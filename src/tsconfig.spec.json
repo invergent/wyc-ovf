@@ -6,7 +6,6 @@
     "types": ["jest"]
   },
   "files": [
-    "test.ts",
     "polyfills.ts"
   ],
   "include": [

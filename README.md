@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/invergent/overtime-frontend.svg?branch=develop)](https://travis-ci.org/invergent/overtime-frontend) [![Maintainability](https://api.codeclimate.com/v1/badges/74732fac5e0a132db878/maintainability)](https://codeclimate.com/github/invergent/overtime-frontend/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/74732fac5e0a132db878/test_coverage)](https://codeclimate.com/github/invergent/overtime-frontend/test_coverage)
+
 # OvertimeFrontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.4.

@@ -1,0 +1,17 @@
+exclude_patterns:
+  - '**/*.spec.js'
+  - '**/__mocks__/'
+  - "**/*.module.ts"
+  - "src/main.ts"
+  - "src/polyfills.ts"
+  - "src/environments/*.ts"
+engines:
+  duplication:
+    enabled: true
+    checks:
+      Similar code:
+        enabled: false
+    config:
+      languages:
+         javascript:
+           mass_threshold: 50
