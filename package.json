@@ -2,9 +2,11 @@
   "name": "overtime-frontend",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "clean": "rm -rf dist && mkdir dist",
+    "build": "ng build --aot --prod",
+    "start": "node app.js",
+    "clean:build": "npm run clean && npm run build",
+    "start:dev": "npm run clean:build && npm run start",
     "test": "ng test --runInBand",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -21,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
     "core-js": "^2.5.4",
+    "express": "^4.16.4",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },
