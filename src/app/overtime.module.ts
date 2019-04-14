@@ -4,16 +4,19 @@ import { NgModule } from '@angular/core';
 import { OvertimeRoutingModule } from './overtime-routing.module';
 import { OvertimeComponent } from './overtime.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [
-    OvertimeComponent,
-    HomeComponent
-  ],
   imports: [
     BrowserModule,
     OvertimeRoutingModule
   ],
+  declarations: [
+    OvertimeComponent,
+    HomeComponent,
+    LoginComponent
+  ],
+
   providers: [],
   bootstrap: [OvertimeComponent]
 })

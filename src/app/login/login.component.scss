@@ -1,0 +1,86 @@
+@import '../../assets/global-styles/mixins';
+@import '../../assets/global-styles/variables';
+
+.login-page {
+  .login-nav {
+    padding: 30px;
+    text-align: right;
+    box-sizing: border-box;
+    p {
+      margin: 0;
+      color: $faint-color;
+    }
+  }
+  .container {
+    padding: 15px;
+    box-sizing: border-box;
+    .brand {
+      margin-top: 30px;
+      .image-wrapper {
+        width: 80px;
+        margin: auto;
+        cursor: pointer;
+        img {
+          width: 100%;
+        }
+      }
+    }
+    .page-title {
+      text-align: center;
+      padding: 50px 0 20px;
+      p {
+        font-size: 2.4rem;
+        color: #000000;
+        margin: auto;
+        span {
+          color: $brand-color;
+        }
+      }
+    }
+    .form-wrapper {
+      form {
+        width: 350px;
+        margin: auto;
+        .input {
+          width: 100%;
+          margin-top: 25px;
+          input {
+            width: 100%;
+            height: 45px;
+            padding: 0 20px;
+            border: 1px solid #ACACAC;
+            border-radius: 10px;
+            box-sizing: border-box;
+            @include placeholder {
+              color: rgba(0,0,0,.2);
+            }
+          }
+        }
+        .button {
+          width: 100%;
+          margin-top: 40px;
+          button {
+            background-color: $brand-color;
+            width: 100%;
+            height: 45px;
+            color: white;
+            font-size: 1.7rem;
+            border-radius: 10px;
+            cursor: pointer;
+          }
+        }
+        @media screen and (max-width: 400px) {
+          width: 100%;
+        }
+      }
+    }
+    .forgot-password {
+      text-align: center;
+      color: $brand-color;
+      p {
+        opacity: .70;
+        cursor: pointer;;
+      }
+    }
+  }
+}

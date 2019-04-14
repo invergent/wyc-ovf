@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: '<overtime-home></overtime-home>',
+  template: '<router-outlet></router-outlet>',
   styleUrls: ['./overtime.component.scss']
 })
 export class OvertimeComponent { }
