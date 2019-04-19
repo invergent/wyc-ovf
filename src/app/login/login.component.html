@@ -1,6 +1,6 @@
 <main class="login-page">
   <div class="login-nav">
-    <p [routerLink]="['/admin/login']">Log in as admin</p>
+    <a [routerLink]="['/admin/login']">Log in as admin</a>
   </div>
   <div class="container">
     <div class="brand">
@@ -12,19 +12,48 @@
       <p>Login to <span class="app-name">V-Timer</span></p>
     </div>
     <div class="form-wrapper">
-      <form>
+      <form #loginForm="ngForm" (ngSubmit)="handleSubmit(loginForm.value)" autocomplete="off" novalidate>
         <div class="input">
-          <input type="text" placeholder="Staff ID">
+          <em
+            *ngIf="loginForm.controls.staffId?.invalid
+              && (loginForm.controls.staffId?.touched || mouseoverLoginButton)">
+            Required
+          </em>
+          <input
+            (ngModel)="staffId"
+            name="staffId"
+            type="text"
+            placeholder="Staff ID"
+            required>
         </div>
         <div class="input">
-          <input type="text" placeholder="Password">
+          <em
+            *ngIf="loginForm.controls.password?.invalid
+              && (loginForm.controls.password?.touched || mouseoverLoginButton)">
+            Required
+          </em>
+          <input
+            (ngModel)="password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            required>
         </div>
-        <div class="button">
-          <button type="submit" name="submit">Login</button>
+        <div
+          class="button"
+          (mouseenter)="mouseoverLoginButton=true"
+          (mouseleave)="mouseoverLoginButton=false">
+          <button
+            [disabled]="loginForm.invalid"
+
+            type="submit"
+            name="submit">
+            Login
+          </button>
         </div>
       </form>
       <div class="forgot-password">
-        <p [routerLink]="['/forgot-password']">Forgot password?</p>
+        <a [routerLink]="['/forgot-password']">Forgot password?</a>
       </div>
     </div>
   </div>
