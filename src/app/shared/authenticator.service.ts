@@ -5,7 +5,7 @@ import { IStaff, ILoginFormData } from './models';
 @Injectable()
 export class Authenticator {
   constructor(private http: HttpClient) { }
-  api = 'http://init.overtime-api.example.com:7000';
+  api = 'http://init.overtime-api.invergent-technologies.com';
   options = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     withCredentials: true
