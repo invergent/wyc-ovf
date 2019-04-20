@@ -36,6 +36,9 @@
         span {
           color: $brand-color;
         }
+        @media screen and (max-width: 400px) {
+          font-size: 1.8rem;
+        }
       }
     }
     .form-wrapper {
@@ -79,6 +82,9 @@
             &:disabled {
               background-color: #80808060;
               cursor: not-allowed;
+            }
+            @media screen and (max-width: 400px) {
+              font-size: 1.4rem;
             }
           }
         }

@@ -27,4 +27,12 @@ describe('Authenticator Service', () => {
 
     expect(httpPost).toHaveBeenCalled();
   });
+
+  it('should make a post request to the api to request password reset.', async () => {
+    const httpPost = jest.spyOn(httpMock, 'post');
+
+    await service.requestPasswordReset({ staffId: 'someStaffID' });
+
+    expect(httpPost).toHaveBeenCalled();
+  });
 });

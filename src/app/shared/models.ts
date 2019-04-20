@@ -19,7 +19,8 @@ export interface IStaff {
 export interface ILoginFormData {
   staffId?: string,
   emailAddress?: string,
-  password: string
+  password?: string
+  staffIdOrEmail?: string
 }
 
 export interface IToastr {

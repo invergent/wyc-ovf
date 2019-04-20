@@ -11,6 +11,7 @@ import { Authenticator } from './shared/authenticator.service';
 import { RedirectToDashboard } from './shared/redirect-to-dashboard.service';
 import { TOASTR_TOKEN } from './shared/toastr.service';
 import { IToastr } from './shared/models';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 declare let toastr:IToastr;
 
@@ -24,7 +25,8 @@ declare let toastr:IToastr;
   declarations: [
     OvertimeComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    ForgotPasswordComponent
   ],
   providers: [
     Authenticator,

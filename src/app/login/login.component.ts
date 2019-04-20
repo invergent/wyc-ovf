@@ -1,8 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Authenticator } from '../shared/authenticator.service';
-import { TOASTR_TOKEN } from '../shared/toastr.service';
-import { ILoginFormData, IToastr } from '../shared/models'
+import {
+  Authenticator, TOASTR_TOKEN, ILoginFormData, IToastr
+} from '../shared';
+import { staffIdRegex } from '../shared/utils';
 
 @Component({
   templateUrl: './login.component.html',
@@ -18,7 +19,6 @@ export class LoginComponent {
   ) { }
 
   validateFormData(formValues: ILoginFormData) {
-    const staffIdRegex = /^[Tt][Nn][0-9]{6}$/;
     const { staffId } = formValues;
     if (!staffIdRegex.test(staffId)) return ['Staff ID is incorrect'];
     return [];
