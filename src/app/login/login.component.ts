@@ -11,6 +11,8 @@ import { staffIdRegex } from '../shared/utils';
 })
 export class LoginComponent {
   mouseoverLoginButton
+  staffId
+  password
 
   constructor(
     private authenticator: Authenticator,

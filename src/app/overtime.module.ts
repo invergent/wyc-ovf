@@ -13,7 +13,7 @@ import { TOASTR_TOKEN } from './shared/toastr.service';
 import { IToastr } from './shared/models';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
-declare let toastr:IToastr;
+const toastr: IToastr = window['toastr'];
 
 @NgModule({
   imports: [
