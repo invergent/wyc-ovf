@@ -45,9 +45,11 @@
           (mouseleave)="mouseoverLoginButton=false">
           <button
             [disabled]="loginForm.invalid"
+            (click)="displaySpinner=true"
             type="submit"
             name="submit">
             Login
+            <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
           </button>
         </div>
       </form>

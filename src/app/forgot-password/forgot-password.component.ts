@@ -10,6 +10,7 @@ import { staffIdRegex, emailRegex } from '../shared/utils';
 })
 export class ForgotPasswordComponent {
   mouseoverLoginButton
+  displaySpinner
   staffIdOrEmail
 
   constructor(
@@ -31,13 +32,17 @@ export class ForgotPasswordComponent {
 
   async handleSubmit(formValues: ILoginFormData) {
     const validatedData = this.validateFormData(formValues);
-    if (validatedData.errors.length) return this.toastr.error(validatedData.errors[0]);
+    if (validatedData.errors.length) {
+      this.displaySpinner = false;
+      return this.toastr.error(validatedData.errors[0]);
+    }
 
     try {
       const response = await this.authenticator.requestPasswordReset(validatedData.payload);
       this.toastr.success(response.message);
       this.staffIdOrEmail = '';
     } catch(e) {
+      this.displaySpinner = false;
       return this.toastr.error('Password reset request failed.');
     }
   }

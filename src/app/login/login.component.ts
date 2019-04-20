@@ -11,6 +11,7 @@ import { staffIdRegex } from '../shared/utils';
 })
 export class LoginComponent {
   mouseoverLoginButton
+  displaySpinner
   staffId
   password
 
@@ -28,13 +29,17 @@ export class LoginComponent {
 
   async handleSubmit(formValues: ILoginFormData) {
     const errors = this.validateFormData(formValues);
-    if (errors.length) return this.toastr.error(errors[0]);
+    if (errors.length) {
+      this.displaySpinner = false;
+      return this.toastr.error(errors[0]);
+    }
 
     try {
       const response = await this.authenticator.login(formValues);
       this.toastr.success(response.message);
       return this.router.navigate(['/']);
     } catch(e) {
+      this.displaySpinner = false;
       return this.toastr.error('Login failed.');
     }
   }

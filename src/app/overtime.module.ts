@@ -12,6 +12,7 @@ import { RedirectToDashboard } from './shared/redirect-to-dashboard.service';
 import { TOASTR_TOKEN } from './shared/toastr.service';
 import { IToastr } from './shared/models';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ConfirmPasswordResetComponent } from './confirm-password-reset/confirm-password-reset.component';
 
 const toastr: IToastr = window['toastr'];
 
@@ -26,7 +27,8 @@ const toastr: IToastr = window['toastr'];
     OvertimeComponent,
     HomeComponent,
     LoginComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ConfirmPasswordResetComponent
   ],
   providers: [
     Authenticator,

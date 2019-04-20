@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ConfirmPasswordResetComponent } from './confirm-password-reset/confirm-password-reset.component'
 import { RedirectToDashboard } from './shared/redirect-to-dashboard.service';
 
 const routes: Routes = [
   { path: 'login', canActivate: [RedirectToDashboard], component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'confirm-reset-request', component: ConfirmPasswordResetComponent },
   { path: '', component: HomeComponent }
 ];
 

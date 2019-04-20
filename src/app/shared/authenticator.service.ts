@@ -22,4 +22,8 @@ export class Authenticator {
   requestPasswordReset(userCredentials: ILoginFormData): Promise<any> {
     return this.http.post(`${this.api}/forgot-password`, userCredentials, this.options).toPromise();
   }
+
+  verifyPasswordResetRequest(hash: string): Promise<any> {
+    return this.http.get(`${this.api}/confirm-reset-request?hash=${hash}`).toPromise();
+  }
 }
