@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'login', canActivate: [RedirectToDashboard], component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'confirm-reset-request', component: ConfirmPasswordResetComponent },
+  { path: 'staff', loadChildren: './staff/staff.module#StaffModule' },
   { path: '', component: HomeComponent }
 ];
 

@@ -41,6 +41,7 @@ export class ForgotPasswordComponent {
       const response = await this.authenticator.requestPasswordReset(validatedData.payload);
       this.toastr.success(response.message);
       this.staffIdOrEmail = '';
+      this.displaySpinner = false;
     } catch(e) {
       this.displaySpinner = false;
       return this.toastr.error('Password reset request failed.');

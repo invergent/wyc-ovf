@@ -12,6 +12,7 @@ import { staffIdRegex } from '../shared/utils';
 export class LoginComponent {
   mouseoverLoginButton
   displaySpinner
+  passwordFieldType = 'password';
   staffId
   password
 
@@ -20,6 +21,11 @@ export class LoginComponent {
     private router: Router,
     @Inject(TOASTR_TOKEN) private toastr: IToastr
   ) { }
+
+  toggleViewPasswordText() {
+    this.passwordFieldType = 'text';
+    setTimeout(() => (this.passwordFieldType = 'password'), 1500);
+  }
 
   validateFormData(formValues: ILoginFormData) {
     const { staffId } = formValues;
@@ -40,7 +46,7 @@ export class LoginComponent {
       return this.router.navigate(['/']);
     } catch(e) {
       this.displaySpinner = false;
-      return this.toastr.error('Login failed.');
+      return this.toastr.error(e.error.message);
     }
   }
 }

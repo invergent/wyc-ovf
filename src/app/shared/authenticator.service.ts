@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IStaff, ILoginFormData } from './models';
+import { IStaff, ILoginFormData, IPasswordReset } from './models';
 
 @Injectable()
 export class Authenticator {
@@ -24,6 +24,10 @@ export class Authenticator {
   }
 
   verifyPasswordResetRequest(hash: string): Promise<any> {
-    return this.http.get(`${this.api}/confirm-reset-request?hash=${hash}`).toPromise();
+    return this.http.get(`${this.api}/confirm-reset-request?hash=${hash}`, this.options).toPromise();
+  }
+
+  resetPassword(resetPasswordData: IPasswordReset, hash: string): Promise<any> {
+    return this.http.post(`${this.api}/users/profile/reset?hash=${hash}`, resetPasswordData, this.options).toPromise();
   }
 }

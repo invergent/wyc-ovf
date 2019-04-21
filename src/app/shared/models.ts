@@ -23,6 +23,11 @@ export interface ILoginFormData {
   staffIdOrEmail?: string
 }
 
+export interface IPasswordReset {
+  password: string,
+  confirmPassword: string
+}
+
 export interface IToastr {
   success(message: string, title?: string): void,
   info(message: string, title?: string): void,

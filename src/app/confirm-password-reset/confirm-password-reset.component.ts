@@ -19,7 +19,7 @@ export class ConfirmPasswordResetComponent implements OnInit {
     try {
       const hash = this.route.snapshot.queryParams['hash'];
       await this.authenticator.verifyPasswordResetRequest(hash);
-      return this.router.navigate(['/password-reset']);
+      return this.router.navigate([`/staff/password-reset`], { queryParams: { hash } });
     } catch(e) {
       this.displaySpinner = false;
     }

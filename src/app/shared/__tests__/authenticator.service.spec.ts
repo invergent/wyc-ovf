@@ -42,6 +42,15 @@ describe('Authenticator Service', () => {
 
     await service.verifyPasswordResetRequest('somehash');
 
-    expect(httpGet).toHaveBeenCalledWith(url);
+    expect(httpGet).toHaveBeenCalledWith(url, service.options);
+  });
+
+  it('should make a post request to the api to reset password.', async () => {
+    const httpPost = jest.spyOn(httpMock, 'get');
+    const url = 'http://init.overtime-api.invergent-technologies.com/confirm-reset-request?hash=somehash'
+
+    await service.resetPassword({ password: 'password', confirmPassword: 'confirmPassword'}, 'somehash');
+
+    expect(httpPost).toHaveBeenCalled();
   });
 });

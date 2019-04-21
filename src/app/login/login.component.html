@@ -32,10 +32,13 @@
               && (loginForm.controls.password?.touched || mouseoverLoginButton)">
             Required
           </em>
+          <i
+          class="fa fa-eye"
+          (click)="toggleViewPasswordText()"></i>
           <input
             (ngModel)="password"
             name="password"
-            type="password"
+            type="{{passwordFieldType}}"
             placeholder="Password"
             required>
         </div>

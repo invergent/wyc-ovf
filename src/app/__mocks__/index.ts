@@ -3,7 +3,8 @@ export const authenticatorMock: any = {
   checkValidity: () => Promise.resolve('value'),
   login: () => Promise.resolve('value'),
   requestPasswordReset: () => Promise.resolve('value'),
-  verifyPasswordResetRequest: () => Promise.resolve('value')
+  verifyPasswordResetRequest: () => Promise.resolve('value'),
+  resetPassword: () => Promise.resolve('value')
 }
 
 export const mockToastr: any = {

@@ -1,7 +1,7 @@
 import { ConfirmPasswordResetComponent } from './confirm-password-reset.component';
 import { authenticatorMock, activatedRouteMock, routerMock } from '../__mocks__';
 
-describe('LoginComponent', () => {
+describe('Comfirm password reset', () => {
   let component: ConfirmPasswordResetComponent;
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('LoginComponent', () => {
     await component.ngOnInit();
 
     expect(verifyPasswordResetRequestMock).toHaveBeenCalledWith('somehash');
-    expect(routerNavigate).toHaveBeenCalledWith(['/password-reset']);
+    expect(routerNavigate).toHaveBeenCalledWith(['/staff/password-reset'], { queryParams: { hash: 'somehash' } });
   });
 
   it('should display error message if request fails.', async () => {
