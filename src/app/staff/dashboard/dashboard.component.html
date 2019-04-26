@@ -1,0 +1,63 @@
+<section class="dashboard">
+  <section class="page-title">
+    <p>Dashboard</p>
+  </section>
+  <section class="salutation">
+    <p>Hi John! A beautiful day, huh?</p>
+  </section>
+  <section class="statistics">
+    <div class="stats stat-total">
+      <p class="stat-title">Total</p>
+      <p class="stat-number">30</p>
+      <div class="stat-icon">
+        <img src="/assets/images/total.png" alt="Total Icon">
+      </div>
+    </div>
+    <div class="stats stat-completed">
+      <p class="stat-title">Completed</p>
+      <p class="stat-number">25</p>
+      <div class="stat-icon">
+        <img src="/assets/images/completed.png" alt="Completed Icon">
+      </div>
+    </div>
+    <div class="stats stat-declined">
+      <p class="stat-title">Declined</p>
+      <p class="stat-number">1</p>
+      <div class="stat-icon">
+        <img src="/assets/images/declined.png" alt="Declined Icon">
+      </div>
+    </div>
+    <div class="stats stat-cancelled">
+      <p class="stat-title">Cancelled</p>
+      <p class="stat-number">4</p>
+      <div class="stat-icon">
+        <img src="/assets/images/cancelled.png" alt="Cancelled Icon">
+      </div>
+    </div>
+  </section>
+  <section class="claim">
+    <div class="section-title">
+      <p>Pending claim</p>
+    </div>
+    <div class="claim-table">
+      <claim></claim>
+    </div>
+    <div class="button-wrapper">
+      <a [routerLink]="['/staff/pending-claim']">View details</a>
+    </div>
+  </section>
+  <section class="recent-activity">
+    <div class="section-title">
+      <p>Recent Activities</p>
+    </div>
+    <div class="activity-block-wrapper">
+      <activity-block></activity-block>
+      <activity-block></activity-block>
+      <activity-block></activity-block>
+      <activity-block></activity-block>
+    </div>
+    <div class="button-wrapper">
+      <a [routerLink]="['/staff/activities']">See all</a>
+    </div>
+  </section>
+</section>

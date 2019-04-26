@@ -1,0 +1,173 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+nav {
+  box-sizing: border-box;
+  padding: 5px 20px;
+  box-shadow: 2px 0px 10px 0px $faint-color-light;
+  section {
+    display: flex;
+    align-items: center;
+    .brand {
+      display: flex;
+      align-items: center;
+      width: 220px;
+      .logo {
+        width: 220px;
+        margin-right: 8px;
+      }
+      .hamburger-icon {
+        display: none;
+        font-size: 22px;
+      }
+      img {
+        width: 100%;
+      }
+    }
+    .nav-items {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      .notify {
+        position: relative;
+        margin-right: 50px;
+        .icons-wrapper {
+          cursor: pointer;
+          outline: none;
+          .fa-bell {
+            font-size: 25px;
+          }
+          span {
+            position: absolute;
+            top: -5px;
+            right: -7px;
+            background-color: $color-red;
+            padding: 2px 5px;
+            color: white;
+            font-size: 12px;
+            border-radius: 1000px;
+          }
+          &:focus ~ .notifications {
+            @include dropdown-wrapper-display;
+          }
+        }
+        .notifications {
+          @include dropdown-wrapper;
+          top: 66px;
+          right: -100px;
+          width: 250px;
+          .notifications-wrapper {
+            @include navigation-items-wrapper;
+            .spike {
+              @include spike;
+              right: 100px;
+            }
+            ul {
+              @include ul-style;
+              a {
+                @include li-style;
+              }
+              a:last-child {
+                @include li-last-child;
+              }
+            }
+          }
+        }
+      }
+      .user {
+        display: flex;
+        position: relative;
+        align-items: center;
+        cursor: pointer;
+        outline: none;
+        .avatar {
+          display: inline-block;
+          width: 50px;
+          margin-right: 10px;
+          img {
+            width: 100%
+          }
+        }
+        .fa-caret-down {
+          display: inline-block;
+        }
+        .dropdown-menu {
+          @include dropdown-wrapper;
+          .ul-wrapper {
+            @include navigation-items-wrapper
+            .spike {
+              @include spike
+            }
+            ul {
+              @include ul-style;
+              a {
+                @include li-style;
+              }
+              a:last-child {
+                @include li-last-child;
+              }
+            }
+          }
+        }
+        &:focus > .dropdown-menu {
+          @include dropdown-wrapper-display;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    section {
+      .brand {
+        width: 60px;
+        .logo {
+          margin-right: 15px;
+        }
+        .name {
+          display: none;
+        }
+        .hamburger-icon {
+          display: inline-block;
+        }
+        img {
+        }
+      }
+      .nav-items {
+        .notify {
+          margin-right: 30px;
+          .icons-wrapper {
+            .fa-bell {
+            }
+            span {
+            }
+          }
+          .notifications {
+            .notifications-wrapper {
+              .spike {
+              }
+            }
+          }
+        }
+        .user {
+          .avatar {
+            img {
+            }
+          }
+          .fa-caret-down {
+          }
+          .dropdown-menu {
+            .ul-wrapper {
+              .spike {
+              }
+              ul {
+                li {
+                }
+                li:last-child {
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

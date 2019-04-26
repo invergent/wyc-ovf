@@ -19,7 +19,7 @@ describe('Comfirm password reset', () => {
     await component.ngOnInit();
 
     expect(verifyPasswordResetRequestMock).toHaveBeenCalledWith('somehash');
-    expect(routerNavigate).toHaveBeenCalledWith(['/staff/password-reset'], { queryParams: { hash: 'somehash' } });
+    expect(routerNavigate).toHaveBeenCalledWith(['/password-reset'], { queryParams: { hash: 'somehash' } });
   });
 
   it('should display error message if request fails.', async () => {

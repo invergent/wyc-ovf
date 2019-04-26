@@ -19,7 +19,7 @@ describe('Authenticator Service', () => {
     await service.canActivate();
 
     expect(authenticatorCheckValidity).toHaveBeenCalled();
-    expect(routerNavigate).toHaveBeenCalledWith(['/dashboard']);
+    expect(routerNavigate).toHaveBeenCalledWith(['/staff/dashboard']);
   });
 
   it('should return true (proceed to login) if call to api fails or user is unathenticated.', async () => {

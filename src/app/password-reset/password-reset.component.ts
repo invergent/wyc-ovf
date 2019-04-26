@@ -2,12 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   Authenticator, TOASTR_TOKEN, IToastr, IPasswordReset
-} from '../../shared';
+} from '../shared';
 
 @Component({
   selector: 'app-password-reset',
   templateUrl: './password-reset.component.html',
-  styleUrls: ['../../login/login.component.scss', './password-reset.component.scss']
+  styleUrls: ['../login/login.component.scss', './password-reset.component.scss']
 })
 export class PasswordResetComponent implements OnInit {
   password

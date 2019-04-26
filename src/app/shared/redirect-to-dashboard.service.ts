@@ -9,7 +9,7 @@ export class RedirectToDashboard implements CanActivate {
   async canActivate() {
     try {
       await this.authenticator.checkValidity();
-      return this.router.navigate(['/dashboard']);
+      return this.router.navigate(['/staff/dashboard']);
     } catch(e) {
       return true; // proceed to login page
     }

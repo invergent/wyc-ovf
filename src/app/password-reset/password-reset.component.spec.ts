@@ -1,7 +1,7 @@
 import { PasswordResetComponent } from './password-reset.component';
 import {
   authenticatorMock, activatedRouteMock, routerMock, mockToastr
-} from '../../__mocks__';
+} from '../__mocks__';
 
 jest.useFakeTimers();
 

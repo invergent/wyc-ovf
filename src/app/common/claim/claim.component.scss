@@ -1,0 +1,49 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.table-wrapper {
+  min-width: 700px;
+  table {
+    width: 100%;
+    border-spacing: 0;
+    text-align: center;
+    thead {
+      color: $faint-color;
+      th {
+        font-weight: 100;
+        padding-bottom: 15px;
+      }
+    }
+    tbody {
+      background-color: $color-white;
+      border-radius: 8px;
+      td {
+        padding: 20px;
+        box-sizing: border-box;
+        .outter-ellipse {
+          width: 25px;
+          height: 25px;
+          margin: auto auto auto 20px;
+          padding: 1px;
+          background-color: $brand-color;
+          border-radius: 1000px;
+          box-sizing: border-box;
+          .inner-ellipse {
+            width: 13px;
+            height: 13px;
+            margin: 5px auto;
+            background-color: $brand-color-light;
+            border-radius: 1000px;
+          }
+        }
+      }
+      td:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+      td:last-child {
+        color: $faint-color;
+        border-radius: 0 8px 8px 0;
+      }
+    }
+  }
+}

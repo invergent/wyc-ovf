@@ -43,7 +43,7 @@ export class LoginComponent {
     try {
       const response = await this.authenticator.login(formValues);
       this.toastr.success(response.message);
-      return this.router.navigate(['/']);
+      return this.router.navigate(['/staff/dashboard']);
     } catch(e) {
       this.displaySpinner = false;
       return this.toastr.error(e.error.message);

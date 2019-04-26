@@ -1,0 +1,49 @@
+<nav>
+  <section>
+    <div class="brand">
+      <div class="logo">
+        <img src="/assets/images/logo.png" alt="Logo">
+      </div>
+      <div class="name">
+        <img src="/assets/images/brand-name.png" alt="Logo">
+      </div>
+      <div class="hamburger-icon" (click)="toggleSideNav()">
+        <i class="fa fa-bars"></i>
+      </div>
+    </div>
+    <div class="nav-items">
+      <div class="notify">
+        <div class="icons-wrapper" tabindex="0">
+          <i class='far fa-bell'></i>
+          <span>5</span>
+        </div>
+        <div class="notifications">
+          <div class="notifications-wrapper">
+            <div class="spike"></div>
+            <ul>
+              <a [routerLink]="['/staff/pending-claim']"><li>Your claim was approved...</li></a>
+              <a [routerLink]="['/staff/pending-claim']"><li>Your claim was approved...</li></a>
+              <a [routerLink]="['/staff/pending-claim']"><li>Your claim was approved...</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="user" tabindex="0">
+        <div class="avatar">
+          <img src="https://res.cloudinary.com/invergent/image/upload/c_fill,g_face,h_400,r_max,w_400/v1/overtime/INIT/INIT012345.png" alt="User Avatar">
+        </div>
+        <i class="fa fa-caret-down"></i>
+        <div class="dropdown-menu">
+          <div class="ul-wrapper">
+            <div class="spike"></div>
+            <ul>
+              <a [routerLink]="['/staff/profile']"><li>Profile</li></a>
+              <a [routerLink]="['/staff/change-password']"><li>Change password</li></a>
+              <a [routerLink]="['/logout']"><li>Logout</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</nav>

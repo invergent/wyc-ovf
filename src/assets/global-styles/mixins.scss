@@ -4,3 +4,53 @@
   &::-moz-placeholder          {@content}
   &:-ms-input-placeholder      {@content}
 }
+
+@mixin dropdown-wrapper {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  display: none;
+  background-color: white;
+  width: 230px;
+  box-shadow: 5px 5px 20px 1px $faint-color-ex-light;
+}
+
+@mixin dropdown-wrapper-display {
+  display: block;
+}
+
+@mixin navigation-items-wrapper {
+  position: relative;
+}
+
+@mixin spike {
+  display: inline-block;
+  position: absolute;
+  z-index: 0;
+  top: -10px;
+  right: 30px;
+  background-color: $color-white;
+  width: 20px;
+  height: 20px;
+  transform: rotate(45deg);
+  box-shadow: -7px -7px 8px 0px $faint-color-xx-light;
+}
+
+@mixin ul-style {
+  list-style: none;
+  margin: 0;
+  padding: 5px;
+  text-align: center;
+}
+
+@mixin li-style {
+  display: block;
+  text-decoration: none;
+  padding: 13px 0;
+  color: $brand-color;
+  border-bottom: .5px solid $faint-color-ex-light;
+}
+
+@mixin li-last-child {
+  border: none;
+}

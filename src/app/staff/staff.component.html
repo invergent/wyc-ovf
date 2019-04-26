@@ -1,0 +1,69 @@
+<main>
+  <top-nav (sideNavToggleEvent)="toggleSideNav()"></top-nav>
+  <article class="content-wrapper">
+    <section class="side-nav" [ngStyle]="{left: sideNavLeft}">
+      <div class="new-claim-button-wrapper">
+        <button
+          [routerLink]="['/staff/new']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}"
+          type="button"
+          name="button">New Claim</button>
+      </div>
+      <a
+        [routerLink]="['/staff/dashboard']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-tachometer-alt"></i>
+        </div>
+        <p>Dashboard</p>
+      </a>
+      <a
+        [routerLink]="['/staff/pending-claim']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="far fa-clock"></i>
+        </div>
+        <p>Pending Claim</p>
+      </a>
+      <a
+        [routerLink]="['/staff/claim-history']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-history"></i>
+        </div>
+        <p>Claim history</p>
+      </a>
+      <hr>
+      <a
+        [routerLink]="['/staff/profile']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-user"></i>
+        </div>
+        <p>Profile</p>
+      </a>
+      <a
+        [routerLink]="['/staff/change-password']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-lock"></i>
+        </div>
+        <p>Change password</p>
+      </a>
+    </section>
+    <section class="content">
+      <router-outlet></router-outlet>
+    </section>
+  </article>
+</main>
