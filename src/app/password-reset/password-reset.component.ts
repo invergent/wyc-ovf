@@ -14,6 +14,7 @@ export class PasswordResetComponent implements OnInit {
   confirmPassword
   displaySpinner
   passwordFieldType = 'password';
+  mouseoverLoginButton
 
   constructor(
     private authenticator: Authenticator,
