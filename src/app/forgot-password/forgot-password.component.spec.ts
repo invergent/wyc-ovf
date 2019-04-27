@@ -1,11 +1,11 @@
 import { ForgotPasswordComponent } from './forgot-password.component';
-import { authenticatorMock, mockToastr } from '../__mocks__';
+import { authServiceMock, mockToastr } from '../__mocks__';
 
 describe('LoginComponent', () => {
   let component: ForgotPasswordComponent;
 
   beforeEach(() => {
-    component = new ForgotPasswordComponent(authenticatorMock, mockToastr);
+    component = new ForgotPasswordComponent(authServiceMock, mockToastr);
   });
 
   it('should create', () => {
@@ -35,17 +35,17 @@ describe('LoginComponent', () => {
   it('should attempt to make password reset request to the server if entry is valid.', async () => {
     const mockValidatedData = { errors: [], payload: { staffId: 'TN012345' } };
     jest.spyOn(component, 'validateFormData').mockReturnValue(mockValidatedData);
-    const authenticatorLogin = jest.spyOn(authenticatorMock, 'requestPasswordReset').mockResolvedValue('success');
+    const authServiceLogin = jest.spyOn(authServiceMock, 'requestPasswordReset').mockResolvedValue('success');
     const toastrSuccess = jest.spyOn(mockToastr, 'success');
 
     await component.handleSubmit({ staffId: 'TN012345' });
 
-    expect(authenticatorLogin).toHaveBeenCalled();
+    expect(authServiceLogin).toHaveBeenCalled();
     expect(toastrSuccess).toHaveBeenCalled();
   });
 
   it('should display error message if request fails.', async () => {
-    jest.spyOn(authenticatorMock, 'requestPasswordReset').mockRejectedValue('err');
+    jest.spyOn(authServiceMock, 'requestPasswordReset').mockRejectedValue('err');
     const toastrError = jest.spyOn(mockToastr, 'error');
 
     await component.handleSubmit({ staffIdOrEmail: 'TN012345' });

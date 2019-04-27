@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-  Authenticator, TOASTR_TOKEN, ILoginFormData, IToastr
+  AuthService, TOASTR_TOKEN, ILoginFormData, IToastr
 } from '../shared';
 import { staffIdRegex } from '../shared/utils';
 
@@ -17,7 +17,7 @@ export class LoginComponent {
   password
 
   constructor(
-    private authenticator: Authenticator,
+    private authService: AuthService,
     private router: Router,
     @Inject(TOASTR_TOKEN) private toastr: IToastr
   ) { }
@@ -41,12 +41,12 @@ export class LoginComponent {
     }
 
     try {
-      const response = await this.authenticator.login(formValues);
+      const response = await this.authService.login(formValues);
       this.toastr.success(response.message);
       return this.router.navigate(['/staff/dashboard']);
     } catch(e) {
       this.displaySpinner = false;
-      return this.toastr.error(e.error.message);
+      return this.toastr.error(e.error.message || 'Login failed. Check your connectivity.');
     }
   }
 }

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
-  Authenticator, TOASTR_TOKEN, IToastr, IPasswordReset
+  AuthService, TOASTR_TOKEN, IToastr, IPasswordReset
 } from '../shared';
 
 @Component({
@@ -17,7 +17,7 @@ export class PasswordResetComponent implements OnInit {
   mouseoverLoginButton
 
   constructor(
-    private authenticator: Authenticator,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     @Inject(TOASTR_TOKEN) private toastr: IToastr
@@ -50,7 +50,7 @@ export class PasswordResetComponent implements OnInit {
 
     try {
       const hash = this.route.snapshot.queryParams['hash'];
-      const response = await this.authenticator.resetPassword(formValues, hash);
+      const response = await this.authService.resetPassword(formValues, hash);
       this.toastr.success(response.message);
       return this.router.navigate(['/login']);
     } catch(e) {

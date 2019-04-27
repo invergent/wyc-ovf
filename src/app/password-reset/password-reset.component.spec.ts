@@ -1,6 +1,6 @@
 import { PasswordResetComponent } from './password-reset.component';
 import {
-  authenticatorMock, activatedRouteMock, routerMock, mockToastr
+  authServiceMock, activatedRouteMock, routerMock, mockToastr
 } from '../__mocks__';
 
 jest.useFakeTimers();
@@ -9,7 +9,7 @@ describe('Comfirm password reset', () => {
   let component: PasswordResetComponent;
 
   beforeEach(() => {
-    component = new PasswordResetComponent(authenticatorMock, routerMock, activatedRouteMock, mockToastr);
+    component = new PasswordResetComponent(authServiceMock, routerMock, activatedRouteMock, mockToastr);
   });
 
   it('should create', () => {
@@ -20,7 +20,7 @@ describe('Comfirm password reset', () => {
     const newActivateRoute: any = { snapshot: { queryParams: {} } };
     const routerNavigate = jest.spyOn(routerMock, 'navigate');
     const toastrError = jest.spyOn(mockToastr, 'error');
-    const newComponent = new PasswordResetComponent(authenticatorMock, routerMock, newActivateRoute, mockToastr);
+    const newComponent = new PasswordResetComponent(authServiceMock, routerMock, newActivateRoute, mockToastr);
 
     newComponent.ngOnInit();
 
@@ -47,24 +47,24 @@ describe('Comfirm password reset', () => {
   });
 
   it('should successfully reset password and navigate to login page.', async () => {
-    const authenticatorReset = jest.spyOn(authenticatorMock, 'resetPassword').mockResolvedValue({ message: 'success' });
+    const authServiceReset = jest.spyOn(authServiceMock, 'resetPassword').mockResolvedValue({ message: 'success' });
     const toastrSuccess = jest.spyOn(mockToastr, 'success');
     const routerNavigate = jest.spyOn(routerMock, 'navigate');
 
     await component.handleSubmit({ password: 'password', confirmPassword: 'password'});
 
-    expect(authenticatorReset).toHaveBeenCalled();
+    expect(authServiceReset).toHaveBeenCalled();
     expect(toastrSuccess).toHaveBeenCalledWith('success');
     expect(routerNavigate).toHaveBeenCalledWith(['/login']);
   });
 
   it('should fail with a message if an error occurs.', async () => {
-    const authenticatorReset = jest.spyOn(authenticatorMock, 'resetPassword').mockRejectedValue('err');
+    const authServiceReset = jest.spyOn(authServiceMock, 'resetPassword').mockRejectedValue('err');
     const toastrError = jest.spyOn(mockToastr, 'error');
 
     await component.handleSubmit({ password: 'password', confirmPassword: 'password'});
 
-    expect(authenticatorReset).toHaveBeenCalled();
+    expect(authServiceReset).toHaveBeenCalled();
     expect(component.displaySpinner).toBe(false);
     expect(toastrError).toHaveBeenCalledWith('Password reset failed.');
   });

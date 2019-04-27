@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import {
-  Authenticator, TOASTR_TOKEN, ILoginFormData, IToastr
+  AuthService, TOASTR_TOKEN, ILoginFormData, IToastr
 } from '../shared';
 import { staffIdRegex, emailRegex } from '../shared/utils';
 
@@ -14,7 +14,7 @@ export class ForgotPasswordComponent {
   staffIdOrEmail
 
   constructor(
-    private authenticator: Authenticator,
+    private authService: AuthService,
     @Inject(TOASTR_TOKEN) private toastr: IToastr
   ) { }
 
@@ -38,7 +38,7 @@ export class ForgotPasswordComponent {
     }
 
     try {
-      const response = await this.authenticator.requestPasswordReset(validatedData.payload);
+      const response = await this.authService.requestPasswordReset(validatedData.payload);
       this.toastr.success(response.message);
       this.staffIdOrEmail = '';
       this.displaySpinner = false;

@@ -1,5 +1,5 @@
 import { LoginComponent } from './login.component';
-import { authenticatorMock, mockToastr, routerMock } from '../__mocks__';
+import { authServiceMock, mockToastr, routerMock } from '../__mocks__';
 
 jest.useFakeTimers();
 
@@ -7,7 +7,7 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
 
   beforeEach(() => {
-    component = new LoginComponent(authenticatorMock, routerMock, mockToastr);
+    component = new LoginComponent(authServiceMock, routerMock, mockToastr);
   });
 
   it('should create', () => {
@@ -32,19 +32,28 @@ describe('LoginComponent', () => {
   });
 
   it('should attempt to login user in if login entries are valid.', async () => {
-    const authenticatorLogin = jest.spyOn(authenticatorMock, 'login');
+    const authServiceLogin = jest.spyOn(authServiceMock, 'login');
     const toastrSuccess = jest.spyOn(mockToastr, 'success');
     const routerNavigate = jest.spyOn(routerMock, 'navigate');
 
     await component.handleSubmit({ staffId: 'TN012345', password: 'somePassword' });
 
-    expect(authenticatorLogin).toHaveBeenCalled();
+    expect(authServiceLogin).toHaveBeenCalled();
     expect(toastrSuccess).toHaveBeenCalled();
     expect(routerNavigate).toHaveBeenCalled();
   });
 
   it('should display error message if login fails.', async () => {
-    jest.spyOn(authenticatorMock, 'login').mockRejectedValue({ error: { message: 'failed' } });
+    jest.spyOn(authServiceMock, 'login').mockRejectedValue({ error: { message: 'failed' } });
+    const toastrError = jest.spyOn(mockToastr, 'error');
+
+    await component.handleSubmit({ staffId: 'TN012345', password: 'somePassword' });
+
+    expect(toastrError).toHaveBeenCalled();
+  });
+
+  it('should display generic error message if login fails for other reasons than incorrect login credentials.', async () => {
+    jest.spyOn(authServiceMock, 'login').mockRejectedValue({ error: '' });
     const toastrError = jest.spyOn(mockToastr, 'error');
 
     await component.handleSubmit({ staffId: 'TN012345', password: 'somePassword' });

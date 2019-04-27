@@ -7,8 +7,10 @@ import { OvertimeRoutingModule } from './overtime-routing.module';
 import { OvertimeComponent } from './overtime.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { Authenticator } from './shared/authenticator.service';
-import { RedirectToDashboard } from './shared/redirect-to-dashboard.service';
+import { AuthService } from './shared';
+import { OvertimeService } from './shared';
+import { RedirectToDashboard } from './shared';
+import { RedirectToLogin } from './shared';
 import { TOASTR_TOKEN } from './shared/toastr.service';
 import { IToastr } from './shared/models';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -33,8 +35,10 @@ const toastr: IToastr = window['toastr'];
     PasswordResetComponent
   ],
   providers: [
-    Authenticator,
+    AuthService,
+    OvertimeService,
     RedirectToDashboard,
+    RedirectToLogin,
     { provide: TOASTR_TOKEN, useValue: toastr }
   ],
   bootstrap: [OvertimeComponent]

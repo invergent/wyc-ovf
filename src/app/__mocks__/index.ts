@@ -1,10 +1,17 @@
-export const authenticatorMock: any = {
+export const authServiceMock: any = {
   api: 'some-url',
-  checkValidity: () => Promise.resolve('value'),
+  currentStaff: { firstname: 'somename' },
+  authenticate: () => Promise.resolve({ data: {} }),
+  fetchStaffProfile: () => Promise.resolve('value'),
   login: () => Promise.resolve('value'),
   requestPasswordReset: () => Promise.resolve('value'),
   verifyPasswordResetRequest: () => Promise.resolve('value'),
   resetPassword: () => Promise.resolve('value')
+}
+
+export const overtimeServiceMock: any = {
+  api: 'some-url',
+  fetchStaffClaimStatistics: () => Promise.resolve('value')
 }
 
 export const mockToastr: any = {

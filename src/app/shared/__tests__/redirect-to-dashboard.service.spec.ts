@@ -1,11 +1,11 @@
 import { RedirectToDashboard } from '../index';
-import { routerMock, authenticatorMock } from '../../__mocks__';
+import { routerMock, authServiceMock } from '../../__mocks__';
 
-describe('Authenticator Service', () => {
+describe('RedirectToDashboard Service', () => {
   let service: RedirectToDashboard;
 
   beforeEach(() => {
-    service = new RedirectToDashboard(routerMock, authenticatorMock);
+    service = new RedirectToDashboard(routerMock, authServiceMock);
   });
 
   it('should create', () => {
@@ -14,16 +14,16 @@ describe('Authenticator Service', () => {
 
   it('should make a get request to the api to check users token validity.', async () => {
     const routerNavigate = jest.spyOn(routerMock, 'navigate');
-    const authenticatorCheckValidity = jest.spyOn(authenticatorMock, 'checkValidity');
+    const authServiceCheckValidity = jest.spyOn(authServiceMock, 'authenticate');
 
     await service.canActivate();
 
-    expect(authenticatorCheckValidity).toHaveBeenCalled();
+    expect(authServiceCheckValidity).toHaveBeenCalled();
     expect(routerNavigate).toHaveBeenCalledWith(['/staff/dashboard']);
   });
 
   it('should return true (proceed to login) if call to api fails or user is unathenticated.', async () => {
-    jest.spyOn(authenticatorMock, 'checkValidity').mockRejectedValue('err');
+    jest.spyOn(authServiceMock, 'authenticate').mockResolvedValue(false);
 
     const response = await service.canActivate();
 

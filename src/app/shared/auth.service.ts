@@ -1,18 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IStaff, ILoginFormData, IPasswordReset } from './models';
+import { IGetStaffProfile, ILoginFormData, IPasswordReset, IStaff } from './models';
 
 @Injectable()
-export class Authenticator {
+export class AuthService {
   constructor(private http: HttpClient) { }
+  currentStaff: IStaff
   api = 'http://init.overtime-api.invergent-technologies.com';
   options = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     withCredentials: true
   }
 
-  checkValidity():Promise<IStaff> {
-    return this.http.get<IStaff>(`${this.api}/users/profile`, this.options).toPromise();
+  async authenticate():Promise<boolean> {
+    try {
+      const { data } = await this.fetchStaffProfile();
+      this.currentStaff = data;
+      return true;
+    } catch(e) {
+      return false;
+    }
+  }
+
+  fetchStaffProfile():Promise<IGetStaffProfile> {
+    return this.http.get<IGetStaffProfile>(`${this.api}/users/profile`, this.options).toPromise();
   }
 
   login(userCredentials: ILoginFormData): Promise<any> {

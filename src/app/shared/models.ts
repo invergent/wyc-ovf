@@ -16,6 +16,21 @@ export interface IStaff {
   bsmEmailAddress: string
 }
 
+export interface IClaim {
+  monthOfClaim: string,
+  weekday: number,
+  weekend: number,
+  shift: number,
+  amount: number,
+  status: string,
+  createdAt: Date
+}
+
+export interface IActivity {
+  activity: string,
+  createdAt: Date
+}
+
 export interface ILoginFormData {
   staffId?: string,
   emailAddress?: string,
@@ -33,4 +48,22 @@ export interface IToastr {
   info(message: string, title?: string): void,
   warning(message: string, title?: string): void,
   error(message: string, title?: string): void
+}
+
+export interface IStatistics {
+  total: number,
+  completed: number
+  declined: number
+  cancelled: number
+}
+
+// fetch request models
+export interface IGetStaffProfile {
+  message: string,
+  data: IStaff
+}
+
+export interface IGetStatistics {
+  message: string,
+  data: IStatistics
 }

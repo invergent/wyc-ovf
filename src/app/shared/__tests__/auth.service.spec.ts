@@ -1,11 +1,11 @@
-import { Authenticator } from '../index';
+import { AuthService } from '../index';
 import { httpMock } from '../../__mocks__';
 
-describe('Authenticator Service', () => {
-  let service: Authenticator;
+describe('AuthService Service', () => {
+  let service: AuthService;
 
   beforeEach(() => {
-    service = new Authenticator(httpMock);
+    service = new AuthService(httpMock);
   });
 
   it('should create', () => {
@@ -15,7 +15,7 @@ describe('Authenticator Service', () => {
   it('should make a get request to the api to check users token validity.', async () => {
     const httpGet = jest.spyOn(httpMock, 'get');
 
-    await service.checkValidity();
+    await service.fetchStaffProfile();
 
     expect(httpGet).toHaveBeenCalled();
   });
@@ -47,10 +47,25 @@ describe('Authenticator Service', () => {
 
   it('should make a post request to the api to reset password.', async () => {
     const httpPost = jest.spyOn(httpMock, 'get');
-    const url = 'http://init.overtime-api.invergent-technologies.com/confirm-reset-request?hash=somehash'
 
     await service.resetPassword({ password: 'password', confirmPassword: 'confirmPassword'}, 'somehash');
 
     expect(httpPost).toHaveBeenCalled();
+  });
+
+  it('should resolve to true if user is authenticated.', async () => {
+    jest.spyOn(httpMock, 'get').mockImplementation(() => ({ toPromise: () => ({ data: {} }) }));
+
+    const response = await service.authenticate();
+
+    expect(response).toBe(true);
+  });
+
+  it('should resolve to false if user is authenticated.', async () => {
+    jest.spyOn(service, 'fetchStaffProfile').mockRejectedValue('err');
+
+    const response = await service.authenticate();
+
+    expect(response).toBe(false);
   });
 });
