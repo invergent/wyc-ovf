@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, IStatistics, OvertimeService } from '../../shared';
+import { AuthService, IClaimStatistics, IClaim, IActivity, OvertimeService } from '../../shared';
 
 @Component({
   templateUrl: './dashboard.component.html',
@@ -8,7 +8,9 @@ import { AuthService, IStatistics, OvertimeService } from '../../shared';
 export class DashboardComponent implements OnInit {
   showLoader: boolean = true;
   errorMessage: string = '';
-  statistics: IStatistics
+  claimStatistics: IClaimStatistics
+  pendingClaim: IClaim
+  activities: IActivity[]
   staffFirstName: string
 
   constructor(
@@ -18,8 +20,10 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      const { data: claimStats } = await this.overtimeService.fetchStaffClaimStatistics();
-      this.statistics = claimStats;
+      const staffData = await this.overtimeService.initialiseStaffData();
+      [this.claimStatistics, this.pendingClaim, this.activities] = staffData;
+      this.activities = this.activities.splice(0, 3); // reduce results to the first three
+
       this.staffFirstName = this.authService.currentStaff.firstname;
       this.showLoader = false;
     } catch(e) {

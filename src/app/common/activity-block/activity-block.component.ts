@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { IActivity } from '../../shared';
 
 @Component({
   selector: 'activity-block',
@@ -6,6 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./activity-block.component.scss']
 })
 export class ActivityBlock {
+  @Input() activities: IActivity[]
 
   constructor() { }
 

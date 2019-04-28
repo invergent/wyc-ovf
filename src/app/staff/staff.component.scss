@@ -38,6 +38,9 @@ top-nav {
         &:hover {
           box-shadow: 0 0 0 0 $faint-color-ex-light;
         }
+        &:focus {
+          outline: none;
+        }
       }
     }
     .side-nav-link {

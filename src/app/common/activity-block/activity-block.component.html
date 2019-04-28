@@ -1,13 +1,23 @@
-<div class="activity-block">
-  <table>
-    <tbody>
-      <td>
-        <div class="image-wrapper">
-          <img src="/assets/images/activity.png" alt="Activity Icon">
-        </div>
-      </td>
-      <td>You changed your password</td>
-      <td>Today</td>
-    </tbody>
-  </table>
-</div>
+<section class="recent-activity">
+  <div class="section-title">
+    <p>Recent Activities</p>
+  </div>
+  <div class="activity-block-wrapper">
+    <div *ngFor="let activity of activities" class="activity-block">
+      <table>
+        <tbody>
+          <td>
+            <div class="image-wrapper">
+              <img src="/assets/images/activity.png" alt="Activity Icon">
+            </div>
+          </td>
+          <td>{{activity.activity}}</td>
+          <td>{{activity.createdAt | timeAgo}}</td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="button-wrapper">
+    <a [routerLink]="['/staff/activities']">See all</a>
+  </div>
+</section>

@@ -1,10 +1,10 @@
 <nav>
   <section>
     <div class="brand">
-      <div class="logo">
+      <div [routerLink]="['/']" class="logo">
         <img src="/assets/images/logo.png" alt="Logo">
       </div>
-      <div class="name">
+      <div [routerLink]="['/']" class="name">
         <img src="/assets/images/brand-name.png" alt="Logo">
       </div>
       <div class="hamburger-icon" (click)="toggleSideNav()">

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { IClaim } from '../../shared';
 
 @Component({
   selector: 'claim',
@@ -6,7 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./claim.component.scss']
 })
 export class ClaimComponent {
+  @Input() pendingClaim: IClaim
 
   constructor() { }
-  
+
 }

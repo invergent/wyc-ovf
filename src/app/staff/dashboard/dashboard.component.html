@@ -1,8 +1,8 @@
-<div *ngIf="showLoader" class="loader">
-  <i class="fa fa-spinner fa-spin"></i>
+<div *ngIf="showLoader || !!errorMessage" class="loader">
+  <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
   <p *ngIf="!!errorMessage">{{errorMessage}}</p>
 </div>
-<section *ngIf="!showLoader" class="dashboard">
+<section *ngIf="!showLoader && !errorMessage" class="dashboard">
   <section class="page-title">
     <p>Dashboard</p>
   </section>
@@ -12,56 +12,34 @@
   <section class="statistics">
     <div class="stats stat-total">
       <p class="stat-title">Total</p>
-      <p class="stat-number">{{statistics?.total}}</p>
+      <p class="stat-number">{{claimStatistics?.total}}</p>
       <div class="stat-icon">
         <img src="/assets/images/total.png" alt="Total Icon">
       </div>
     </div>
     <div class="stats stat-completed">
       <p class="stat-title">Completed</p>
-      <p class="stat-number">{{statistics?.completed}}</p>
+      <p class="stat-number">{{claimStatistics?.completed}}</p>
       <div class="stat-icon">
         <img src="/assets/images/completed.png" alt="Completed Icon">
       </div>
     </div>
     <div class="stats stat-declined">
       <p class="stat-title">Declined</p>
-      <p class="stat-number">{{statistics?.declined}}</p>
+      <p class="stat-number">{{claimStatistics?.declined}}</p>
       <div class="stat-icon">
         <img src="/assets/images/declined.png" alt="Declined Icon">
       </div>
     </div>
     <div class="stats stat-cancelled">
       <p class="stat-title">Cancelled</p>
-      <p class="stat-number">{{statistics?.cancelled}}</p>
+      <p class="stat-number">{{claimStatistics?.cancelled}}</p>
       <div class="stat-icon">
         <img src="/assets/images/cancelled.png" alt="Cancelled Icon">
       </div>
     </div>
   </section>
-  <section class="claim">
-    <div class="section-title">
-      <p>Pending claim</p>
-    </div>
-    <div class="claim-table">
-      <claim></claim>
-    </div>
-    <div class="button-wrapper">
-      <a [routerLink]="['/staff/pending-claim']">View details</a>
-    </div>
-  </section>
-  <section class="recent-activity">
-    <div class="section-title">
-      <p>Recent Activities</p>
-    </div>
-    <div class="activity-block-wrapper">
-      <activity-block></activity-block>
-      <activity-block></activity-block>
-      <activity-block></activity-block>
-      <activity-block></activity-block>
-    </div>
-    <div class="button-wrapper">
-      <a [routerLink]="['/staff/activities']">See all</a>
-    </div>
-  </section>
+  <claim [pendingClaim]="pendingClaim"></claim>
+  <activity-block [activities]="activities"></activity-block>
+
 </section>

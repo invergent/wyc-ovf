@@ -11,6 +11,7 @@ export const authServiceMock: any = {
 
 export const overtimeServiceMock: any = {
   api: 'some-url',
+  initialiseStaffData: () => Promise.resolve([{}, {}, [{}]]),
   fetchStaffClaimStatistics: () => Promise.resolve('value')
 }
 

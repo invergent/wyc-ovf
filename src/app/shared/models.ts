@@ -50,11 +50,17 @@ export interface IToastr {
   error(message: string, title?: string): void
 }
 
-export interface IStatistics {
+export interface IClaimStatistics {
   total: number,
   completed: number
   declined: number
   cancelled: number
+}
+
+export interface IStaffData {
+  claimStatistics?: IClaimStatistics,
+  pendingClaim?: IClaim,
+  activities?: IActivity
 }
 
 // fetch request models
@@ -65,5 +71,15 @@ export interface IGetStaffProfile {
 
 export interface IGetStatistics {
   message: string,
-  data: IStatistics
+  data: IClaimStatistics
+}
+
+export interface IGetPendingClaim {
+  message: string,
+  data: IClaim
+}
+
+export interface IGetActivities {
+  message: string,
+  data: IActivity
 }
