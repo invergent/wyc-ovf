@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import {
   AuthService, TOASTR_TOKEN, ILoginFormData, IToastr
 } from '../shared';
-import { staffIdRegex } from '../shared/utils';
+import { staffIdRegex } from '../shared';
 
 @Component({
   templateUrl: './login.component.html',

@@ -49,4 +49,14 @@ describe('AuthService Service', () => {
 
     expect(httpGet).toHaveBeenCalledTimes(3);
   });
+
+  it('should make a post request to create overtime request.', () => {
+    const httpGet = jest.spyOn(httpMock, 'post');
+    const overtimeRequest = { weekday: 2, weekend: 3 };
+    const url = 'http://init.overtime-api.invergent-technologies.com/users/claim';
+
+    service.createOvertimeRequest(overtimeRequest);
+
+    expect(httpGet).toHaveBeenCalledWith(url, overtimeRequest, service.options);
+  });
 });

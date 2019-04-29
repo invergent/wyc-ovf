@@ -1,3 +1,74 @@
-<p>
-  new-claim works!
-</p>
+<section class="new-claim">
+  <div class="page-title">
+    <p>New Claim</p>
+  </div>
+  <div class="description">
+    <p>Click an overtime type and fill in the overtime value.</p>
+  </div>
+  <div class="new-claim-button-wrapper">
+    <button
+      *ngIf="staffRole !== 'RPC'"
+      (click)="toggleButtonPress('weekdayClicked')"
+      [ngClass]="{buttonPressed: weekdayClicked}"
+      type="button"
+      name="button">Weekday</button>
+    <button
+      *ngIf="staffRole !== 'RPC'"
+      (click)="toggleButtonPress('weekendClicked')"
+      [ngClass]="{buttonPressed: weekendClicked}"
+      type="button"
+      name="button">Weekend</button>
+    <button
+      *ngIf="staffRole === 'RPC'"
+      (click)="toggleButtonPress('shiftClicked')"
+      [ngClass]="{buttonPressed: shiftClicked}"
+      type="button"
+      name="button">Shift</button>
+  </div>
+  <div class="form-wrapper">
+    <form (ngSubmit)="handleSubmit()" autocomplete="off" novalidate>
+      <div *ngIf="(staffRole !== 'RPC') && weekdayClicked" class="input">
+        <input
+          id="weekdayInput"
+          data-language='en'
+          data-multiple-dates="23"
+          data-multiple-dates-separator=", "
+          data-position='top center'
+          type="text"
+          placeholder="Select weekdays worked"
+          required>
+      </div>
+      <div *ngIf="(staffRole !== 'RPC') && weekendClicked" class="input">
+        <input
+          id="weekendInput"
+          data-language='en'
+          data-multiple-dates="10"
+          data-multiple-dates-separator=", "
+          data-position='top center'
+          type="text"
+          placeholder="Select weekends worked"
+          required>
+      </div>
+      <div *ngIf="(staffRole === 'RPC') && shiftClicked" class="input">
+        <input
+          id="shiftInput"
+          data-language='en'
+          data-multiple-dates="30"
+          data-multiple-dates-separator=", "
+          data-position='top center'
+          type="text"
+          placeholder="Select shift days worked"
+          required>
+      </div>
+      <div *ngIf="weekdayClicked || weekendClicked || shiftClicked" class="button">
+        <button
+          (click)="displaySpinner=true"
+          type="submit"
+          name="submit">
+          Login
+          <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

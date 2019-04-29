@@ -5,8 +5,8 @@ export interface IStaff {
   middleName: string,
   emailAddress: string,
   image: string,
-  role: number,
-  branch: number,
+  role: string,
+  branch: string,
   changedPassword: boolean,
   supervisorFirstName: string,
   supervisorLastName: string,
@@ -41,6 +41,12 @@ export interface ILoginFormData {
 export interface IPasswordReset {
   password: string,
   confirmPassword: string
+}
+
+export interface IValidClaimRequest {
+  weekday?: number
+  weekend?: number
+  shift?: number
 }
 
 export interface IToastr {
@@ -82,4 +88,14 @@ export interface IGetPendingClaim {
 export interface IGetActivities {
   message: string,
   data: IActivity
+}
+
+export interface IPostOvertimeRequest {
+  message: string,
+  data: IClaim
+}
+
+export interface IValidatedForm {
+  validField: IValidClaimRequest,
+  error: string[]
 }

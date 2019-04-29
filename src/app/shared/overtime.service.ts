@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IGetStatistics, IGetPendingClaim, IGetActivities, IStaffData, } from './models';
+import {
+  IGetStatistics, IGetPendingClaim, IGetActivities, IPostOvertimeRequest, IValidClaimRequest
+} from './models';
 
 @Injectable()
 export class OvertimeService {
   constructor(private http: HttpClient) { }
-  api = 'http://init.overtime-api.example.com:7000';
+  api = 'http://init.overtime-api.invergent-technologies.com';
   options = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     withCredentials: true
@@ -33,5 +35,9 @@ export class OvertimeService {
 
   fetchStaffActivities(): Promise<IGetActivities> {
     return this.http.get<IGetActivities>(`${this.api}/users/activities`, this.options).toPromise();
+  }
+
+  createOvertimeRequest(overtimeRequest: IValidClaimRequest): Promise<IPostOvertimeRequest> {
+    return this.http.post<IPostOvertimeRequest>(`${this.api}/users/claim`, overtimeRequest, this.options).toPromise();
   }
 }
