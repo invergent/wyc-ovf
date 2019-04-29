@@ -5,6 +5,7 @@
     "types": ["node"]
   },
   "exclude": [
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/__mocks__"
   ]
 }
