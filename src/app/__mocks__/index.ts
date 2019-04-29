@@ -4,6 +4,7 @@ export const authServiceMock: any = {
   authenticate: () => Promise.resolve({ data: {} }),
   fetchStaffProfile: () => Promise.resolve('value'),
   login: () => Promise.resolve('value'),
+  logout: () => Promise.resolve('value'),
   requestPasswordReset: () => Promise.resolve('value'),
   verifyPasswordResetRequest: () => Promise.resolve('value'),
   resetPassword: () => Promise.resolve('value')

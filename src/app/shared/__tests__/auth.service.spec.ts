@@ -28,6 +28,14 @@ describe('AuthService Service', () => {
     expect(httpPost).toHaveBeenCalled();
   });
 
+  it('should make a get request to log the user out.', async () => {
+    const httpGet = jest.spyOn(httpMock, 'get');
+
+    await service.logout();
+
+    expect(httpGet).toHaveBeenCalled();
+  });
+
   it('should make a post request to the api to request password reset.', async () => {
     const httpPost = jest.spyOn(httpMock, 'post');
 

@@ -30,6 +30,10 @@ export class AuthService {
     return this.http.post(`${this.api}/signin`, userCredentials, this.options).toPromise();
   }
 
+  logout(): Promise<any> {
+    return this.http.get(`${this.api}/destroy-token`, this.options).toPromise();
+  }
+
   requestPasswordReset(userCredentials: ILoginFormData): Promise<any> {
     return this.http.post(`${this.api}/forgot-password`, userCredentials, this.options).toPromise();
   }

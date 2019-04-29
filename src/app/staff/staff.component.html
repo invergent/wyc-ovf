@@ -1,13 +1,15 @@
 <main>
   <top-nav (sideNavToggleEvent)="toggleSideNav()"></top-nav>
   <article class="content-wrapper">
-    <section class="side-nav" [ngStyle]="{left: sideNavLeft}">
+    <section
+      (click)="toggleSideNav()"
+      class="side-nav"
+      [ngStyle]="{left: sideNavLeft}">
       <div class="new-claim-button-wrapper">
         <button
           [routerLink]="['/staff/new']"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{exact:true}"
-          (click)="toggleSideNav()"
           type="button"
           name="button">New Claim</button>
       </div>
@@ -15,7 +17,6 @@
         [routerLink]="['/staff/dashboard']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
-        (click)="toggleSideNav()"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-tachometer-alt"></i>
@@ -26,7 +27,6 @@
         [routerLink]="['/staff/pending-claim']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
-        (click)="toggleSideNav()"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="far fa-clock"></i>
@@ -37,7 +37,6 @@
         [routerLink]="['/staff/claim-history']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
-        (click)="toggleSideNav()"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-history"></i>
@@ -49,7 +48,6 @@
         [routerLink]="['/staff/profile']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
-        (click)="toggleSideNav()"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-user"></i>
@@ -60,7 +58,6 @@
         [routerLink]="['/staff/change-password']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
-        (click)="toggleSideNav()"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-lock"></i>

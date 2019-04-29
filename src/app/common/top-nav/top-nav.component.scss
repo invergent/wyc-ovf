@@ -25,6 +25,7 @@ nav {
       }
     }
     .nav-items {
+      position: relative;
       display: flex;
       align-items: center;
       margin-left: auto;
@@ -76,7 +77,6 @@ nav {
       }
       .user {
         display: flex;
-        position: relative;
         align-items: center;
         cursor: pointer;
         outline: none;
@@ -91,26 +91,26 @@ nav {
         .fa-caret-down {
           display: inline-block;
         }
-        .dropdown-menu {
-          @include dropdown-wrapper;
-          .ul-wrapper {
-            @include navigation-items-wrapper
-            .spike {
-              @include spike
+        &:focus ~ .dropdown-menu {
+          @include dropdown-wrapper-display;
+        }
+      }
+      .dropdown-menu {
+        @include dropdown-wrapper;
+        .ul-wrapper {
+          @include navigation-items-wrapper
+          .spike {
+            @include spike
+          }
+          ul {
+            @include ul-style;
+            a {
+              @include li-style;
             }
-            ul {
-              @include ul-style;
-              a {
-                @include li-style;
-              }
-              a:last-child {
-                @include li-last-child;
-              }
+            a:last-child {
+              @include li-last-child;
             }
           }
-        }
-        &:focus > .dropdown-menu {
-          @include dropdown-wrapper-display;
         }
       }
     }

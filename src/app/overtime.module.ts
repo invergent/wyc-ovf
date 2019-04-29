@@ -16,6 +16,7 @@ import { IToastr } from './shared/models';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ConfirmPasswordResetComponent } from './confirm-password-reset/confirm-password-reset.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { LogoutComponent } from './logout/logout.component';
 
 const jQuery: Object = window['$'];
 const toastr: IToastr = window['toastr'];
@@ -33,7 +34,8 @@ const toastr: IToastr = window['toastr'];
     LoginComponent,
     ForgotPasswordComponent,
     ConfirmPasswordResetComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    LogoutComponent
   ],
   providers: [
     AuthService,
