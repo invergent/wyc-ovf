@@ -40,4 +40,8 @@ export class OvertimeService {
   createOvertimeRequest(overtimeRequest: IValidClaimRequest): Promise<IPostOvertimeRequest> {
     return this.http.post<IPostOvertimeRequest>(`${this.api}/users/claim`, overtimeRequest, this.options).toPromise();
   }
+
+  cancelClaim(claimId: number): Promise<IPostOvertimeRequest> {
+    return this.http.delete<IPostOvertimeRequest>(`${this.api}/users/claims/${claimId}`, this.options).toPromise();
+  }
 }

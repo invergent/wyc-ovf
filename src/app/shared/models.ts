@@ -17,13 +17,15 @@ export interface IStaff {
 }
 
 export interface IClaim {
+  id: number,
   monthOfClaim: string,
   weekday: number,
   weekend: number,
   shift: number,
   amount: number,
   status: string,
-  createdAt: Date
+  createdAt: Date,
+  approvalHistory?: any[]
 }
 
 export interface IActivity {
@@ -58,8 +60,8 @@ export interface IToastr {
 
 export interface IClaimStatistics {
   total: number,
-  completed: number
-  declined: number
+  completed: number,
+  declined: number,
   cancelled: number
 }
 
@@ -67,6 +69,13 @@ export interface IStaffData {
   claimStatistics?: IClaimStatistics,
   pendingClaim?: IClaim,
   activities?: IActivity
+}
+
+export interface IApprovalHistory {
+  id: number,
+  claimId: number,
+  lineManagerId?: number,
+  createdAt: Date
 }
 
 // fetch request models

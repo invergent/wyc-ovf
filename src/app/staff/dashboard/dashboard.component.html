@@ -39,7 +39,22 @@
       </div>
     </div>
   </section>
-  <claim [pendingClaim]="pendingClaim"></claim>
-  <activity-block [activities]="activities"></activity-block>
-
+  <section class="claim">
+    <div class="section-title">
+      <p>Pending claim</p>
+    </div>
+    <claim [pendingClaim]="pendingClaim"></claim>
+    <div *ngIf="!!pendingClaim.monthOfClaim" class="button-wrapper">
+      <a [routerLink]="['/staff/pending-claim']">View details</a>
+    </div>
+  </section>
+  <section class="recent-activity">
+    <div class="section-title">
+      <p>Recent Activities</p>
+    </div>
+    <activity-block [activities]="activities"></activity-block>
+    <div class="button-wrapper">
+      <a [routerLink]="['/staff/activities']">See all</a>
+    </div>
+  </section>
 </section>

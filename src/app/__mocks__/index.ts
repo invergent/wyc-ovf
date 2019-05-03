@@ -14,6 +14,7 @@ export const overtimeServiceMock: any = {
   api: 'some-url',
   initialiseStaffData: () => Promise.resolve([{}, {}, [{}]]),
   fetchStaffClaimStatistics: () => Promise.resolve('value'),
+  cancelClaim: () => Promise.resolve('value'),
   createOvertimeRequest: () => Promise.resolve({ message: 'created successfully!' })
 }
 
@@ -43,5 +44,6 @@ export const activatedRouteMock: any = {
 
 export const httpMock: any = {
   get: () => ({ toPromise: () => {} }),
-  post: () => ({ toPromise: () => {} })
+  post: () => ({ toPromise: () => {} }),
+  delete: () => ({ toPromise: () => {} })
 }

@@ -58,3 +58,25 @@
 @mixin li-last-child {
   border: none;
 }
+@mixin white-button {
+  background-color: $color-white;
+  padding: 10px 18px;
+  font-size: 18px;
+  border: 1px solid $faint-border-color;
+  border-radius: 8px;
+  box-shadow: 4px 4px 10px 0 $faint-color-ex-light;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  color: $color-red;
+  &:hover {
+    color: white;
+    background-color: $color-red;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+@mixin white-button-responsive-450 {
+  display: block;
+  margin: auto auto 30px;
+}

@@ -67,7 +67,6 @@ export class NewClaimComponent implements OnInit {
     const inputName = input.split('Clicked')[0]; // remove "Clicked" and add "input"
     const inputNameValue = this.jQuery(`#${inputName}Input`).val();
     const dates = inputNameValue.split(', ');
-    console.log(dates)
 
     if(!dateRegex.test(dates[0])) error.push(`Enter a valid value for ${inputName}.`);
 
@@ -96,15 +95,18 @@ export class NewClaimComponent implements OnInit {
 
     if (errors.length) {
       this.displaySpinner = false;
-      return errors.forEach(error => this.toastr.error(error))
+      return errors.forEach(error => this.toastr.error(error));
     }
 
     try {
       const { message } = await this.overtimeService.createOvertimeRequest(overtimeRequest);
       this.toastr.success(message);
-      return this.router.navigate(['/staff/dashboard'])
+      return this.router.navigate(['/staff/dashboard']);
     } catch(e) {
       this.displaySpinner = false;
+      if (e.error.errors) {
+        return e.error.errors.forEach(error => this.toastr.error(error));
+      }
       return this.toastr.error(e.error.message || 'An error occurred. Check your connectivity.');
     }
   }

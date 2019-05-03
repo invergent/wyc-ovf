@@ -73,10 +73,6 @@
     .section-title {
       font-size: 23px;
     }
-    .claim-table {
-      margin-bottom: 20px;
-      overflow-x: scroll;
-    }
     .button-wrapper {
       font-size: 17px;
       font-weight: bold;
@@ -89,9 +85,6 @@
   }
   .recent-activity {
     @extend .claim;
-    .activity-block-wrapper {
-      @extend .claim-table;
-    }
   }
 
   @media screen and (max-width: 768px) {

@@ -98,4 +98,23 @@ describe('Comfirm password reset', () => {
 
     expect(toastrErrorFunction).toHaveBeenCalled();
   });
+
+  it('should display multiple error messages when they occur while creating overtime request', async () => {
+    const errors = { error: { errors: ['many', 'many', 'erros'] } };
+    jest.spyOn(overtimeServiceMock, 'createOvertimeRequest').mockRejectedValue(errors);
+    const toastrErrorFunction = jest.spyOn(mockToastr, 'error');
+    const mockJQueryVal = jest.fn().mockReturnValue({
+      val: () => '29/04/2019, 30/04/2019'
+    });
+
+    const newComponent = new NewClaimComponent(
+      authServiceMock, overtimeServiceMock, routerMock, mockToastr, mockJQueryVal
+    );
+    newComponent.weekdayClicked = true;
+    newComponent.weekendClicked = true;
+
+    await newComponent.handleSubmit();
+
+    expect(toastrErrorFunction).toHaveBeenCalled();
+  });
 });

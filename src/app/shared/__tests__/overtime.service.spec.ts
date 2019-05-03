@@ -59,4 +59,13 @@ describe('AuthService Service', () => {
 
     expect(httpGet).toHaveBeenCalledWith(url, overtimeRequest, service.options);
   });
+
+  it('should make a delete request to cancel pending claim.', () => {
+    const httpGet = jest.spyOn(httpMock, 'delete');
+    const url = 'http://init.overtime-api.invergent-technologies.com/users/claims/1';
+
+    service.cancelClaim(1);
+
+    expect(httpGet).toHaveBeenCalledWith(url, service.options);
+  });
 });

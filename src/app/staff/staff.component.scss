@@ -4,7 +4,7 @@
 top-nav {
   position: absolute;
   width: 100%;
-  z-index: 999999999;
+  z-index: 999;
 }
 
 .active {
@@ -83,7 +83,7 @@ top-nav {
   @media screen and (max-width: 768px) {
     .side-nav {
       position: absolute;
-      z-index: 99999999;
+      z-index: 99;
       width: 250px;
       height: calc(100% - (65px));
     }

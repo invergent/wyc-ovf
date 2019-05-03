@@ -1,38 +1,31 @@
-<section class="claim">
-  <div class="section-title">
-    <p>Pending claim</p>
+<div class="claim-table">
+  <p *ngIf="!pendingClaim.monthOfClaim">You currently have no pending claims.</p>
+  <div *ngIf="!!pendingClaim.monthOfClaim" class="table-wrapper">
+    <table>
+      <thead>
+        <th></th>
+        <th>Month of claim</th>
+        <th>Weekday</th>
+        <th>Weekend</th>
+        <th>Shift</th>
+        <th>Amount(₦)</th>
+        <th>Status</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <td>
+          <div class="outter-ellipse">
+            <div class="inner-ellipse"></div>
+          </div>
+        </td>
+        <td>{{pendingClaim.monthOfClaim}}</td>
+        <td>{{pendingClaim.weekday || '--'}}</td>
+        <td>{{pendingClaim.weekend || '--'}}</td>
+        <td>{{pendingClaim.shift || '--'}}</td>
+        <td>{{pendingClaim.amount}}</td>
+        <td>{{pendingClaim.status}}</td>
+        <td>{{pendingClaim.createdAt | timeAgo}}</td>
+      </tbody>
+    </table>
   </div>
-  <div class="claim-table">
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <th></th>
-          <th>Month of claim</th>
-          <th>Weekday</th>
-          <th>Weekend</th>
-          <th>Shift</th>
-          <th>Amount(₦)</th>
-          <th>Status</th>
-          <th></th>
-        </thead>
-        <tbody>
-          <td>
-            <div class="outter-ellipse">
-              <div class="inner-ellipse"></div>
-            </div>
-          </td>
-          <td>{{pendingClaim.monthOfClaim}}</td>
-          <td>{{pendingClaim.weekday}}</td>
-          <td>{{pendingClaim.weekend}}</td>
-          <td>{{pendingClaim.shift}}</td>
-          <td>{{pendingClaim.amount}}</td>
-          <td>{{pendingClaim.status}}</td>
-          <td>{{pendingClaim.createdAt | timeAgo}}</td>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="button-wrapper">
-    <a [routerLink]="['/staff/pending-claim']">View details</a>
-  </div>
-</section>
+</div>
