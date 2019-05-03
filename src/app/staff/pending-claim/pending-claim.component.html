@@ -10,7 +10,7 @@
   <section *ngIf="!!pendingClaim.monthOfClaim" class="approval-progress-bar-wrapper">
     <approval-progress-bar [approvalHistory]="pendingClaim.approvalHistory"></approval-progress-bar>
   </section>
-  <section *ngIf="!(pendingClaim.approvalHistory.length>1 || !pendingClaim.monthOfClaim)" class="button-section">
+  <section *ngIf="!(pendingClaim.approvalHistory?.length>1 || !pendingClaim.monthOfClaim)" class="button-section">
     <button type="button" name="button" (click)="displayModal='block'">Cancel this claim</button>
   </section>
   <section [ngStyle]="{display: displayModal}" class="cancel-modal-section">

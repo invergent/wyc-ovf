@@ -43,6 +43,8 @@ export class LoginComponent {
     try {
       const response = await this.authService.login(formValues);
       this.toastr.success(response.message);
+
+      await this.authService.authenticate();
       return this.router.navigate(['/staff/dashboard']);
     } catch(e) {
       this.displaySpinner = false;

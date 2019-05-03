@@ -100,6 +100,7 @@ export class NewClaimComponent implements OnInit {
 
     try {
       const { message } = await this.overtimeService.createOvertimeRequest(overtimeRequest);
+      await this.overtimeService.syncWithAPI()
       this.toastr.success(message);
       return this.router.navigate(['/staff/dashboard']);
     } catch(e) {

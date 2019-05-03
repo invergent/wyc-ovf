@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'http://overtime-api.invergent-technologies.com'
+  api: 'http://init.overtime-api.example.com:7000'
 };
 
 /*

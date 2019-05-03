@@ -65,10 +65,10 @@ export interface IClaimStatistics {
   cancelled: number
 }
 
-export interface IStaffData {
+export interface IStaffClaimData {
   claimStatistics?: IClaimStatistics,
   pendingClaim?: IClaim,
-  activities?: IActivity
+  activities?: IActivity[]
 }
 
 export interface IApprovalHistory {
@@ -96,7 +96,7 @@ export interface IGetPendingClaim {
 
 export interface IGetActivities {
   message: string,
-  data: IActivity
+  data: IActivity[]
 }
 
 export interface IPostOvertimeRequest {

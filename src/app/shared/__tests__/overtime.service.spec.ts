@@ -1,7 +1,7 @@
 import { OvertimeService } from '../index';
 import { httpMock } from '../../__mocks__';
 
-describe('AuthService Service', () => {
+describe('Overtime Service', () => {
   let service: OvertimeService;
 
   beforeEach(() => {
@@ -23,7 +23,7 @@ describe('AuthService Service', () => {
 
     const result = await service.initialiseStaffData();
 
-    expect(result).toHaveLength(3);
+    expect(result).toBe(true);
     expect(statistics).toHaveBeenCalled();
     expect(pendingClaim).toHaveBeenCalled();
     expect(activities).toHaveBeenCalled();
@@ -50,19 +50,49 @@ describe('AuthService Service', () => {
     expect(httpGet).toHaveBeenCalledTimes(3);
   });
 
+  it('should prompt data initialisation', async () => {
+    //@ts-ignore
+    const initialiseStaffData = jest.spyOn(service, 'initialiseStaffData').mockImplementation(() => {});
+    service.staffClaimData = null;
+
+    await service.fetchStaffData();
+
+    expect(initialiseStaffData).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not prompt data initialisation but return staff data.', async () => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+    const initialiseData = jest.spyOn(service, 'initialiseStaffData');
+    service.staffClaimData = {};
+
+    await service.fetchStaffData();
+
+    expect(initialiseData).toHaveBeenCalledTimes(0);
+  });
+
+  it('should sync API data when user makes changes to database.', async () => {
+    //@ts-ignore
+    const initialiseStaffData = jest.spyOn(service, 'initialiseStaffData').mockImplementation(() => {});
+
+    await service.syncWithAPI();
+
+    expect(initialiseStaffData).toHaveBeenCalled();
+  });
+
   it('should make a post request to create overtime request.', () => {
-    const httpGet = jest.spyOn(httpMock, 'post');
+    const httpPost = jest.spyOn(httpMock, 'post');
     const overtimeRequest = { weekday: 2, weekend: 3 };
-    const url = 'http://init.overtime-api.invergent-technologies.com/users/claim';
+    const url = 'http://init.overtime-api.example.com:7000/users/claim';
 
     service.createOvertimeRequest(overtimeRequest);
 
-    expect(httpGet).toHaveBeenCalledWith(url, overtimeRequest, service.options);
+    expect(httpPost).toHaveBeenCalledWith(url, overtimeRequest, service.options);
   });
 
   it('should make a delete request to cancel pending claim.', () => {
     const httpGet = jest.spyOn(httpMock, 'delete');
-    const url = 'http://init.overtime-api.invergent-technologies.com/users/claims/1';
+    const url = 'http://init.overtime-api.example.com:7000/users/claims/1';
 
     service.cancelClaim(1);
 

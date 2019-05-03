@@ -5,7 +5,7 @@ import {
 
 jest.useFakeTimers();
 
-describe('Comfirm password reset', () => {
+describe('New Claim', () => {
   let component: NewClaimComponent;
 
   beforeEach(() => {

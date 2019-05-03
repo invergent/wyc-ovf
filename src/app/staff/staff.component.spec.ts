@@ -10,15 +10,16 @@ describe('Comfirm password reset', () => {
     component = new StaffComponent();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should toggle the left value of the sideNavLeft', () => {
-    component.toggleSideNav();
+    component.toggleSideNav('self');
     expect(component.sideNavLeft).toBe('0');
 
-    component.toggleSideNav();
+    component.toggleSideNav('self');
+    expect(component.sideNavLeft).toBe('-300px');
+  });
+
+  it('should force close sidenav if open when navItems are clicked', () => {
+    component.toggleSideNav('navItem');
     expect(component.sideNavLeft).toBe('-300px');
   });
 });

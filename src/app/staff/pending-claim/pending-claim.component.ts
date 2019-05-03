@@ -21,8 +21,8 @@ export class PendingClaimComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      const staffData = await this.overtimeService.initialiseStaffData();
-      this.pendingClaim = staffData[1];
+      const { pendingClaim } = await this.overtimeService.fetchStaffData();
+      this.pendingClaim = pendingClaim;
       this.showLoader = false;
     } catch(e) {
       this.showLoader = false;

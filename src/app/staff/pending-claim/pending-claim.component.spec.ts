@@ -11,7 +11,7 @@ describe('Pending Claim', () => {
   });
 
   it('should fetch and update component with staff pending claim data', async () => {
-    const overtimeServiceMockFunc = jest.spyOn(overtimeServiceMock, 'initialiseStaffData');
+    const overtimeServiceMockFunc = jest.spyOn(overtimeServiceMock, 'fetchStaffData');
 
     await component.ngOnInit();
 
@@ -19,7 +19,7 @@ describe('Pending Claim', () => {
   });
 
   it('should display error message if data initialisation fails', async () => {
-    jest.spyOn(overtimeServiceMock, 'initialiseStaffData').mockRejectedValue('err');
+    jest.spyOn(overtimeServiceMock, 'fetchStaffData').mockRejectedValue('err');
 
     await component.ngOnInit();
 

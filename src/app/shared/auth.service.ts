@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IGetStaffProfile, ILoginFormData, IPasswordReset, IStaff } from './models';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthService {
   constructor(private http: HttpClient) { }
-  currentStaff: IStaff
-  api = 'http://init.overtime-api.invergent-technologies.com';
+  api = environment.api;
   options = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     withCredentials: true
   }
+  currentStaff: IStaff
+  isAuthenticated: boolean = false;
 
   async authenticate():Promise<boolean> {
     try {
       const { data } = await this.fetchStaffProfile();
       this.currentStaff = data;
+      this.isAuthenticated = true;
       return true;
     } catch(e) {
       return false;
@@ -31,6 +34,7 @@ export class AuthService {
   }
 
   logout(): Promise<any> {
+    this.isAuthenticated = false;
     return this.http.get(`${this.api}/destroy-token`, this.options).toPromise();
   }
 

@@ -3,7 +3,7 @@ import {
   authServiceMock, overtimeServiceMock
 } from '../../__mocks__';
 
-describe('Comfirm password reset', () => {
+describe('Dashboard', () => {
   let component: DashboardComponent;
 
   beforeEach(() => {
@@ -11,20 +11,20 @@ describe('Comfirm password reset', () => {
   });
 
   it('should should fetch staff details and claim statistics when component loads', () => {
-    const initData = jest.spyOn(overtimeServiceMock, 'initialiseStaffData');
+    const fetchDataMock = jest.spyOn(overtimeServiceMock, 'fetchStaffData');
 
     component.ngOnInit();
 
-    expect(initData).toHaveBeenCalled();
+    expect(fetchDataMock).toHaveBeenCalled();
   });
 
   it('should display error message if an error occurs while fetching staff data.', () => {
-    const initData = jest.spyOn(overtimeServiceMock, 'initialiseStaffData').mockRejectedValue('err');
+    const fetchDataMock = jest.spyOn(overtimeServiceMock, 'fetchStaffData').mockRejectedValue('err');
 
     try {
       component.ngOnInit();
     } catch(e) {
-      expect(initData).toHaveBeenCalled();
+      expect(fetchDataMock).toHaveBeenCalled();
       expect(component.errorMessage).toBe('Unable to load content. Please reload');
       expect(component.showLoader).toBe(false);
     }

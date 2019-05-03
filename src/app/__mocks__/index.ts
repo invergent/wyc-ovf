@@ -1,5 +1,6 @@
 export const authServiceMock: any = {
   api: 'some-url',
+  isAuthenticated: false,
   currentStaff: { firstname: 'somename', role: 'someRole' },
   authenticate: () => Promise.resolve({ data: {} }),
   fetchStaffProfile: () => Promise.resolve('value'),
@@ -12,7 +13,9 @@ export const authServiceMock: any = {
 
 export const overtimeServiceMock: any = {
   api: 'some-url',
-  initialiseStaffData: () => Promise.resolve([{}, {}, [{}]]),
+  initialiseStaffData: () => Promise.resolve({ claimStatistics: {}, activities: [], pendingClaim: {} }),
+  fetchStaffData: () => Promise.resolve({ claimStatistics: {}, activities: [], pendingClaim: {} }),
+  syncWithAPI: () => {},
   fetchStaffClaimStatistics: () => Promise.resolve('value'),
   cancelClaim: () => Promise.resolve('value'),
   createOvertimeRequest: () => Promise.resolve({ message: 'created successfully!' })

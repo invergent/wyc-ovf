@@ -10,7 +10,11 @@ export class StaffComponent {
 
   constructor(){}
 
-  toggleSideNav() {
-    this.sideNavLeft = this.sideNavLeft === '-300px' ? '0' : '-300px';
+  toggleSideNav(source) {
+    if (source === 'navItem') {
+      this.sideNavLeft = '-300px';
+    } else {
+      this.sideNavLeft = this.sideNavLeft === '-300px' ? '0' : '-300px';
+    }
   }
 }

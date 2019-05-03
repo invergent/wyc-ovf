@@ -1,28 +1,40 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 import {
-  IGetStatistics, IGetPendingClaim, IGetActivities, IPostOvertimeRequest, IValidClaimRequest
+  IGetStatistics, IGetPendingClaim, IGetActivities, IPostOvertimeRequest, IValidClaimRequest,
+  IClaimStatistics, IClaim, IActivity, IStaffClaimData
 } from './models';
 
 @Injectable()
 export class OvertimeService {
   constructor(private http: HttpClient) { }
-  api = 'http://init.overtime-api.invergent-technologies.com';
+  api = environment.api;
   options = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     withCredentials: true
   }
+  staffClaimData: IStaffClaimData
 
-  async initialiseStaffData(): Promise<any[]> {
+  async initialiseStaffData(): Promise<boolean> {
     try {
-      const { data: claimStatistics} = await this.fetchStaffClaimStatistics();
-      const { data: pendingClaim} = await this.fetchStaffPendingClaim();
+      const { data: claimStatistics } = await this.fetchStaffClaimStatistics();
+      const { data: pendingClaim } = await this.fetchStaffPendingClaim();
       const { data: activities } = await this.fetchStaffActivities();
-      return [claimStatistics, pendingClaim, activities];
+      this.staffClaimData = { activities, pendingClaim, claimStatistics };
+      return true;
     } catch(e) {
       throw new Error();
     }
+  }
 
+  async fetchStaffData() {
+    if (!this.staffClaimData) await this.initialiseStaffData();
+    return this.staffClaimData;
+  }
+
+  syncWithAPI() {
+    this.initialiseStaffData();
   }
 
   fetchStaffClaimStatistics(): Promise<IGetStatistics> {

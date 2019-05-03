@@ -1,8 +1,8 @@
 <main>
-  <top-nav (sideNavToggleEvent)="toggleSideNav()"></top-nav>
+  <top-nav (sideNavToggleEvent)="toggleSideNav($event)"></top-nav>
   <article class="content-wrapper">
     <section
-      (click)="toggleSideNav()"
+      (click)="toggleSideNav('self')"
       class="side-nav"
       [ngStyle]="{left: sideNavLeft}">
       <div class="new-claim-button-wrapper">

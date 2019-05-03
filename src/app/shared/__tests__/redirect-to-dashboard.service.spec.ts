@@ -12,21 +12,18 @@ describe('RedirectToDashboard Service', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should make a get request to the api to check users token validity.', async () => {
+  it('should return true (proceed to login) if staff is unathenticated.', async () => {
+    const result = await service.canActivate();
+
+    expect(result).toBe(true);
+  });
+
+  it('should redirect staff to dashboard if staff is already logged in.', async () => {
     const routerNavigate = jest.spyOn(routerMock, 'navigate');
-    const authServiceCheckValidity = jest.spyOn(authServiceMock, 'authenticate');
+    authServiceMock.isAuthenticated = true;
 
     await service.canActivate();
 
-    expect(authServiceCheckValidity).toHaveBeenCalled();
     expect(routerNavigate).toHaveBeenCalledWith(['/staff/dashboard']);
-  });
-
-  it('should return true (proceed to login) if call to api fails or user is unathenticated.', async () => {
-    jest.spyOn(authServiceMock, 'authenticate').mockResolvedValue(false);
-
-    const response = await service.canActivate();
-
-    expect(response).toBe(true);
   });
 });

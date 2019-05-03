@@ -8,10 +8,6 @@ describe('AuthService Service', () => {
     service = new AuthService(httpMock);
   });
 
-  it('should create', () => {
-    expect(service).toBeTruthy();
-  });
-
   it('should make a get request to the api to check users token validity.', async () => {
     const httpGet = jest.spyOn(httpMock, 'get');
 
@@ -46,7 +42,7 @@ describe('AuthService Service', () => {
 
   it('should make a get request to the api to verify password reset request.', async () => {
     const httpGet = jest.spyOn(httpMock, 'get');
-    const url = 'http://init.overtime-api.invergent-technologies.com/confirm-reset-request?hash=somehash'
+    const url = 'http://init.overtime-api.example.com:7000/confirm-reset-request?hash=somehash'
 
     await service.verifyPasswordResetRequest('somehash');
 
@@ -56,7 +52,7 @@ describe('AuthService Service', () => {
   it('should make a post request to the api to reset password.', async () => {
     const httpPost = jest.spyOn(httpMock, 'get');
 
-    await service.resetPassword({ password: 'password', confirmPassword: 'confirmPassword'}, 'somehash');
+    await service.resetPassword({ password: 'password', confirmPassword: 'confirmPassword' }, 'somehash');
 
     expect(httpPost).toHaveBeenCalled();
   });

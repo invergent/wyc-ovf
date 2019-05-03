@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, IClaimStatistics, IClaim, IActivity, OvertimeService } from '../../shared';
+import {
+  AuthService, IClaimStatistics, IClaim, IActivity, OvertimeService, IStaffClaimData
+} from '../../shared';
 
 @Component({
   templateUrl: './dashboard.component.html',
@@ -8,6 +10,7 @@ import { AuthService, IClaimStatistics, IClaim, IActivity, OvertimeService } fro
 export class DashboardComponent implements OnInit {
   showLoader: boolean = true;
   errorMessage: string = '';
+  staffClaimData: IStaffClaimData
   claimStatistics: IClaimStatistics
   pendingClaim: IClaim
   activities: IActivity[]
@@ -20,15 +23,20 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      const staffData = await this.overtimeService.initialiseStaffData();
-      [this.claimStatistics, this.pendingClaim, this.activities] = staffData;
-      this.activities = this.activities.splice(0, 3); // reduce results to the first three
+      const { claimStatistics, pendingClaim, activities } = await this.overtimeService.fetchStaffData();
 
+      this.claimStatistics = claimStatistics;
+      this.pendingClaim = pendingClaim;
+      this.activities = activities.splice(0, 3); // reduce results to the first three
       this.staffFirstName = this.authService.currentStaff.firstname;
       this.showLoader = false;
     } catch(e) {
-      this.showLoader = false;
-      this.errorMessage = 'Unable to load content. Please reload';
+      this.displayError();
     }
+  }
+
+  displayError() {
+    this.showLoader = false;
+    this.errorMessage = 'Unable to load content. Please reload';
   }
 }

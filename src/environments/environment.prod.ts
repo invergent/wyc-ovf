@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  api: 'http://init.overtime-api.invergent-technologies.com'
 };
