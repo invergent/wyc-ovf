@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
   errorMessage: string = '';
   staffClaimData: IStaffClaimData
   claimStatistics: IClaimStatistics
-  pendingClaim: IClaim
+  pendingClaim: IClaim[]
   activities: IActivity[]
   staffFirstName: string
 
@@ -24,9 +24,9 @@ export class DashboardComponent implements OnInit {
   async ngOnInit() {
     try {
       const { claimStatistics, pendingClaim, activities } = await this.overtimeService.fetchStaffData();
-
+      
       this.claimStatistics = claimStatistics;
-      this.pendingClaim = pendingClaim;
+      this.pendingClaim = [pendingClaim];
       this.activities = activities.splice(0, 3); // reduce results to the first three
       this.staffFirstName = this.authService.currentStaff.firstname;
       this.showLoader = false;

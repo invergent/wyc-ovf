@@ -7,7 +7,7 @@ describe('Pending Claim', () => {
   beforeEach(() => {
     component = new PendingClaimComponent(overtimeServiceMock, routerMock, mockToastr);
     //@ts-ignore
-    component.pendingClaim = { id: 1};
+    component.pendingClaim = [{ id: 1}];
   });
 
   it('should fetch and update component with staff pending claim data', async () => {
@@ -30,12 +30,14 @@ describe('Pending Claim', () => {
     const overtimeServiceMockFunc = jest.spyOn(overtimeServiceMock, 'cancelClaim');
     const toastrSuccessFunction = jest.spyOn(mockToastr, 'success');
     const routerMockFunc = jest.spyOn(routerMock, 'navigate');
+    const syncData = jest.spyOn(overtimeServiceMock, 'syncWithAPI');
 
     await component.cancelClaim();
 
     expect(overtimeServiceMockFunc).toHaveBeenCalled();
     expect(toastrSuccessFunction).toHaveBeenCalledWith('Claim cancelled successfully!');
     expect(routerMockFunc).toHaveBeenCalledWith(['/staff/claim-history']);
+    expect(syncData).toHaveBeenCalled();
   });
 
   it('should notify staff if claim cancellation fails', async () => {

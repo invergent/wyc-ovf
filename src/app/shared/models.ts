@@ -69,6 +69,7 @@ export interface IStaffClaimData {
   claimStatistics?: IClaimStatistics,
   pendingClaim?: IClaim,
   activities?: IActivity[]
+  claimHistory?: IClaim[]
 }
 
 export interface IApprovalHistory {
@@ -92,6 +93,11 @@ export interface IGetStatistics {
 export interface IGetPendingClaim {
   message: string,
   data: IClaim
+}
+
+export interface IGetClaimHistory {
+  message: string,
+  data: IClaim[]
 }
 
 export interface IGetActivities {

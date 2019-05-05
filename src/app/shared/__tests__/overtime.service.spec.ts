@@ -19,6 +19,8 @@ describe('Overtime Service', () => {
     const pendingClaim = jest.spyOn(service, 'fetchStaffPendingClaim').mockResolvedValue({});
     // @ts-ignore-start
     const activities = jest.spyOn(service, 'fetchStaffActivities').mockResolvedValue([{}]);
+    // @ts-ignore-start
+    const staffClaimHistory = jest.spyOn(service, 'fetchStaffClaimHistory').mockResolvedValue([{}]);
 
 
     const result = await service.initialiseStaffData();
@@ -27,6 +29,7 @@ describe('Overtime Service', () => {
     expect(statistics).toHaveBeenCalled();
     expect(pendingClaim).toHaveBeenCalled();
     expect(activities).toHaveBeenCalled();
+    expect(staffClaimHistory).toHaveBeenCalled();
   });
 
   it('should initialise staff data.', async () => {
@@ -91,10 +94,19 @@ describe('Overtime Service', () => {
   });
 
   it('should make a delete request to cancel pending claim.', () => {
-    const httpGet = jest.spyOn(httpMock, 'delete');
+    const httpDelete = jest.spyOn(httpMock, 'delete');
     const url = 'http://init.overtime-api.example.com:7000/users/claims/1';
 
     service.cancelClaim(1);
+
+    expect(httpDelete).toHaveBeenCalledWith(url, service.options);
+  });
+
+  it('should make a get request to fetch staff claim history.', async () => {
+    const httpGet = jest.spyOn(httpMock, 'get').mockImplementation(() => ({ toPromise: () => {} }));
+    const url = 'http://init.overtime-api.example.com:7000/users/claims/history';
+
+    await service.fetchStaffClaimHistory();
 
     expect(httpGet).toHaveBeenCalledWith(url, service.options);
   });

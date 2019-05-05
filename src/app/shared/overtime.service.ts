@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {
   IGetStatistics, IGetPendingClaim, IGetActivities, IPostOvertimeRequest, IValidClaimRequest,
-  IClaimStatistics, IClaim, IActivity, IStaffClaimData
+  IClaimStatistics, IClaim, IActivity, IStaffClaimData, IGetClaimHistory
 } from './models';
 
 @Injectable()
@@ -21,7 +21,8 @@ export class OvertimeService {
       const { data: claimStatistics } = await this.fetchStaffClaimStatistics();
       const { data: pendingClaim } = await this.fetchStaffPendingClaim();
       const { data: activities } = await this.fetchStaffActivities();
-      this.staffClaimData = { activities, pendingClaim, claimStatistics };
+      const { data: claimHistory } = await this.fetchStaffClaimHistory();
+      this.staffClaimData = { activities, pendingClaim, claimStatistics, claimHistory };
       return true;
     } catch(e) {
       throw new Error();
@@ -34,7 +35,7 @@ export class OvertimeService {
   }
 
   syncWithAPI() {
-    this.initialiseStaffData();
+    return this.initialiseStaffData();
   }
 
   fetchStaffClaimStatistics(): Promise<IGetStatistics> {
@@ -47,6 +48,10 @@ export class OvertimeService {
 
   fetchStaffActivities(): Promise<IGetActivities> {
     return this.http.get<IGetActivities>(`${this.api}/users/activities`, this.options).toPromise();
+  }
+
+  fetchStaffClaimHistory(): Promise<IGetClaimHistory> {
+    return this.http.get<IGetClaimHistory>(`${this.api}/users/claims/history`, this.options).toPromise();
   }
 
   createOvertimeRequest(overtimeRequest: IValidClaimRequest): Promise<IPostOvertimeRequest> {

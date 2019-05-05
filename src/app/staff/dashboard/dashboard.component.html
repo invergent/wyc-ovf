@@ -43,8 +43,8 @@
     <div class="section-title">
       <p>Pending claim</p>
     </div>
-    <claim [pendingClaim]="pendingClaim"></claim>
-    <div *ngIf="!!pendingClaim.monthOfClaim" class="button-wrapper">
+    <claims [claims]="pendingClaim" [statuses]="[]"></claims>
+    <div *ngIf="!!pendingClaim[0]?.monthOfClaim" class="button-wrapper">
       <a [routerLink]="['/staff/pending-claim']">View details</a>
     </div>
   </section>

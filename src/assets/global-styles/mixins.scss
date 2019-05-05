@@ -80,3 +80,16 @@
   display: block;
   margin: auto auto 30px;
 }
+@mixin pagination-button {
+  background-color: $brand-color;
+  width: 60px;
+  height: 20px;
+  font-size: 14px;
+  color: $color-white;
+  border: none;
+  border-radius: 5px;
+  &:disabled {
+    background-color: #80808060;
+    cursor: not-allowed;
+  }
+}

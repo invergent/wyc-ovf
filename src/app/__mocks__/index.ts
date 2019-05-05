@@ -17,6 +17,7 @@ export const overtimeServiceMock: any = {
   fetchStaffData: () => Promise.resolve({ claimStatistics: {}, activities: [], pendingClaim: {} }),
   syncWithAPI: () => {},
   fetchStaffClaimStatistics: () => Promise.resolve('value'),
+  fetchStaffClaimHistory: () => Promise.resolve('value'),
   cancelClaim: () => Promise.resolve('value'),
   createOvertimeRequest: () => Promise.resolve({ message: 'created successfully!' })
 }
