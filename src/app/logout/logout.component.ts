@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../shared';
+import { AuthService, OvertimeService } from '../shared';
 
 @Component({
   template: `
@@ -19,12 +19,16 @@ export class LogoutComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private overtimeService: OvertimeService
   ) { }
 
   async ngOnInit() {
     try {
       await this.authService.logout();
+      this.authService.isAuthenticated = false;
+      this.authService.currentStaff = null;
+      this.overtimeService.staffClaimData = null;
       this.router.navigate(['/']);
     } catch(e) {
       this.displaySpinner = false;

@@ -34,7 +34,6 @@ export class AuthService {
   }
 
   logout(): Promise<any> {
-    this.isAuthenticated = false;
     return this.http.get(`${this.api}/destroy-token`, this.options).toPromise();
   }
 
