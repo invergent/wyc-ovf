@@ -18,6 +18,8 @@ const routes: Routes = [
   { path: 'password-reset', component: PasswordResetComponent },
   { path: 'staff', redirectTo: '/staff/dashboard', pathMatch: 'full' },
   { path: 'staff', canActivate: [RedirectToLogin], loadChildren: './staff/staff.module#StaffModule' },
+  { path: 'line-manager', redirectTo: '/line-manager/verify', pathMatch: 'full' },
+  { path: 'line-manager', loadChildren: './line-manager/line-manager.module#LineManagerModule' },
   { path: '', component: HomeComponent }
 ];
 

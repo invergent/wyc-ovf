@@ -1,0 +1,82 @@
+<div *ngIf="displaySpinner" class="wrapper">
+  <div class="spinner">
+    <i class="fa fa-spinner fa-spin"></i>
+    <p class="waiting">Fetching claims...</p>
+  </div>
+</div>
+<section *ngIf="!displaySpinner" class="approvals-section">
+  <div class="greeting">
+    <p>Hi {{lineManager?.firstname}}, {{message}}.</p>
+  </div>
+  <div class="claim-requests-wrapper">
+    <div><p>{{errorMessage}}</p></div>
+    <div *ngFor="let claim of claimsToApprove" class="claim-request" id="{{claim.id}}">
+      <div class="month-of-claim-title">
+        <p>{{claim?.monthOfClaim}}</p>
+      </div>
+      <div class="claim-body">
+        <div class="request-section staff-profile">
+          <div class="image-wrapper">
+            <img src="https://res.cloudinary.com/invergent/image/upload/c_fill,g_face,h_400,r_max,w_400/v1/overtime/INIT/INIT012345.png" alt="Staff Avater">
+          </div>
+          <div class="name-wrapper">
+            <p class="name">{{claim?.firstname}} {{claim?.lastname}}</p>
+          </div>
+        </div>
+        <div class="request-section claim-details">
+          <div *ngIf="!!claim?.weekday" class="claim-unit">
+            <div class="claim-item">
+              <p>Weekday:</p>
+            </div>
+            <div class="claim-item-value"><span>{{claim?.weekday}}</span></div>
+          </div>
+          <div *ngIf="!!claim?.weekend" class="claim-unit">
+            <div class="claim-item">
+              <p>Weekend:</p>
+            </div>
+            <div class="claim-item-value"><span>{{claim?.weekend}}</span></div>
+          </div>
+          <div *ngIf="!!claim?.shift" class="claim-unit">
+            <div class="claim-item">
+              <p>shift:</p>
+            </div>
+            <div class="claim-item-value"><span>{{claim?.shift}}</span></div>
+          </div>
+        </div>
+        <div class="request-section approval-buttons">
+          <div class="approval-btn approve" (click)="runApproval('approve '+claim.id)">
+            <img src="/assets/images/green-check.png" alt="Approve Icon">
+          </div>
+          <div class="approval-btn decline" (click)="runApproval('decline '+claim.id)">
+            <img src="/assets/images/declined.png" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!!claimsToApprove.length" class="claims-counter">
+    <div>
+      <p class="claim-number">{{claimsToApprove?.length}}</p>
+      <p class="left">left</p>
+    </div>
+  </div>
+  <section [ngStyle]="{display: displayThanks}" class="thanks-modal-section">
+    <div class="thanks-modal">
+      <div class="thanks-content">
+        <div class="thanks-icon-wrapper">
+          <img src="/assets/images/dance_dribbble.gif" alt="">
+        </div>
+        <div class="confirmation-text">
+          <p>Thank you for your time!</p>
+        </div>
+        <div class="action-buttons">
+          <button
+            class="no-cancel"
+            type="button"
+            name="button"
+            (click)="displayThanks='none'">Close</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

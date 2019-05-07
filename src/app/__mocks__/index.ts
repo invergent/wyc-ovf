@@ -22,6 +22,13 @@ export const overtimeServiceMock: any = {
   createOvertimeRequest: () => Promise.resolve({ message: 'created successfully!' })
 }
 
+export const lineManagerServiceMock: any = {
+  api: 'some-url',
+  fetchClaimsToApprove: () => Promise.resolve({ data: { lineManager: {}, pendingClaims: [] } }),
+  runApproval: () => Promise.resolve({ message: 'some message' }),
+  verifyLineManager: () => Promise.resolve('value')
+}
+
 export const mockToastr: any = {
   success: () => {},
   error: () => {}
@@ -31,7 +38,8 @@ export const mockJQuery: any = jest.fn().mockReturnValue({
   datepicker: () => ({
     data: () => {}
   }),
-  val: () => 'someDate'
+  val: () => 'someDate',
+  css: () => ({ css: () => {} })
 })
 
 export const routerMock: any = {
@@ -49,5 +57,6 @@ export const activatedRouteMock: any = {
 export const httpMock: any = {
   get: () => ({ toPromise: () => {} }),
   post: () => ({ toPromise: () => {} }),
+  put: () => ({ toPromise: () => {} }),
   delete: () => ({ toPromise: () => {} })
 }

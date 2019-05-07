@@ -1,0 +1,35 @@
+@import '../../assets/global-styles/variables';
+
+.line-manager-section {
+  background-color: $dashboard-background-color;
+  height: 100vh;
+  overflow-y: scroll;
+  .nav {
+    position: fixed;
+    width: 100%;
+    background-color: $color-white;
+    box-sizing: border-box;
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 2px 0px 10px 0px $faint-color-light;
+    section {
+      .brand {
+        display: flex;
+        align-items: center;
+        width: 220px;
+        margin: auto;
+        .logo {
+          width: 220px;
+          margin-right: 8px;
+        }
+        .hamburger-icon {
+          display: none;
+          font-size: 22px;
+        }
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

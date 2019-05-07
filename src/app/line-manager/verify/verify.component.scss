@@ -1,0 +1,32 @@
+.wrapper {
+  padding: 40vh 8px 0px;
+  text-align: center;
+  box-sizing: border-box;
+  .spinner {
+    .fa {
+      font-size: 150px;
+    }
+    .waiting {
+      font-size: 25px;
+    }
+  }
+  .error-wrapper {
+    h4 {
+      font-size: 40px;
+      margin: 0;
+    }
+    p {
+      font-size: 16px;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .spinner {
+      .fa {
+        font-size: 80px;
+      }
+      .waiting {
+        font-size: 20px;
+      }
+    }
+  }
+}

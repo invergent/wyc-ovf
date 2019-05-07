@@ -16,6 +16,30 @@ export interface IStaff {
   bsmEmailAddress: string
 }
 
+export interface ILineManager {
+  firstname: string
+  lastname: string
+  email?: string
+}
+
+export interface IClaimForLineManager {
+  staffId: string,
+  firstname: string,
+  lastname: string,
+  image: string,
+  id: number,
+  monthOfClaim: string,
+  weekday: number,
+  weekend: number,
+  shift: number,
+  status: string,
+}
+
+export interface ILineManagerData {
+  lineManager: ILineManager
+  pendingClaims: IClaimForLineManager[]
+}
+
 export interface IClaim {
   id: number,
   monthOfClaim: string,
@@ -110,7 +134,17 @@ export interface IPostOvertimeRequest {
   data: IClaim
 }
 
+export interface IApprovedClaim {
+  message: string,
+  data: IClaim
+}
+
 export interface IValidatedForm {
   validField: IValidClaimRequest,
   error: string[]
+}
+
+export interface IGetClaimForLineManager {
+  message: string,
+  data: ILineManagerData
 }

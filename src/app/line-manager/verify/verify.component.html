@@ -1,0 +1,11 @@
+<div class="wrapper">
+  <div *ngIf="displaySpinner" class="spinner">
+    <i class="fa fa-spinner fa-spin"></i>
+    <p class="waiting">Just a moment...</p>
+  </div>
+  <div *ngIf="!displaySpinner" class="error-wrapper">
+    <h4>Invalid link!</h4>
+    <p>Be sure to click the button in the email sent to you.</p>
+  </div>
+</div>
+  
