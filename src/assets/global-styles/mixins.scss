@@ -93,3 +93,20 @@
     cursor: not-allowed;
   }
 }
+
+@mixin profile-grid-item {
+  background-color: $color-white;
+  padding: 20px;
+  border: 1px solid $faint-border-color;
+  border-radius: 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+@mixin profile-details-grid-item {
+  background-color: $color-white;
+  padding: 20px;
+  border: 1px solid $faint-border-color;
+  border-radius: 10px;
+  box-sizing: border-box;
+}

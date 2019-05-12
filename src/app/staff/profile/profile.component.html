@@ -1,3 +1,72 @@
-<p>
-  profile works!
-</p>
+<section class="profile">
+  <div class="page-title">
+    <p>Profile</p>
+  </div>
+  <div class="profile-info">
+    <div class="profile-image">
+      <div class="image-wrapper">
+        <img src={{currentStaff?.image}} alt="Staff Image">
+      </div>
+    </div>
+    <div class="profile-details">
+      <div class="details">
+        <p class="details-header">Name</p>
+        <p class="details-item">{{currentStaff?.firstname}} {{currentStaff?.lastname}}</p>
+      </div>
+      <div class="details">
+        <p class="details-header">Position</p>
+        <p class="details-item">{{currentStaff?.role}}</p>
+      </div>
+      <div class="details">
+        <p class="details-header">Phone Number</p>
+        <p class="details-item">08012345678</p>
+      </div>
+      <div class="details">
+        <p class="details-header">Email Address</p>
+        <p class="details-item">{{currentStaff?.emailAddress}}</p>
+      </div>
+      <div class="details">
+        <p class="details-header">Branch</p>
+        <p class="details-item">{{currentStaff?.branch}}</p>
+      </div>
+    </div>
+    <div class="lm supervisor">
+      <div class="lm-details-header">
+        <p>Supervisor</p>
+      </div>
+      <div class="lm-details-body">
+        <div class="details-header">
+          <p>Name</p>
+        </div>
+        <div class="name details-item">
+          <p>{{currentStaff?.supervisorFirstName}} {{currentStaff?.supervisorLastName}}</p>
+        </div>
+        <div class="email details-header">
+          <p>Email Address</p>
+        </div>
+        <div class="email details-item">
+          <p>{{currentStaff?.supervisorEmailAddress}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="lm BSM">
+      <div class="lm-details-header">
+        <p>BSM</p>
+      </div>
+      <div class="lm-details-body">
+        <div class="details-header">
+          <p>Name</p>
+        </div>
+        <div class="name details-item">
+          <p>{{currentStaff?.bsmFirstName}} {{currentStaff?.bsmLastName}}</p>
+        </div>
+        <div class="email details-header">
+          <p>Email Address</p>
+        </div>
+        <div class="email details-item">
+          <p>{{currentStaff?.bsmEmailAddress}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

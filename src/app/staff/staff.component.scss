@@ -80,12 +80,17 @@ top-nav {
     overflow-y: scroll;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     .side-nav {
       position: absolute;
       z-index: 99;
       width: 250px;
       height: calc(100% - (65px));
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .content {
+      padding: 0 10px;
     }
   }
 }

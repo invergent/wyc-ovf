@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LineManagerService } from '../line-manager.service';
 import { TOASTR_TOKEN, IToastr, ILineManager, IClaimForLineManager, JQUERY_TOKEN } from 'src/app/shared';
-import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-approvals',
@@ -66,7 +65,7 @@ export class ApprovalsComponent implements OnInit {
         this.displayThanks = 'block';
         this.message = 'you currently have no pending claims to approve.';
         this.playAudio();
-      }, 500);
+      }, 300);
     }
   }
 
