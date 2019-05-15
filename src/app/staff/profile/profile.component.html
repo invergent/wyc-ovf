@@ -199,10 +199,7 @@
               <input [(ngModel)]="bsmLastName" name="lastname" type="text" placeholder="Enter BSM last name" required>
             </div>
           </ng-template>
-          <div
-            class="button"
-            (mouseenter)="mouseoverLoginButton=true"
-            (mouseleave)="mouseoverLoginButton=false">
+          <div class="button">
             <button
               [disabled]="profileForm.invalid"
               (click)="displaySpinner=true"
