@@ -6,3 +6,5 @@ export * from './redirect-to-login.service';
 export * from './jquery.service';
 export * from './toastr.service';
 export * from './utils';
+export * from './profile.service';
+export * from './form-submission.service';

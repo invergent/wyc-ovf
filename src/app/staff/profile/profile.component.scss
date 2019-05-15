@@ -2,17 +2,70 @@
 @import '../../../assets/global-styles/variables';
 
 .profile {
+  padding-bottom: 30px;
+  box-sizing: border-box;
   .page-title {
     font-size: 30px;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+  }
+  .edit-mode {
+    display: none;
+    align-items: center;
+    width: 250px;
+    margin: auto auto 30px;
+    p {
+      margin: 0;
+    }
+    .switch-text {
+      margin-right: 40px;
+      font-size: 20px;
+    }
+    #switch {
+      position: relative;
+      padding: 8px 11px;
+      border-radius: 100px;
+      box-sizing: border-box;
+      color: $color-white;
+      background-color: $faint-color;
+      transition: all .5s ease-in-out;
+      p {
+        display: inline-block;
+        font-size: 14px;
+        transition: all .5s ease-in-out;
+      }
+      #on {
+        margin-right: 30px;
+        opacity: 0;
+      }
+      #off {
+        opacity: 1;
+      }
+      .knob {
+        position: absolute;
+        top: 3px;
+        left: 3.5%;
+        background-color: $color-white;
+        width: 27px;
+        height: 27px;
+        border-radius: 1000px;
+        transition: all .5s ease-in-out;
+      }
+    }
   }
   .profile-info {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 20px;
     padding: 0 7%;
-
+    .edit-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: none;
+      color: $faint-color;
+      cursor: pointer;
+    }
     .profile-image {
       @include profile-grid-item;
       .image-wrapper {
@@ -66,6 +119,168 @@
       }
     }
   }
+  .edit-modal-section {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $modal-background-tint;
+    z-index: 9999;
+    .edit-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      display: inline-block;
+      background-color: $color-white;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      padding: 40px;
+      border-radius: 8px;
+      .page-title {
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        p {
+          margin: 10px 0 0;
+        }
+      }
+      .close {
+        cursor: pointer;
+      }
+      .form-wrapper {
+        form {
+          width: 100%;
+          margin: auto;
+          .image-preview {
+            padding: 5px;
+            width: 100%;
+            height: 215px;
+            box-sizing: border-box;
+            img {
+              height: 200px;
+            }
+          }
+          .role-input-wrapper {
+            outline: none;
+          }
+          .input {
+            position: relative;
+            width: 100%;
+            margin-top: 25px;
+            input, .decoy-input {
+              width: 100%;
+              height: 45px;
+              padding: 0 20px;
+              border: 1px solid #ACACAC;
+              border-radius: 10px;
+              box-sizing: border-box;
+              @include placeholder {
+                color: rgba(0,0,0,.2);
+              }
+            }
+            .decoy-input {
+              line-height: 3;
+              text-align: left;
+            }
+            .role-decoy-input {
+              background-position: right 3% top 50%;
+              background-size: 10px;
+              background-repeat: no-repeat;
+              background-image: url('/assets/images/caret.png')
+            }
+            .dropdown-list {
+              position: absolute;
+              top: 50px;
+              background-color: $color-white;
+              width: 100%;
+              max-height: 250px;
+              line-height: 2.5;
+              padding: 5px;
+              text-align: left;
+              border: 1px solid $faint-border-color;
+              border-radius: 10px;
+              box-sizing: border-box;
+              overflow-y: scroll;
+              z-index: 9;
+              cursor: pointer;
+              .list-item, .multi-list-item {
+                padding: 0 10px;
+                box-sizing: border-box;
+                &:hover {
+                  background-color: $brand-color;
+                  color: $color-white;
+                }
+              }
+              .multi-list-item {
+                line-height: 1.2;
+                margin-bottom: 10px;
+                padding: 5px;
+                box-sizing: border-box;
+                p {
+                  margin: 0;
+                }
+                .lm-email {
+                  color: $faint-color;
+                }
+              }
+            }
+            input[type=file] {
+              display: none;
+            }
+            .input-button {
+              background-color: $brand-color-ex-light;
+              width: 100%;
+              height: 40px;
+              line-height: 2.5;
+              margin: 0;
+              border: 1px solid $faint-border-color;
+              border-radius: 10px;
+              cursor: pointer;
+            }
+          }
+          .button {
+            width: 100%;
+            margin-top: 40px;
+            button {
+              position: relative;
+              background-color: $brand-color;
+              width: 100%;
+              height: 45px;
+              color: white;
+              font-size: 1.5rem;
+              border-radius: 10px;
+              border: none;
+              cursor: pointer;
+              &:disabled {
+                background-color: #80808060;
+                cursor: not-allowed;
+              }
+              .fa {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                color: white;
+              }
+              @media screen and (max-width: 400px) {
+                font-size: 1.4rem;
+              }
+            }
+          }
+          @media screen and (max-width: 400px) {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 1024px) {
+    .edit-mode {
+      display: flex;
+    }
+  }
   @media screen and (max-width: 768px) {
     .page-title {
     }
@@ -103,6 +318,18 @@
             margin-bottom: 20px;
           }
         }
+      }
+    }
+    .edit-modal-section {
+      .edit-modal {
+      }
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .edit-modal-section {
+      .edit-modal {
+        width: 95%;
+        padding: 10px;
       }
     }
   }

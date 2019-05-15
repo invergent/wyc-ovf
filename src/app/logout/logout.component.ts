@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, OvertimeService } from '../shared';
+import { ProfileService } from '../shared';
 
 @Component({
   template: `
@@ -20,7 +21,8 @@ export class LogoutComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private overtimeService: OvertimeService
+    private overtimeService: OvertimeService,
+    private profileService: ProfileService
   ) { }
 
   async ngOnInit() {
@@ -29,6 +31,7 @@ export class LogoutComponent implements OnInit {
       this.authService.isAuthenticated = false;
       this.authService.currentStaff = null;
       this.overtimeService.staffClaimData = null;
+      this.profileService.profileData = null;
       this.router.navigate(['/']);
     } catch(e) {
       this.displaySpinner = false;

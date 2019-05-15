@@ -22,6 +22,32 @@ export const overtimeServiceMock: any = {
   createOvertimeRequest: () => Promise.resolve({ message: 'created successfully!' })
 }
 
+export const profileServiceMock: any = {
+  api: 'some-url',
+  profileData: {},
+  initialiseProfileData: () => Promise.resolve(true),
+  fetchProfileData: () => Promise.resolve({ lineManagers: [], branches: [], roles: [] }),
+  syncWithAPI: () => {},
+  fetchLineManagers: () => Promise.resolve('value'),
+  fetchBanches: () => Promise.resolve('value'),
+  fetchRoles: () => Promise.resolve('value'),
+  updateImage: () => Promise.resolve('value'),
+  updatePersonalInfo: () => Promise.resolve('value'),
+  updateLineManagerInfo: () => Promise.resolve('value')
+  
+}
+
+export const formServiceMock: any = {
+  validateProfileInfo: () => {},
+  checkFields: () => {},
+  imageSubmit: () => {},
+  profileInfoSubmit: () => {},
+  nameSanitizer: () => {},
+  emailSanitizer: () => {},
+  addLineManagerRole: () => {},
+  getUpdateMethod: () => {}  
+}
+
 export const lineManagerServiceMock: any = {
   api: 'some-url',
   fetchClaimsToApprove: () => Promise.resolve({ data: { lineManager: {}, pendingClaims: [] } }),

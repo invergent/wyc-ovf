@@ -1,5 +1,5 @@
 import { LogoutComponent } from './logout.component';
-import { authServiceMock, routerMock, overtimeServiceMock } from '../__mocks__';
+import { authServiceMock, routerMock, overtimeServiceMock, profileServiceMock } from '../__mocks__';
 
 jest.useFakeTimers();
 
@@ -7,7 +7,7 @@ describe('LoginComponent', () => {
   let component: LogoutComponent;
 
   beforeEach(() => {
-    component = new LogoutComponent(authServiceMock, routerMock, overtimeServiceMock);
+    component = new LogoutComponent(authServiceMock, routerMock, overtimeServiceMock, profileServiceMock);
   });
 
   it('should log user out.', async () => {

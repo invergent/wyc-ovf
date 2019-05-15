@@ -25,6 +25,11 @@ export class AuthService {
     }
   }
 
+  async syncWithAPI() {
+    const { data } = await this.fetchStaffProfile();
+    this.currentStaff = data;
+  }
+
   fetchStaffProfile():Promise<IGetStaffProfile> {
     return this.http.get<IGetStaffProfile>(`${this.api}/users/profile`, this.options).toPromise();
   }

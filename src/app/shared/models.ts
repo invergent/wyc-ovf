@@ -16,6 +16,23 @@ export interface IStaff {
   bsmEmailAddress: string
 }
 
+export interface IProfileUpdate {
+  staffId?: string,
+  firstname?: string,
+  lastname?: string,
+  middleName?: string,
+  emailAddress?: string,
+  image?: string,
+  roleId?: number,
+  branchId?: number,
+  supervisorFirstName?: string,
+  supervisorLastName?: string,
+  supervisorEmailAddress?: string,
+  bsmFirstName?: string,
+  bsmLastName?: string,
+  bsmEmailAddress?: string
+}
+
 export interface ILineManager {
   firstname: string
   lastname: string
@@ -33,6 +50,11 @@ export interface IClaimForLineManager {
   weekend: number,
   shift: number,
   status: string,
+}
+
+export interface IImageData {
+  url: string
+  secureUrl: string
 }
 
 export interface ILineManagerData {
@@ -96,11 +118,27 @@ export interface IStaffClaimData {
   claimHistory?: IClaim[]
 }
 
+export interface IProfileData {
+  lineManagers?: ILineManager[],
+  branches?: IBranch[],
+  roles?: IRole[]
+}
+
 export interface IApprovalHistory {
   id: number,
   claimId: number,
   lineManagerId?: number,
   createdAt: Date
+}
+
+export interface IBranch {
+  id: number,
+  name: string
+}
+
+export interface IRole {
+  id: number,
+  name: string
 }
 
 // fetch request models
@@ -147,4 +185,28 @@ export interface IValidatedForm {
 export interface IGetClaimForLineManager {
   message: string,
   data: ILineManagerData
+}
+
+export interface IGetLineManagers {
+  message: string,
+  data: ILineManager[]
+}
+
+export interface IGetBranches {
+  message: string,
+  data: IBranch[]
+}
+
+export interface IGetRoles {
+  message: string,
+  data: IRole[]
+}
+
+export interface IPutProfile {
+  message: string
+}
+
+export interface IPostImage {
+  message: string
+  data: IImageData
 }
