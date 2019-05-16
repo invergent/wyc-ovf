@@ -21,8 +21,6 @@ export class FormSubmissionService {
   }
 
   imageSubmit(file) {
-    console.log(file);
-    
     const formData = new FormData();
     formData.append('image', file, file.name);
     

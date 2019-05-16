@@ -50,9 +50,17 @@ describe('AuthService Service', () => {
   });
 
   it('should make a post request to the api to reset password.', async () => {
-    const httpPost = jest.spyOn(httpMock, 'get');
+    const httpGet = jest.spyOn(httpMock, 'get');
 
     await service.resetPassword({ password: 'password', confirmPassword: 'confirmPassword' }, 'somehash');
+
+    expect(httpGet).toHaveBeenCalled();
+  });
+
+  it('should make a post request to the api to change users password.', async () => {
+    const httpPost = jest.spyOn(httpMock, 'post');
+    //@ts-ignore
+    await service.changePassword({});
 
     expect(httpPost).toHaveBeenCalled();
   });
@@ -65,11 +73,21 @@ describe('AuthService Service', () => {
     expect(response).toBe(true);
   });
 
+
   it('should resolve to false if user is authenticated.', async () => {
-    jest.spyOn(service, 'fetchStaffProfile').mockRejectedValue('err');
+    jest.spyOn(service, 'fetchStaffProfile').mockRejectedValueOnce('err');
 
     const response = await service.authenticate();
 
     expect(response).toBe(false);
+  });
+
+  it('should resolve to false if user is authenticated.', async () => {
+    //@ts-ignore
+    const fetchDataMock = jest.spyOn(service, 'fetchStaffProfile').mockResolvedValueOnce({ data: 'value' });
+
+    await service.syncWithAPI();
+
+    expect(fetchDataMock).toHaveBeenCalled();
   });
 });

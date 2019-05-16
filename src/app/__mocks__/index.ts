@@ -8,7 +8,8 @@ export const authServiceMock: any = {
   logout: () => Promise.resolve('value'),
   requestPasswordReset: () => Promise.resolve('value'),
   verifyPasswordResetRequest: () => Promise.resolve('value'),
-  resetPassword: () => Promise.resolve('value')
+  resetPassword: () => Promise.resolve('value'),
+  changePassword: () => Promise.resolve('value')
 }
 
 export const overtimeServiceMock: any = {
@@ -28,13 +29,12 @@ export const profileServiceMock: any = {
   initialiseProfileData: () => Promise.resolve(true),
   fetchProfileData: () => Promise.resolve({ lineManagers: [], branches: [], roles: [] }),
   syncWithAPI: () => {},
-  fetchLineManagers: () => Promise.resolve('value'),
-  fetchBanches: () => Promise.resolve('value'),
-  fetchRoles: () => Promise.resolve('value'),
+  fetchLineManagers: () => Promise.resolve({ data: 'value' }),
+  fetchBanches: () => Promise.resolve({ data: 'value' }),
+  fetchRoles: () => Promise.resolve({ data: 'value' }),
   updateImage: () => Promise.resolve('value'),
   updatePersonalInfo: () => Promise.resolve('value'),
-  updateLineManagerInfo: () => Promise.resolve('value')
-  
+  updateLineManagerInfo: () => Promise.resolve('value')  
 }
 
 export const formServiceMock: any = {
@@ -65,7 +65,8 @@ export const mockJQuery: any = jest.fn().mockReturnValue({
     data: () => {}
   }),
   val: () => 'someDate',
-  css: () => ({ css: () => {} })
+  css: () => ({ css: () => {} }),
+  prop: () => {}
 })
 
 export const routerMock: any = {

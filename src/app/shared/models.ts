@@ -91,6 +91,12 @@ export interface IPasswordReset {
   confirmPassword: string
 }
 
+export interface IChangePassword {
+  currentPassword: string,
+  newPassword: string,
+  confirmPassword: string
+}
+
 export interface IValidClaimRequest {
   weekday?: number
   weekend?: number

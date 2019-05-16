@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {
   AuthService, IStaff, JQUERY_TOKEN, ProfileService, ILineManager, IBranch, IRole,
-  FormSubmissionService, TOASTR_TOKEN, IToastr
+  FormSubmissionService, TOASTR_TOKEN, IToastr, OvertimeService
 } from 'src/app/shared';
 
 @Component({
@@ -66,6 +66,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private profileService: ProfileService,
+    private overtimeService: OvertimeService,
     private formSubmissionService: FormSubmissionService,
     @Inject(TOASTR_TOKEN) private toastr: IToastr,
     @Inject(JQUERY_TOKEN) private jQuery
@@ -191,26 +192,23 @@ export class ProfileComponent implements OnInit {
       : this.formSubmissionService.profileInfoSubmit(formValues);
   
     if (formData.errors.length) return formData.errors.forEach(error => this.toastr.error(error));
-      console.log(formData.data);
-      
+          
     if (['supervisorModal', 'bsmModal'].includes(currentModal)) {
       formData.data.lineManagerRole = this.formSubmissionService.addLineManagerRole(currentModal);
     }
 
     try {
-      console.log(updateMethod);
-      
       const { message } = await this.profileService[updateMethod](formData.data);
       this.toastr.success(message);
-      await this.authService.syncWithAPI();
+      
       await this.profileService.syncWithAPI();
+      await this.overtimeService.syncWithAPI();
       await this.initialiseData();
+
       this.displayModal = 'none';
       this[currentModal] = false;
       this.displaySpinner = false;
     } catch (e) {
-      console.log(e);
-      
       this.toastr.error('An error occurred');
     }
   }

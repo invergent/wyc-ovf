@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IGetStaffProfile, ILoginFormData, IPasswordReset, IStaff } from './models';
+import { IGetStaffProfile, ILoginFormData, IPasswordReset, IStaff, IChangePassword } from './models';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -52,5 +52,9 @@ export class AuthService {
 
   resetPassword(resetPasswordData: IPasswordReset, hash: string): Promise<any> {
     return this.http.post(`${this.api}/users/profile/reset?hash=${hash}`, resetPasswordData, this.options).toPromise();
+  }
+
+  changePassword(changePasswordData: IChangePassword): Promise<any> {
+    return this.http.post(`${this.api}/users/profile/change-password`, changePasswordData, this.options).toPromise();
   }
 }
