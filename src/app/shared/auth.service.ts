@@ -55,6 +55,6 @@ export class AuthService {
   }
 
   changePassword(changePasswordData: IChangePassword): Promise<any> {
-    return this.http.post(`${this.api}/users/profile/change-password`, changePasswordData, this.options).toPromise();
+    return this.http.post(`${this.api}/change-password`, changePasswordData, this.options).toPromise();
   }
 }

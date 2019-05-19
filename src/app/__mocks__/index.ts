@@ -1,11 +1,12 @@
 export const authServiceMock: any = {
   api: 'some-url',
   isAuthenticated: false,
-  currentStaff: { firstname: 'somename', role: 'someRole' },
+  currentStaff: { firstname: 'somename', role: 'someRole', staffId: 'someId' },
   authenticate: () => Promise.resolve({ data: {} }),
   fetchStaffProfile: () => Promise.resolve('value'),
   login: () => Promise.resolve('value'),
   logout: () => Promise.resolve('value'),
+  syncWithAPI: () => {},
   requestPasswordReset: () => Promise.resolve('value'),
   verifyPasswordResetRequest: () => Promise.resolve('value'),
   resetPassword: () => Promise.resolve('value'),
@@ -37,6 +38,40 @@ export const profileServiceMock: any = {
   updateLineManagerInfo: () => Promise.resolve('value')  
 }
 
+export const notificationServiceMock: any = {
+  api: 'some-url',
+  channel: { bind_global: () => {} },
+  initialiseNotificationsData: () => Promise.resolve('value'),
+  getNotificationsData: () => Promise.resolve([{}, {}]),
+  formatNotificationsData: () => {},
+  markNotificationsAsReadAndViewed: () => {},
+  playAudio: () => {},
+  fetchNotifications: () => Promise.resolve({
+    data: [
+      { viewed: false, activity:  'This is some activity over thirty characters' },
+      { viewed: true, activity:  'Less than thirty characters' },
+    ]
+  }),
+  markNotificationAsRead: () => Promise.resolve('value')
+}
+
+export const pusherMock: any = {
+  subscribe: () => ({
+    bind_global: () => {}
+  })
+}
+
+export class AudioMock {
+  src: string
+  constructor() {}
+  load() {}
+  play() {}
+}
+
+export const changeDetectorMock: any = {
+  detectChanges: () => {}
+}
+
 export const formServiceMock: any = {
   validateProfileInfo: () => {},
   checkFields: () => {},
@@ -66,7 +101,8 @@ export const mockJQuery: any = jest.fn().mockReturnValue({
   }),
   val: () => 'someDate',
   css: () => ({ css: () => {} }),
-  prop: () => {}
+  prop: () => {},
+  text: () => {}
 })
 
 export const routerMock: any = {

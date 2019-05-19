@@ -16,7 +16,7 @@
         <i class="fas fa-edit"></i>
       </div>
       <div class="image-wrapper">
-        <img src={{transformImage(currentStaff?.image)}} alt="Staff Image">
+        <img src="{{currentStaff?.image | transformImage}}" alt="Staff Image">
       </div>
     </div>
     <div class="profile-details">
@@ -110,7 +110,7 @@
         <form [ngSwitch]="true" #profileForm="ngForm" (ngSubmit)="handleSubmit(profileForm.value, currentModal)" autocomplete="off" novalidate>
           <ng-template [ngSwitchCase]="imageModal">
             <div class="image-preview">
-              <img src="{{imagePreview || '/assets/images/cancelled.png'}}" alt="Image">
+              <img src="{{imagePreview || authService?.currentStaff?.image}}" alt="Image">
             </div>
             <div class="input">
               <p (click)="triggerFileInput()" class="input-button">Click to select image</p>

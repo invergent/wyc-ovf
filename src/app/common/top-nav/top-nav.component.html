@@ -12,28 +12,32 @@
       </div>
     </div>
     <div class="nav-items">
-      <div class="notify" (click)="toggleNavItems('notificationMenuOpened')">
+      <div class="notify" (click)="toggleNavItems('notificationMenu')">
         <div class="icons-wrapper">
           <i class='far fa-bell'></i>
-          <span>5</span>
+          <span *ngIf="!!newNotificationsCount">{{newNotificationsCount}}</span>
         </div>
-        <div *ngIf="notificationMenuOpened" class="notifications">
+        <div *ngIf="notificationMenu" class="notifications">
           <div class="notifications-wrapper">
             <div class="spike"></div>
-            <ul>
-              <li><a [routerLink]="['/staff/pending-claim']">Your claim was approved...</a></li>
-              <li><a [routerLink]="['/staff/pending-claim']">Your claim was approved...</a></li>
-              <li><a [routerLink]="['/staff/pending-claim']">Your claim was approved...</a></li>
+            <div *ngIf="!notifications.length" class="nothing-here">Nothing here...</div>
+            <ul *ngIf="!!notifications.length">
+              <li *ngFor="let notif of notifications;">
+                <a [routerLink]="['Cancelled', 'Declined'].includes(notif.type) ? ['/staff/claim-history'] : ['/staff/pending-claim']">
+                  {{notif.activity}}
+                </a>
+              </li>
             </ul>
+            <div *ngIf="notifications.length>7" [routerLink]="['/staff/notifications']" class="see-all">See all</div>
           </div>
         </div>
       </div>
-      <div class="user" (click)="toggleNavItems('profileMenuOpened')">
+      <div class="user" (click)="toggleNavItems('profileMenu')">
         <div class="avatar" >
-          <img src="https://res.cloudinary.com/invergent/image/upload/c_fill,g_face,h_400,r_max,w_400/v1/overtime/INIT/INIT012345.png" alt="User Avatar">
+          <img src="{{userImage | transformImage}}" alt="User Avatar">
         </div>
         <i class="fa fa-caret-down"></i>
-        <div *ngIf="profileMenuOpened" class="dropdown-menu">
+        <div *ngIf="profileMenu" class="dropdown-menu">
           <div class="ul-wrapper">
             <div class="spike"></div>
             <ul>
@@ -46,4 +50,7 @@
       </div>
     </div>
   </section>
+  <div class="flash-message" id="flash-message">
+    <p id="f-message"></p>
+  </div>
 </nav>

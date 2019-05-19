@@ -9,6 +9,7 @@ import { ClaimsComponent } from './claims/claims.component';
 import { ActivityBlock } from './activity-block/activity-block.component';
 import { ApprovalProgressBar } from './approval-progress-bar/approval-progress-bar.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 const declarations = [
   TimeAgoPipe, TopNav, ClaimsComponent, ActivityBlock, ApprovalProgressBar, PasswordChangeComponent
@@ -18,7 +19,8 @@ const declarations = [
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    PipesModule
   ],
   declarations,
   exports: declarations

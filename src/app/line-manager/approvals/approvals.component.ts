@@ -1,7 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LineManagerService } from '../line-manager.service';
-import { TOASTR_TOKEN, IToastr, ILineManager, IClaimForLineManager, JQUERY_TOKEN } from 'src/app/shared';
+import {
+  TOASTR_TOKEN, IToastr, ILineManager, IClaimForLineManager, JQUERY_TOKEN,
+  NotificationService
+} from 'src/app/shared';
 
 @Component({
   selector: 'app-approvals',
@@ -13,6 +16,7 @@ export class ApprovalsComponent implements OnInit {
   constructor(
     private router: Router,
     private lineManagerService: LineManagerService,
+    private notificationService: NotificationService,
     @Inject(TOASTR_TOKEN) private toaster: IToastr,
     @Inject(JQUERY_TOKEN) private jQuery
   ) { }
@@ -64,15 +68,8 @@ export class ApprovalsComponent implements OnInit {
       setTimeout(() => {
         this.displayThanks = 'block';
         this.message = 'you currently have no pending claims to approve.';
-        this.playAudio();
+        this.notificationService.playAudio('../../../assets/audio/tada.mp3');
       }, 300);
     }
-  }
-
-  playAudio(){
-    let audio = new Audio();
-    audio.src = "../../../assets/audio/tada.mp3";
-    audio.load();
-    audio.play();
   }
 }

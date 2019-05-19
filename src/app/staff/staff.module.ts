@@ -11,13 +11,15 @@ import { PendingClaimComponent } from './pending-claim/pending-claim.component';
 import { ClaimHistoryComponent } from './claim-history/claim-history.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     StaffRoutingModule,
-    CommonComponentsModule
+    CommonComponentsModule,
+    PipesModule
   ],
   declarations: [
     StaffComponent,

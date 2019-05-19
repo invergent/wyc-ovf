@@ -13,18 +13,23 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { LogoutComponent } from './logout/logout.component';
 import {
   AuthService, ProfileService, OvertimeService, RedirectToDashboard, RedirectToLogin,
-  TOASTR_TOKEN, JQUERY_TOKEN, IToastr, FormSubmissionService
+  TOASTR_TOKEN, JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService
 } from './shared';
+import { PUSHER_TOKEN } from './shared/pusher.service';
+import { environment } from 'src/environments/environment';
+import { PipesModule } from './pipes/pipes.module';
 
 const jQuery: Object = window['$'];
 const toastr: IToastr = window['toastr'];
+const pusher: IPusher = new window['Pusher'](environment.API_KEY, { cluster: 'eu' });
 
 @NgModule({
   imports: [
     BrowserModule,
     OvertimeRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    PipesModule
   ],
   declarations: [
     OvertimeComponent,
@@ -42,8 +47,10 @@ const toastr: IToastr = window['toastr'];
     RedirectToDashboard,
     RedirectToLogin,
     FormSubmissionService,
+    NotificationService,
     { provide: JQUERY_TOKEN, useValue: jQuery },
-    { provide: TOASTR_TOKEN, useValue: toastr }
+    { provide: TOASTR_TOKEN, useValue: toastr },
+    { provide: PUSHER_TOKEN, useValue: pusher }
   ],
   bootstrap: [OvertimeComponent]
 })

@@ -5,6 +5,20 @@ nav {
   box-sizing: border-box;
   padding: 5px 20px;
   box-shadow: 2px 0px 10px 0px $faint-color-light;
+  .flash-message {
+    position: absolute;
+    top: 15px;
+    right: -400px;
+    background-color: $color-white;
+    width: 300px;
+    padding: 15px;
+    box-sizing: border-box;
+    box-shadow: 2px 0px 15px 0px $faint-color-light;
+    transition: all .4s ease-in-out;
+    p {
+      margin: 0;
+    }
+  }
   section {
     display: flex;
     align-items: center;
@@ -12,6 +26,7 @@ nav {
       display: flex;
       align-items: center;
       width: 220px;
+      cursor: pointer;
       .logo {
         width: 220px;
         margin-right: 8px;
@@ -56,15 +71,32 @@ nav {
           @include dropdown-wrapper;
           top: 66px;
           right: -100px;
-          width: 250px;
           .notifications-wrapper {
             @include navigation-items-wrapper;
+            .see-all {
+              box-sizing: border-box;
+              padding: 10px 5px;
+              text-align: center;
+              cursor: pointer;
+              outline: none;
+              &:hover {
+                background-color: $brand-color-light;
+                color: $color-white;
+              }
+            }
+            .nothing-here {
+              box-sizing: border-box;
+              padding: 20px;
+              text-align: center;
+            }
             .spike {
               @include spike;
               right: 100px;
             }
             ul {
               @include ul-style;
+              max-height: 300px;
+              overflow-y: scroll;
               a {
                 @include li-style;
               }
@@ -98,7 +130,7 @@ nav {
       .dropdown-menu {
         @include dropdown-wrapper;
         .ul-wrapper {
-          @include navigation-items-wrapper
+          @include navigation-items-wrapper;
           .spike {
             @include spike
           }
@@ -163,6 +195,45 @@ nav {
                 }
                 li:last-child {
                 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 350px) {
+    section {
+      .brand {
+        width: 60px;
+        .logo {
+          margin-right: 15px;
+        }
+        .name {
+          display: none;
+        }
+        .hamburger-icon {
+          display: inline-block;
+        }
+      }
+      .nav-items {
+        .notify {
+          margin-right: 30px;
+          .notifications {
+            right: -110px;
+            .notifications-wrapper {
+              .spike {
+                right: 110px;
+              }
+            }
+          }
+        }
+        .user {
+          .dropdown-menu {
+            right: -10px;
+            .ul-wrapper {
+              .spike {
+                right: 40px;
               }
             }
           }

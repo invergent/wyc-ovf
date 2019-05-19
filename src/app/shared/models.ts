@@ -103,11 +103,30 @@ export interface IValidClaimRequest {
   shift?: number
 }
 
+export interface INotification {
+  id: number
+  activity: string
+  type: string
+  viewed: boolean
+}
+
 export interface IToastr {
   success(message: string, title?: string): void,
   info(message: string, title?: string): void,
   warning(message: string, title?: string): void,
   error(message: string, title?: string): void
+}
+
+type SingleEventCallbackFunction = () => void;
+type GlobalEventCallbackFunction = (event: string, data: any) => void;
+
+export interface ISubscribe {
+  bind(event: string, callback: SingleEventCallbackFunction): void
+  bind_global(callback: GlobalEventCallbackFunction): void
+}
+
+export interface IPusher {
+  subscribe(channel: string): ISubscribe
 }
 
 export interface IClaimStatistics {
@@ -215,4 +234,14 @@ export interface IPutProfile {
 export interface IPostImage {
   message: string
   data: IImageData
+}
+
+export interface IGetNotification {
+  message: string
+  data: INotification[]
+}
+
+export interface IPutNotification {
+  message: string
+  data: INotification
 }

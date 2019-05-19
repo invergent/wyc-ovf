@@ -1,5 +1,7 @@
 import { ApprovalsComponent } from "./approvals.component";
-import { routerMock, lineManagerServiceMock, mockToastr, mockJQuery } from "src/app/__mocks__";
+import {
+  routerMock, lineManagerServiceMock, mockToastr, mockJQuery, notificationServiceMock
+} from "src/app/__mocks__";
 
 jest.useFakeTimers();
 
@@ -7,7 +9,9 @@ describe('Approval component', () => {
   let component: ApprovalsComponent;
 
   beforeEach(() => {
-    component = new ApprovalsComponent(routerMock, lineManagerServiceMock, mockToastr, mockJQuery);
+    component = new ApprovalsComponent(
+      routerMock, lineManagerServiceMock, notificationServiceMock, mockToastr, mockJQuery
+    );
   });
 
   it('should initialise line manager data and pending claims', () => {
@@ -41,9 +45,9 @@ describe('Approval component', () => {
   it('should run approval based on approvalType supplied', async () => {
     const runApprovalFn = jest.spyOn(lineManagerServiceMock, 'runApproval');
     const toastrSuccessFn = jest.spyOn(lineManagerServiceMock, 'runApproval');
+    const playAudioMock = jest.spyOn(notificationServiceMock, 'playAudio');
     //@ts-ignore
     component.claimsToApprove = [];
-    component.playAudio = jest.fn();
 
     await component.runApproval('approve 1');
     jest.runAllTimers();
@@ -51,5 +55,6 @@ describe('Approval component', () => {
     expect(runApprovalFn).toHaveBeenCalledWith('approve', '1');
     expect(toastrSuccessFn).toHaveBeenCalled();
     expect(mockJQuery).toHaveBeenCalled();
+    expect(playAudioMock).toHaveBeenCalled();
   });
 });

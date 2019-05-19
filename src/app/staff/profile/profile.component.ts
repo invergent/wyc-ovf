@@ -135,11 +135,6 @@ export class ProfileComponent implements OnInit {
     this.jQuery('.edit-icon').css('display', this.editMode);
   }
 
-  transformImage(imageUrl) {
-    const urlFragments = imageUrl.split('upload');
-    return `${urlFragments[0]}upload/c_fill,g_face,h_400,r_max,w_400${urlFragments[1]}`;
-  }
-
   handleSelect(field, fieldValue) {
     if (fieldValue.name) {
       // for role and branch
@@ -201,6 +196,7 @@ export class ProfileComponent implements OnInit {
       const { message } = await this.profileService[updateMethod](formData.data);
       this.toastr.success(message);
       
+      await this.authService.syncWithAPI();
       await this.profileService.syncWithAPI();
       await this.overtimeService.syncWithAPI();
       await this.initialiseData();

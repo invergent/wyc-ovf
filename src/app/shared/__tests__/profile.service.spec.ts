@@ -17,7 +17,7 @@ describe('Overtime Service', () => {
     const roles = jest.spyOn(service, 'fetchRoles').mockResolvedValue([{}]);
 
 
-    const result = await service.fetchProfileData();
+    await service.fetchProfileData();
 
     expect(lineManagers).toHaveBeenCalled();
     expect(branches).toHaveBeenCalled();

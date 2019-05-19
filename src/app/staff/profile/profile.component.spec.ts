@@ -4,7 +4,7 @@ import {
 } from '../../__mocks__';
 import { FormSubmissionService } from 'src/app/shared';
 
-describe('Comfirm password reset', () => {
+describe('Profile Component', () => {
   let component: ProfileComponent;
 
   beforeEach(() => {
@@ -68,13 +68,6 @@ describe('Comfirm password reset', () => {
     expect(mockCss).toHaveBeenCalledTimes(10);
   });
 
-  it('should insert cloudinary"s image transform string into url string', () => {
-    const mockUrl = 'something/upload/another';
-    const transformedUrl = component.transformImage(mockUrl);
-
-    expect(transformedUrl).toBe('something/upload/c_fill,g_face,h_400,r_max,w_400/another');
-  });
-
   it('should update open modal"s input fields on dropdown item select', () => {
     const mockText = jest.fn();
     const jqMock = jest.fn(() => ({ text: mockText }));
@@ -111,7 +104,6 @@ describe('Comfirm password reset', () => {
 
   it('should fail if form data contain errors', () => {
     const invalidFormData = { firstname: '   ', lastname: '  ' };
-    const validFormData = { firstname: 'John', lastname: 'Doe' };
 
     const mockToastrError = jest.spyOn(mockToastr, 'error');
 
@@ -125,6 +117,7 @@ describe('Comfirm password reset', () => {
 
     const mockToastrSuccess = jest.spyOn(mockToastr, 'success');
     const mockUPI = jest.spyOn(profileServiceMock, 'updatePersonalInfo');
+    const mockSyncAuth = jest.spyOn(authServiceMock, 'syncWithAPI');
     const mockSyncProfile = jest.spyOn(profileServiceMock, 'syncWithAPI');
     const mockSyncOvertime = jest.spyOn(overtimeServiceMock, 'syncWithAPI');
     const init = jest.spyOn(component, 'initialiseData');
@@ -133,6 +126,7 @@ describe('Comfirm password reset', () => {
 
     expect(mockToastrSuccess).toHaveBeenCalledTimes(1);
     expect(mockUPI).toHaveBeenCalledTimes(1);
+    expect(mockSyncAuth).toHaveBeenCalledTimes(1);
     expect(mockSyncProfile).toHaveBeenCalledTimes(1);
     expect(mockSyncOvertime).toHaveBeenCalledTimes(1);
     expect(init).toHaveBeenCalledTimes(1);

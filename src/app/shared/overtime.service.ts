@@ -31,7 +31,6 @@ export class OvertimeService {
 
   async fetchStaffData() {
     if (!this.staffClaimData) await this.initialiseStaffData();
-    console.log(this.staffClaimData)
     return this.staffClaimData;
   }
 
