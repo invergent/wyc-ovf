@@ -1,16 +1,18 @@
 import { ProfileComponent } from './profile.component';
 import {
-  authServiceMock, profileServiceMock, formServiceMock, mockToastr, mockJQuery, overtimeServiceMock
+  authServiceMock, profileServiceMock, formServiceMock, mockToastr, mockJQuery, overtimeServiceMock, notificationServiceMock, routerMock, activatedRouteMock, profileCheckerServiceMock
 } from '../../__mocks__';
-import { FormSubmissionService } from 'src/app/shared';
+import { FormSubmissionService, ProfileCheckerService } from 'src/app/shared';
+
+const realFSS = new FormSubmissionService();
 
 describe('Profile Component', () => {
   let component: ProfileComponent;
 
   beforeEach(() => {
-    const realFSS = new FormSubmissionService();
     component = new ProfileComponent(
-      authServiceMock, profileServiceMock, overtimeServiceMock, realFSS, mockToastr, mockJQuery
+      authServiceMock, notificationServiceMock, profileCheckerServiceMock,  profileServiceMock, overtimeServiceMock,
+      realFSS, routerMock, activatedRouteMock, mockToastr, mockJQuery
     );
   });
 
@@ -42,7 +44,8 @@ describe('Profile Component', () => {
     const mockClick = jest.fn();
     const jqMock = jest.fn(() => ({ click: mockClick }));
     const newComponent = new ProfileComponent(
-      authServiceMock, profileServiceMock, overtimeServiceMock, formServiceMock, mockToastr, jqMock
+      authServiceMock, notificationServiceMock, profileCheckerServiceMock,  profileServiceMock, overtimeServiceMock,
+      realFSS, routerMock, activatedRouteMock, mockToastr, jqMock
     );
     newComponent.triggerFileInput();
 
@@ -53,7 +56,8 @@ describe('Profile Component', () => {
     const mockCss = jest.fn();
     const jqMock = jest.fn(() => ({ css: mockCss }));
     const newComponent = new ProfileComponent(
-      authServiceMock, profileServiceMock, overtimeServiceMock, formServiceMock, mockToastr, jqMock
+      authServiceMock, notificationServiceMock, profileCheckerServiceMock,  profileServiceMock, overtimeServiceMock,
+      realFSS, routerMock, activatedRouteMock, mockToastr, jqMock
     );
     expect(newComponent.editMode).toBe('none');
 
@@ -75,7 +79,8 @@ describe('Profile Component', () => {
     const lineManagerPayload = { firstname: 'John', lastname: 'Doe', email: 'email' };
 
     const newComponent = new ProfileComponent(
-      authServiceMock, profileServiceMock, overtimeServiceMock, formServiceMock, mockToastr, jqMock
+      authServiceMock, notificationServiceMock, profileCheckerServiceMock,  profileServiceMock, overtimeServiceMock,
+      realFSS, routerMock, activatedRouteMock, mockToastr, jqMock
     );
     // @ts-ignore
     newComponent.currentStaff = { branch: 'someValue' };

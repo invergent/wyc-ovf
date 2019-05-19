@@ -1,6 +1,6 @@
 import { PasswordChangeComponent } from './password-change.component';
 import {
-  authServiceMock, activatedRouteMock, routerMock, mockToastr, overtimeServiceMock, mockJQuery
+  authServiceMock, activatedRouteMock, routerMock, mockToastr, overtimeServiceMock, mockJQuery, profileCheckerServiceMock
 } from '../../__mocks__';
 import { async } from '@angular/core/testing';
 
@@ -11,12 +11,16 @@ describe('Claim', () => {
   let component: PasswordChangeComponent;
 
   beforeEach(() => {
-    component = new PasswordChangeComponent(authServiceMock, overtimeServiceMock, mockToastr, mockJQuery);
+    component = new PasswordChangeComponent(
+      authServiceMock, overtimeServiceMock, profileCheckerServiceMock, routerMock, activatedRouteMock, mockToastr, mockJQuery
+    );
   });
 
   it('should toggle password input field type between "text" and "password"', () => {
     const jqueryMock = jest.fn(() => ({ prop: () => {} }));
-    const newComponent = new PasswordChangeComponent(authServiceMock, overtimeServiceMock, mockToastr, jqueryMock);
+    const newComponent = new PasswordChangeComponent(
+      authServiceMock, overtimeServiceMock, profileCheckerServiceMock, routerMock, activatedRouteMock, mockToastr, jqueryMock
+    );
     newComponent.toggleViewPasswordText('elementId');
     jest.runAllTimers();
 

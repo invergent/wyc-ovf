@@ -10,3 +10,5 @@ export * from './profile.service';
 export * from './form-submission.service';
 export * from './notification.service';
 export * from './pusher.service';
+export * from './profile-checker.service';
+export * from './enforce-profile-update.service';

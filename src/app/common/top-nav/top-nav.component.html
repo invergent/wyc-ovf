@@ -1,5 +1,9 @@
 <nav>
-  <section>
+  <section class="section-wrapper">
+    <div class="flash-message" id="flash-message">
+      <p id="f-message"></p>
+      <p class="close" id="close">Close</p>
+    </div>
     <div class="brand">
       <div [routerLink]="['/']" class="logo">
         <img src="/assets/images/logo.png" alt="Logo">
@@ -50,7 +54,5 @@
       </div>
     </div>
   </section>
-  <div class="flash-message" id="flash-message">
-    <p id="f-message"></p>
-  </div>
 </nav>
+

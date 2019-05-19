@@ -32,7 +32,7 @@
           <i class="fas fa-edit"></i>
         </div>
         <p class="details-header">Position</p>
-        <p class="details-item">{{currentStaff?.role}}</p>
+        <p class="details-item">{{currentStaff?.role || '--'}}</p>
       </div>
       <div class="details">
         <div class="edit-icon" (click)="runModalDisplay('phoneModal', 'Phone Number')">
@@ -53,7 +53,7 @@
           <i class="fas fa-edit"></i>
         </div>
         <p class="details-header">Branch</p>
-        <p class="details-item">{{currentStaff?.branch}}</p>
+        <p class="details-item">{{currentStaff?.branch || '--'}}</p>
       </div>
     </div>
     <div class="lm supervisor">
@@ -68,13 +68,13 @@
           <p>Name</p>
         </div>
         <div class="name details-item">
-          <p>{{currentStaff?.supervisorFirstName}} {{currentStaff?.supervisorLastName}}</p>
+          <p>{{currentStaff?.supervisorFirstName || '--'}} {{currentStaff?.supervisorLastName}}</p>
         </div>
         <div class="email details-header">
           <p>Email Address</p>
         </div>
         <div class="email details-item">
-          <p>{{currentStaff?.supervisorEmailAddress}}</p>
+          <p>{{currentStaff?.supervisorEmailAddress || '--'}}</p>
         </div>
       </div>
     </div>
@@ -90,13 +90,13 @@
           <p>Name</p>
         </div>
         <div class="name details-item">
-          <p>{{currentStaff?.bsmFirstName}} {{currentStaff?.bsmLastName}}</p>
+          <p>{{currentStaff?.bsmFirstName || '--'}} {{currentStaff?.bsmLastName}}</p>
         </div>
         <div class="email details-header">
           <p>Email Address</p>
         </div>
         <div class="email details-item">
-          <p>{{currentStaff?.bsmEmailAddress}}</p>
+          <p>{{currentStaff?.bsmEmailAddress || '--'}}</p>
         </div>
       </div>
     </div>
@@ -212,6 +212,24 @@
         </form>
       </div>
       <p class="close" (click)="closeModal(currentModal)">Close</p>
+    </div>
+    <div class="thanks-modal" *ngIf="thanksModal">
+      <div class="thanks-content">
+        <div class="thanks-icon-wrapper">
+          <img src="/assets/images/dance_dribbble.gif" alt="">
+        </div>
+        <div class="confirmation-text">
+          <p>Profile complete!</p>
+        </div>
+        <div class="action-buttons">
+          <button
+            class="no-cancel"
+            id="welldone"
+            type="button"
+            name="button"
+            (click)="closeModal(currentModal)">Close</button>
+        </div>
+      </div>
     </div>
   </section>
 </section>

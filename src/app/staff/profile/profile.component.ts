@@ -1,16 +1,22 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import {
   AuthService, IStaff, JQUERY_TOKEN, ProfileService, ILineManager, IBranch, IRole,
-  FormSubmissionService, TOASTR_TOKEN, IToastr, OvertimeService
+  FormSubmissionService, TOASTR_TOKEN, IToastr, OvertimeService, ProfileCheckerService, NotificationService
 } from 'src/app/shared';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, AfterViewInit {
   currentStaff: IStaff
+  firstTimeLogin
+  pendingFields: string[]
+  autoDisplay: boolean
+
+  empoweringWords: string[] = ['Great', 'Awesome', 'Cool', 'Nice', 'Good', 'Perfect', 'Superb']
 
   // edit mode toggle; Also used to display edit icon buttons
   editMode: string = 'none';
@@ -28,6 +34,7 @@ export class ProfileComponent implements OnInit {
   roleModal: boolean = false;
   supervisorModal: boolean = false;
   bsmModal: boolean = false;
+  thanksModal: boolean = false;
 
   // dropdown controls
   roleDropdown: boolean = false;
@@ -65,15 +72,72 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private notificationService: NotificationService,
+    private profileChecker: ProfileCheckerService,
     private profileService: ProfileService,
     private overtimeService: OvertimeService,
     private formSubmissionService: FormSubmissionService,
+    private route: ActivatedRoute,
+    private router: Router,
     @Inject(TOASTR_TOKEN) private toastr: IToastr,
     @Inject(JQUERY_TOKEN) private jQuery
   ) { }
 
   async ngOnInit() {
     await this.initialiseData();
+    this.updatePendingField();
+  }
+  ngAfterViewInit() {
+    this.firstTimeLogin = this.route.snapshot.queryParams['m'];
+    this.autoDisplay = true;
+    
+    if (this.firstTimeLogin) {
+      const message = this.firstTimeLogin === 'p-lm'
+        ? 'Great job changing your password! Just a few more to go.'
+        : 'You still have unfinished business.';
+
+      this.displayFlashMessage(`${message} Let's make your profile 100%.`);
+      // add close listener
+    this.jQuery('#close').click(() => this.closeFlashMessage())
+    }
+  }
+
+  updatePendingField() {
+    this.pendingFields = this.profileChecker.getPendingFields()
+  }
+
+  displayFlashMessage(message) {
+    this.jQuery('#f-message').text(message);
+    this.jQuery('#close').text('Okay');
+    setTimeout(() => this.jQuery('#flash-message').css({right: '15px', top: '150px', display: 'block', opacity: '1'}), 1500);
+  }
+
+  closeFlashMessage() {
+    this.jQuery('#flash-message').css('opacity', '0')
+    setTimeout(() => this.jQuery('#flash-message').css('display', 'none'), 500);
+
+    if (this.autoDisplay) this.leadUserToNextField();
+    this.autoDisplay = false; // just so leadusertonextfield is not called again
+  }
+
+  leadUserToNextField() {
+    this.updatePendingField();
+
+    const randNum = Math.floor(Math.random() * this.empoweringWords.length);
+    const verb = ['role'].includes(this.pendingFields[0]) ? 'select your Position' : `fill in ${this.pendingFields[0]} details`;
+
+    if (this.pendingFields.length) {
+      return this.displayFlashMessage(
+        `${this.empoweringWords[randNum]}! Now, ${verb}.`
+      );
+    }
+    this.runModalDisplay('thanksModal', '');
+    setTimeout(() => {
+      this.notificationService.playAudio('/assets/audio/tada.mp3');
+      this.jQuery('#welldone').click(() => this.router.navigate(['/logout'], { queryParams: { m: 'c' } }))
+    }, 500);
+
+    setTimeout(() => this.router.navigate(['/logout'], { queryParams: { m: 'c' } }), 4000);
   }
 
   async initialiseData() {
@@ -204,6 +268,8 @@ export class ProfileComponent implements OnInit {
       this.displayModal = 'none';
       this[currentModal] = false;
       this.displaySpinner = false;
+
+      if (!!this.firstTimeLogin) this.leadUserToNextField();
     } catch (e) {
       this.toastr.error('An error occurred');
     }

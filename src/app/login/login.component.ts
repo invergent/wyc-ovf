@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
-  AuthService, TOASTR_TOKEN, ILoginFormData, IToastr
+  AuthService, TOASTR_TOKEN, ILoginFormData, IToastr, JQUERY_TOKEN
 } from '../shared';
 import { staffIdRegex } from '../shared';
 
@@ -9,7 +9,7 @@ import { staffIdRegex } from '../shared';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   mouseoverLoginButton
   displaySpinner
   passwordFieldType = 'password';
@@ -19,8 +19,23 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    @Inject(TOASTR_TOKEN) private toastr: IToastr
+    private route: ActivatedRoute,
+    @Inject(TOASTR_TOKEN) private toastr: IToastr,
+    @Inject(JQUERY_TOKEN) private jQuery
   ) { }
+
+  ngOnInit() {
+    if (this.route.snapshot.queryParams['m']) {
+      this.toggleFlashMessage('Please login with your new password.')
+    }
+  }
+
+  toggleFlashMessage(message) {
+    this.jQuery('#f-message').text(message);
+    this.jQuery('#close').css('display', 'none');
+    setTimeout(() => this.jQuery('#flash-message').css('right', '15px'), 1000);
+    setTimeout(() => this.jQuery('#flash-message').css('right', '-400px'), 6000);
+  }
 
   toggleViewPasswordText() {
     this.passwordFieldType = 'text';

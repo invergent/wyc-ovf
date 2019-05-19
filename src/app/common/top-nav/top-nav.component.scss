@@ -5,18 +5,33 @@ nav {
   box-sizing: border-box;
   padding: 5px 20px;
   box-shadow: 2px 0px 10px 0px $faint-color-light;
-  .flash-message {
-    position: absolute;
-    top: 15px;
-    right: -400px;
-    background-color: $color-white;
-    width: 300px;
-    padding: 15px;
-    box-sizing: border-box;
-    box-shadow: 2px 0px 15px 0px $faint-color-light;
-    transition: all .4s ease-in-out;
-    p {
-      margin: 0;
+  .section-wrapper {
+    overflow-x: hidden;
+    .flash-message {
+      position: absolute;
+      top: 15px;
+      right: -400px;
+      background-color: $color-white;
+      width: 300px;
+      padding: 15px;
+      box-sizing: border-box;
+      box-shadow: 2px 0px 15px 0px $faint-color-light;
+      transition: all .4s ease-in-out;
+      z-index: 999999999;
+      .close {
+        background-color: $brand-color;
+        width: 50px;
+        padding: 10px;
+        border-radius: 5px;
+        color: $color-white;
+        box-sizing: border-box;
+        font-size: 12px;
+        cursor: pointer;
+        margin: 0 auto;
+      }
+      p {
+        margin: 0 0 30px;
+      }
     }
   }
   section {

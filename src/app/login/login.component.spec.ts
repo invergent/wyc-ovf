@@ -1,5 +1,5 @@
 import { LoginComponent } from './login.component';
-import { authServiceMock, mockToastr, routerMock } from '../__mocks__';
+import { authServiceMock, mockToastr, routerMock, activatedRouteMock, mockJQuery } from '../__mocks__';
 
 jest.useFakeTimers();
 
@@ -7,7 +7,7 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
 
   beforeEach(() => {
-    component = new LoginComponent(authServiceMock, routerMock, mockToastr);
+    component = new LoginComponent(authServiceMock, routerMock, activatedRouteMock, mockToastr, mockJQuery);
   });
 
   it('should create', () => {

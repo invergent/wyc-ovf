@@ -1,6 +1,6 @@
 import { LogoutComponent } from './logout.component';
 import {
-  authServiceMock, routerMock, overtimeServiceMock, profileServiceMock, notificationServiceMock
+  authServiceMock, routerMock, overtimeServiceMock, profileServiceMock, notificationServiceMock, activatedRouteMock
 } from '../__mocks__';
 
 jest.useFakeTimers();
@@ -10,7 +10,7 @@ describe('LoginComponent', () => {
 
   beforeEach(() => {
     component = new LogoutComponent(
-      authServiceMock, routerMock, overtimeServiceMock, profileServiceMock, notificationServiceMock
+      authServiceMock, routerMock, overtimeServiceMock, profileServiceMock, notificationServiceMock, activatedRouteMock
     );
   });
 
@@ -21,7 +21,7 @@ describe('LoginComponent', () => {
     await component.ngOnInit();
 
     expect(logoutFunc).toHaveBeenCalled();
-    expect(routerFunc).toHaveBeenCalledWith(['/']);
+    expect(routerFunc).toHaveBeenCalledWith(['/login'], {});
   });
 
   it('should display error message if logout fails.', async () => {

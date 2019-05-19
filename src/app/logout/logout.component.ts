@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService, OvertimeService, NotificationService } from '../shared';
 import { ProfileService } from '../shared';
 
@@ -23,10 +23,12 @@ export class LogoutComponent implements OnInit {
     private router: Router,
     private overtimeService: OvertimeService,
     private profileService: ProfileService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private route: ActivatedRoute
   ) { }
 
   async ngOnInit() {
+    const forced = this.route.snapshot.queryParams['m'];
     try {
       await this.authService.logout();
       this.authService.isAuthenticated = false;
@@ -35,7 +37,7 @@ export class LogoutComponent implements OnInit {
       this.profileService.profileData = null;
       this.notificationService.notifications = [];
       this.notificationService.newNotificationsCount = 0;
-      this.router.navigate(['/']);
+      this.router.navigate(['/login'], forced ?  { queryParams: { m: 'c' } } : {});
     } catch(e) {
       this.displaySpinner = false;
       this.message = 'An error occurred. Please try again.'

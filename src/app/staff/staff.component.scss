@@ -1,6 +1,9 @@
 @import '../../assets/global-styles/mixins';
 @import '../../assets/global-styles/variables';
 
+.main {
+  position: relative;
+}
 top-nav {
   position: absolute;
   width: 100%;

@@ -55,6 +55,11 @@ export const notificationServiceMock: any = {
   markNotificationAsRead: () => Promise.resolve('value')
 }
 
+export const profileCheckerServiceMock: any = {
+  getCurrentFieldsStatus: () => {},
+  getPendingFields: () => {}
+}
+
 export const pusherMock: any = {
   subscribe: () => ({
     bind_global: () => {}

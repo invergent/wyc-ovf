@@ -13,7 +13,8 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { LogoutComponent } from './logout/logout.component';
 import {
   AuthService, ProfileService, OvertimeService, RedirectToDashboard, RedirectToLogin,
-  TOASTR_TOKEN, JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService
+  TOASTR_TOKEN, JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService,
+  EnforceProfileUpdateService, ProfileCheckerService
 } from './shared';
 import { PUSHER_TOKEN } from './shared/pusher.service';
 import { environment } from 'src/environments/environment';
@@ -46,6 +47,8 @@ const pusher: IPusher = new window['Pusher'](environment.API_KEY, { cluster: 'eu
     ProfileService,
     RedirectToDashboard,
     RedirectToLogin,
+    EnforceProfileUpdateService,
+    ProfileCheckerService,
     FormSubmissionService,
     NotificationService,
     { provide: JQUERY_TOKEN, useValue: jQuery },
