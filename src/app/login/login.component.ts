@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
-  AuthService, TOASTR_TOKEN, ILoginFormData, IToastr, JQUERY_TOKEN
+  AuthService, TOASTR_TOKEN, ILoginFormData, IToastr, JQUERY_TOKEN, emailRegex
 } from '../shared';
 import { staffIdRegex } from '../shared';
 
@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   passwordFieldType = 'password';
   staffId
   password
+  isAdmin: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -43,8 +44,9 @@ export class LoginComponent implements OnInit {
   }
 
   validateFormData(formValues: ILoginFormData) {
-    const { staffId } = formValues;
-    if (!staffIdRegex.test(staffId)) return ['Staff ID is incorrect'];
+    const { staffId, email } = formValues;
+    const isValid = staffId ? staffIdRegex.test(staffId) : emailRegex.test(email);
+    if (!isValid) return [`${staffId ? 'Staff ID' : 'Email address'} is incorrect`];
     return [];
   }
 
@@ -54,13 +56,16 @@ export class LoginComponent implements OnInit {
       this.displaySpinner = false;
       return this.toastr.error(errors[0]);
     }
-
+    
+    const loginType = this.isAdmin ? 'admin/login' : 'signin';
+    
     try {
-      const response = await this.authService.login(formValues);
+      const response = await this.authService.login(formValues, loginType);
       this.toastr.success(response.message);
 
       await this.authService.authenticate();
-      return this.router.navigate(['/staff/dashboard']);
+      
+      return this.router.navigate([`/${this.isAdmin ? 'admin' : 'staff'}/dashboard`]);
     } catch(e) {
       this.displaySpinner = false;
       return this.toastr.error(e.error.message || 'Login failed. Check your connectivity.');

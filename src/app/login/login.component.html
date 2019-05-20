@@ -1,6 +1,6 @@
 <main class="login-page">
   <div class="login-nav">
-    <a [routerLink]="['/admin/login']">Log in as admin</a>
+    <a (click)="isAdmin=true">Log in as admin</a>
   </div>
   <div class="container">
     <div class="brand">
@@ -13,19 +13,36 @@
     </div>
     <div class="form-wrapper">
       <form #loginForm="ngForm" (ngSubmit)="handleSubmit(loginForm.value)" autocomplete="off" novalidate>
-        <div class="input">
-          <em
-            *ngIf="loginForm.controls.staffId?.invalid
-              && (loginForm.controls.staffId?.touched || mouseoverLoginButton)">
-            Required
-          </em>
-          <input
-            (ngModel)="staffId"
-            name="staffId"
-            type="text"
-            placeholder="Staff ID"
-            required>
-        </div>
+        <ng-template [ngIf]="isAdmin">
+          <div class="input">
+            <em
+              *ngIf="loginForm.controls.email?.invalid
+                && (loginForm.controls.email?.touched || mouseoverLoginButton)">
+              Required
+            </em>
+            <input
+              (ngModel)="email"
+              name="email"
+              type="email"
+              placeholder="Admin email address"
+              required>
+          </div>
+        </ng-template>
+        <ng-template [ngIf]="!isAdmin">
+          <div class="input">
+            <em
+              *ngIf="loginForm.controls.staffId?.invalid
+                && (loginForm.controls.staffId?.touched || mouseoverLoginButton)">
+              Required
+            </em>
+            <input
+              (ngModel)="staffId"
+              name="staffId"
+              type="text"
+              placeholder="Staff ID"
+              required>
+          </div>
+        </ng-template>
         <div class="input">
           <em
             *ngIf="loginForm.controls.password?.invalid

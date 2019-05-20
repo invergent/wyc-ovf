@@ -81,7 +81,7 @@ export interface IActivity {
 
 export interface ILoginFormData {
   staffId?: string,
-  emailAddress?: string,
+  email?: string,
   password?: string
   staffIdOrEmail?: string
 }

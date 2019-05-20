@@ -19,7 +19,7 @@ describe('AuthService Service', () => {
   it('should make a post request to the api to log the user in.', async () => {
     const httpPost = jest.spyOn(httpMock, 'post');
 
-    await service.login({ staffId: 'someStaffID', password: 'somePassword' });
+    await service.login({ staffId: 'someStaffID', password: 'somePassword' }, 'signin');
 
     expect(httpPost).toHaveBeenCalled();
   });

@@ -34,8 +34,8 @@ export class AuthService {
     return this.http.get<IGetStaffProfile>(`${this.api}/users/profile`, this.options).toPromise();
   }
 
-  login(userCredentials: ILoginFormData): Promise<any> {
-    return this.http.post(`${this.api}/signin`, userCredentials, this.options).toPromise();
+  login(userCredentials: ILoginFormData, loginType: string): Promise<any> {
+    return this.http.post(`${this.api}/${loginType}`, userCredentials, this.options).toPromise();
   }
 
   logout(): Promise<any> {
