@@ -21,7 +21,7 @@ describe('LoginComponent', () => {
     await component.ngOnInit();
 
     expect(logoutFunc).toHaveBeenCalled();
-    expect(routerFunc).toHaveBeenCalledWith(['/login'], {});
+    expect(routerFunc).toHaveBeenCalledWith(['/login'], { queryParams: { m: 'c' } });
   });
 
   it('should display error message if logout fails.', async () => {

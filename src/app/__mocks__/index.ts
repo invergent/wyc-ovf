@@ -1,7 +1,15 @@
 export const authServiceMock: any = {
   api: 'some-url',
   isAuthenticated: false,
-  currentStaff: { firstname: 'somename', role: 'someRole', staffId: 'someId' },
+  currentStaff: {
+    firstname: 'somename',
+    role: 'someRole',
+    staffId: 'someId',
+    changePassword: false,
+    supervisorEmailAddress: null,
+    bsmEmailAddress: null,
+    branch: null
+  },
   authenticate: () => Promise.resolve({ data: {} }),
   fetchStaffProfile: () => Promise.resolve('value'),
   login: () => Promise.resolve('value'),
@@ -57,7 +65,7 @@ export const notificationServiceMock: any = {
 
 export const profileCheckerServiceMock: any = {
   getCurrentFieldsStatus: () => {},
-  getPendingFields: () => {}
+  getPendingFields: () => []
 }
 
 export const pusherMock: any = {
@@ -107,7 +115,8 @@ export const mockJQuery: any = jest.fn().mockReturnValue({
   val: () => 'someDate',
   css: () => ({ css: () => {} }),
   prop: () => {},
-  text: () => {}
+  text: () => {},
+  click: () => {}
 })
 
 export const routerMock: any = {
@@ -117,7 +126,8 @@ export const routerMock: any = {
 export const activatedRouteMock: any = {
   snapshot: {
     queryParams: {
-      hash: 'somehash'
+      hash: 'somehash',
+      m: 'value'
     }
   }
 }

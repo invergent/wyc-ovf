@@ -12,7 +12,7 @@ describe('Profile Component', () => {
   beforeEach(() => {
     component = new ProfileComponent(
       authServiceMock, notificationServiceMock, profileCheckerServiceMock,  profileServiceMock, overtimeServiceMock,
-      realFSS, routerMock, activatedRouteMock, mockToastr, mockJQuery
+      realFSS,activatedRouteMock, routerMock, mockToastr, mockJQuery
     );
   });
 
@@ -23,6 +23,20 @@ describe('Profile Component', () => {
 
     expect(profileMock).toHaveBeenCalled();
     expect(component.currentStaff.firstname).toBe('somename');
+  });
+
+  it('should display flash message and add listener for clicks', () => {
+    component.ngAfterViewInit();
+
+    expect(component.firstTimeLogin).toBe('value');
+    expect(component.autoDisplay).toBe(true);
+  });
+
+  it('should close flash message and display message to lead user to next step.', () => {
+    component.autoDisplay = true;
+    component.closeFlashMessage();
+
+    expect(component.autoDisplay).toBe(false);
   });
 
   it('should sync staff data with API', async () => {

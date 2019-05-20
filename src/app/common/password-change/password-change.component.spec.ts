@@ -16,6 +16,15 @@ describe('Claim', () => {
     );
   });
 
+  it('should display flash message and set a listener for clicks', () => {
+    component.ngAfterViewInit();
+    expect(component.firstTimeLogin).toBeTruthy();
+  });
+
+  it('should close displayed flash message', () => {
+    const result = component.closeFlashMessage();
+    expect(result).toBeUndefined();
+  })
   it('should toggle password input field type between "text" and "password"', () => {
     const jqueryMock = jest.fn(() => ({ prop: () => {} }));
     const newComponent = new PasswordChangeComponent(

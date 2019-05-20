@@ -124,7 +124,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.updatePendingField();
 
     const randNum = Math.floor(Math.random() * this.empoweringWords.length);
-    const verb = ['role'].includes(this.pendingFields[0]) ? 'select your Position' : `fill in ${this.pendingFields[0]} details`;
+    const verb = this.pendingFields[0] === 'role' ? 'select your Position' : `fill in ${this.pendingFields[0]} details`;
 
     if (this.pendingFields.length) {
       return this.displayFlashMessage(

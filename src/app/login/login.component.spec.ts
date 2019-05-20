@@ -10,9 +10,16 @@ describe('LoginComponent', () => {
     component = new LoginComponent(authServiceMock, routerMock, activatedRouteMock, mockToastr, mockJQuery);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('should display flash message if query param is set', () => {
+    component.ngOnInit();
+    //@ts-ignore
+    expect(component.route.snapshot.queryParams.m).toBe('value');
+    //@ts-ignore
+    component.route.snapshot.queryParams.m = undefined;
+    component.ngOnInit();
+    //@ts-ignore
+    expect(component.route.snapshot.queryParams.m).toBe(undefined);
+  })
 
   it('should return errors if provided staffId fails staffIdRegex test.', async () => {
     const toastrError = jest.spyOn(mockToastr, 'error');
