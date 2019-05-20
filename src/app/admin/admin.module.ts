@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { CommonComponentsModule } from '../common/common-components.module';
 import { AdminComponent } from './admin.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminRoutingModule } from './admin-routing.module';
@@ -13,6 +15,7 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
 @NgModule({
   imports: [
     CommonModule,
+    CommonComponentsModule,
     AdminRoutingModule
   ],
   declarations: [

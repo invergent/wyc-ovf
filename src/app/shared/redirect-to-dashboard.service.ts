@@ -7,6 +7,9 @@ export class RedirectToDashboard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) {}
 
   async canActivate() {
-    return this.authService.isAuthenticated ? this.router.navigate(['/staff/dashboard']) : true;
+    const isAdmin = this.authService.isAdmin;
+    return this.authService.isAuthenticated
+      ? this.router.navigate([`/${isAdmin ? 'admin' : 'staff'}/dashboard`])
+      : true;
   }
 }

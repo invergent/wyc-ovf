@@ -22,6 +22,13 @@ describe('LoginComponent', () => {
 
     expect(logoutFunc).toHaveBeenCalled();
     expect(routerFunc).toHaveBeenCalledWith(['/login'], { queryParams: { m: 'c' } });
+
+    jest.clearAllMocks();
+    //@ts-ignore
+    component.route.snapshot.queryParams.m = undefined;
+
+    await component.ngOnInit();
+    expect(routerFunc).toHaveBeenCalledWith(['/login'], {});
   });
 
   it('should display error message if logout fails.', async () => {

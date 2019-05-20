@@ -19,6 +19,11 @@ describe('Claim', () => {
   it('should display flash message and set a listener for clicks', () => {
     component.ngAfterViewInit();
     expect(component.firstTimeLogin).toBeTruthy();
+    //@ts-ignore
+    component.route.snapshot.queryParams.m = undefined;
+
+    component.ngAfterViewInit();
+    expect(component.firstTimeLogin).toBeFalsy();
   });
 
   it('should close displayed flash message', () => {

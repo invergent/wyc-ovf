@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent {
+  sideNavLeft = '-300px';
 
-  constructor() { }
+  constructor(){}
 
-  ngOnInit() {
+  toggleSideNav(source) {
+    if (source === 'navItem') {
+      this.sideNavLeft = '-300px';
+    } else {
+      this.sideNavLeft = this.sideNavLeft === '-300px' ? '0' : '-300px';
+    }
   }
 
 }

@@ -13,12 +13,14 @@ export class AuthService {
   }
   currentStaff: IStaff
   isAuthenticated: boolean = false;
+  isAdmin: boolean = false;
 
   async authenticate():Promise<boolean> {
     try {
       const { data } = await this.fetchStaffProfile();
       this.currentStaff = data;
       this.isAuthenticated = true;
+      if (this.currentStaff.role === 'Admin') this.isAdmin = true;
       return true;
     } catch(e) {
       return false;

@@ -1,1 +1,89 @@
-<router-outlet></router-outlet>
+<main class="main">
+  <top-nav (sideNavToggleEvent)="toggleSideNav($event)"></top-nav>
+  <article class="content-wrapper">
+    <section class="side-nav" (click)="toggleSideNav('self')" [ngStyle]="{left: sideNavLeft}">
+      <div class="side-nav-tags">
+        <p>Overview</p>
+      </div>
+      <a
+        [routerLink]="['/admin/dashboard']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-tachometer-alt"></i>
+        </div>
+        <p>Dashboard</p>
+      </a>
+      <a
+        [routerLink]="['/admin/claims']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="far fa-clock"></i>
+        </div>
+        <p>Claims</p>
+      </a>
+      <div class="side-nav-tags">
+        <p>Administration</p>
+      </div>
+      <a
+        [routerLink]="['/admin/staff']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-users"></i>
+        </div>
+        <p>Staff</p>
+      </a>
+      <a
+        [routerLink]="['/admin/branch']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-university"></i>
+        </div>
+        <p>Branch</p>
+      </a>
+      <a
+        [routerLink]="['/admin/settings']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-cogs"></i>
+        </div>
+        <p>Settings</p>
+      </a>
+      <div class="side-nav-tags">
+        <p>Personal</p>
+      </div>
+      <a
+        [routerLink]="['/admin/profile']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-user"></i>
+        </div>
+        <p>Profile</p>
+      </a>
+      <a
+        [routerLink]="['/admin/change-password']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-lock"></i>
+        </div>
+        <p>Change password</p>
+      </a>
+    </section>
+    <section class="content">
+      <router-outlet></router-outlet>
+    </section>
+  </article>
+</main>

@@ -229,7 +229,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   filterArray(value, arrayProp) {
     return this[arrayProp].filter((item) => {
       if (item.name) {
-        return item.name.toLowerCase().includes(value.toLowerCase());
+        const itemName = item.name.toLowerCase();
+        return itemName.includes(value.toLowerCase()) && !itemName.includes('admin');
       }
       return item.email.includes(value.toLowerCase());
     });
