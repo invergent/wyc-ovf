@@ -29,7 +29,8 @@
             "styles": [
               "node_modules/air-datepicker/dist/css/datepicker.min.css",
               "node_modules/toastr/build/toastr.min.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.base.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

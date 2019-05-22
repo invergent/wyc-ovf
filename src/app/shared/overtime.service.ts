@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {
   IGetStatistics, IGetPendingClaim, IGetActivities, IPostOvertimeRequest, IValidClaimRequest,
-  IClaimStatistics, IClaim, IActivity, IStaffClaimData, IGetClaimHistory
+  IStaffClaimData, IGetClaimHistory, IGetAdminClaimsData, IAdminDashboardData, IGetChartStatistics
 } from './models';
 
 @Injectable()
@@ -15,6 +15,7 @@ export class OvertimeService {
     withCredentials: true
   }
   staffClaimData: IStaffClaimData
+  adminClaimData: IAdminDashboardData
 
   async initialiseStaffData(): Promise<boolean> {
     try {
@@ -29,13 +30,33 @@ export class OvertimeService {
     }
   }
 
+  async initialiseAdminData(): Promise<boolean> {
+    try {
+      const { data: monthlyStat } = await this.fetchAdminClaimsData();
+      const { data: chartStats } = await this.fetchChartStatistics();
+      this.adminClaimData = { monthlyStat, chartStats };
+      return true;
+    } catch(e) {
+      throw new Error();
+    }
+  }
+
   async fetchStaffData() {
     if (!this.staffClaimData) await this.initialiseStaffData();
     return this.staffClaimData;
   }
 
+  async fetchAdminData() {
+    if (!this.adminClaimData) await this.initialiseAdminData();
+    return this.adminClaimData;
+  }
+
   syncWithAPI() {
     return this.initialiseStaffData();
+  }
+
+  syncAdminWithAPI() {
+    return this.initialiseAdminData();
   }
 
   fetchStaffClaimStatistics(): Promise<IGetStatistics> {
@@ -61,4 +82,13 @@ export class OvertimeService {
   cancelClaim(claimId: number): Promise<IPostOvertimeRequest> {
     return this.http.delete<IPostOvertimeRequest>(`${this.api}/users/claims/${claimId}`, this.options).toPromise();
   }
+
+  fetchAdminClaimsData(): Promise<IGetAdminClaimsData> {
+    return this.http.get<IGetAdminClaimsData>(`${this.api}/admin/claims`, this.options).toPromise();
+  }
+
+  fetchChartStatistics(): Promise<IGetChartStatistics> {
+    return this.http.get<IGetChartStatistics>(`${this.api}/admin/claims/chart-statistics`, this.options).toPromise();
+  }
 }
+

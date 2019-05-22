@@ -130,10 +130,11 @@ export interface IPusher {
 }
 
 export interface IClaimStatistics {
-  total: number,
-  completed: number,
-  declined: number,
-  cancelled: number
+  total: number
+  completed: number
+  declined: number
+  cancelled?: number
+  pending?: number
 }
 
 export interface IStaffClaimData {
@@ -141,6 +142,38 @@ export interface IStaffClaimData {
   pendingClaim?: IClaim,
   activities?: IActivity[]
   claimHistory?: IClaim[]
+}
+
+export interface IAdminClaimData {
+  statistics: IClaimStatistics
+  claims: IClaim[]
+}
+
+export interface IChartData {
+  tenantRef: string
+  year: number
+  Jan: number
+  Feb: number
+  Mar: number
+  Apr: number
+  May: number
+  Jun: number
+  Jul: number
+  Aug: number
+  Sep: number
+  Oct: number
+  Nov: number
+  Dec: number
+}
+
+export interface IChartSourceData {
+  Month: string
+  claims: number
+}
+
+export interface IAdminDashboardData {
+  monthlyStat: IAdminClaimData
+  chartStats: IChartData
 }
 
 export interface IProfileData {
@@ -244,4 +277,14 @@ export interface IGetNotification {
 export interface IPutNotification {
   message: string
   data: INotification
+}
+
+export interface IGetAdminClaimsData {
+  message: string
+  data: IAdminClaimData
+}
+
+export interface IGetChartStatistics {
+  message: string
+  data: IChartData
 }

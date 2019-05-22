@@ -1,3 +1,46 @@
-<p>
-  admin-dashboard works!
-</p>
+<div *ngIf="showLoader || !!errorMessage" class="loader">
+  <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
+  <p *ngIf="!!errorMessage">{{errorMessage}}</p>
+</div>
+<section *ngIf="!showLoader && !errorMessage" class="dashboard">
+  <section class="page-title">
+    <p>Dashboard</p>
+  </section>
+  <section class="salutation">
+    <p>Hi {{staffFirstName}}! A beautiful day, huh?</p>
+  </section>
+  <section class="statistics">
+    <div class="stats stat-total">
+      <p class="stat-title">Total</p>
+      <p class="stat-number">{{claimStatistics?.total}}</p>
+      <div class="stat-icon">
+        <img src="/assets/images/total.png" alt="Total Icon">
+      </div>
+    </div>
+    <div class="stats stat-completed">
+      <p class="stat-title">Approved</p>
+      <p class="stat-number">{{claimStatistics?.approved}}</p>
+      <div class="stat-icon">
+        <img src="/assets/images/completed.png" alt="Completed Icon">
+      </div>
+    </div>
+    <div class="stats stat-declined">
+      <p class="stat-title">Declined</p>
+      <p class="stat-number">{{claimStatistics?.declined}}</p>
+      <div class="stat-icon">
+        <img src="/assets/images/declined.png" alt="Declined Icon">
+      </div>
+    </div>
+    <div class="stats stat-cancelled">
+      <p class="stat-title">Pending</p>
+      <p class="stat-number">{{claimStatistics?.pending}}</p>
+      <div class="stat-icon">
+        <img src="/assets/images/pending.png" alt="Pending Icon">
+      </div>
+    </div>
+  </section>
+  <section class="stat-line-graph">
+    <claims-graph></claims-graph>
+  </section>
+</section>
+  

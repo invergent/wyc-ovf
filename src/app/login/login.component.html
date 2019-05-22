@@ -1,6 +1,6 @@
 <main class="login-page">
   <div class="login-nav">
-    <a (click)="isAdmin=true">Log in as admin</a>
+    <a (click)="isAdmin=!isAdmin">Log in as {{isAdmin?'staff':'admin'}}</a>
   </div>
   <div class="container">
     <div class="brand">

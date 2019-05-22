@@ -32,6 +32,20 @@ describe('Overtime Service', () => {
     expect(staffClaimHistory).toHaveBeenCalled();
   });
 
+  it('should initialise admin data.', async () => {
+    // @ts-ignore-start
+    const adminData = jest.spyOn(service, 'fetchAdminClaimsData').mockResolvedValue({});
+    // @ts-ignore-start
+    const chartData = jest.spyOn(service, 'fetchChartStatistics').mockResolvedValue({});
+
+
+    const result = await service.initialiseAdminData();
+
+    expect(result).toBe(true);
+    expect(adminData).toHaveBeenCalled();
+    expect(chartData).toHaveBeenCalled();
+  });
+
   it('should initialise staff data.', async () => {
     // @ts-ignore-start
     jest.spyOn(service, 'fetchStaffClaimStatistics').mockRejectedValue('err');
@@ -43,44 +57,71 @@ describe('Overtime Service', () => {
     }
   });
 
+  it('should throw an error if error occurs while initialising admin data.', async () => {
+    // @ts-ignore-start
+    jest.spyOn(service, 'fetchAdminClaimsData').mockRejectedValue('err');
+
+    try {
+      await service.initialiseAdminData();
+    } catch(e) {
+      expect(e).toBeInstanceOf(Error);
+    }
+  });
+
   it('should fetch staff data.', async () => {
     const httpGet = jest.spyOn(httpMock, 'get');
 
     await service.fetchStaffClaimStatistics();
     await service.fetchStaffPendingClaim();
     await service.fetchStaffActivities();
+    await service.fetchAdminClaimsData();
+    await service.fetchChartStatistics();
 
-    expect(httpGet).toHaveBeenCalledTimes(3);
+    expect(httpGet).toHaveBeenCalledTimes(5);
   });
 
   it('should prompt data initialisation', async () => {
     //@ts-ignore
     const initialiseStaffData = jest.spyOn(service, 'initialiseStaffData').mockImplementation(() => {});
+    //@ts-ignore
+    const initialiseAdminData = jest.spyOn(service, 'initialiseAdminData').mockImplementation(() => {});
+    service.staffClaimData = null;
     service.staffClaimData = null;
 
     await service.fetchStaffData();
+    await service.fetchAdminData();
 
     expect(initialiseStaffData).toHaveBeenCalledTimes(1);
+    expect(initialiseAdminData).toHaveBeenCalledTimes(1);
   });
 
   it('should not prompt data initialisation but return staff data.', async () => {
     jest.resetAllMocks();
     jest.clearAllMocks();
     const initialiseData = jest.spyOn(service, 'initialiseStaffData');
+    const initialiseAdminData = jest.spyOn(service, 'initialiseStaffData');
     service.staffClaimData = {};
+    //@ts-ignore
+    service.adminClaimData = {};
 
     await service.fetchStaffData();
+    await service.fetchAdminData();
 
     expect(initialiseData).toHaveBeenCalledTimes(0);
+    expect(initialiseAdminData).toHaveBeenCalledTimes(0);
   });
 
   it('should sync API data when user makes changes to database.', async () => {
     //@ts-ignore
     const initialiseStaffData = jest.spyOn(service, 'initialiseStaffData').mockImplementation(() => {});
+    //@ts-ignore
+    const initialiseAdminData = jest.spyOn(service, 'initialiseAdminData').mockImplementation(() => {});
 
     await service.syncWithAPI();
+    await service.syncAdminWithAPI();
 
     expect(initialiseStaffData).toHaveBeenCalled();
+    expect(initialiseAdminData).toHaveBeenCalled();
   });
 
   it('should make a post request to create overtime request.', () => {
