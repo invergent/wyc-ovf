@@ -35,6 +35,7 @@ export class OvertimeService {
       const { data: monthlyStat } = await this.fetchAdminClaimsData();
       const { data: chartStats } = await this.fetchChartStatistics();
       this.adminClaimData = { monthlyStat, chartStats };
+      
       return true;
     } catch(e) {
       throw new Error();
@@ -89,6 +90,11 @@ export class OvertimeService {
 
   fetchChartStatistics(): Promise<IGetChartStatistics> {
     return this.http.get<IGetChartStatistics>(`${this.api}/admin/claims/chart-statistics`, this.options).toPromise();
+  }
+
+  exportApprovedClaims(): Promise<any> {
+    return this.http.get<any>(`${this.api}/admin/claims/export/excel`,
+      { responseType: 'arrayBuffer' as 'json', withCredentials: true }).toPromise();
   }
 }
 

@@ -14,8 +14,8 @@
     </div>
   </div>
   <div class="claim-table">
-    <p *ngIf="!claims[0]?.monthOfClaim">You currently have no records here.</p>
-    <div *ngIf="!!claims[0]?.monthOfClaim" class="table-wrapper">
+    <p *ngIf="!claims?.length">You currently have no records here.</p>
+    <div *ngIf="!!claims?.length" class="table-wrapper">
       <table>
         <thead>
           <tr>

@@ -25,6 +25,7 @@
     "air-datepicker": "^2.2.3",
     "core-js": "^2.6.8",
     "express": "^4.16.4",
+    "file-saver": "^2.0.2",
     "jqwidgets-scripts": "^8.0.0",
     "pusher-js": "^4.4.0",
     "rxjs": "^6.3.3",

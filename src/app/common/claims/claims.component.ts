@@ -7,7 +7,7 @@ import { IClaim } from '../../shared';
   styleUrls: ['./claims.component.scss']
 })
 export class ClaimsComponent implements OnChanges {
-  @Input() claims: IClaim[]
+  @Input() claims: IClaim[] = []
   @Input() statuses: string[]
   visibleClaims: IClaim[]
   currentPageClaims: IClaim[]

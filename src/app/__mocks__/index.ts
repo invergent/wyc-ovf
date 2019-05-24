@@ -30,9 +30,10 @@ export const overtimeServiceMock: any = {
   fetchStaffClaimHistory: () => Promise.resolve('value'),
   cancelClaim: () => Promise.resolve('value'),
   createOvertimeRequest: () => Promise.resolve({ message: 'created successfully!' }),
-  fetchAdminData: () => Promise.resolve({ monthlyStat: { statistics: 'value' } }),
+  fetchAdminData: () => Promise.resolve({ monthlyStat: { statistics: 'value', submittedClaims: [{}] } }),
   fetchAdminClaimsData: () => Promise.resolve({ data: {} }),
   fetchChartStatistics: () => Promise.resolve({ data: {} }),
+  exportApprovedClaims: () => Promise.resolve({}),
   adminClaimData: {
     chartStats: {
       Jan: null,

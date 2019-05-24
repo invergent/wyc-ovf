@@ -9,7 +9,6 @@ export class EnforceProfileUpdateService implements CanActivate {
 
   canActivate() {
     const pendingFields = this.profileChecker.getPendingFields();
-    console.log(pendingFields);
     
     if (pendingFields.includes('changedPassword')) {
       return this.router.navigate(['/staff/change-password'], { queryParams: { m: 'p' } });

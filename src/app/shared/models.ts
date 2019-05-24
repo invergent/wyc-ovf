@@ -146,7 +146,7 @@ export interface IStaffClaimData {
 
 export interface IAdminClaimData {
   statistics: IClaimStatistics
-  claims: IClaim[]
+  submittedClaims: IClaim[]
 }
 
 export interface IChartData {

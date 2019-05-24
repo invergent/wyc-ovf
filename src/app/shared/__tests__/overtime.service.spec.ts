@@ -151,4 +151,12 @@ describe('Overtime Service', () => {
 
     expect(httpGet).toHaveBeenCalledWith(url, service.options);
   });
+
+  it('should make a get request to download claims.', async () => {
+    const httpGet = jest.spyOn(httpMock, 'get').mockImplementation(() => ({ toPromise: () => {} }));
+
+    await service.exportApprovedClaims();
+
+    expect(httpGet).toHaveBeenCalled();
+  });
 });
