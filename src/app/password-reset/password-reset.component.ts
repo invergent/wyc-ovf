@@ -58,5 +58,4 @@ export class PasswordResetComponent implements OnInit {
       return this.toastr.error('Password reset failed.');
     }
   }
-
 }

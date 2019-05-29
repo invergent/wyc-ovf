@@ -16,6 +16,14 @@ export interface IStaff {
   bsmEmailAddress: string
 }
 
+export interface IStaffForAdmin {
+  staffId: string
+  firstname: string
+  lastname: string
+  emailAddress: string
+  image: string
+}
+
 export interface IProfileUpdate {
   staffId?: string,
   firstname?: string,
@@ -84,6 +92,14 @@ export interface ILoginFormData {
   email?: string,
   password?: string
   staffIdOrEmail?: string
+}
+
+export interface ICreateStaffData {
+  staffId: string
+  firstname: string
+  lastname: string
+  email: string
+  phone: string
 }
 
 export interface IPasswordReset {
@@ -180,6 +196,7 @@ export interface IProfileData {
   lineManagers?: ILineManager[],
   branches?: IBranch[],
   roles?: IRole[]
+  staffList?: IStaffForAdmin[]
 }
 
 export interface IApprovalHistory {
@@ -203,6 +220,11 @@ export interface IRole {
 export interface IGetStaffProfile {
   message: string,
   data: IStaff
+}
+
+export interface IGetStaffList {
+  message: string,
+  data: IStaffForAdmin[]
 }
 
 export interface IGetStatistics {

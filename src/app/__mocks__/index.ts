@@ -46,14 +46,16 @@ export const profileServiceMock: any = {
   api: 'some-url',
   profileData: {},
   initialiseProfileData: () => Promise.resolve(true),
-  fetchProfileData: () => Promise.resolve({ lineManagers: [], branches: [], roles: [] }),
+  fetchProfileData: () => Promise.resolve({ lineManagers: [], branches: [], roles: [], staffList: [] }),
   syncWithAPI: () => {},
   fetchLineManagers: () => Promise.resolve({ data: 'value' }),
   fetchBanches: () => Promise.resolve({ data: 'value' }),
   fetchRoles: () => Promise.resolve({ data: 'value' }),
   updateImage: () => Promise.resolve('value'),
   updatePersonalInfo: () => Promise.resolve('value'),
-  updateLineManagerInfo: () => Promise.resolve('value')  
+  updateLineManagerInfo: () => Promise.resolve('value'),
+  createSingleStaff: () => Promise.resolve({ message: 'value' }),
+  createBulkStaff: () => Promise.resolve({ message: 'value' })
 }
 
 export const notificationServiceMock: any = {

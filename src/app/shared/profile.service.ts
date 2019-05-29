@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-import { IGetLineManagers, IGetBranches, IGetRoles, IProfileData, IPutProfile, IProfileUpdate, IPostImage } from "./models";
+import {
+  IGetLineManagers, IGetBranches, IGetRoles, IProfileData, IPutProfile, IProfileUpdate,
+  IPostImage, IGetStaffProfile, IGetStaffList, ICreateStaffData
+} from "./models";
 
 @Injectable()
 export class ProfileService {
@@ -20,7 +23,8 @@ export class ProfileService {
       const { data: lineManagers } = await this.fetchLineManagers();
       const { data: branches } = await this.fetchBranches();
       const { data: roles } = await this.fetchRoles();
-      this.profileData = { lineManagers, branches, roles };
+      const { data: staffList } = await this.fetchStaff();
+      this.profileData = { lineManagers, branches, roles, staffList };
       return true;
     } catch(e) {
       throw new Error();
@@ -48,6 +52,10 @@ export class ProfileService {
     return this.http.get<IGetRoles>(`${this.api}/roles`, this.options).toPromise();
   }
 
+  fetchStaff(): Promise<IGetStaffList> {
+    return this.http.get<IGetStaffList>(`${this.api}/admin/staff`, this.options).toPromise();
+  }
+
   updateImage(imageData): Promise<IPostImage> {
     const imageOptions = { withCredentials: true };
     return this.http.post<IPostImage>(`${this.api}/users/profile/image`, imageData, imageOptions).toPromise();
@@ -59,5 +67,13 @@ export class ProfileService {
 
   updateLineManagerInfo(updatePayload: IProfileUpdate): Promise<IPutProfile> {
     return this.http.post<IPutProfile>(`${this.api}/users/profile/line-manager`, updatePayload, this.options).toPromise();
+  }
+
+  createBulkStaff(excelData) {
+    return this.http.post<IPutProfile>(`${this.api}/admin/staff`, excelData, { withCredentials: true }).toPromise();
+  }
+
+  createSingleStaff(staffData: ICreateStaffData) {
+    return this.http.post(`${this.api}/admin/staff/single`, staffData, this.options).toPromise();
   }
 }

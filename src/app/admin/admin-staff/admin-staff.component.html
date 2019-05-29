@@ -1,3 +1,105 @@
-<p>
-  admin-staff works!
-</p>
+<div class="staff">
+  <div class="page-title">
+    <p>Staff</p>
+  </div>
+  <div class="function-div">
+    <div class="filter-section">
+      <p class="action-labels">Filter by staff name:</p>
+      <input #filterQuery type="text" placeholder="Filter staff by name" (input)="handleFiltering(filterQuery.value)">
+    </div>
+    <div class="add-section">
+      <p class="action-labels">Add new staff:</p>
+      <div class="add-buttons-wrapper">
+        <button class="add-buttons single" (click)="runModalDisplay('singleModal', 'Add single user')">Single</button>
+        <button class="add-buttons bulk" (click)="runModalDisplay('bulkModal', 'Add bulk users')">Bulk</button>
+      </div>
+    </div>
+  </div>
+  <div class="staff-table">
+    <p *ngIf="!visibleStaffList.length">No records.</p>
+    <div *ngIf="!!visibleStaffList.length" class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Staff ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email address</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let staff of currentPageStaffList">
+          <tr>
+            <td>
+              <div class="avatar">
+                <img src="{{staff.image | transformImage}}" alt="Avatar">
+              </div>
+            </td>
+            <td>{{staff?.staffId}}</td>
+            <td>{{staff?.firstname || '--'}}</td>
+            <td>{{staff?.lastname || '--'}}</td>
+            <td>{{staff?.emailAddress}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="visibleStaffList.length>staffPerPage" class="pagination">
+    <div class="navigation">
+      <button [disabled]="currentPage<=1" class="prev" (click)="prevPage()">Prev</button>
+      <p><span>{{currentPage}}</span>of<span>{{totalPages}}</span></p>
+      <button [disabled]="currentPage>=totalPages" class="next" (click)="nextPage()">Next</button>
+    </div>
+  </div>
+  <!-- <div class="staff-count">
+    <div>
+      <p class="total-staff-number">{{staffList.length}}</p>
+      <p class="total-staff-label">Total</p>
+    </div>
+  </div> -->
+  <section [ngStyle]="{display: displayModal}" class="add-modal-section">
+    <div class="add-modal">
+      <div class="page-title">
+        <p>{{modalTitle}}</p>
+      </div>
+      <div class="form-wrapper">
+        <form [ngSwitch]="true" #addStaffForm="ngForm" (ngSubmit)="handleSubmit(addStaffForm.value, currentModal)" autocomplete="off" novalidate>
+          <ng-template [ngSwitchCase]="bulkModal">
+            <div class="input">
+              <p (click)="triggerFileInput()" class="input-button">Click to select excel file</p>
+              <input #fileInput type="file" id="fileInput" (input)="handleFileInput(fileInput)" accept=".xlsx" required>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="singleModal">
+            <div class="input">
+              <input [(ngModel)]="staffId" name="staffId" type="text" placeholder="Staff ID" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="firstname" name="firstname" type="text" placeholder="First name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="lastname" name="lastname" type="text" placeholder="Last name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="email" name="email" type="email" placeholder="Email address" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="phone" name="phone" type="tel" placeholder="Phone number" required>
+            </div>
+          </ng-template>
+          <div class="button">
+            <button
+              [disabled]="addStaffForm.invalid || (bulkModal && fileInvalid)"
+              (click)="displaySpinner=true"
+              type="submit"
+              name="submit">
+              Submit
+              <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+      <p class="close" (click)="closeModal(currentModal)">Close</p>
+    </div>
+  </section>
+</div>

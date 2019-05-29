@@ -6,7 +6,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
@@ -58,6 +57,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   // image
   imagePreview: any
   imageFile: any
+  fileInvalid: boolean = true // used to disable button when invalid
 
   // hidden input controls
   roleId
@@ -237,7 +237,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   handleImagePreview(e) {
-    this.imageFile = e.target.files[0];
+    this.fileInvalid = !e.value; // toggle disability of submit button based in file input value
+    
+    this.imageFile = e.files[0];
     const reader = new FileReader(); //eslint-disable-line
     reader.readAsDataURL(this.imageFile);
     reader.addEventListener('load', () => {
@@ -248,7 +250,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   async handleSubmit(formValues, currentModal) {
     const updateMethod = this.formSubmissionService.getUpdateMethod(currentModal);
     const formData = currentModal === 'imageModal'
-      ? this.formSubmissionService.imageSubmit(this.imageFile)
+      ? this.formSubmissionService.fileSubmit('image', this.imageFile)
       : this.formSubmissionService.profileInfoSubmit(formValues);
   
     if (formData.errors.length) return formData.errors.forEach(error => this.toastr.error(error));

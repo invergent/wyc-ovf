@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
-import { emptyRegex, emailRegex, phoneNumberRegex } from "./utils";
+import { emptyRegex, emailRegex, phoneNumberRegex, staffIdRegex } from "./utils";
 
 @Injectable()
 export class FormSubmissionService {
   constructor() {}
 
   validateProfileInfo(formValues) {
-    const { firstname, lastname, email, phone } = formValues;
+    const { staffId, firstname, lastname, email, phone } = formValues;
     const errors = [];
+    if (staffId) errors.push(...this.checkFields('Staff ID', staffId, staffIdRegex));
     if (firstname) errors.push(...this.checkFields('First name', firstname, emptyRegex));
     if (lastname) errors.push(...this.checkFields('Last name', lastname, emptyRegex));
     if (email) errors.push(...this.checkFields('Email address', email, emailRegex));
@@ -20,30 +21,28 @@ export class FormSubmissionService {
     if (!regex.test(fieldValue.trim())) return [`${field} value is invalid`];
   }
 
-  imageSubmit(file) {
+  fileSubmit(filePropName, file) {
     const formData = new FormData();
-    formData.append('image', file, file.name);
+    formData.append(filePropName, file, file.name);
     
     return { data: formData, errors: [] };
   }
 
   profileInfoSubmit(formValues) {
-    let { firstname, lastname, email } = formValues;
+    let { staffId, firstname, lastname, email, phone } = formValues;
     const errors = this.validateProfileInfo(formValues);
 
+    if (staffId) formValues.staffId = staffId.trim().toUpperCase();
     if (firstname) formValues.firstname = this.nameSanitizer(firstname);
     if (lastname) formValues.lastname = this.nameSanitizer(lastname);
-    if (email) formValues.email = this.emailSanitizer(email);
+    if (email) formValues.email = email.trim().toLowerCase();
+    if (phone) formValues.phone = phone.trim();
     
     return { data: formValues, errors };
   }
   nameSanitizer(string) {
     const trimmedString = string.trim().toLowerCase();
     return `${trimmedString.charAt(0).toUpperCase()}${trimmedString.slice(1)}`;
-  }
-
-  emailSanitizer(string) {
-    return string.trim().toLowerCase();
   }
 
   addLineManagerRole(currentModal) {
@@ -63,7 +62,9 @@ export class FormSubmissionService {
     const updateMethods = {
       imageModal: 'updateImage',
       bsmModal: 'updateLineManagerInfo',
-      supervisorModal: 'updateLineManagerInfo'
+      supervisorModal: 'updateLineManagerInfo',
+      bulkModal: 'createBulkStaff',
+      singleModal: 'createSingleStaff'
     };
 
     if (!updateMethods[openModal]) {

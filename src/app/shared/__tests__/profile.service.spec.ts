@@ -15,6 +15,8 @@ describe('Overtime Service', () => {
     const branches = jest.spyOn(service, 'fetchBranches').mockResolvedValue([{}]);
     // @ts-ignore-start
     const roles = jest.spyOn(service, 'fetchRoles').mockResolvedValue([{}]);
+    // @ts-ignore-start
+    const staff = jest.spyOn(service, 'fetchStaff').mockResolvedValue([{}]);
 
 
     await service.fetchProfileData();
@@ -22,6 +24,7 @@ describe('Overtime Service', () => {
     expect(lineManagers).toHaveBeenCalled();
     expect(branches).toHaveBeenCalled();
     expect(roles).toHaveBeenCalled();
+    expect(staff).toHaveBeenCalled();
   });
 
   it('should return profile data is already set', async () => {
@@ -58,8 +61,9 @@ describe('Overtime Service', () => {
     service.fetchLineManagers();
     service.fetchBranches();
     service.fetchRoles();
+    service.fetchStaff();
 
-    expect(httpGet).toHaveBeenCalledTimes(3);
+    expect(httpGet).toHaveBeenCalledTimes(4);
   });
 
   it('should make a post request to upload image.', () => {
@@ -69,8 +73,11 @@ describe('Overtime Service', () => {
     service.updateImage({});
     service.updateLineManagerInfo({});
     service.updatePersonalInfo({});
+    service.createBulkStaff({});
+    // @ts-ignore-start
+    service.createSingleStaff({});
 
-    expect(httpPost).toHaveBeenCalledTimes(2);
+    expect(httpPost).toHaveBeenCalledTimes(4);
     expect(httpPut).toHaveBeenCalledTimes(1);
   });
 });

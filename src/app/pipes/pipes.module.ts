@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ImageTransformPipe } from './image-transform.pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
-const declarations = [ImageTransformPipe]
+const declarations = [ImageTransformPipe, TimeAgoPipe]
 
 @NgModule({
   imports: [
