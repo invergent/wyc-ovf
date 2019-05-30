@@ -252,7 +252,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     const formData = currentModal === 'imageModal'
       ? this.formSubmissionService.fileSubmit('image', this.imageFile)
       : this.formSubmissionService.profileInfoSubmit(formValues);
-  
+    
     if (formData.errors.length) return formData.errors.forEach(error => this.toastr.error(error));
           
     if (['supervisorModal', 'bsmModal'].includes(currentModal)) {

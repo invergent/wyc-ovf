@@ -73,9 +73,9 @@ describe('Overtime Service', () => {
     service.updateImage({});
     service.updateLineManagerInfo({});
     service.updatePersonalInfo({});
-    service.createBulkStaff({});
+    service.createBulk({});
     // @ts-ignore-start
-    service.createSingleStaff({});
+    service.createSingle({});
 
     expect(httpPost).toHaveBeenCalledTimes(4);
     expect(httpPut).toHaveBeenCalledTimes(1);

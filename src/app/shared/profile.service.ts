@@ -69,11 +69,11 @@ export class ProfileService {
     return this.http.post<IPutProfile>(`${this.api}/users/profile/line-manager`, updatePayload, this.options).toPromise();
   }
 
-  createBulkStaff(excelData) {
-    return this.http.post<IPutProfile>(`${this.api}/admin/staff`, excelData, { withCredentials: true }).toPromise();
+  createBulk(excelData, route: string = 'staff') {
+    return this.http.post<IPutProfile>(`${this.api}/admin/${route}`, excelData, { withCredentials: true }).toPromise();
   }
 
-  createSingleStaff(staffData: ICreateStaffData) {
-    return this.http.post(`${this.api}/admin/staff/single`, staffData, this.options).toPromise();
+  createSingle(staffData: ICreateStaffData, route: string = 'staff') {
+    return this.http.post(`${this.api}/admin/${route}/single`, staffData, this.options).toPromise();
   }
 }

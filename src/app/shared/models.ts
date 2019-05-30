@@ -207,8 +207,10 @@ export interface IApprovalHistory {
 }
 
 export interface IBranch {
-  id: number,
+  id: number
+  solId: string
   name: string
+  address: string
 }
 
 export interface IRole {

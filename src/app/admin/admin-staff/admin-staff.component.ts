@@ -121,6 +121,7 @@ export class AdminStaffComponent implements OnInit {
       this.displayModal = 'none';
       this[currentModal] = false;
       this.displaySpinner = false;
+      this.fileInvalid = true;
     } catch (error) {
       this.displaySpinner = false;
       if(error.error) {

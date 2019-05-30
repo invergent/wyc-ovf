@@ -54,8 +54,8 @@ export const profileServiceMock: any = {
   updateImage: () => Promise.resolve('value'),
   updatePersonalInfo: () => Promise.resolve('value'),
   updateLineManagerInfo: () => Promise.resolve('value'),
-  createSingleStaff: () => Promise.resolve({ message: 'value' }),
-  createBulkStaff: () => Promise.resolve({ message: 'value' })
+  createSingle: () => Promise.resolve({ message: 'value' }),
+  createBulk: () => Promise.resolve({ message: 'value' })
 }
 
 export const notificationServiceMock: any = {

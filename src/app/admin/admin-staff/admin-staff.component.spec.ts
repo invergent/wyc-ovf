@@ -1,7 +1,6 @@
 import { AdminStaffComponent } from './admin-staff.component';
-import { profileServiceMock, mockToastr, mockJQuery } from 'src/app/__mocks__';
-import { FormSubmissionService } from 'src/app/shared';
-import { async } from '@angular/core/testing';
+import { profileServiceMock, mockToastr, mockJQuery } from '../../__mocks__';
+import { FormSubmissionService } from '../../shared';
 
 const staffList = [
   { firstname: 'Johnny', lastname: 'Doe', emailAddress: 'j.doe@init.com' },
@@ -107,7 +106,7 @@ describe('AdminStaffComponent', () => {
     jest.clearAllMocks();
     const mockErr = { error: { message: 'message', errors: ['error', 'error', 'error'] } }
     const toastrErrMock = jest.spyOn(mockToastr, 'error');
-    jest.spyOn(profileServiceMock, 'createSingleStaff').mockRejectedValueOnce(mockErr);
+    jest.spyOn(profileServiceMock, 'createSingle').mockRejectedValueOnce(mockErr);
 
     await component.handleSubmit(sampleFormValues, 'singleModal');
     expect(toastrErrMock).toHaveBeenCalledTimes(3);
@@ -118,7 +117,7 @@ describe('AdminStaffComponent', () => {
     const mockErr = { error: { message: 'message' } }
     const toastrErrMock = jest.spyOn(mockToastr, 'error');
 
-    jest.spyOn(profileServiceMock, 'createSingleStaff').mockRejectedValueOnce(mockErr);
+    jest.spyOn(profileServiceMock, 'createSingle').mockRejectedValueOnce(mockErr);
 
     await component.handleSubmit(sampleFormValues, 'singleModal');
     expect(toastrErrMock).toHaveBeenCalledWith('message');
@@ -129,7 +128,7 @@ describe('AdminStaffComponent', () => {
     const mockErr = {}
     const toastrErrMock = jest.spyOn(mockToastr, 'error');
 
-    jest.spyOn(profileServiceMock, 'createSingleStaff').mockRejectedValueOnce(mockErr);
+    jest.spyOn(profileServiceMock, 'createSingle').mockRejectedValueOnce(mockErr);
 
     await component.handleSubmit(sampleFormValues, 'singleModal');
     expect(toastrErrMock).toHaveBeenCalledWith('An error occurred. Please check your network connection');

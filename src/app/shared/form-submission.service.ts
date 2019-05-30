@@ -1,18 +1,22 @@
 import { Injectable } from "@angular/core";
-import { emptyRegex, emailRegex, phoneNumberRegex, staffIdRegex } from "./utils";
+import { emptyRegex, emailRegex, phoneNumberRegex, staffIdRegex, solIdRegex, addressRegex } from "./utils";
 
 @Injectable()
 export class FormSubmissionService {
   constructor() {}
 
   validateProfileInfo(formValues) {
-    const { staffId, firstname, lastname, email, phone } = formValues;
+    const { staffId, firstname, lastname, email, phone, solId, name, address } = formValues;
     const errors = [];
+
     if (staffId) errors.push(...this.checkFields('Staff ID', staffId, staffIdRegex));
     if (firstname) errors.push(...this.checkFields('First name', firstname, emptyRegex));
     if (lastname) errors.push(...this.checkFields('Last name', lastname, emptyRegex));
     if (email) errors.push(...this.checkFields('Email address', email, emailRegex));
     if (phone) errors.push(...this.checkFields('Phone number', phone, phoneNumberRegex));
+    if (solId) errors.push(...this.checkFields('SOL ID', solId, solIdRegex));
+    if (name) errors.push(...this.checkFields('Branch name', name, emptyRegex));
+    if (address) errors.push(...this.checkFields('Branch address', address, addressRegex));
 
     return errors;
   }
@@ -29,7 +33,7 @@ export class FormSubmissionService {
   }
 
   profileInfoSubmit(formValues) {
-    let { staffId, firstname, lastname, email, phone } = formValues;
+    let { staffId, firstname, lastname, email, phone, solId, name, address } = formValues;
     const errors = this.validateProfileInfo(formValues);
 
     if (staffId) formValues.staffId = staffId.trim().toUpperCase();
@@ -37,6 +41,9 @@ export class FormSubmissionService {
     if (lastname) formValues.lastname = this.nameSanitizer(lastname);
     if (email) formValues.email = email.trim().toLowerCase();
     if (phone) formValues.phone = phone.trim();
+    if (solId) formValues.solId = solId.trim();
+    if (name) formValues.name = this.nameSanitizer(name);
+    if (address) formValues.address = address.trim();
     
     return { data: formValues, errors };
   }
@@ -63,8 +70,8 @@ export class FormSubmissionService {
       imageModal: 'updateImage',
       bsmModal: 'updateLineManagerInfo',
       supervisorModal: 'updateLineManagerInfo',
-      bulkModal: 'createBulkStaff',
-      singleModal: 'createSingleStaff'
+      bulkModal: 'createBulk',
+      singleModal: 'createSingle'
     };
 
     if (!updateMethods[openModal]) {
