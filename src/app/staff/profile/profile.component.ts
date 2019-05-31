@@ -45,6 +45,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   firstname: string
   lastname: string
   email: string
+  phone: string
   position: string
   branch: string
   supervisorFirstName: string
@@ -142,10 +143,11 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   async initialiseData() {
     this.currentStaff = this.authService.currentStaff;
-    
+
     this.firstname = this.authService.currentStaff.firstname;
     this.lastname = this.authService.currentStaff.lastname;
     this.email = this.authService.currentStaff.emailAddress;
+    this.phone = this.authService.currentStaff.phone;
     this.position = this.authService.currentStaff.role;
     this.branch = this.authService.currentStaff.branch;
     this.supervisorFirstName = this.authService.currentStaff.supervisorFirstName;

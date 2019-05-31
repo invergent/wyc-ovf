@@ -60,6 +60,10 @@ export class NotificationService {
     audio.play();
   }
 
+  disconnect() {
+    this.pusherService.disconnect();
+  }
+
   fetchNotifications(): Promise<IGetNotification> {
     return this.http.get<IGetNotification>(`${this.api}/notifications`, this.options).toPromise();
   }

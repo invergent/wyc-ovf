@@ -35,7 +35,8 @@ export class LogoutComponent implements OnInit {
       this.authService.currentStaff = null;
       this.overtimeService.staffClaimData = null;
       this.profileService.profileData = null;
-      this.notificationService.notifications = [];
+      this.notificationService.notifications = null;
+      this.notificationService.disconnect();
       this.notificationService.newNotificationsCount = 0;
       this.router.navigate(['/login'], forced ?  { queryParams: { m: 'c' } } : {});
     } catch(e) {

@@ -39,7 +39,7 @@ export class AdminStaffComponent implements OnInit {
   }
 
   async initialiseData() {
-    const { staffList } = await this.profileService.fetchProfileData();
+    const { staffList } = await this.profileService.fetchProfileData(true);
     this.staffList = staffList.slice(0);
     this.visibleStaffList = this.staffList;
     this.calculatePagination(this.staffList);

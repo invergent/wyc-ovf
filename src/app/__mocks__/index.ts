@@ -66,6 +66,7 @@ export const notificationServiceMock: any = {
   formatNotificationsData: () => {},
   markNotificationsAsReadAndViewed: () => {},
   playAudio: () => {},
+  disconnect: () => {},
   fetchNotifications: () => Promise.resolve({
     data: [
       { viewed: false, activity:  'This is some activity over thirty characters' },

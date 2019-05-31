@@ -1,18 +1,19 @@
 export interface IStaff {
-  staffId: string,
-  firstname: string,
-  lastname: string,
-  middleName: string,
-  emailAddress: string,
-  image: string,
-  role: string,
-  branch: string,
-  changedPassword: boolean,
-  supervisorFirstName: string,
-  supervisorLastName: string,
-  supervisorEmailAddress: string,
-  bsmFirstName: string,
-  bsmLastName: string,
+  staffId: string
+  firstname: string
+  lastname: string
+  middleName: string
+  emailAddress: string
+  phone: string
+  image: string
+  role: string
+  branch: string
+  changedPassword: boolean
+  supervisorFirstName: string
+  supervisorLastName: string
+  supervisorEmailAddress: string
+  bsmFirstName: string
+  bsmLastName: string
   bsmEmailAddress: string
 }
 
@@ -143,6 +144,7 @@ export interface ISubscribe {
 
 export interface IPusher {
   subscribe(channel: string): ISubscribe
+  disconnect(): void
 }
 
 export interface IClaimStatistics {
@@ -155,7 +157,7 @@ export interface IClaimStatistics {
 
 export interface IStaffClaimData {
   claimStatistics?: IClaimStatistics,
-  pendingClaim?: IClaim,
+  pendingClaim?: IClaim[],
   activities?: IActivity[]
   claimHistory?: IClaim[]
 }
@@ -236,7 +238,7 @@ export interface IGetStatistics {
 
 export interface IGetPendingClaim {
   message: string,
-  data: IClaim
+  data: IClaim[]
 }
 
 export interface IGetClaimHistory {
