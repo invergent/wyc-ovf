@@ -19,7 +19,6 @@ export class PasswordChangeComponent implements AfterViewInit {
   constructor(
     private authService: AuthService,
     private overtimeService: OvertimeService,
-    private profileChecker: ProfileCheckerService,
     private router: Router,
     private route: ActivatedRoute,
     @Inject(TOASTR_TOKEN) private toastr: IToastr,
@@ -67,7 +66,7 @@ export class PasswordChangeComponent implements AfterViewInit {
     try {
       await this.authService.changePassword(formValues);
       await this.authService.syncWithAPI();
-      await this.overtimeService.syncWithAPI();
+      if(!this.authService.isAdmin) await this.overtimeService.syncWithAPI();
       this.toastr.success('Password changed successfully.');
       this.displaySpinner = false;
       this.clearInputFields();

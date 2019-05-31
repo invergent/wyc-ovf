@@ -12,7 +12,7 @@ describe('Claim', () => {
 
   beforeEach(() => {
     component = new PasswordChangeComponent(
-      authServiceMock, overtimeServiceMock, profileCheckerServiceMock, routerMock, activatedRouteMock, mockToastr, mockJQuery
+      authServiceMock, overtimeServiceMock, routerMock, activatedRouteMock, mockToastr, mockJQuery
     );
   });
 
@@ -33,7 +33,7 @@ describe('Claim', () => {
   it('should toggle password input field type between "text" and "password"', () => {
     const jqueryMock = jest.fn(() => ({ prop: () => {} }));
     const newComponent = new PasswordChangeComponent(
-      authServiceMock, overtimeServiceMock, profileCheckerServiceMock, routerMock, activatedRouteMock, mockToastr, jqueryMock
+      authServiceMock, overtimeServiceMock, routerMock, activatedRouteMock, mockToastr, jqueryMock
     );
     newComponent.toggleViewPasswordText('elementId');
     jest.runAllTimers();
