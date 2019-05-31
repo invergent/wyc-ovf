@@ -18,12 +18,16 @@ export class ProfileService {
 
   constructor(private http: HttpClient) {}
 
-  async initialiseProfileData(): Promise<boolean> {
+  async initialiseProfileData(includeStaff): Promise<boolean> {
+    let staffList;
     try {
       const { data: lineManagers } = await this.fetchLineManagers();
       const { data: branches } = await this.fetchBranches();
       const { data: roles } = await this.fetchRoles();
-      const { data: staffList } = await this.fetchStaff();
+      if(includeStaff) {
+        const { data } = await this.fetchStaff();
+        staffList = data;
+      }
       this.profileData = { lineManagers, branches, roles, staffList };
       return true;
     } catch(e) {
@@ -31,13 +35,13 @@ export class ProfileService {
     }
   }
 
-  async fetchProfileData() {
-    if (!this.profileData) await this.initialiseProfileData();
+  async fetchProfileData(includeStaff?: boolean) {
+    if (!this.profileData) await this.initialiseProfileData(includeStaff);
     return this.profileData;
   }
 
-  syncWithAPI() {
-    return this.initialiseProfileData();
+  syncWithAPI(includeStaff?: boolean) {
+    return this.initialiseProfileData(includeStaff);
   }
 
   fetchLineManagers(): Promise<IGetLineManagers> {

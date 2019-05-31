@@ -19,7 +19,7 @@ describe('Overtime Service', () => {
     const staff = jest.spyOn(service, 'fetchStaff').mockResolvedValue([{}]);
 
 
-    await service.fetchProfileData();
+    await service.fetchProfileData(true);
 
     expect(lineManagers).toHaveBeenCalled();
     expect(branches).toHaveBeenCalled();
@@ -49,7 +49,7 @@ describe('Overtime Service', () => {
     jest.spyOn(service, 'fetchLineManagers').mockRejectedValue('err');
 
     try {
-      await service.initialiseProfileData();
+      await service.initialiseProfileData(false);
     } catch (e) {
       expect(e).toBeInstanceOf(Error);
     }

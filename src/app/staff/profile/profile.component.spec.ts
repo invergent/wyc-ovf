@@ -200,4 +200,17 @@ describe('Profile Component', () => {
 
     expect(mockToastrError).toHaveBeenCalledWith('An error occurred');
   });
+
+  it('should set image file property and handle image preview', () => {
+    const payload = { value: 'value', files: [{ filename: 'filename' }] };
+    const mockListener = jest.fn();
+    const mockReader = jest.fn();
+    FileReader.prototype.addEventListener = mockListener;
+    FileReader.prototype.readAsDataURL = mockReader;
+    component.handleImagePreview(payload);
+
+    expect(component.imageFile).toHaveProperty('filename');
+    expect(mockListener).toHaveBeenCalled();
+    expect(mockReader).toHaveBeenCalled();
+  })
 });

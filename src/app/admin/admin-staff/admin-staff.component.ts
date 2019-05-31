@@ -115,7 +115,7 @@ export class AdminStaffComponent implements OnInit {
       const { message } = await this.profileService[updateMethod](submissionData.data);
       this.toastr.success(message);
 
-      await this.profileService.syncWithAPI();
+      await this.profileService.syncWithAPI(true);
       await this.initialiseData();
 
       this.displayModal = 'none';

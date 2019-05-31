@@ -1,3 +1,101 @@
-<p>
-  admin-profile works!
-</p>
+<section class="profile">
+  <div class="page-title">
+    <p>Profile</p>
+  </div>
+  <div class="edit-mode">
+    <p class="switch-text">Edit mode</p>
+    <div id="switch">
+      <p id="on">On</p>
+      <p id="off">Off</p>
+      <div class="knob" id="knob" (click)="toggleEditMode()"></div>
+    </div>
+  </div>
+  <div class="profile-info">
+    <div class="profile-image">
+      <div class="edit-icon" (click)="runModalDisplay('imageModal', 'Profile Photo')">
+        <i class="fas fa-edit"></i>
+      </div>
+      <div class="image-wrapper">
+        <img src="{{currentStaff?.image | transformImage}}" alt="Staff Image">
+      </div>
+    </div>
+    <div class="profile-details">
+      <div class="details">
+        <div class="edit-icon" (click)="runModalDisplay('nameModal', 'Name')">
+          <i class="fas fa-edit"></i>
+        </div>
+        <p class="details-header">Name</p>
+        <p class="details-item">{{currentStaff?.firstname}} {{currentStaff?.lastname}}</p>
+      </div>
+      <div class="details">
+        <div class="edit-icon" (click)="runModalDisplay('emailModal', 'Email Address')">
+          <i class="fas fa-edit"></i>
+        </div>
+        <p class="details-header">Email Address</p>
+        <p class="details-item">{{currentStaff?.emailAddress}}</p>
+      </div>
+    </div>
+  </div>
+  <section [ngStyle]="{display: displayModal}" class="edit-modal-section">
+    <div class="edit-modal">
+      <div class="page-title">
+        <p>{{modalTitle}}</p>
+      </div>
+      <div class="form-wrapper">
+        <form [ngSwitch]="true" #profileForm="ngForm" (ngSubmit)="handleSubmit(profileForm.value, currentModal)" autocomplete="off" novalidate>
+          <ng-template [ngSwitchCase]="imageModal">
+            <div class="image-preview">
+              <img src="{{imagePreview || authService?.currentStaff?.image}}" alt="Image">
+            </div>
+            <div class="input">
+              <p (click)="triggerFileInput()" class="input-button">Click to select image</p>
+              <input #fileInput (change)="handleImagePreview(fileInput)" type="file" id="fileInput" accept=".jpeg,.png,.jpg" required>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="nameModal">
+            <div class="input">
+              <input [(ngModel)]="firstname" name="firstname" type="text" placeholder="Enter your first name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="lastname" name="lastname" type="text" placeholder="Enter your last name" required>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="emailModal">
+            <div class="input">
+              <input [(ngModel)]="email" name="email" type="email" placeholder="Enter office email address" required>
+            </div>
+          </ng-template>
+          <div class="button">
+            <button
+              [disabled]="profileForm.invalid || (imageModal && fileInvalid)"
+              (click)="displaySpinner=true"
+              type="submit"
+              name="submit">
+              Submit
+              <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+      <p class="close" (click)="closeModal(currentModal)">Close</p>
+    </div>
+    <div class="thanks-modal" *ngIf="thanksModal">
+      <div class="thanks-content">
+        <div class="thanks-icon-wrapper">
+          <img src="/assets/images/dance_dribbble.gif" alt="">
+        </div>
+        <div class="confirmation-text">
+          <p>Profile complete!</p>
+        </div>
+        <div class="action-buttons">
+          <button
+            class="no-cancel"
+            id="welldone"
+            type="button"
+            name="button"
+            (click)="closeModal(currentModal)">Close</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

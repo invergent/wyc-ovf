@@ -1,0 +1,311 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.profile {
+  padding-bottom: 30px;
+  box-sizing: border-box;
+  .page-title {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .edit-mode {
+    display: none;
+    align-items: center;
+    width: 250px;
+    margin: auto auto 30px;
+    p {
+      margin: 0;
+    }
+    .switch-text {
+      margin-right: 40px;
+      font-size: 20px;
+    }
+    #switch {
+      position: relative;
+      padding: 8px 11px;
+      border-radius: 100px;
+      box-sizing: border-box;
+      color: $color-white;
+      background-color: $faint-color;
+      transition: all .5s ease-in-out;
+      p {
+        display: inline-block;
+        font-size: 14px;
+        transition: all .5s ease-in-out;
+      }
+      #on {
+        margin-right: 30px;
+        opacity: 0;
+      }
+      #off {
+        opacity: 1;
+      }
+      .knob {
+        position: absolute;
+        top: 3px;
+        left: 3.5%;
+        background-color: $color-white;
+        width: 27px;
+        height: 27px;
+        border-radius: 1000px;
+        transition: all .5s ease-in-out;
+      }
+    }
+  }
+  .profile-info {
+    width: 450px;
+    margin: auto;
+    .edit-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: none;
+      color: $faint-color;
+      cursor: pointer;
+    }
+    .profile-image {
+      @include profile-grid-item;
+      margin-bottom: 20px;
+      .image-wrapper {
+        width: 300px;
+        margin: auto;
+        img {
+          width: 100%;
+        }
+      }
+    }
+    .profile-details {
+      display: grid;
+      grid-auto-rows: 1fr;
+      grid-gap: 5px;
+      .details {
+        @include profile-grid-item;
+        padding: 10px;
+        p {
+          margin: 0;
+          overflow-x: scroll;
+        }
+        .details-header {
+          color: $faint-color;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  .edit-modal-section {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $modal-background-tint;
+    z-index: 9999;
+    .edit-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      display: inline-block;
+      background-color: $color-white;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      padding: 40px;
+      border-radius: 8px;
+      .page-title {
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        p {
+          margin: 10px 0 0;
+        }
+      }
+      .close {
+        cursor: pointer;
+      }
+      .form-wrapper {
+        form {
+          width: 100%;
+          margin: auto;
+          .image-preview {
+            padding: 5px;
+            width: 100%;
+            height: 215px;
+            box-sizing: border-box;
+            overflow: hidden;
+            img {
+              height: 200px;
+            }
+          }
+          .input {
+            position: relative;
+            width: 100%;
+            margin-top: 25px;
+            input, .decoy-input {
+              width: 100%;
+              height: 45px;
+              padding: 0 20px;
+              border: 1px solid #ACACAC;
+              border-radius: 10px;
+              box-sizing: border-box;
+              @include placeholder {
+                color: rgba(0,0,0,.2);
+              }
+            }
+            input[type=file] {
+              display: none;
+            }
+            .input-button {
+              background-color: $brand-color-ex-light;
+              width: 100%;
+              height: 40px;
+              line-height: 2.5;
+              margin: 0;
+              border: 1px solid $faint-border-color;
+              border-radius: 10px;
+              cursor: pointer;
+            }
+          }
+          .button {
+            width: 100%;
+            margin-top: 40px;
+            button {
+              position: relative;
+              background-color: $brand-color;
+              width: 100%;
+              height: 45px;
+              color: white;
+              font-size: 1.5rem;
+              border-radius: 10px;
+              border: none;
+              cursor: pointer;
+              &:disabled {
+                background-color: #80808060;
+                cursor: not-allowed;
+              }
+              .fa {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                color: white;
+              }
+              @media screen and (max-width: 400px) {
+                font-size: 1.4rem;
+              }
+            }
+          }
+          @media screen and (max-width: 400px) {
+            width: 100%;
+          }
+        }
+      }
+    }
+    .thanks-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 70%;
+      display: inline-block;
+      background-color: $color-white;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      padding: 40px;
+      border-radius: 8px;
+      .thanks-icon-wrapper {
+        width: 400px;
+        margin: auto;
+        img {
+          width: 100%;
+        }
+      }
+      .confirmation-text {
+        margin: 10px auto 20px;
+        p {
+          font-size: 22px;
+          width: 60%;
+          margin: auto;
+        }
+      }
+      .action-buttons {
+        margin: 10px auto;
+        .yes-cancel {
+          @include white-button;
+          margin-right: 30%;
+        }
+        .no-cancel {
+          @include white-button;
+          color: $brand-color;
+          &:hover {
+            background-color: $brand-color;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 1024px) {
+    .edit-mode {
+      display: flex;
+    }
+    .edit-modal-section {
+      .thanks-modal {
+        width: 95%;
+        padding: 20px 5px;
+        .thanks-icon-wrapper {
+          width: 200px;
+        }
+        .confirmation-text {
+          margin: 20px auto 40px;
+          text-align: center;
+          p {
+            font-size: 18px;
+            margin: 0 5px;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .page-title {
+    }
+    .profile-info {
+      .profile-image {
+        .image-wrapper {
+          width: 100%;
+          img {
+          }
+        }
+      }
+      .profile-details {
+        grid-template-columns: repeat(1, minmax(250px, 1fr));
+        .details {
+          p {
+          }
+          .details-header {
+          }
+        }
+      }
+    }
+    .edit-modal-section {
+      .edit-modal {
+      }
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .profile-info {
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .profile-info {
+
+    }
+    .edit-modal-section {
+      .edit-modal {
+        width: 95%;
+        padding: 10px;
+      }
+    }
+  }
+}
