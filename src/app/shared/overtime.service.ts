@@ -96,5 +96,9 @@ export class OvertimeService {
     return this.http.get<any>(`${this.api}/admin/claims/export/excel`,
       { responseType: 'arrayBuffer' as 'json', withCredentials: true }).toPromise();
   }
+
+  markClaimsAsCompleted(): Promise<any> {
+    return this.http.put<any>(`${this.api}/admin/claims/completed`, {}, this.options).toPromise();
+  }
 }
 

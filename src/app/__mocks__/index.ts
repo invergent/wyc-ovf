@@ -34,6 +34,7 @@ export const overtimeServiceMock: any = {
   fetchAdminClaimsData: () => Promise.resolve({ data: {} }),
   fetchChartStatistics: () => Promise.resolve({ data: {} }),
   exportApprovedClaims: () => Promise.resolve({}),
+  markClaimsAsCompleted: () => ({ message: 'Completed' }),
   adminClaimData: {
     chartStats: {
       Jan: null,

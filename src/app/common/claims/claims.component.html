@@ -1,5 +1,5 @@
 <div class="claims">
-  <div *ngIf="!!statuses.length" class="filter">
+  <div *ngIf="claims.length && statuses?.length" class="filter">
     <div class="filter-title">
         <p>Filter by status:</p>
         <p class="claims-count">Claims count: <span>{{numberOfFilteredClaims}}</span></p>
@@ -15,7 +15,10 @@
   </div>
   <div class="claim-table">
     <p *ngIf="!claims?.length">You currently have no records here.</p>
-    <div *ngIf="!!claims?.length" class="table-wrapper">
+    <div *ngIf="!currentPageClaims?.length" class="empty-filter">
+      No claims in this stage
+    </div>
+    <div *ngIf="currentPageClaims?.length" class="table-wrapper">
       <table>
         <thead>
           <tr>
@@ -41,7 +44,7 @@
                 <img *ngIf="claim?.status==='Cancelled'" src="/assets/images/cancelled.png" alt="Status Icon">
               </div>
             </td>
-            <td>{{claim?.monthofclaim}}</td>
+            <td>{{claim?.monthOfClaim}}</td>
             <td>{{claim?.weekday || '--'}}</td>
             <td>{{claim?.weekend || '--'}}</td>
             <td>{{claim?.shift || '--'}}</td>

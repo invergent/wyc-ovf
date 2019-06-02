@@ -18,6 +18,11 @@ export class TopNav implements OnInit {
   newNotificationsCount: number = 0;
 
   userImage: string = 'https://res.cloudinary.com/dbsxxymfz/image/upload/v1536757459/dummy-profile.png';
+  staffType: string
+  claimHistoryLink: string[]
+  pendingClaimLink: string[]
+  menuItemProfile: string[]
+  menuItemChangePassword: string[]
 
   constructor(
     private authService: AuthService,
@@ -30,7 +35,16 @@ export class TopNav implements OnInit {
   async ngOnInit() {
     await this.initialiseNotifications();
     this.userImage = this.authService.currentStaff.image;
+    this.staffType = this.authService.isAdmin ? 'admin' : 'staff';
+    this.claimHistoryLink = [`/${this.staffType}/claim-history`];
+    this.pendingClaimLink = [`/${this.staffType}/pending-claim`];
+    this.menuItemProfile = [`/${this.staffType}/profile`]; 
+    this.menuItemChangePassword = [`/${this.staffType}/change-password`]; 
     this.notificationService.channel.bind_global((triggeredEvent, payload) => this.notificationEventHandler(triggeredEvent, payload));
+  }
+
+  menuItemLinks() {
+
   }
 
   async notificationEventHandler(triggeredEvent, payload) {

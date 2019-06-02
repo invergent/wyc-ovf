@@ -39,5 +39,15 @@
       box-sizing: border-box;
       cursor: pointer;
     }
+    .mark-as-completed {
+      margin: auto 10px auto auto;
+    }
+    @media screen and (max-width: 350px) {
+      text-align: center;
+      .export-button {
+        width: 100%;
+        margin: auto auto 10px;
+      }
+    }
   }
 }

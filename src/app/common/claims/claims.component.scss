@@ -43,6 +43,14 @@
       }
     }
   }
+  .empty-filter {
+    background-color: $color-white;
+    width: 100%;
+    text-align: center;
+    border-radius: 8px;
+    padding: 25px;
+    box-sizing: border-box;
+  }
   .claim-table {
     margin-bottom: 5px;
     overflow-x: scroll;

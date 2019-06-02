@@ -6,7 +6,11 @@
   <section class="page-title">
     <p>Claims</p>
   </section>
-  <section class="export-button-section">
+  <section *ngIf="claims.length" class="export-button-section">
+    <button class="export-button mark-as-completed" (click)="markClaimsAsCompleted()">
+      Mark as completed
+      <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
+    </button>
     <button class="export-button" (click)="exportClaims()">
       Export to excel
       <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>

@@ -12,11 +12,11 @@ import { ConfirmPasswordResetComponent } from './confirm-password-reset/confirm-
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { LogoutComponent } from './logout/logout.component';
 import {
-  AuthService, ProfileService, OvertimeService, RedirectToDashboard, RedirectToLogin,
-  TOASTR_TOKEN, JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService,
-  EnforceProfileUpdateService, ProfileCheckerService
+  AuthService, ProfileService, OvertimeService, RedirectToDashboard, TOASTR_TOKEN,
+  JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService,
+  EnforceProfileUpdateService, ProfileCheckerService, AdminOnlyGuard, StaffOnlyGuard,
+  PUSHER_TOKEN
 } from './shared';
-import { PUSHER_TOKEN } from './shared/pusher.service';
 import { environment } from 'src/environments/environment';
 import { PipesModule } from './pipes/pipes.module';
 
@@ -46,7 +46,8 @@ const pusher: IPusher = new window['Pusher'](environment.API_KEY, { cluster: 'eu
     OvertimeService,
     ProfileService,
     RedirectToDashboard,
-    RedirectToLogin,
+    AdminOnlyGuard,
+    StaffOnlyGuard,
     EnforceProfileUpdateService,
     ProfileCheckerService,
     FormSubmissionService,

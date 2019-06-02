@@ -8,7 +8,7 @@ import { IClaim } from '../../shared';
 })
 export class ClaimsComponent implements OnChanges {
   @Input() claims: IClaim[] = []
-  @Input() statuses: string[]
+  @Input() statuses: string[] = [];
   visibleClaims: IClaim[]
   currentPageClaims: IClaim[]
   numberOfFilteredClaims: number

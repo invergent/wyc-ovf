@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { saveAs } from 'file-saver';
-import { IClaim, OvertimeService } from '../../shared';
+import { IClaim, OvertimeService, TOASTR_TOKEN, IToastr } from '../../shared';
 
 @Component({
   selector: 'app-admin-claims',
@@ -15,7 +15,10 @@ export class AdminClaimsComponent implements OnInit {
   claims: IClaim[] = [];
 
 
-  constructor(private overtimeService: OvertimeService) {}
+  constructor(
+    private overtimeService: OvertimeService,
+    @Inject(TOASTR_TOKEN) private toastr: IToastr
+  ) {}
 
   async ngOnInit() {
     try {
@@ -42,6 +45,18 @@ export class AdminClaimsComponent implements OnInit {
     } catch (error) {
       this.displaySpinner = false;
       // TODO display error modal on fail
+    }
+  }
+
+  async markClaimsAsCompleted() {
+    this.displaySpinner = true;
+    try {
+      const { message } = await this.overtimeService.markClaimsAsCompleted();
+      this.toastr.success(message);
+      this.displaySpinner = false;
+    } catch (error) {
+      this.displaySpinner = false;
+      this.toastr.error('An error occurred while marking claims as completed.');
     }
   }
 }

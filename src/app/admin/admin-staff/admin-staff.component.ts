@@ -8,8 +8,8 @@ import { ProfileService, IStaffForAdmin, TOASTR_TOKEN, IToastr, JQUERY_TOKEN, Fo
 })
 export class AdminStaffComponent implements OnInit {
   staffList: IStaffForAdmin[] = [];
-  visibleStaffList: IStaffForAdmin[] = []
-  currentPageStaffList: IStaffForAdmin[] = []
+  visibleStaffList: IStaffForAdmin[] = [];
+  currentPageStaffList: IStaffForAdmin[] = [];
   staffPerPage: number = 5;
   currentPage: number = 1;
   totalPages: number
@@ -40,7 +40,7 @@ export class AdminStaffComponent implements OnInit {
 
   async initialiseData() {
     const { staffList } = await this.profileService.fetchProfileData(true);
-    this.staffList = staffList.slice(0);
+    this.staffList = [...staffList];
     this.visibleStaffList = this.staffList;
     this.calculatePagination(this.staffList);
   }

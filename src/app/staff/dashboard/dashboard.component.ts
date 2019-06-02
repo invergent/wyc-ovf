@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
   async ngOnInit() {
     try {
       const { claimStatistics, pendingClaim, activities } = await this.overtimeService.fetchStaffData();
-      this.activities = activities.slice(0, 3); // reduce results to the first three
+      this.activities = activities.slice(0, 5); // reduce results to the first five
       this.claimStatistics = claimStatistics;
       this.pendingClaim = pendingClaim;
       this.staffFirstName = this.authService.currentStaff.firstname;
