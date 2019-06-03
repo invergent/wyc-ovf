@@ -24,6 +24,7 @@
     "@angular/router": "~7.0.0",
     "air-datepicker": "^2.2.3",
     "core-js": "^2.6.8",
+    "cronstrue": "^1.68.0",
     "express": "^4.16.4",
     "file-saver": "^2.0.2",
     "jqwidgets-scripts": "^8.0.0",

@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
     const loginType = this.isAdmin ? 'admin/login' : 'signin';
     
     try {
+      console.log(formValues, loginType)
       const response = await this.authService.login(formValues, loginType);
       this.toastr.success(response.message);
 
@@ -67,6 +68,7 @@ export class LoginComponent implements OnInit {
       
       return this.router.navigate([`/${this.isAdmin ? 'admin' : 'staff'}/dashboard`]);
     } catch(e) {
+      console.log(e)
       this.displaySpinner = false;
       return this.toastr.error(e.error.message || 'Login failed. Check your connectivity.');
     }

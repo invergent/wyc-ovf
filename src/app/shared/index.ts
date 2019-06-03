@@ -13,3 +13,5 @@ export * from './profile-checker.service';
 export * from './enforce-profile-update.service';
 export * from './admin-only.guard';
 export * from './staff-only.guard';
+export * from './cronstrue.service';
+export * from './settings.service';

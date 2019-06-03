@@ -147,6 +147,10 @@ export interface IPusher {
   disconnect(): void
 }
 
+export interface ICronstrue {
+  toString(cronTime: string): string
+}
+
 export interface IClaimStatistics {
   total: number
   completed: number
@@ -218,6 +222,10 @@ export interface IBranch {
 export interface IRole {
   id: number,
   name: string
+}
+
+export interface ISettings {
+  emailSchedule?: string
 }
 
 // fetch request models
@@ -314,3 +322,10 @@ export interface IGetChartStatistics {
   message: string
   data: IChartData
 }
+
+export interface IGetSettings {
+  message: string
+  data: ISettings[]
+}
+
+export interface IPutEmailSetting extends IPutProfile {}

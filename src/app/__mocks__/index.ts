@@ -59,6 +59,16 @@ export const profileServiceMock: any = {
   createBulk: () => Promise.resolve({ message: 'value' })
 }
 
+export const settingsServiceMock: any = {
+  api: 'some-url',
+  settings: {},
+  initialiseSettingsData: () => Promise.resolve(true),
+  fetchAdminSettings: () => Promise.resolve({ lineManagers: [], branches: [], roles: [], staffList: [] }),
+  syncWithAPI: () => {},
+  fetchSettingsData: () => Promise.resolve({ data: ['value'] }),
+  updateEmailingSetting: () => Promise.resolve({ message: 'value' })
+}
+
 export const notificationServiceMock: any = {
   api: 'some-url',
   channel: { bind_global: () => {} },
@@ -86,6 +96,10 @@ export const pusherMock: any = {
   subscribe: () => ({
     bind_global: () => {}
   })
+}
+
+export const cronstrueMock: any = {
+  toString: () => 'converted to string'
 }
 
 export class AudioMock {

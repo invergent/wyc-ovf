@@ -1,0 +1,161 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.settings {
+  .page-title {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .settings-grid {
+    display: grid;
+    grid-auto-columns: 50%;
+    .settings-card {
+      .card-header {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+      .card-body {
+        position: relative;
+        padding: 30px 20px;
+        background-color: $color-white;
+        box-sizing: border-box;
+        border-radius: 8px;
+        cursor: pointer;
+        &:hover > .edit-icon {
+          display: block;
+        }
+        .edit-icon {
+          position: absolute;
+          display: none;
+          top: 10px;
+          right: 10px;
+          color: $faint-color;
+          cursor: pointer;
+          
+        }
+        .card-description {
+          margin-bottom: 20px;
+        }
+        .card-details {
+          font-weight: bold
+        }
+      }
+    }
+  }
+  .edit-modal-section {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $modal-background-tint;
+    z-index: 9999;
+    .edit-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      display: inline-block;
+      background-color: $color-white;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      padding: 40px;
+      border-radius: 8px;
+      .page-title {
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        p {
+          margin: 10px 0 0;
+        }
+      }
+      .close {
+        cursor: pointer;
+      }
+      .form-wrapper {
+        form {
+          width: 100%;
+          margin: auto;
+          .input {
+            position: relative;
+            width: 100%;
+            margin-top: 25px;
+            input, .decoy-input {
+              width: 100%;
+              height: 45px;
+              padding: 0 20px;
+              border: 1px solid #ACACAC;
+              border-radius: 10px;
+              box-sizing: border-box;
+              @include placeholder {
+                color: rgba(0,0,0,.2);
+              }
+            }
+            input[type=file] {
+              display: none;
+            }
+            .input-button {
+              background-color: $brand-color-ex-light;
+              width: 100%;
+              height: 40px;
+              line-height: 2.5;
+              margin: 0;
+              border: 1px solid $faint-border-color;
+              border-radius: 10px;
+              cursor: pointer;
+            }
+          }
+          .button {
+            width: 100%;
+            margin-top: 40px;
+            button {
+              position: relative;
+              background-color: $brand-color;
+              width: 100%;
+              height: 45px;
+              color: white;
+              font-size: 1.5rem;
+              border-radius: 10px;
+              border: none;
+              cursor: pointer;
+              &:disabled {
+                background-color: #80808060;
+                cursor: not-allowed;
+              }
+              .fa {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                color: white;
+              }
+              @media screen and (max-width: 400px) {
+                font-size: 1.4rem;
+              }
+            }
+          }
+          @media screen and (max-width: 400px) {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .settings-grid {
+      grid-auto-columns: 1fr;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .edit-modal-section {
+      .edit-modal {
+        width: 95%;
+        padding: 10px;
+      }
+    }
+  }
+}
+#datepickers-container {
+  z-index: 99999;
+}

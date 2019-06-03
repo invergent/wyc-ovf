@@ -15,7 +15,7 @@
   </div>
   <div class="claim-table">
     <p *ngIf="!claims?.length">You currently have no records here.</p>
-    <div *ngIf="!currentPageClaims?.length" class="empty-filter">
+    <div *ngIf="!currentPageClaims?.length && claims.length" class="empty-filter">
       No claims in this stage
     </div>
     <div *ngIf="currentPageClaims?.length" class="table-wrapper">
