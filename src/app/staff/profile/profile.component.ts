@@ -44,6 +44,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   // profile info data
   firstname: string
   lastname: string
+  middlename: string
   email: string
   phone: string
   position: string
@@ -70,6 +71,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   
   filteredbranches: IBranch[] = [];
   filteredlineManagers: ILineManager[] = [];
+
+  countDown: number = 5;
 
   constructor(
     private authService: AuthService,
@@ -99,7 +102,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
       this.displayFlashMessage(`${message} Let's make your profile 100%.`);
       // add close listener
-    this.jQuery('#close').click(() => this.closeFlashMessage())
+      this.jQuery('#close').click(() => this.closeFlashMessage())
     }
   }
 
@@ -133,12 +136,20 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       );
     }
     this.runModalDisplay('thanksModal', '');
+
+    setTimeout(() => {
+      const countDown = setInterval(() => {
+        this.countDown -= 1
+        if(this.countDown <= 0) clearInterval(countDown); 
+      }, 1000);
+    }, 500);
+  
     setTimeout(() => {
       this.notificationService.playAudio('/assets/audio/tada.mp3');
       this.jQuery('#welldone').click(() => this.router.navigate(['/logout'], { queryParams: { m: 'c' } }))
     }, 500);
 
-    setTimeout(() => this.router.navigate(['/logout'], { queryParams: { m: 'c' } }), 4000);
+    setTimeout(() => this.router.navigate(['/logout'], { queryParams: { m: 'c' } }), 7000);
   }
 
   async initialiseData() {
@@ -146,6 +157,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
     this.firstname = this.authService.currentStaff.firstname;
     this.lastname = this.authService.currentStaff.lastname;
+    this.middlename = this.authService.currentStaff.middlename;
     this.email = this.authService.currentStaff.emailAddress;
     this.phone = this.authService.currentStaff.phone;
     this.position = this.authService.currentStaff.role;

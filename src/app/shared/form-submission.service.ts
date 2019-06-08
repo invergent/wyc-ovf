@@ -6,12 +6,13 @@ export class FormSubmissionService {
   constructor() {}
 
   validateProfileInfo(formValues) {
-    const { staffId, firstname, lastname, email, phone, solId, name, address } = formValues;
+    const { staffId, firstname, lastname, middlename, email, phone, solId, name, address } = formValues;
     const errors = [];
 
     if (staffId) errors.push(...this.checkFields('Staff ID', staffId, staffIdRegex));
     if (firstname) errors.push(...this.checkFields('First name', firstname, emptyRegex));
     if (lastname) errors.push(...this.checkFields('Last name', lastname, emptyRegex));
+    if (middlename) errors.push(...this.checkFields('Middle name', middlename, emptyRegex));
     if (email) errors.push(...this.checkFields('Email address', email, emailRegex));
     if (phone) errors.push(...this.checkFields('Phone number', phone, phoneNumberRegex));
     if (solId) errors.push(...this.checkFields('SOL ID', solId, solIdRegex));
@@ -33,12 +34,13 @@ export class FormSubmissionService {
   }
 
   profileInfoSubmit(formValues) {
-    let { staffId, firstname, lastname, email, phone, solId, name, address } = formValues;
+    let { staffId, firstname, lastname, middlename, email, phone, solId, name, address } = formValues;
     const errors = this.validateProfileInfo(formValues);
 
     if (staffId) formValues.staffId = staffId.trim().toUpperCase();
     if (firstname) formValues.firstname = this.nameSanitizer(firstname);
     if (lastname) formValues.lastname = this.nameSanitizer(lastname);
+    if (middlename) formValues.middlename = this.nameSanitizer(middlename);
     if (email) formValues.email = email.trim().toLowerCase();
     if (phone) formValues.phone = phone.trim();
     if (solId) formValues.solId = solId.trim();

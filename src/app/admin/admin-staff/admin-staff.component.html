@@ -23,8 +23,8 @@
           <tr>
             <th></th>
             <th>Staff ID</th>
-            <th>First name</th>
             <th>Last name</th>
+            <th>First name</th>
             <th>Email address</th>
           </tr>
         </thead>
@@ -36,8 +36,8 @@
               </div>
             </td>
             <td>{{staff?.staffId}}</td>
-            <td>{{staff?.firstname || '--'}}</td>
             <td>{{staff?.lastname || '--'}}</td>
+            <td>{{staff?.firstname || '--'}} {{staff?.middlename?.substring(0, 1)}}</td>
             <td>{{staff?.emailAddress}}</td>
           </tr>
         </tbody>
@@ -79,6 +79,9 @@
             </div>
             <div class="input">
               <input [(ngModel)]="lastname" name="lastname" type="text" placeholder="Last name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="middlename" name="middlename" type="text" placeholder="Middle name" required>
             </div>
             <div class="input">
               <input [(ngModel)]="email" name="email" type="email" placeholder="Email address" required>

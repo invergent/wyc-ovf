@@ -7,7 +7,6 @@ import {
 } from 'src/app/shared';
 
 @Component({
-  selector: 'app-approvals',
   templateUrl: './approvals.component.html',
   styleUrls: ['./approvals.component.scss']
 })

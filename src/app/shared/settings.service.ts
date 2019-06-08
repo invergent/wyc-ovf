@@ -21,7 +21,6 @@ export class SettingsService {
       this.settings = settings[0];
       return true;
     } catch(e) {
-      console.log(e)
       throw new Error();
     }
   }

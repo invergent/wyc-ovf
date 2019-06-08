@@ -7,6 +7,7 @@ import { VerifyComponent } from './verify/verify.component';
 import { ApprovalsComponent } from './approvals/approvals.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LineManagerService } from './line-manager.service';
+import { PipesModule } from '../pipes/pipes.module';
 
 const routes: Routes = [{
   path: '',
@@ -21,6 +22,7 @@ const routes: Routes = [{
   imports: [
     CommonModule,
     HttpClientModule,
+    PipesModule,
     RouterModule.forChild(routes)
   ],
   declarations: [LineManagerComponent, VerifyComponent, ApprovalsComponent],

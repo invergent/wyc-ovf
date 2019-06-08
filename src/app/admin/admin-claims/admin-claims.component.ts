@@ -9,7 +9,8 @@ import { IClaim, OvertimeService, TOASTR_TOKEN, IToastr } from '../../shared';
 })
 export class AdminClaimsComponent implements OnInit {
   showLoader: boolean = true;
-  displaySpinner: boolean = false;
+  displaySpinnerMark: boolean = false;
+  displaySpinnerExport: boolean = false;
   errorMessage: string = '';
   statuses: string[] = ['All', 'Processing', 'Awaiting supervisor', 'Awaiting BSM'];
   claims: IClaim[] = [];
@@ -36,26 +37,26 @@ export class AdminClaimsComponent implements OnInit {
   }
 
   async exportClaims() {
-    this.displaySpinner = true;
+    this.displaySpinnerExport = true;
     try {
       const excelBlob = await this.overtimeService.exportApprovedClaims();
       const blob = new Blob([excelBlob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       saveAs(blob, `Approved Claims (${new Date().toDateString().substr(4)})`);
-      this.displaySpinner = false;
+      this.displaySpinnerExport = false;
     } catch (error) {
-      this.displaySpinner = false;
+      this.displaySpinnerExport = false;
       // TODO display error modal on fail
     }
   }
 
   async markClaimsAsCompleted() {
-    this.displaySpinner = true;
+    this.displaySpinnerMark = true;
     try {
       const { message } = await this.overtimeService.markClaimsAsCompleted();
       this.toastr.success(message);
-      this.displaySpinner = false;
+      this.displaySpinnerMark = false;
     } catch (error) {
-      this.displaySpinner = false;
+      this.displaySpinnerMark = false;
       this.toastr.error('An error occurred while marking claims as completed.');
     }
   }

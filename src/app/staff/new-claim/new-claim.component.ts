@@ -51,7 +51,8 @@ export class NewClaimComponent implements OnInit {
       this.initializeDatePicker('#weekdayInput', [0, 6]);
       this.initializeDatePicker('#weekendInput', [1, 2, 3, 4, 5]);
       this.initializeDatePicker('#shiftInput', [0, 6]);
-    }, 400);
+    }, 200);
+    setTimeout(() => this.jQuery('#datepickers-container').css('z-index', '99999'), 400);
   }
 
   previousMonthDate() {

@@ -48,7 +48,6 @@ export class AdminSettingsComponent implements OnInit {
     const data: any = {};
     const errorMessage = 'Entry is invalid! Please select a date from the calendar.';
     const input = this.jQuery('#emailScheduleInput').val();
-    console.log(input)
     const dates = input.split(', ');
 
     if(!dateRegex.test(dates[0])) {
@@ -78,7 +77,6 @@ export class AdminSettingsComponent implements OnInit {
 
   async handleSubmit(currentModal) {
     const data = this.validateDateEntry();
-    console.log(data)
     if (data.error) return this.toastr.error(data.error);
 
     try {

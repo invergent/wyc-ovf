@@ -28,6 +28,7 @@ export class AdminProfileComponent implements OnInit {
   // profile info data
   firstname: string
   lastname: string
+  middlename: string
   email: string
 
   // image
@@ -52,6 +53,7 @@ export class AdminProfileComponent implements OnInit {
     
     this.firstname = this.authService.currentStaff.firstname;
     this.lastname = this.authService.currentStaff.lastname;
+    this.middlename = this.authService.currentStaff.middlename;
     this.email = this.authService.currentStaff.emailAddress;
   }
 

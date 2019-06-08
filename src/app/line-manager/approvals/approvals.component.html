@@ -17,10 +17,10 @@
       <div class="claim-body">
         <div class="request-section staff-profile">
           <div class="image-wrapper">
-            <img src="https://res.cloudinary.com/invergent/image/upload/c_fill,g_face,h_400,r_max,w_400/v1/overtime/INIT/INIT012345.png" alt="Staff Avater">
+            <img src="{{claim?.image | transformImage}}" alt="Staff Avater">
           </div>
           <div class="name-wrapper">
-            <p class="name">{{claim?.firstname}} {{claim?.lastname}}</p>
+            <p class="name">{{claim?.lastname}} {{claim?.firstname}} {{claim?.middlename?.substring(0,1)}}</p>
           </div>
         </div>
         <div class="request-section claim-details">

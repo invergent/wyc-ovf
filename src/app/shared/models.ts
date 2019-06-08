@@ -2,7 +2,7 @@ export interface IStaff {
   staffId: string
   firstname: string
   lastname: string
-  middleName: string
+  middlename: string
   emailAddress: string
   phone: string
   image: string
@@ -29,7 +29,7 @@ export interface IProfileUpdate {
   staffId?: string,
   firstname?: string,
   lastname?: string,
-  middleName?: string,
+  middlename?: string,
   emailAddress?: string,
   image?: string,
   roleId?: number,
