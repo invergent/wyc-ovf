@@ -13,6 +13,7 @@ import {
 export class NewClaimComponent implements OnInit {
   weekdayClicked: boolean = false;
   weekendClicked: boolean = false;
+  atmClicked: boolean = false;
   shiftClicked: boolean = false;
   staffRole: string;
   weekend
@@ -47,10 +48,15 @@ export class NewClaimComponent implements OnInit {
   toggleButtonPress(clickedButton) {
     this[clickedButton] = this[clickedButton] ? false : true;
 
+    // display only one of weekend or atm inputs
+    if (clickedButton === 'weekendClicked') this.atmClicked = false;
+    if (clickedButton === 'atmClicked') this.weekendClicked = false;
+
     setTimeout(() => {
       this.initializeDatePicker('#weekdayInput', [0, 6]);
       this.initializeDatePicker('#weekendInput', [1, 2, 3, 4, 5]);
-      this.initializeDatePicker('#shiftInput', [0, 6]);
+      this.initializeDatePicker('#atmInput', [1, 2, 3, 4, 5]);
+      this.initializeDatePicker('#shiftInput', []);
     }, 200);
     setTimeout(() => this.jQuery('#datepickers-container').css('z-index', '99999'), 400);
   }
@@ -76,7 +82,7 @@ export class NewClaimComponent implements OnInit {
   }
 
   getOvertimeEntries() {
-    const inputs = ['weekdayClicked', 'weekendClicked', 'shiftClicked'];
+    const inputs = ['weekdayClicked', 'weekendClicked', 'atmClicked', 'shiftClicked'];
     const errors = [];
     let overtimeRequest = {};
 

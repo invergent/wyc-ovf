@@ -31,13 +31,15 @@ describe('New Claim', () => {
 
     component.toggleButtonPress('weekdayClicked');
     component.toggleButtonPress('weekendClicked');
+    component.toggleButtonPress('atmClicked');
     component.toggleButtonPress('shiftClicked');
     jest.runAllTimers();
 
     expect(component.weekdayClicked).toBe(true);
-    expect(component.weekendClicked).toBe(true);
+    expect(component.weekendClicked).toBe(false);
+    expect(component.atmClicked).toBe(true);
     expect(component.shiftClicked).toBe(true);
-    expect(datePickerInitializer).toHaveBeenCalledTimes(9);
+    expect(datePickerInitializer).toHaveBeenCalledTimes(16);
   });
 
   it('should return previous month', () => {

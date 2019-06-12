@@ -19,6 +19,7 @@ export class AdminStaffComponent implements OnInit {
   currentModal: string
   displayModal: string = 'none';
   displaySpinner: boolean = false;
+  displayFetchSpinner: boolean = true;
 
   bulkModal: boolean = false;
   singleModal: boolean = false;
@@ -36,6 +37,7 @@ export class AdminStaffComponent implements OnInit {
 
   async ngOnInit() {
     await this.initialiseData();
+    this.displayFetchSpinner = false;
   }
 
   async initialiseData() {

@@ -76,6 +76,7 @@ export interface IClaim {
   monthOfClaim: string,
   weekday: number,
   weekend: number,
+  atm: number,
   shift: number,
   amount: number,
   status: string,

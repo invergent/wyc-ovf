@@ -19,6 +19,12 @@
       type="button"
       name="button">Weekend</button>
     <button
+      *ngIf="staffRole !== 'RPC'"
+      (click)="toggleButtonPress('atmClicked')"
+      [ngClass]="{buttonPressed: atmClicked}"
+      type="button"
+      name="button">ATM Duty</button>
+    <button
       *ngIf="staffRole === 'RPC'"
       (click)="toggleButtonPress('shiftClicked')"
       [ngClass]="{buttonPressed: shiftClicked}"
@@ -49,18 +55,29 @@
           placeholder="Select weekends worked"
           required>
       </div>
+      <div *ngIf="(staffRole !== 'RPC') && atmClicked" class="input">
+        <input
+          id="atmInput"
+          data-language='en'
+          data-multiple-dates="10"
+          data-multiple-dates-separator=", "
+          data-position='top center'
+          type="text"
+          placeholder="Select ATM Duty days"
+          required>
+        </div>
       <div *ngIf="(staffRole === 'RPC') && shiftClicked" class="input">
         <input
           id="shiftInput"
           data-language='en'
-          data-multiple-dates="30"
+          data-multiple-dates="31"
           data-multiple-dates-separator=", "
           data-position='top center'
           type="text"
           placeholder="Select shift days worked"
           required>
       </div>
-      <div *ngIf="weekdayClicked || weekendClicked || shiftClicked" class="button">
+      <div *ngIf="weekdayClicked || weekendClicked || atmClicked || shiftClicked" class="button">
         <button
           (click)="displaySpinner=true"
           type="submit"
