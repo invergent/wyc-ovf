@@ -15,6 +15,12 @@
       </div>
     </div>
   </div>
+  <div *ngIf="displaySpinner" class="wrapper">
+    <div class="spinner">
+      <i class="fa fa-spinner fa-spin"></i>
+      <p class="waiting">Fetching...</p>
+    </div>
+  </div>
   <div class="branch-table">
     <p *ngIf="!visibleBranches.length">No records.</p>
     <div *ngIf="!!visibleBranches.length" class="table-wrapper">

@@ -110,7 +110,7 @@ nav {
             ul {
               @include ul-style;
               max-height: 300px;
-              overflow-y: scroll;
+              overflow-y: auto;
               a {
                 @include li-style;
               }

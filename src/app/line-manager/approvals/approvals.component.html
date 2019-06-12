@@ -45,9 +45,11 @@
         </div>
         <div class="request-section approval-buttons">
           <div class="approval-btn approve" (click)="runApproval('approve '+claim.id)">
+            <span class="toolTip">Approve</span>          
             <img src="/assets/images/green-check.png" alt="Approve Icon">
           </div>
           <div class="approval-btn decline" (click)="runApproval('decline '+claim.id)">
+            <span class="toolTip">Decline</span>            
             <img src="/assets/images/declined.png" alt="">
           </div>
         </div>

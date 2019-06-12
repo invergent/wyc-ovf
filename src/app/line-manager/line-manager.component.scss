@@ -3,7 +3,7 @@
 .line-manager-section {
   background-color: $dashboard-background-color;
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   .nav {
     position: fixed;
     width: 100%;
