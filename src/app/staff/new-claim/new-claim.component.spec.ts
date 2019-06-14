@@ -36,7 +36,7 @@ describe('New Claim', () => {
     jest.runAllTimers();
 
     expect(component.weekdayClicked).toBe(true);
-    expect(component.weekendClicked).toBe(false);
+    expect(component.weekendClicked).toBe(true);
     expect(component.atmClicked).toBe(true);
     expect(component.shiftClicked).toBe(true);
     expect(datePickerInitializer).toHaveBeenCalledTimes(16);

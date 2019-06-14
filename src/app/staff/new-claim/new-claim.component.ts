@@ -37,8 +37,8 @@ export class NewClaimComponent implements OnInit {
       firstDay: 1,
       onRenderCell: (date, cellType) => {
         if (cellType == 'day') {
-          const day = date.getDay()
-          const isDisabled = daysToDisable.indexOf(day) != -1;
+          const day = date.getDay();
+          const isDisabled = daysToDisable.indexOf(day) !== -1;
           return { disabled: isDisabled }
         }
       }
@@ -47,10 +47,6 @@ export class NewClaimComponent implements OnInit {
 
   toggleButtonPress(clickedButton) {
     this[clickedButton] = this[clickedButton] ? false : true;
-
-    // display only one of weekend or atm inputs
-    if (clickedButton === 'weekendClicked') this.atmClicked = false;
-    if (clickedButton === 'atmClicked') this.weekendClicked = false;
 
     setTimeout(() => {
       this.initializeDatePicker('#weekdayInput', [0, 6]);
