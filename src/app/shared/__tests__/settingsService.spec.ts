@@ -30,6 +30,7 @@ describe('Overtime Service', () => {
 
   it('should return settings data if already set', async () => {
     const settings = { emailSchedule: 'some schedule' };
+    //@ts-ignore
     service.settings = settings;
 
     const result = await service.fetchAdminSettings();
@@ -51,7 +52,7 @@ describe('Overtime Service', () => {
     const httpPut = jest.spyOn(httpMock, 'put');
 
     service.fetchSettingsData();
-    service.updateEmailingSetting('cronTime');
+    service.updateSettings({ emailSchedule: 'something' });
 
     expect(httpGet).toHaveBeenCalledTimes(1);
     expect(httpPut).toHaveBeenCalledTimes(1);

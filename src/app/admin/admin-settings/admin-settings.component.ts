@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { SettingsService, ISettings, JQUERY_TOKEN, dateRegex, TOASTR_TOKEN, IToastr } from '../../shared';
+import { SettingsService, ISettings, JQUERY_TOKEN, dateRegex, TOASTR_TOKEN, IToastr, IValidatedForm } from '../../shared';
 import { error } from 'util';
 
 @Component({
@@ -16,8 +16,19 @@ export class AdminSettingsComponent implements OnInit {
   displayModal: string = 'none';
   displaySpinner: boolean = false;
   emailScheduleModal: boolean = false;
+  claimRequestWindowModal: boolean = false;
+  modalMessage: string;
 
   emailSchedule
+  overtimeWindowStart
+  overtimeWindowEnd
+
+  // knob control
+  knobIsOn: boolean;
+
+  // confirm modal controls
+  displayConfirmModal: string = 'none';
+  displayConfirmSpinner: boolean
 
   constructor(
     private settingsService: SettingsService,
@@ -31,6 +42,12 @@ export class AdminSettingsComponent implements OnInit {
 
   async initialiseData() {
     this.settings = await this.settingsService.fetchAdminSettings();
+    this.knobIsOn = this.settings.overtimeWindowIsActive;
+    if (this.knobIsOn) {
+      this.switchKnobOn();
+    } else {
+      this.switchKnobOff();
+    }
   }
 
   runModalDisplay(modal, title, element) {
@@ -38,23 +55,65 @@ export class AdminSettingsComponent implements OnInit {
     this.displayModal = 'block';
     this.currentModal = modal;
     this[modal] = true;
-    if (element) {
-      setTimeout(() => this.jQuery(element).datepicker({ firstDay: 1 }).data('datepicker'), 200);
-      setTimeout(() => this.jQuery('#datepickers-container').css('z-index', '99999'), 400);
+    if (element === '#emailScheduleInput') {
+      setTimeout(() => this.jQuery('#emailScheduleInput').datepicker({ firstDay: 1 }).data('datepicker'), 200);
+    } else {
+      setTimeout(() => this.jQuery('#overtimeWindowStartInput').datepicker({ firstDay: 1 }).data('datepicker'), 200);
+      setTimeout(() => this.jQuery('#overtimeWindowEndInput').datepicker({ firstDay: 1 }).data('datepicker'), 200);
+    }
+    setTimeout(() => this.jQuery('#datepickers-container').css('z-index', '99999'), 400);
+  }
+
+  displayConfirmationModal() {
+    this.displayConfirmModal = 'block';
+  }
+
+  closeConfirmationModal() {
+    this.displayConfirmModal = 'none';
+  }
+
+  async openClaimRequestWindow() {
+    this.displayConfirmSpinner = true; 
+    const payload = { overtimeWindowIsActive: !this.settings.overtimeWindowIsActive };
+    
+    try {
+      const { message } = await this.settingsService.updateSettings(payload);
+      await this.settingsService.syncWithAPI();
+      await this.initialiseData();
+      this.displayConfirmSpinner = false;
+      this.closeConfirmationModal();
+      return this.toastr.success(message); 
+    } catch (error) {
+      this.displayConfirmSpinner = false;
+      return this.toastr.error('An error occurred'); 
     }
   }
 
-  validateDateEntry() {
-    const data: any = {};
-    const errorMessage = 'Entry is invalid! Please select a date from the calendar.';
-    const input = this.jQuery('#emailScheduleInput').val();
-    const dates = input.split(', ');
+  switchKnobOn() {
+    this.jQuery('#knob').css('left', '63.5%');
+    this.jQuery('#on').css('opacity', '1');
+    this.jQuery('#off').css('opacity', '0');
+    this.jQuery('#switch').css('background-color', '#5CA1FF');
+  }
 
-    if(!dateRegex.test(dates[0])) {
-      data.error = errorMessage;
-      return data;
+  switchKnobOff() {
+    this.jQuery('#knob').css('left', '3.5%');
+    this.jQuery('#on').css('opacity', '0');
+    this.jQuery('#off').css('opacity', '1');
+    this.jQuery('#switch').css('background-color', '#ACACAC');
+  }
+
+  toggleKnob() {
+    if (this.settings.overtimeWindowIsActive) {
+      return this.openClaimRequestWindow();
     } 
+    if (this.settings.overtimeWindow === 'Open') {
+      return this.toastr.warning('Claim request window is still open')
+    }
+    this.displayConfirmationModal();
+  }
 
+  translateDatesToCronTime(dates) {
     const cronTimeDays = dates.reduce((acc, date) => {
       const dayOfMonth = date.split('/')[1];
       if (acc.length === 0) {
@@ -65,7 +124,34 @@ export class AdminSettingsComponent implements OnInit {
       return acc;
     }, '');
 
-    data.cronTime = `0 6 ${cronTimeDays} * *`;
+    return `0 ${this.emailScheduleModal ? 6 : 0 } ${cronTimeDays} * *`;
+  }
+
+  checkEntries(input): IValidatedForm {
+    const validField = {};
+    const error = [];
+    const inputValue = this.jQuery(`#${input}Input`).val();
+    const dates = inputValue.split(', ');
+
+    if(!dateRegex.test(dates[0])) error.push(`Enter a valid value for ${input}.`);
+
+    validField[input] = dates;
+    return { validField, error };
+  }
+
+  validateDateEntry() {
+    const data: any = { errors: [] };
+    const inputs = this.emailScheduleModal ? ['emailSchedule'] : ['overtimeWindowStart', 'overtimeWindowEnd'];
+
+    inputs.forEach((input) => {
+      const { validField, error } = this.checkEntries(input);
+      if (!error.length) {
+        const dates = validField[input];
+        const cronTime = this.translateDatesToCronTime(dates);
+        data[input] = cronTime;
+      }
+      data.errors.push(...error);
+    });
 
     return data;
   }
@@ -76,11 +162,13 @@ export class AdminSettingsComponent implements OnInit {
   }
 
   async handleSubmit(currentModal) {
-    const data = this.validateDateEntry();
-    if (data.error) return this.toastr.error(data.error);
+    const { emailSchedule, overtimeWindowStart, overtimeWindowEnd, errors } = this.validateDateEntry();
+    if (errors.length) return errors.forEach(error => this.toastr.error(error));
+
+    const data = this.emailScheduleModal ? { emailSchedule } : { overtimeWindowStart, overtimeWindowEnd };
 
     try {
-      const { message } = await this.settingsService.updateEmailingSetting(data.cronTime);
+      const { message } = await this.settingsService.updateSettings(data);
       this.toastr.success(message);
 
       await this.settingsService.syncWithAPI();
@@ -89,6 +177,7 @@ export class AdminSettingsComponent implements OnInit {
       this.closeModal(currentModal);
       this.displaySpinner = false;
     } catch (error) {
+      this.displaySpinner = false;
       if (error.error) return error.error.errors.forEach(error => this.toastr.error(error))
       return this.toastr.error('An error occurred');
     }

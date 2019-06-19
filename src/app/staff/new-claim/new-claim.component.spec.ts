@@ -1,6 +1,6 @@
 import { NewClaimComponent } from './new-claim.component';
 import {
-  authServiceMock, overtimeServiceMock, routerMock, mockToastr, mockJQuery
+  authServiceMock, overtimeServiceMock, routerMock, mockToastr, mockJQuery, settingsServiceMock
 } from '../../__mocks__';
 
 jest.useFakeTimers();
@@ -10,7 +10,7 @@ describe('New Claim', () => {
 
   beforeEach(() => {
     component = new NewClaimComponent(
-      authServiceMock, overtimeServiceMock, routerMock, mockToastr, mockJQuery
+      authServiceMock, overtimeServiceMock, settingsServiceMock, routerMock, mockToastr, mockJQuery
     );
   });
 
@@ -71,7 +71,7 @@ describe('New Claim', () => {
     });
 
     const newComponent = new NewClaimComponent(
-      authServiceMock, overtimeServiceMock, routerMock, mockToastr, mockJQueryVal
+      authServiceMock, overtimeServiceMock, settingsServiceMock, routerMock, mockToastr, mockJQueryVal
     );
     newComponent.weekdayClicked = true;
     newComponent.weekendClicked = true;
@@ -91,7 +91,7 @@ describe('New Claim', () => {
     });
 
     const newComponent = new NewClaimComponent(
-      authServiceMock, overtimeServiceMock, routerMock, mockToastr, mockJQueryVal
+      authServiceMock, overtimeServiceMock, settingsServiceMock, routerMock, mockToastr, mockJQueryVal
     );
     newComponent.weekdayClicked = true;
     newComponent.weekendClicked = true;
@@ -110,7 +110,7 @@ describe('New Claim', () => {
     });
 
     const newComponent = new NewClaimComponent(
-      authServiceMock, overtimeServiceMock, routerMock, mockToastr, mockJQueryVal
+      authServiceMock, overtimeServiceMock, settingsServiceMock, routerMock, mockToastr, mockJQueryVal
     );
     newComponent.weekdayClicked = true;
     newComponent.weekendClicked = true;

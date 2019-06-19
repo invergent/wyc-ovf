@@ -11,10 +11,11 @@ import { ApprovalProgressBar } from './approval-progress-bar/approval-progress-b
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { ClaimsGraphComponent } from './claims-graph/claims-graph.component';
+import { ClaimWindowComponent } from './claim-window/claim-window.component';
 
 const declarations = [
   TopNav, ClaimsComponent, ActivityBlock, ApprovalProgressBar, PasswordChangeComponent,
-  ClaimsGraphComponent, jqxChartComponent
+  ClaimsGraphComponent, jqxChartComponent, ClaimWindowComponent
 ];
 
 @NgModule({

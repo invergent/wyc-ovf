@@ -64,9 +64,10 @@ export const settingsServiceMock: any = {
   settings: {},
   initialiseSettingsData: () => Promise.resolve(true),
   fetchAdminSettings: () => Promise.resolve({ lineManagers: [], branches: [], roles: [], staffList: [] }),
+  getReopenDate: () => {},
   syncWithAPI: () => {},
   fetchSettingsData: () => Promise.resolve({ data: ['value'] }),
-  updateEmailingSetting: () => Promise.resolve({ message: 'value' })
+  updateSettings: () => Promise.resolve({ message: 'value' })
 }
 
 export const notificationServiceMock: any = {

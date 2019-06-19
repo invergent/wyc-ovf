@@ -73,24 +73,10 @@
       margin: 0 0 0 15px;
     }
   }
-  .claim {
-    margin-bottom: 60px;
-    .section-title {
-      font-size: 23px;
-    }
-    .button-wrapper {
-      margin-top: 20px;
-      font-size: 17px;
-      font-weight: bold;
-      text-align: center;
-      a {
-        color: $brand-color-light;
-        text-decoration: none;
-      }
-    }
-  }
-  .recent-activity {
-    @extend .claim;
+  .window-info {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
   }
 
   @media screen and (max-width: 768px) {

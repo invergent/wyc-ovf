@@ -225,8 +225,15 @@ export interface IRole {
   name: string
 }
 
-export interface ISettings {
+export interface IUpdateSettings {
   emailSchedule?: string
+  overtimeWindowStart?: string
+  overtimeWindowEnd?: string
+  overtimeWindowIsActive?: boolean
+}
+
+export interface ISettings extends IUpdateSettings {
+  overtimeWindow: string
 }
 
 // fetch request models
@@ -329,4 +336,4 @@ export interface IGetSettings {
   data: ISettings[]
 }
 
-export interface IPutEmailSetting extends IPutProfile {}
+export interface IPutSettings extends IPutProfile {}

@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   JQUERY_TOKEN, AuthService, IValidatedForm, dateRegex, TOASTR_TOKEN, IToastr,
-  OvertimeService
+  OvertimeService, ISettings, SettingsService
 } from '../../shared';
 
 @Component({
@@ -11,6 +11,9 @@ import {
   styleUrls: ['./new-claim.component.scss']
 })
 export class NewClaimComponent implements OnInit {
+  companySettings: ISettings;
+  reopenDate: string = '';
+  windowIsActive: boolean = false;
   weekdayClicked: boolean = false;
   weekendClicked: boolean = false;
   atmClicked: boolean = false;
@@ -22,13 +25,23 @@ export class NewClaimComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private overtimeService: OvertimeService,
+    private settingService: SettingsService,
     private router: Router,
     @Inject(TOASTR_TOKEN) private toastr: IToastr,
     @Inject(JQUERY_TOKEN) private jQuery
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.staffRole = this.authService.currentStaff.role;
+    this.companySettings = await this.settingService.fetchAdminSettings();
+    const { overtimeWindow, overtimeWindowIsActive } = this.companySettings;
+
+    if (overtimeWindow === 'Open' || overtimeWindowIsActive) {
+      this.windowIsActive = true;
+    } else {
+      this.windowIsActive = false;
+      this.reopenDate = this.settingService.getReopenDate(this.companySettings.overtimeWindowStart);
+    }
   }
 
   initializeDatePicker(element, daysToDisable) {
@@ -51,7 +64,7 @@ export class NewClaimComponent implements OnInit {
     setTimeout(() => {
       this.initializeDatePicker('#weekdayInput', [0, 6]);
       this.initializeDatePicker('#weekendInput', [1, 2, 3, 4, 5]);
-      this.initializeDatePicker('#atmInput', [1, 2, 3, 4, 5]);
+      this.initializeDatePicker('#atmInput', []);
       this.initializeDatePicker('#shiftInput', []);
     }, 200);
     setTimeout(() => this.jQuery('#datepickers-container').css('z-index', '99999'), 400);

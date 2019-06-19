@@ -87,6 +87,11 @@
   .recent-activity {
     @extend .claim;
   }
+  .window-info {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+  }
 
   @media screen and (max-width: 768px) {
     .page-title {

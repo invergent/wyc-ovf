@@ -1,7 +1,5 @@
 import { AdminSettingsComponent } from './admin-settings.component';
 import { settingsServiceMock, mockToastr, mockJQuery } from 'src/app/__mocks__';
-import { async } from '@angular/core/testing';
-
 jest.useFakeTimers();
 
 describe('AdminSettingsComponent', () => {
@@ -27,7 +25,6 @@ describe('AdminSettingsComponent', () => {
   });
 
   it('should display validation errors when they occur', async () => {
-    const errMsg = 'Entry is invalid! Please select a date from the calendar.';
     const valMock = jest.fn(() => 'wrongDate')
     const newJQMock = jest.fn(() => ({ val: valMock }));
     const toastrErrMock = jest.spyOn(mockToastr, 'error');
@@ -37,7 +34,7 @@ describe('AdminSettingsComponent', () => {
 
     expect(newJQMock).toHaveBeenCalled();
     expect(valMock).toHaveBeenCalled();
-    expect(toastrErrMock).toHaveBeenCalledWith(errMsg);
+    expect(toastrErrMock).toHaveBeenCalledTimes(2);
   });
 
   it('should submit cronTime to server', async () => {
@@ -46,7 +43,7 @@ describe('AdminSettingsComponent', () => {
     const newComponent = new AdminSettingsComponent(settingsServiceMock, mockToastr, newJQMock);
     
     const toastrSucMock = jest.spyOn(mockToastr, 'success');
-    const updateMock = jest.spyOn(settingsServiceMock, 'updateEmailingSetting');
+    const updateMock = jest.spyOn(settingsServiceMock, 'updateSettings');
     const syncMock = jest.spyOn(settingsServiceMock, 'syncWithAPI');
     const init = jest.spyOn(newComponent, 'initialiseData');
     
@@ -54,7 +51,7 @@ describe('AdminSettingsComponent', () => {
     
     expect(newJQMock).toHaveBeenCalled();
     expect(valMock).toHaveBeenCalled();
-    expect(updateMock).toHaveBeenCalledWith('0 6 23 * *');
+    expect(updateMock).toHaveBeenCalled();
     expect(toastrSucMock).toHaveBeenCalledWith('value');
     expect(syncMock).toHaveBeenCalled();
     expect(init).toHaveBeenCalled();
@@ -68,7 +65,7 @@ describe('AdminSettingsComponent', () => {
     const err = { error: { errors: ['error1', 'error2', 'error3'] } };
     
     const toastrErrMock = jest.spyOn(mockToastr, 'error');
-    const updateMock = jest.spyOn(settingsServiceMock, 'updateEmailingSetting').mockRejectedValueOnce(err);
+    const updateMock = jest.spyOn(settingsServiceMock, 'updateSettings').mockRejectedValueOnce(err);
     
     await newComponent.handleSubmit('emailScheduleModal');
     

@@ -1,0 +1,11 @@
+<div class="window-info" [ngStyle]="{backgroundColor: backgroundColor}" (click)="displayInfo()">
+  <p>!</p>
+  <p class="info" [ngStyle]="{backgroundColor: backgroundColor, display: infoDisplay}">
+    Claim request window is currently {{
+      windowStatus?.toLowerCase()
+    }} and would {{
+      windowStatus==='Open' ? 'close' : 'reopen'
+    }} on {{
+      infoDate()
+    }}</p>
+</div>

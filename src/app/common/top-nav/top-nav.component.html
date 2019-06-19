@@ -27,7 +27,7 @@
             <div *ngIf="!notifications.length" class="nothing-here">Nothing here...</div>
             <ul *ngIf="!!notifications.length">
               <li *ngFor="let notif of notifications;">
-                <a [routerLink]="['Cancelled', 'Declined'].includes(notif.type) ? claimHistoryLink : pendingClaimLink">
+                <a [routerLink]="['Cancelled', 'Declined'].indexOf(notif.type) !== 1 ? claimHistoryLink : pendingClaimLink">
                   {{notif.activity}}
                 </a>
               </li>
