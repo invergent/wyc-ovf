@@ -1,0 +1,81 @@
+<main class="login-page">
+  <div class="login-nav">
+    <a (click)="isAdmin=!isAdmin">Log in as {{isAdmin?'staff':'admin'}}</a>
+  </div>
+  <div class="container">
+    <div class="brand">
+      <div [routerLink]="['/']" class="image-wrapper">
+        <img src="/assets/images/logo.png" alt="Logo">
+      </div>
+    </div>
+    <div class="page-title">
+      <p>Login to <span class="app-name"><span class="the-v">V</span>-Timer</span></p>
+    </div>
+    <div class="form-wrapper">
+      <form #loginForm="ngForm" (ngSubmit)="handleSubmit(loginForm.value)" autocomplete="off" novalidate>
+        <ng-template [ngIf]="isAdmin">
+          <div class="input">
+            <em
+              *ngIf="loginForm.controls.email?.invalid
+                && (loginForm.controls.email?.touched || mouseoverLoginButton)">
+              Required
+            </em>
+            <input
+              (ngModel)="email"
+              name="email"
+              type="email"
+              placeholder="Admin email address"
+              required>
+          </div>
+        </ng-template>
+        <ng-template [ngIf]="!isAdmin">
+          <div class="input">
+            <em
+              *ngIf="loginForm.controls.staffId?.invalid
+                && (loginForm.controls.staffId?.touched || mouseoverLoginButton)">
+              Required
+            </em>
+            <input
+              (ngModel)="staffId"
+              name="staffId"
+              type="text"
+              placeholder="Staff ID"
+              required>
+          </div>
+        </ng-template>
+        <div class="input">
+          <em
+            *ngIf="loginForm.controls.password?.invalid
+              && (loginForm.controls.password?.touched || mouseoverLoginButton)">
+            Required
+          </em>
+          <i
+          class="fa fa-eye"
+          (click)="toggleViewPasswordText()"></i>
+          <input
+            (ngModel)="password"
+            name="password"
+            type="{{passwordFieldType}}"
+            placeholder="Password"
+            required>
+        </div>
+        <div
+          class="button"
+          (mouseenter)="mouseoverLoginButton=true"
+          (mouseleave)="mouseoverLoginButton=false">
+          <button
+            [disabled]="loginForm.invalid"
+            (click)="displaySpinner=true"
+            type="submit"
+            name="submit">
+            Login
+            <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
+          </button>
+        </div>
+      </form>
+      <div class="forgot-password">
+        <a [routerLink]="['/forgot-password']">Forgot password?</a>
+      </div>
+    </div>
+  </div>
+</main>

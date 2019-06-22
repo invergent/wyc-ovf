@@ -1,0 +1,246 @@
+<section class="profile">
+  <div class="page-title">
+    <p>Profile</p>
+  </div>
+  <div class="edit-mode">
+    <p class="switch-text">Edit mode</p>
+    <div id="switch">
+      <p id="on">On</p>
+      <p id="off">Off</p>
+      <div class="knob" id="knob" (click)="toggleEditMode()"></div>
+    </div>
+  </div>
+  <div class="profile-info">
+    <div class="profile-image">
+      <div class="edit-icon" (click)="runModalDisplay('imageModal', 'Profile Photo')">
+        <i class="fas fa-edit"></i>
+      </div>
+      <div class="image-wrapper">
+        <img src="{{currentStaff?.image | transformImage}}" alt="Staff Image">
+      </div>
+    </div>
+    <div class="profile-details">
+      <div class="details">
+        <div class="edit-icon" (click)="runModalDisplay('nameModal', 'Name')">
+          <i class="fas fa-edit"></i>
+        </div>
+        <p class="details-header">Name</p>
+        <p class="details-item">{{currentStaff?.lastname}} {{currentStaff?.firstname}} {{currentStaff?.middlename?.substring(0,1)}}</p>
+      </div>
+      <div class="details">
+        <div class="edit-icon" (click)="runModalDisplay('roleModal', 'Role')">
+          <i class="fas fa-edit"></i>
+        </div>
+        <p class="details-header">Position</p>
+        <p class="details-item">{{currentStaff?.role || '--'}}</p>
+      </div>
+      <div class="details">
+        <div class="edit-icon" (click)="runModalDisplay('phoneModal', 'Phone Number')">
+          <i class="fas fa-edit"></i>
+        </div>
+        <p class="details-header">Phone Number</p>
+        <p class="details-item">{{currentStaff?.phone}}</p>
+      </div>
+      <div class="details">
+        <div class="edit-icon" (click)="runModalDisplay('emailModal', 'Email Address')">
+          <i class="fas fa-edit"></i>
+        </div>
+        <p class="details-header">Email Address</p>
+        <p class="details-item">{{currentStaff?.emailAddress}}</p>
+      </div>
+      <div class="details">
+        <div class="edit-icon" (click)="runModalDisplay('branchModal', 'Branch')">
+          <i class="fas fa-edit"></i>
+        </div>
+        <p class="details-header">Branch</p>
+        <p class="details-item">{{currentStaff?.branch || '--'}}</p>
+      </div>
+    </div>
+    <div class="lm supervisor">
+      <div class="edit-icon" (click)="runModalDisplay('supervisorModal', 'Supervisor')">
+        <i class="fas fa-edit"></i>
+      </div>
+      <div class="lm-details-header">
+        <p>Supervisor</p>
+      </div>
+      <div class="lm-details-body">
+        <div class="details-header">
+          <p>Name</p>
+        </div>
+        <div class="name details-item">
+          <p>{{currentStaff?.supervisorFirstName || '--'}} {{currentStaff?.supervisorLastName}}</p>
+        </div>
+        <div class="email details-header">
+          <p>Email Address</p>
+        </div>
+        <div class="email details-item">
+          <p>{{currentStaff?.supervisorEmailAddress || '--'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="lm BSM">
+      <div class="edit-icon" (click)="runModalDisplay('bsmModal', 'BSM')">
+        <i class="fas fa-edit"></i>
+      </div>
+      <div class="lm-details-header">
+        <p>BSM</p>
+      </div>
+      <div class="lm-details-body">
+        <div class="details-header">
+          <p>Name</p>
+        </div>
+        <div class="name details-item">
+          <p>{{currentStaff?.bsmFirstName || '--'}} {{currentStaff?.bsmLastName}}</p>
+        </div>
+        <div class="email details-header">
+          <p>Email Address</p>
+        </div>
+        <div class="email details-item">
+          <p>{{currentStaff?.bsmEmailAddress || '--'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section [ngStyle]="{display: displayModal}" class="edit-modal-section">
+    <div class="edit-modal">
+      <div class="page-title">
+        <p>{{modalTitle}}</p>
+      </div>
+      <div class="form-wrapper">
+        <form [ngSwitch]="true" #profileForm="ngForm" (ngSubmit)="handleSubmit(profileForm.value, currentModal)" autocomplete="off" novalidate>
+          <ng-template [ngSwitchCase]="imageModal">
+            <div class="image-preview">
+              <img src="{{imagePreview || authService?.currentStaff?.image}}" alt="Image">
+            </div>
+            <div class="input">
+              <p (click)="triggerFileInput()" class="input-button">Click to select image</p>
+              <input #fileInput (change)="handleImagePreview(fileInput)" type="file" id="fileInput" accept=".jpeg,.png,.jpg" required>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="nameModal">
+            <div class="input">
+              <input [(ngModel)]="firstname" name="firstname" type="text" placeholder="Enter your first name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="lastname" name="lastname" type="text" placeholder="Enter your last name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="middlename" name="middlename" type="text" placeholder="Enter your middle name" required>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="emailModal">
+            <div class="input">
+              <input [(ngModel)]="email" name="email" type="email" placeholder="Enter office email address" required>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="phoneModal">
+            <div class="input">
+              <input [(ngModel)]="phone" name="phone" type="tel" placeholder="Enter your phone number" required>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="roleModal">
+            <div class="input role-input-wrapper" tabindex="0" (blur)="roleDropdown=false">
+              <div class="decoy-input role-decoy-input" (click)="roleDropdown=true">{{currentStaff?.role}}</div>
+              <input [ngStyle]="{display:'none'}" [(ngModel)]="roleId" name="roleId" type="number" required>
+              <div *ngIf="roleDropdown" class="dropdown-list">
+                <div *ngFor="let role of roles" class="list-item" (click)="handleSelect('role', role)">{{role.name}}</div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="branchModal">
+            <div class="input">
+              <div
+                contenteditable="true"
+                class="decoy-input"
+                id="decoy-input"
+                (input)="handleInput($event.target.innerText, 'branches', 'branch')"
+                (focus)="handleInput('', 'branches', 'branch')"
+              >{{currentStaff?.branch}}</div>
+              <input [ngStyle]="{display:'none'}" [(ngModel)]="branchId" name="branchId" type="number" required>
+              <div *ngIf="branchDropdown && filteredbranches.length" class="dropdown-list">
+                <div *ngFor="let branch of filteredbranches" class="list-item" (click)="handleSelect('branch', branch)">{{branch.name}}</div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="supervisorModal">
+            <div class="input">
+              <input
+                [(ngModel)]="supervisorEmailAddress"
+                name="email"
+                type="email"
+                placeholder="Enter supervisor's email address"
+                (input)="handleInput($event.target.value, 'lineManagers', 'supervisor')"
+                required>
+              <div *ngIf="supervisorDropdown && filteredlineManagers.length" class="dropdown-list">
+                <div *ngFor="let lm of filteredlineManagers" class="multi-list-item" (click)="handleSelect('supervisor', lm)">
+                  <p class="lm-name">{{lm.firstname}} {{lm.lastname}}</p>
+                  <p class="lm-email">{{lm.email}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="supervisorFirstName" name="firstname" type="text" placeholder="Enter supervisor's first name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="supervisorLastName" name="lastname" type="text" placeholder="Enter supervisor's last name" required>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="bsmModal">
+            <div class="input">
+              <input
+                [(ngModel)]="bsmEmailAddress"
+                name="email"
+                type="email"
+                placeholder="Enter BSM email address"
+                (input)="handleInput($event.target.value, 'lineManagers', 'bsm')"
+                required>
+              <div *ngIf="bsmDropdown" class="dropdown-list">
+                <div *ngFor="let lm of filteredlineManagers" class="multi-list-item" (click)="handleSelect('bsm', lm)">
+                  <p class="lm-name">{{lm.firstname}} {{lm.lastname}}</p>
+                  <p class="lm-email">{{lm.email}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="bsmFirstName" name="firstname" type="text" placeholder="Enter BSM first name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="bsmLastName" name="lastname" type="text" placeholder="Enter BSM last name" required>
+            </div>
+          </ng-template>
+          <div class="button">
+            <button
+              [disabled]="profileForm.invalid || (imageModal && fileInvalid)"
+              (click)="displaySpinner=true"
+              type="submit"
+              name="submit">
+              Submit
+              <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+      <p class="close" (click)="closeModal(currentModal)">Close</p>
+    </div>
+    <div class="thanks-modal" *ngIf="thanksModal">
+      <div class="thanks-content">
+        <div class="thanks-icon-wrapper">
+          <img src="/assets/images/dance_dribbble.gif" alt="">
+        </div>
+        <div class="confirmation-text">
+          <p>Profile complete!</p>
+          <br>
+          <p class="info">You would be logged out in {{countDown}}</p>
+        </div>
+        <div class="action-buttons">
+          <button
+            class="no-cancel"
+            id="welldone"
+            type="button"
+            name="button"
+            (click)="closeModal(currentModal)">Close</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

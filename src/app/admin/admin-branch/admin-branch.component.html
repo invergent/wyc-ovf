@@ -1,0 +1,103 @@
+<div class="branch">
+  <div class="page-title">
+    <p>Branch</p>
+  </div>
+  <div class="function-div">
+    <div class="filter-section">
+      <p class="action-labels">Filter by branch name:</p>
+      <input #filterQuery type="text" placeholder="Filter branch by name" (input)="handleFiltering(filterQuery.value)">
+    </div>
+    <div class="add-section">
+      <p class="action-labels">Add new branch:</p>
+      <div class="add-buttons-wrapper">
+        <button class="add-buttons single" (click)="runModalDisplay('singleModal', 'Add single user')">Single</button>
+        <button class="add-buttons bulk" (click)="runModalDisplay('bulkModal', 'Add bulk users')">Bulk</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="displayFetchSpinner" class="wrapper">
+    <div class="spinner">
+      <i class="fa fa-spinner fa-spin"></i>
+      <p class="waiting">Fetching...</p>
+    </div>
+  </div>
+  <div *ngIf="!displayFetchSpinner" class="branch-table">
+    <p *ngIf="!visibleBranches.length">No records.</p>
+    <div *ngIf="!!visibleBranches.length" class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>SOL ID</th>
+            <th>Branch name</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let branch of currentPageBranches">
+          <tr>
+            <td>
+              <div class="outter-ellipse">
+                <div class="inner-ellipse"></div>
+              </div>
+            </td>
+            <td>{{branch?.solId}}</td>
+            <td>{{branch?.name || '--'}}</td>
+            <td>{{branch?.address}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="visibleBranches.length>branchesPerPage" class="pagination">
+    <div class="navigation">
+      <button [disabled]="currentPage<=1" class="prev" (click)="prevPage()">Prev</button>
+      <p><span>{{currentPage}}</span>of<span>{{totalPages}}</span></p>
+      <button [disabled]="currentPage>=totalPages" class="next" (click)="nextPage()">Next</button>
+    </div>
+  </div>
+  <!-- <div class="branch-count">
+    <div>
+      <p class="total-branch-number">{{branchList.length}}</p>
+      <p class="total-branch-label">Total</p>
+    </div>
+  </div> -->
+  <section [ngStyle]="{display: displayModal}" class="add-modal-section">
+    <div class="add-modal">
+      <div class="page-title">
+        <p>{{modalTitle}}</p>
+      </div>
+      <div class="form-wrapper">
+        <form [ngSwitch]="true" #addBranchForm="ngForm" (ngSubmit)="handleSubmit(addBranchForm.value, currentModal)" autocomplete="off" novalidate>
+          <ng-template [ngSwitchCase]="bulkModal">
+            <div class="input">
+              <p (click)="triggerFileInput()" class="input-button">Click to select excel file</p>
+              <input #fileInput type="file" id="fileInput" (input)="handleFileInput(fileInput)" accept=".xlsx" required>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="singleModal">
+            <div class="input">
+              <input [(ngModel)]="solId" name="solId" type="text" placeholder="SOL ID" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="name" name="name" type="text" placeholder="Branch name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="address" name="address" type="text" placeholder="Branch address" required>
+            </div>
+          </ng-template>
+          <div class="button">
+            <button
+              [disabled]="addBranchForm.invalid || (bulkModal && fileInvalid)"
+              (click)="displaySpinner=true"
+              type="submit"
+              name="submit">
+              Submit
+              <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+      <p class="close" (click)="closeModal(currentModal)">Close</p>
+    </div>
+  </section>
+</div>

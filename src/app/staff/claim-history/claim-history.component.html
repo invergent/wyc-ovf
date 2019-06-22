@@ -1,0 +1,10 @@
+<div *ngIf="showLoader || !!errorMessage" class="loader">
+  <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
+  <p *ngIf="!!errorMessage">{{errorMessage}}</p>
+</div>
+<section *ngIf="!showLoader && !errorMessage" class="claim-history-section">
+  <section class="page-title">
+    <p>Claim History</p>
+  </section>
+  <claims [claims]="staffClaimsHistory" [statuses]="statuses"></claims>
+</section>

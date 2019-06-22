@@ -1,0 +1,20 @@
+<div *ngIf="showLoader || !!errorMessage" class="loader">
+  <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
+  <p *ngIf="!!errorMessage">{{errorMessage}}</p>
+</div>
+<section *ngIf="!showLoader && !errorMessage" class="admin-claims-section">
+  <section class="page-title">
+    <p>Claims</p>
+  </section>
+  <section *ngIf="claims.length" class="export-button-section">
+    <button class="export-button mark-as-completed" (click)="markClaimsAsCompleted()">
+      Mark as completed
+      <i *ngIf="displaySpinnerMark" class="fa fa-spinner fa-spin"></i>
+    </button>
+    <button class="export-button" (click)="exportClaims()">
+      Export to excel
+      <i *ngIf="displaySpinnerExport" class="fa fa-spinner fa-spin"></i>
+    </button>
+  </section>
+  <claims [claims]="claims" [statuses]="statuses"></claims>
+</section>

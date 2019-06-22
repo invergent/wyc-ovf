@@ -1,0 +1,309 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.settings {
+  .page-title {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .card-header {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .settings-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    .settings-card {
+      margin-bottom: 30px;
+      min-height: 100%;
+      flex: 0 1 48.5%;
+      .card-body {
+        position: relative;
+        padding: 30px 20px;
+        background-color: $color-white;
+        box-sizing: border-box;
+        border-radius: 8px;
+        height: 100%;
+        cursor: pointer;
+        &:hover > .edit-icon {
+          display: block;
+        }
+        .edit-icon {
+          position: absolute;
+          display: none;
+          top: 10px;
+          right: 10px;
+          color: $faint-color;
+          cursor: pointer;
+          
+        }
+        .card-description {
+          margin-bottom: 20px;
+        }
+        .card-details {
+          font-weight: bold
+        }
+        .edit-mode {
+          position: relative;
+          width: 90px;
+          margin: auto;
+          p {
+            margin: 0;
+          }
+          .switching-off {
+            position: absolute;
+            bottom: -20px;
+            font-style: italic;
+            font-size: 12px;
+          }
+          #switch {
+            position: relative;
+            padding: 8px 11px;
+            border-radius: 100px;
+            box-sizing: border-box;
+            color: $color-white;
+            background-color: $faint-color;
+            transition: all .5s ease-in-out;
+            p {
+              display: inline-block;
+              font-size: 14px;
+              transition: all .5s ease-in-out;
+            }
+            #on {
+              margin-right: 30px;
+              opacity: 0;
+            }
+            #off {
+              opacity: 1;
+            }
+            .knob {
+              position: absolute;
+              top: 3px;
+              left: 3.5%;
+              background-color: $color-white;
+              width: 27px;
+              height: 27px;
+              border-radius: 1000px;
+              transition: all .5s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+    .settings-card:first-child {
+      margin-right: 20px;
+    }
+  }
+  .edit-modal-section {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $modal-background-tint;
+    z-index: 9999;
+    .edit-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      display: inline-block;
+      background-color: $color-white;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      padding: 40px;
+      border-radius: 8px;
+      .page-title {
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        p {
+          margin: 10px 0 0;
+        }
+      }
+      .close {
+        cursor: pointer;
+      }
+      .form-wrapper {
+        form {
+          width: 100%;
+          margin: auto;
+          .input {
+            position: relative;
+            width: 100%;
+            margin-top: 25px;
+            input, .decoy-input {
+              width: 100%;
+              height: 45px;
+              padding: 0 20px;
+              border: 1px solid #ACACAC;
+              border-radius: 10px;
+              box-sizing: border-box;
+              @include placeholder {
+                color: rgba(0,0,0,.2);
+              }
+            }
+            input[type=file] {
+              display: none;
+            }
+            .input-button {
+              background-color: $brand-color-ex-light;
+              width: 100%;
+              height: 40px;
+              line-height: 2.5;
+              margin: 0;
+              border: 1px solid $faint-border-color;
+              border-radius: 10px;
+              cursor: pointer;
+            }
+          }
+          .button {
+            width: 100%;
+            margin-top: 40px;
+            button {
+              position: relative;
+              background-color: $brand-color;
+              width: 100%;
+              height: 45px;
+              color: white;
+              font-size: 1.5rem;
+              border-radius: 10px;
+              border: none;
+              cursor: pointer;
+              &:disabled {
+                background-color: #80808060;
+                cursor: not-allowed;
+              }
+              .fa {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                color: white;
+              }
+              @media screen and (max-width: 400px) {
+                font-size: 1.4rem;
+              }
+            }
+          }
+          @media screen and (max-width: 400px) {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  .confirm-modal-section {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $modal-background-tint;
+    z-index: 9999;
+    .confirm-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 700px;
+      display: inline-block;
+      background-color: $color-white;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      padding: 40px;
+      border-radius: 8px;
+      .confirm-icon-wrapper {
+        width: 150px;
+        margin: auto;
+        img {
+          width: 100%;
+        }
+      }
+      .confirmation-text {
+        margin: 40px auto 80px;
+        p {
+          font-size: 22px;
+          margin: auto;
+        }
+      }
+      .action-buttons {
+        margin: 30px auto;
+        .yes-cancel {
+          @include white-button;
+          margin-right: 80px;
+        }
+        .no-cancel {
+          @include white-button;
+          color: $brand-color;
+          &:hover {
+            background-color: $brand-color;
+          }
+        }
+      }
+    }
+    .confirm-loader {
+      padding: 50px 0;
+      box-sizing: border-box;
+      .fa {
+        font-size: 70px;
+        margin-bottom: 50px;
+      }
+      p {
+        font-size: 20px;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .settings-grid {
+      .settings-card {
+        flex: 0 0 100%;
+      }
+    }
+    .confirm-modal-section {
+      .confirm-modal {
+        width: 90%;
+        .confirmation-text {
+          p {
+            width: 95%;
+          }
+        }
+        .action-buttons {
+          .yes-cancel {
+            @include white-button-responsive-450;
+          }
+          .no-cancel {
+            @include white-button-responsive-450;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .edit-modal-section {
+      .edit-modal {
+        width: 95%;
+        padding: 10px;
+      }
+    }
+    .confirm-modal-section {
+      .confirm-modal {
+        width: 95%;
+        .confirm-icon-wrapper {
+          width: 100px;
+        }
+        .confirmation-text {
+          margin: 20px auto 40px;
+          p {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}
+#datepickers-container {
+  z-index: 99999;
+}

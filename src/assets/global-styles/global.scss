@@ -1,0 +1,9 @@
+@import './variables';
+
+body, html {
+  font-family: "Trebuchet MS";
+  color: $color-black;
+  font-size: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

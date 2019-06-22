@@ -1,0 +1,86 @@
+@import '../../assets/global-styles/mixins';
+@import '../../assets/global-styles/variables';
+
+.main {
+  position: relative;
+}
+top-nav {
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+}
+
+.active {
+  background-color: $brand-color !important;
+  color: $color-white !important;
+}
+
+.content-wrapper {
+  display: flex;
+  height: 100vh;
+  padding-top: 55px;
+  box-sizing: border-box;
+  .side-nav {
+    flex: 0 0 250px;
+    background-color: $color-white;
+    transition: all .4s ease-in-out;
+    overflow-y: auto;
+    .side-nav-tags {
+      padding: 25px 0 10px;
+      box-sizing: border-box;
+      p {
+        margin: 0 0 0 30px;
+        font-size: 18px;
+        color: $faint-color;
+      }
+      &:first-child {
+        padding: 15px 0 10px;
+      }
+    }
+    .side-nav-link {
+      display: block;
+      color: $color-black;
+      .icon-wrapper {
+        display: inline-block;
+        width: 20px;
+        margin: auto 20px auto 30px;
+        .fas, .far {
+          font-size: 20px;
+        }
+      }
+      p {
+        display: inline-block;
+        margin: 10px auto;
+      }
+      &:hover:not(.active) {
+        background-color: $dashboard-background-color;
+      }
+      .active {
+        background-color: $brand-color;
+        color: $color-white !important;
+      }
+    }
+  }
+  .content {
+    flex: 1;
+    background-color: $dashboard-background-color;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .side-nav {
+      position: absolute;
+      z-index: 99;
+      width: 250px;
+      height: calc(100% - (65px));
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .content {
+      padding: 0 10px;
+    }
+  }
+}

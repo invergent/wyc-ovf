@@ -1,0 +1,19 @@
+.window-info {
+  position: relative;
+  padding: 10px;
+  border-radius: 200px;
+  box-sizing: border-box;
+  transition: all .4s ease-in-out;
+  .info {
+    display: none;
+    position: absolute;
+    padding: 10px;
+    top: -90px;
+    left: -240px;
+    width: 270px;
+  }
+  p {
+    margin: 0;
+    color: white
+  }
+}

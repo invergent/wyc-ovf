@@ -1,0 +1,374 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.wrapper {
+  padding: 40vh 8px 0px;
+  text-align: center;
+  box-sizing: border-box;
+  .spinner {
+    .fa {
+      font-size: 150px;
+    }
+    .waiting {
+      font-size: 25px;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .spinner {
+      .fa {
+        font-size: 80px;
+      }
+      .waiting {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.approvals-section {
+  padding: 10vh 2px 0px;
+  .greeting {
+    padding: 0 10px;
+    margin-bottom: 50px;
+    p {
+      text-align: center;
+    }
+  }
+  .claim-requests-wrapper {
+    padding: 0 20px;
+    box-sizing: border-box;
+    .claim-request {
+      background-color: $color-white;
+      margin: auto auto 10px;
+      width: 620px;
+      padding: 15px;
+      border: 1px solid $faint-border-color;
+      border-radius: 8px;
+      opacity: 1;
+      transition: all 1s ease-in-out;
+      .month-of-claim-title {
+        text-align: center;
+        margin-bottom: 15px;
+        p {
+          margin: 0;
+        }
+      }
+      .claim-body {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        .request-section {
+          flex: 1;
+        }
+        .staff-profile {
+          flex: 0 0 200px;
+          text-align: center;
+          .image-wrapper {
+            height: 50px;
+            margin: auto auto 10px;
+            img {
+              height: 100%;
+            }
+          }
+          .name-wrapper {
+            .name {
+              margin: 0;
+            }
+          }
+        }
+        .claim-details {
+          display: flex;
+          flex-direction: column;
+          align-content: center;
+          align-items: center;
+          .claim-unit {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            .claim-item {
+              width: 100px;
+              p {
+                margin: 0;
+                padding: 5px;
+                color: $faint-color;
+              }
+            }
+            .claim-item-value {
+              width: 60px;
+              text-align: center;
+              span {
+                font-size: 18px;
+              }
+            }
+          }
+        }
+        .approval-buttons {
+          flex: 0 0 200px;
+          display: flex;
+          align-items: center;
+          .approval-btn {
+            position: relative;
+            width: 50px;
+            cursor: pointer;
+            img {
+              width: 100%;
+            }
+            .toolTip {
+              position: absolute;
+              top: -35px;
+              left: -5px;
+              background: rgba(0,0,0,.6);
+              padding: 5px;
+              font-size: 14px;
+              border-radius: 5px;
+              color: $color-white;
+              visibility: hidden;
+            }
+            .toolTip::after {
+              position: absolute;
+              bottom: -10px;
+              left: 50%;
+              transform: translate(-50%);
+              content: ' ';
+              border-style: solid;
+              border-width: 5px;
+              border-color: rgba(0,0,0,.6) transparent transparent transparent;
+            }
+            &:hover .toolTip {
+              visibility: visible;
+            }
+          }
+          .approve {
+            margin: auto;
+          }
+          .decline {
+            width: 40px;
+            margin: auto 10px auto auto;
+          }
+        }
+      }
+    }
+  }
+  .claims-counter {
+    position: absolute;
+    bottom: 50%;
+    left: 30px;
+    background-color: $brand-color;
+    border-radius: 1000px;
+    width: 80px;
+    height: 80px;
+    div {
+      background-color: $color-white;
+      width: 60px;
+      height: 60px;
+      margin: 10px auto auto;
+      border-radius: 1000px;
+      text-align: center;
+      .claim-number {
+        margin: 5px auto auto;
+        padding-top: 5px;
+        font-size: 25px;
+        font-weight: bold;
+      }
+      .left {
+        margin: 0;
+      }
+    }
+  }
+  .thanks-modal-section {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $modal-background-tint;
+    z-index: 9999;
+    .thanks-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 70%;
+      display: inline-block;
+      background-color: $color-white;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      padding: 40px;
+      border-radius: 8px;
+      .thanks-icon-wrapper {
+        width: 400px;
+        margin: auto;
+        img {
+          width: 100%;
+        }
+      }
+      .confirmation-text {
+        margin: 10px auto 20px;
+        p {
+          font-size: 22px;
+          width: 60%;
+          margin: auto;
+        }
+      }
+      .action-buttons {
+        margin: 10px auto;
+        .yes-cancel {
+          @include white-button;
+          margin-right: 30%;
+        }
+        .no-cancel {
+          @include white-button;
+          color: $brand-color;
+          &:hover {
+            background-color: $brand-color;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .greeting {
+      margin-bottom: 30px;
+      p {
+      }
+    }
+    .claim-requests-wrapper {
+      .claim-request {
+        width: unset;
+        .month-of-claim-title {
+          p {
+          }
+        }
+        .claim-body {
+          .request-section {
+          }
+          .staff-profile {
+            .image-wrapper {
+              img {
+              }
+            }
+            .name-wrapper {
+              .name {
+              }
+            }
+          }
+          .claim-details {
+            .claim-unit {
+              .claim-item {
+                p {
+                }
+              }
+              .claim-item-value {
+                span {
+                }
+              }
+            }
+          }
+          .approval-buttons {
+            .approval-btn {
+              img {
+              }
+            }
+            .approval-btn {
+            }
+            .approve {
+            }
+            .decline {
+            }
+          }
+        }
+      }
+    }
+    .claims-counter {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 630px) {
+    padding: 15vh 2px 0px;
+    .greeting {
+      p {
+      }
+    }
+    .claim-requests-wrapper {
+      .claim-request {
+        
+        .month-of-claim-title {
+          p {
+          }
+        }
+        .claim-body {
+          flex-direction: column;
+          .request-section {
+          }
+          .staff-profile {
+            flex-basis: 100px;
+            .image-wrapper {
+              img {
+              }
+            }
+            .name-wrapper {
+              .name {
+              }
+            }
+          }
+          .claim-details {
+            .claim-unit {
+              .claim-item {
+                p {
+                }
+              }
+              .claim-item-value {
+                span {
+                }
+              }
+            }
+          }
+          .approval-buttons {
+            flex-basis: 100px;
+            width: 220px;
+            margin: auto;
+            .approval-btn {
+              width: 40px;
+              img {
+              }
+            }
+            .approval-btn {
+            }
+            .approve {
+              margin: auto auto auto 20px;
+            }
+            .decline {
+              margin: auto 20px auto auto;
+            }
+          }
+        }
+      }
+    }
+    .thanks-modal-section {
+      .thanks-modal {
+        width: 95%;
+        padding: 20px 5px;
+        .thanks-icon-wrapper {
+          width: 200px;
+        }
+        .confirmation-text {
+          margin: 20px auto 40px;
+          text-align: center;
+          p {
+            font-size: 18px;
+            margin: 0 5px;
+            width: 100%;
+          }
+        }
+        .action-buttons {
+          .yes-cancel {
+            @include white-button-responsive-450;
+          }
+          .no-cancel {
+            @include white-button-responsive-450;
+          }
+        }
+      }
+    }
+  }
+}

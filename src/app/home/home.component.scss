@@ -1,0 +1,141 @@
+@import '../../assets/global-styles/variables';
+
+.cover {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: 20px 5%;
+  box-sizing: border-box;
+  .home-image {
+    position: relative;
+    margin-top: 7%;
+    width: 100%;
+    .image-wrapper {
+      width: 550px;
+      margin: auto 0 auto auto;
+      img {
+        width: 100%;
+      }
+    }
+    .description {
+      background-color: rgba(255,255,255,.48);
+      position: absolute;
+      top: 30%;
+      left: 5%;
+      transform: translateY(-50%);
+      border: none;
+      box-shadow: 0 0px 80px 35px rgba(255,255,255,.595);;
+      line-height: 60px;
+      .app-name {
+        margin-bottom: 100px;
+        p {
+          font-size: 120px;
+          font-weight: bold;
+          color: $color-black;
+          margin: 0;
+        }
+        span {
+          color: $brand-color;
+        }
+      }
+      .mantra {
+        margin-bottom: 80px;
+        p {
+          color: #000000;
+          font-size: 2.5rem;
+          width: 600px;
+          margin: 0;
+          box-sizing: border-box;
+        }
+      }
+      .submit-overtime-button {
+        button {
+          background-color: white;
+          height: 60px;
+          font-size: 1.6rem;
+          color: $brand-color-2;
+          padding: 0 20px;
+          border: .5px solid #e0e0e0;
+          border-radius: 10px;
+          box-shadow: $home-btn-box-shadow;
+          transition: all .3s ease-in-out;
+          cursor: pointer;
+          &:hover {
+            box-shadow: 0 0 0 -1px #e0e0e0;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 992px) {
+    .image-wrapper {
+      opacity: .15;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .home-image {
+      .description {
+        width: 100%;
+        left: 0;
+        text-align: center;
+        .app-name {
+          margin-bottom: 60px;
+          p {
+            font-size: 120px;
+          }
+        }
+        .mantra {
+          margin-bottom: 50px;
+          p {
+            font-size: 1.7rem;
+            width: 330px;
+            line-height: 1.5;
+            margin: auto;
+          }
+        }
+        .submit-overtime-button {
+          button {
+            font-size: 1.2rem;
+            height: 45px;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .home-image {
+      .description {
+        top: 35%;
+        .app-name {
+          margin-bottom: 60px;
+          p {
+            font-size: 75px;
+          }
+        }
+        .mantra {
+          margin-bottom: 50px;
+          p {
+            font-size: 1.3rem;
+            width: 280px;
+            line-height: 1.5;
+            margin: auto;
+          }
+        }
+        .submit-overtime-button {
+          button {
+            font-size: 1rem;
+            height: 40px;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-height: 500px) {
+    .home-image {
+      .description {
+        height: 100vh;
+      }
+    }
+  }
+}

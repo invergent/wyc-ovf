@@ -1,0 +1,69 @@
+<div class="claims">
+  <div *ngIf="claims.length && statuses?.length" class="filter">
+    <div class="filter-title">
+        <p>Filter by status:</p>
+        <p class="claims-count">Claims count: <span>{{numberOfFilteredClaims}}</span></p>
+    </div>
+    <div class="statuses">
+      <p
+        *ngFor="let status of statuses"
+        class="status"
+        [class.active]="activeFilter===status"
+        (click)="activeFilter=status; filterClaims(status);"
+      >{{status}}</p>
+    </div>
+  </div>
+  <div class="claim-table">
+    <p *ngIf="!claims?.length">You currently have no records here.</p>
+    <div *ngIf="!currentPageClaims?.length && claims.length" class="empty-filter">
+      No claims in this stage
+    </div>
+    <div *ngIf="currentPageClaims?.length" class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Month of claim</th>
+            <th>Weekday</th>
+            <th>Weekend</th>
+            <th>ATM Duty</th>
+            <th>Shift</th>
+            <th>Amount(₦)</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let claim of currentPageClaims">
+          <tr>
+            <td>
+              <div *ngIf="claim?.status.includes('ing')" class="outter-ellipse">
+                <div class="inner-ellipse"></div>
+              </div>
+              <div *ngIf="!claim?.status.includes('ing')" class="claim-icon">
+                <img *ngIf="claim?.status==='Declined'" src="/assets/images/declined.png" alt="Status Icon">
+                <img *ngIf="claim?.status==='Completed'" src="/assets/images/completed.png" alt="Status Icon">
+                <img *ngIf="claim?.status==='Cancelled'" src="/assets/images/cancelled.png" alt="Status Icon">
+              </div>
+            </td>
+            <td>{{claim?.monthOfClaim}}</td>
+            <td>{{claim?.weekday || '--'}}</td>
+            <td>{{claim?.weekend || '--'}}</td>
+            <td>{{claim?.atm || '--'}}</td>
+            <td>{{claim?.shift || '--'}}</td>
+            <td>{{claim?.amount}}</td>
+            <td>{{claim?.status}}</td>
+            <td>{{claim?.createdAt | timeAgo}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="visibleClaims?.length>claimsPerPage" class="pagination">
+    <div class="navigation">
+      <button [disabled]="currentPage<=1" class="prev" (click)="prevPage()">Prev</button>
+      <p><span>{{currentPage}}</span>of<span>{{totalPages}}</span></p>
+      <button [disabled]="currentPage>=totalPages" class="next" (click)="nextPage()">Next</button>
+    </div>
+  </div>
+</div>
+

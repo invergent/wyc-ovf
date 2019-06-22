@@ -1,0 +1,144 @@
+<section class="settings">
+  <div class="page-title">
+    <p>Settings</p>
+  </div>
+  <div class="settings-row">
+    <div class="card-header">Reminder emailing</div>
+    <div class="settings-grid">
+      <div class="settings-card">
+        <div class="card-body">
+          <div class="edit-icon" (click)="runModalDisplay('emailScheduleModal', 'Reminder Email Schedule', '#emailScheduleInput')">
+            <i class="fas fa-edit"></i>
+          </div>
+          <div class="card-description">
+            Send reminder emails to staff with claims pending line managers' approval at:
+          </div>
+          <div class="card-details">
+            {{settings?.emailSchedule | convertCronTime}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="settings-row">
+    <div class="card-header">Claim request window</div>
+    <div class="settings-grid">
+      <div class="settings-card">
+        <div class="card-body">
+          <div class="edit-icon" (click)="runModalDisplay('claimRequestWindowModal', 'Claim Request Window', 'claimRequest')">
+            <i class="fas fa-edit"></i>
+          </div>
+          <div class="card-description">
+            Claim request window would open at <strong>{{settings?.overtimeWindowStart | convertCronTime}}</strong>
+            and close at <strong>{{settings?.overtimeWindowEnd | convertCronTime}}</strong>
+          </div>
+        </div>
+      </div>
+      <div class="settings-card">
+        <div class="card-body">
+          <div class="card-description">
+            Allow claim request submission irrespective of claim request window status.
+          </div>
+          <div class="edit-mode">
+            <div id="switch">
+              <p id="on">On</p>
+              <p id="off">Off</p>
+              <div class="knob" id="knob" (click)="toggleKnob()"></div>
+            </div>
+            <p *ngIf="displaySwitchOffMessage" class="switching-off">Switching off...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section [ngStyle]="{display: displayModal}" class="edit-modal-section">
+    <div class="edit-modal">
+      <div class="page-title">
+        <p>{{modalTitle}}</p>
+      </div>
+      <div class="form-wrapper">
+        <form [ngSwitch]="true" #settingsForm="ngForm" (ngSubmit)="handleSubmit(currentModal)" autocomplete="off" novalidate>
+          <ng-template [ngSwitchCase]="emailScheduleModal">
+            <div class="input">
+              <input
+                [(ngModel)]="emailSchedule"
+                name="emailSchedule"
+                id="emailScheduleInput"
+                type="text"
+                placeholder="Enter email schedule"
+                data-language='en'
+                data-multiple-dates="3"
+                data-multiple-dates-separator=", "
+                data-position='top center'
+                required>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="claimRequestWindowModal">
+            <div class="input">
+              <input
+                [(ngModel)]="overtimeWindowStart"
+                name="overtimeWindowStart"
+                id="overtimeWindowStartInput"
+                type="text"
+                placeholder="Enter date to start accepting requests"
+                data-language='en'
+                data-position='top center'
+                required>
+            </div>
+            <div class="input">
+              <input
+                [(ngModel)]="overtimeWindowEnd"
+                name="overtimeWindowEnd"
+                id="overtimeWindowEndInput"
+                type="text"
+                placeholder="Enter date to stop accepting requests"
+                data-language='en'
+                data-position='top center'
+                required>
+            </div>
+          </ng-template>
+          <div class="button">
+            <button
+              (click)="displaySpinner=true"
+              type="submit"
+              name="submit">
+              Submit
+              <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+      <p class="close" (click)="closeModal(currentModal)">Close</p>
+    </div>
+  </section>
+  <section [ngStyle]="{display: displayConfirmModal}" class="confirm-modal-section">
+    <div class="confirm-modal">
+      <div *ngIf="!displayConfirmSpinner" class="confirm-content">
+        <div class="confirm-icon-wrapper">
+          <img src="/assets/images/cancelled.png" alt="">
+        </div>
+        <div class="confirmation-text">
+          <p>Claim request window is currently closed, turning on this switch would allow staff to submit claim request regardless.</p>
+          <br>
+          <p><strong>Do you still want to proceed with this action?</strong></p>
+        </div>
+        <div class="action-buttons">
+          <button
+            class="yes-cancel"
+            type="button"
+            name="button"
+            (click)="openClaimRequestWindow()">Yes, allow request.</button>
+          <button
+            class="no-cancel"
+            type="button"
+            name="button"
+            (click)="displayConfirmModal='none'">No! I change my mind.</button>
+        </div>
+      </div>
+      <div *ngIf="displayConfirmSpinner" class="confirm-loader">
+        <i class="fa fa-spinner fa-spin"></i>
+        <p>Opening claim request window...</p>
+      </div>
+    </div>
+  </section>
+</section>

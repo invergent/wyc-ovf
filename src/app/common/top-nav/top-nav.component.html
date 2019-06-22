@@ -1,0 +1,55 @@
+<nav>
+  <section class="section-wrapper">
+    <div class="flash-message" id="flash-message">
+      <p id="f-message"></p>
+      <p class="close" id="close">Close</p>
+    </div>
+    <div class="brand">
+      <div [routerLink]="['/']" class="logo">
+        <img src="/assets/images/logo.png" alt="Logo">
+      </div>
+      <div class="hamburger-icon" (click)="toggleSideNav()">
+        <i class="fa fa-bars"></i>
+      </div>
+    </div>
+    <div class="nav-items">
+      <div class="notify" (click)="toggleNavItems('notificationMenu')">
+        <div class="icons-wrapper">
+          <i class='far fa-bell'></i>
+          <span *ngIf="!!newNotificationsCount">{{newNotificationsCount}}</span>
+        </div>
+        <div *ngIf="notificationMenu" class="notifications">
+          <div class="notifications-wrapper">
+            <div class="spike"></div>
+            <div *ngIf="!notifications.length" class="nothing-here">Nothing here...</div>
+            <ul *ngIf="!!notifications.length">
+              <li *ngFor="let notif of notifications;">
+                <a [routerLink]="['Cancelled', 'Declined'].indexOf(notif.type) !== 1 ? claimHistoryLink : pendingClaimLink">
+                  {{notif.activity}}
+                </a>
+              </li>
+            </ul>
+            <div *ngIf="notifications.length>7" [routerLink]="['/staff/notifications']" class="see-all">See all</div>
+          </div>
+        </div>
+      </div>
+      <div class="user" (click)="toggleNavItems('profileMenu')">
+        <div class="avatar" >
+          <img src="{{userImage | transformImage}}" alt="User Avatar">
+        </div>
+        <i class="fa fa-caret-down"></i>
+        <div *ngIf="profileMenu" class="dropdown-menu">
+          <div class="ul-wrapper">
+            <div class="spike"></div>
+            <ul>
+              <li [routerLink]="menuItemProfile"><a >Profile</a></li>
+              <li><a [routerLink]="menuItemChangePassword">Change password</a></li>
+              <li><a [routerLink]="['/logout']">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</nav>
+

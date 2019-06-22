@@ -1,0 +1,62 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.grey {
+  background-color: $faint-color !important;
+}
+.white {
+  background-color: $color-white !important;
+}
+
+.approval-progress-bar {
+  .bar-wrapper {
+    display: inline-flex;
+    .outter-ellipse {
+      width: 25px;
+      height: 25px;
+      margin: auto;
+      padding: 1px;
+      background-color: $brand-color;
+      border-radius: 1000px;
+      box-sizing: border-box;
+      .inner-ellipse {
+        width: 13px;
+        height: 13px;
+        margin: 5px auto;
+        background-color: $color-white;
+        border-radius: 1000px;
+      }
+      .checkmark-wrapper {
+        width: 17px;
+        margin: 3px auto auto ;
+        img {
+          width: 100%;
+        }
+      }
+    }
+    .connector {
+      width: 200px;
+      height: 5px;
+      background-color: $brand-color;
+      margin: auto -23px auto auto;
+    }
+  }
+  .label-wrapper {
+    display: flex;
+    width: 600px;
+    margin: auto;
+    p {
+      flex: 1;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .bar-wrapper {
+      .connector {
+        width: 120px;
+      }
+    }
+    .label-wrapper {
+      width: 280px;
+    }
+  }
+}

@@ -1,0 +1,159 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.loader {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  .fa {
+    position: absolute;
+    top: 30vh;
+    left: 45%;
+    font-size: 100px;
+    transform: translateX(-50%);
+  }
+  p {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+  }
+}
+.pending-claim {
+  .page-title {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  .button-section {
+    text-align: center;
+    button {
+      @include white-button;
+      color: $color-red;
+      &:hover {
+        color: $color-white;
+        background-color: $color-red;
+      }
+    }
+  }
+  .approval-progress-bar-wrapper {
+    text-align: center;
+    margin: 80px auto;
+  }
+  .cancel-modal-section {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $modal-background-tint;
+    z-index: 9999;
+    .cancel-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 70%;
+      display: inline-block;
+      background-color: $color-white;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      padding: 40px;
+      border-radius: 8px;
+      .cancel-icon-wrapper {
+        width: 150px;
+        margin: auto;
+        img {
+          width: 100%;
+        }
+      }
+      .confirmation-text {
+        margin: 40px auto 80px;
+        p {
+          font-size: 22px;
+          width: 60%;
+          margin: auto;
+        }
+      }
+      .action-buttons {
+        margin: 30px auto;
+        .yes-cancel {
+          @include white-button;
+          margin-right: 30%;
+        }
+        .no-cancel {
+          @include white-button;
+          color: $brand-color;
+          &:hover {
+            background-color: $brand-color;
+          }
+        }
+      }
+    }
+    .cancel-loader {
+      padding: 50px 0;
+      box-sizing: border-box;
+      .fa {
+        font-size: 70px;
+        margin-bottom: 50px;
+      }
+      p {
+        font-size: 20px;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .cancel-modal-section {
+
+      .cancel-modal {
+
+        .cancel-icon-wrapper {
+
+          img {
+
+          }
+        }
+        .confirmation-text {
+
+          p {
+            width: 95%;
+          }
+        }
+        .action-buttons {
+
+          .yes-cancel {
+          }
+          .no-cancel {
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .cancel-modal-section {
+      .cancel-modal {
+        width: 95%;
+        .cancel-icon-wrapper {
+          width: 100px;
+        }
+        .confirmation-text {
+          margin: 20px auto 40px;
+          p {
+            font-size: 18px;
+          }
+        }
+        .action-buttons {
+          .yes-cancel {
+            @include white-button-responsive-450;
+          }
+          .no-cancel {
+            @include white-button-responsive-450;
+          }
+        }
+      }
+    }
+  }
+}

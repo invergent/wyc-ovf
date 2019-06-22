@@ -1,0 +1,111 @@
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}
+}
+
+@mixin dropdown-wrapper {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  background-color: white;
+  width: 300px;
+  box-shadow: 5px 5px 20px 1px $faint-color-ex-light;
+  z-index: 1;
+}
+
+@mixin dropdown-wrapper-display {
+  display: block;
+}
+
+@mixin navigation-items-wrapper {
+  position: relative;
+}
+
+@mixin spike {
+  display: inline-block;
+  position: absolute;
+  z-index: -2;
+  top: -10px;
+  right: 30px;
+  background-color: $color-white;
+  width: 20px;
+  height: 20px;
+  transform: rotate(45deg);
+  box-shadow: -7px -7px 8px 0px $faint-color-xx-light;
+}
+
+@mixin ul-style {
+  list-style: none;
+  margin: 0;
+  padding: 5px;
+  text-align: center;
+}
+
+@mixin li-style {
+  border-bottom: 1px solid $faint-color-ex-light;
+}
+
+@mixin li-style-link {
+  display: block;
+  text-decoration: none;
+  padding: 13px 0;
+  color: $color-black;
+  &:hover {
+    background-color: $brand-color;
+    color: $color-white;
+  }
+}
+
+@mixin li-last-child {
+  border: none;
+}
+@mixin white-button {
+  background-color: $color-white;
+  padding: 10px 18px;
+  font-size: 18px;
+  border: 1px solid $faint-border-color;
+  border-radius: 8px;
+  box-shadow: 4px 4px 10px 0 $faint-color-ex-light;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  color: $color-red;
+  &:hover {
+    color: white;
+    background-color: $color-red;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+@mixin white-button-responsive-450 {
+  display: block;
+  margin: auto auto 30px;
+}
+@mixin pagination-button {
+  background-color: $brand-color;
+  width: 60px;
+  height: 20px;
+  font-size: 14px;
+  color: $color-white;
+  border: none;
+  border-radius: 5px;
+  &:disabled {
+    background-color: #80808060;
+    cursor: not-allowed;
+  }
+}
+
+@mixin profile-grid-item {
+  background-color: $color-white;
+  padding: 20px;
+  border: 1px solid $faint-border-color;
+  border-radius: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;
+  &:hover > .edit-icon {
+    display: block;
+  }
+}

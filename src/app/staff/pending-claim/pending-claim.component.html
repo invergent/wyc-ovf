@@ -1,0 +1,44 @@
+<div *ngIf="showLoader || !!errorMessage" class="loader">
+  <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
+  <p *ngIf="!!errorMessage">{{errorMessage}}</p>
+</div>
+<section *ngIf="!showLoader && !errorMessage" class="pending-claim">
+  <div class="page-title">
+    <p>Pending Claim</p>
+  </div>
+  <claims [claims]="pendingClaim" [statuses]="[]"></claims>
+  <section *ngIf="!!pendingClaim.length" class="approval-progress-bar-wrapper">
+    <approval-progress-bar [approvalHistory]="pendingClaim[0].approvalHistory"></approval-progress-bar>
+  </section>
+  <section *ngIf="!(pendingClaim[0]?.approvalHistory?.length>1 || !pendingClaim.length)" class="button-section">
+    <button type="button" name="button" (click)="displayModal='block'">Cancel this claim</button>
+  </section>
+  <section [ngStyle]="{display: displayModal}" class="cancel-modal-section">
+    <div class="cancel-modal">
+      <div *ngIf="!displayCancelSpinner" class="cancel-content">
+        <div class="cancel-icon-wrapper">
+          <img src="/assets/images/cancelled.png" alt="">
+        </div>
+        <div class="confirmation-text">
+          <p>Are you sure you want to cancel this claim request? This cannot be undone!</p>
+        </div>
+        <div class="action-buttons">
+          <button
+            class="yes-cancel"
+            type="button"
+            name="button"
+            (click)="displayCancelSpinner=true; cancelClaim();">Yes, Cancel it.</button>
+          <button
+            class="no-cancel"
+            type="button"
+            name="button"
+            (click)="displayModal='none'">No! Mistake.</button>
+        </div>
+      </div>
+      <div *ngIf="displayCancelSpinner" class="cancel-loader">
+        <i class="fa fa-spinner fa-spin"></i>
+        <p>Cancelling claim...</p>
+      </div>
+    </div>
+  </section>
+</section>

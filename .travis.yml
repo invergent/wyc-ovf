@@ -1,0 +1,25 @@
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+cache:
+  directories:
+    - ./node_modules
+env:
+  global:
+    - CC_TEST_REPORTER_ID=3dc6703807024386019b0c7355e31062ddb1d06b431932a1c621bea89e6ed4db
+language: node_js
+node_js:
+  - '11.10.1'
+install:
+  - npm install
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+script:
+  - npm run test
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
