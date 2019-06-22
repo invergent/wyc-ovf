@@ -23,7 +23,7 @@
         width: 13px;
         height: 13px;
         margin: 5px auto;
-        background-color: $brand-color-light;
+        background-color: $color-white;
         border-radius: 1000px;
       }
       .checkmark-wrapper {
@@ -51,22 +51,12 @@
   }
   @media screen and (max-width: 500px) {
     .bar-wrapper {
-      .outter-ellipse {
-        .inner-ellipse {
-        }
-        .checkmark-wrapper {
-          img {
-          }
-        }
-      }
       .connector {
         width: 120px;
       }
     }
     .label-wrapper {
       width: 280px;
-      p {
-      }
     }
   }
 }

@@ -95,7 +95,7 @@ export class AdminSettingsComponent implements OnInit {
     this.jQuery('#knob').css('left', '66%');
     this.jQuery('#on').css('opacity', '1');
     this.jQuery('#off').css('opacity', '0');
-    this.jQuery('#switch').css('background-color', '#5CA1FF');
+    this.jQuery('#switch').css('background-color', '#84120B');
   }
 
   switchKnobOff() {
@@ -128,7 +128,7 @@ export class AdminSettingsComponent implements OnInit {
       return acc;
     }, '');
 
-    return `0 ${this.emailScheduleModal ? 6 : 0 } ${cronTimeDays} * *`;
+    return `0 ${this.emailScheduleModal ? 7 : 1 } ${cronTimeDays} * *`;
   }
 
   checkEntries(input): IValidatedForm {

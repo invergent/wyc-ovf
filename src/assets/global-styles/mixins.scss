@@ -44,11 +44,14 @@
 }
 
 @mixin li-style {
+  border-bottom: 1px solid $faint-color-ex-light;
+}
+
+@mixin li-style-link {
   display: block;
   text-decoration: none;
   padding: 13px 0;
-  color: $brand-color;
-  border-bottom: .5px solid $faint-color-ex-light;
+  color: $color-black;
   &:hover {
     background-color: $brand-color;
     color: $color-white;

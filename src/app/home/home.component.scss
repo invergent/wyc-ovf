@@ -1,3 +1,5 @@
+@import '../../assets/global-styles/variables';
+
 .cover {
   width: 100vw;
   height: 100vh;
@@ -18,26 +20,29 @@
     .description {
       background-color: rgba(255,255,255,.48);
       position: absolute;
-      top: 40%;
+      top: 30%;
       left: 5%;
       transform: translateY(-50%);
       border: none;
-      box-shadow: 0 0px 80px 35px rgba(255,255,255,.595);
-      line-height: 66px;
+      box-shadow: 0 0px 80px 35px rgba(255,255,255,.595);;
+      line-height: 60px;
       .app-name {
         margin-bottom: 100px;
         p {
-          font-size: 160px;
+          font-size: 120px;
           font-weight: bold;
-          color: #001E50;
+          color: $color-black;
           margin: 0;
+        }
+        span {
+          color: $brand-color;
         }
       }
       .mantra {
         margin-bottom: 80px;
         p {
           color: #000000;
-          font-size: 3rem;
+          font-size: 2.5rem;
           width: 600px;
           margin: 0;
           box-sizing: border-box;
@@ -48,11 +53,11 @@
           background-color: white;
           height: 60px;
           font-size: 1.6rem;
-          color: #001E50;
+          color: $brand-color-2;
           padding: 0 20px;
           border: .5px solid #e0e0e0;
           border-radius: 10px;
-          box-shadow: 4px 5px 8px -1px #e0e0e0;
+          box-shadow: $home-btn-box-shadow;
           transition: all .3s ease-in-out;
           cursor: pointer;
           &:hover {
