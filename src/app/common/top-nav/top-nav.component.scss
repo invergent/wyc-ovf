@@ -39,10 +39,10 @@ nav {
     .brand {
       display: flex;
       align-items: center;
-      width: 220px;
+      width: 120px;
       cursor: pointer;
       .logo {
-        width: 220px;
+        width: 100%;
         margin-right: 8px;
       }
       .hamburger-icon {
@@ -94,7 +94,7 @@ nav {
               cursor: pointer;
               outline: none;
               &:hover {
-                background-color: $brand-color-light;
+                background-color: $brand-color-3;
                 color: $color-white;
               }
             }
@@ -111,10 +111,13 @@ nav {
               @include ul-style;
               max-height: 300px;
               overflow-y: auto;
-              a {
+              li {
                 @include li-style;
+                a {
+                  @include li-style-link;
+                }
               }
-              a:last-child {
+              li:last-child {
                 @include li-last-child;
               }
             }
@@ -150,10 +153,13 @@ nav {
           }
           ul {
             @include ul-style;
-            a {
+            li {
               @include li-style;
+              a {
+                @include li-style-link;
+              }
             }
-            a:last-child {
+            li:last-child {
               @include li-last-child;
             }
           }
@@ -164,54 +170,18 @@ nav {
   @media screen and (max-width: 1024px) {
     section {
       .brand {
-        width: 60px;
+        width: 120px;
         .logo {
           margin-right: 15px;
         }
-        .name {
-          display: none;
-        }
         .hamburger-icon {
           display: inline-block;
-        }
-        img {
+          font-size: 30px;
         }
       }
       .nav-items {
         .notify {
           margin-right: 30px;
-          .icons-wrapper {
-            .fa-bell {
-            }
-            span {
-            }
-          }
-          .notifications {
-            .notifications-wrapper {
-              .spike {
-              }
-            }
-          }
-        }
-        .user {
-          .avatar {
-            img {
-            }
-          }
-          .fa-caret-down {
-          }
-          .dropdown-menu {
-            .ul-wrapper {
-              .spike {
-              }
-              ul {
-                li {
-                }
-                li:last-child {
-                }
-              }
-            }
-          }
         }
       }
     }
@@ -222,12 +192,6 @@ nav {
         width: 60px;
         .logo {
           margin-right: 15px;
-        }
-        .name {
-          display: none;
-        }
-        .hamburger-icon {
-          display: inline-block;
         }
       }
       .nav-items {

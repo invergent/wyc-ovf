@@ -1,18 +1,19 @@
 <main class="cover">
-  <section class="home-image">
-    <div class="image-wrapper">
-      <img src="/assets/images/home-bg.png" alt="Man in a black suit">
-    </div>
-    <div class="description">
-      <div class="app-name">
-        <p>V-Timer</p>
+    <section class="home-image">
+      <div class="image-wrapper">
+        <img src="/assets/images/home-bg.png" alt="Man in a black suit">
       </div>
-      <div class="mantra">
-        <p>An innovative way to make overtime claims</p>
+      <div class="description">
+        <div class="app-name">
+          <p><span class="the-v">V</span>-Timer</p>
+        </div>
+        <div class="mantra">
+          <p>An innovative way to make overtime claims</p>
+        </div>
+        <div class="submit-overtime-button">
+          <button [routerLink]="['/login']" type="button" name="button">Submit overtime claim</button>
+        </div>
       </div>
-      <div class="submit-overtime-button">
-        <button [routerLink]="['/login']" type="button" name="button">Submit overtime claim</button>
-      </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
+  

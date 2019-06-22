@@ -127,7 +127,7 @@ describe('Overtime Service', () => {
   it('should make a post request to create overtime request.', () => {
     const httpPost = jest.spyOn(httpMock, 'post');
     const overtimeRequest = { weekday: 2, weekend: 3 };
-    const url = 'http://init.overtime-api.example.com:7000/users/claim';
+    const url = 'http://overtime-api.vla.com:7000/users/claim';
 
     service.createOvertimeRequest(overtimeRequest);
 
@@ -136,7 +136,7 @@ describe('Overtime Service', () => {
 
   it('should make a delete request to cancel pending claim.', () => {
     const httpDelete = jest.spyOn(httpMock, 'delete');
-    const url = 'http://init.overtime-api.example.com:7000/users/claims/1';
+    const url = 'http://overtime-api.vla.com:7000/users/claims/1';
 
     service.cancelClaim(1);
 
@@ -145,7 +145,7 @@ describe('Overtime Service', () => {
 
   it('should make a get request to fetch staff claim history.', async () => {
     const httpGet = jest.spyOn(httpMock, 'get').mockImplementation(() => ({ toPromise: () => {} }));
-    const url = 'http://init.overtime-api.example.com:7000/users/claims/history';
+    const url = 'http://overtime-api.vla.com:7000/users/claims/history';
 
     await service.fetchStaffClaimHistory();
 
