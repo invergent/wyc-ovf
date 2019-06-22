@@ -333,7 +333,7 @@ export interface IGetChartStatistics {
 
 export interface IGetSettings {
   message: string
-  data: ISettings[]
+  data: ISettings
 }
 
 export interface IPutSettings extends IPutProfile {}

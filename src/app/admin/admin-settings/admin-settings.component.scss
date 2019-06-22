@@ -46,10 +46,17 @@
           font-weight: bold
         }
         .edit-mode {
+          position: relative;
           width: 90px;
           margin: auto;
           p {
             margin: 0;
+          }
+          .switching-off {
+            position: absolute;
+            bottom: -20px;
+            font-style: italic;
+            font-size: 12px;
           }
           #switch {
             position: relative;

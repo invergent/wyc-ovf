@@ -18,7 +18,7 @@ export class SettingsService {
   async initialiseSettingsData(): Promise<boolean> {
     try {
       const { data: settings } = await this.fetchSettingsData();
-      this.settings = settings[0];
+      this.settings = settings;
       return true;
     } catch(e) {
       throw new Error();
@@ -27,6 +27,7 @@ export class SettingsService {
 
   async fetchAdminSettings() {
     if (!this.settings) await this.initialiseSettingsData();
+    console.log(this.settings, 'frooommmm')
     return this.settings;
   }
 

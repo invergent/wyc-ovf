@@ -8,10 +8,11 @@ import { ISettings, SettingsService } from '../../shared';
 })
 export class ClaimWindowComponent implements OnInit {
   @Input() companySettings: ISettings
-  backgroundColor: string = 'blue';
+  backgroundColor: string = 'transparent';
   reopenDate
   closingDate
   windowStatus
+  message
   infoDisplay: string = 'none';
 
   constructor(private settingService: SettingsService) { }
@@ -22,12 +23,7 @@ export class ClaimWindowComponent implements OnInit {
     this.reopenDate = this.settingService.getReopenDate(overtimeWindowStart);
     this.closingDate = this.settingService.getReopenDate(overtimeWindowEnd);
     this.windowStatus = this.companySettings.overtimeWindow;
-    this.backgroundColor = this.companySettings.overtimeWindow === 'Open'
-      ? 'green' : 'red';
-  }
-
-  infoDate() {
-    return this.windowStatus === 'Open' ? this.closingDate : this.reopenDate;
+    this.createTheme();
   }
 
   displayInfo() {
@@ -35,6 +31,20 @@ export class ClaimWindowComponent implements OnInit {
       this.infoDisplay = 'block';
     } else {
       this.infoDisplay = 'none';
+    }
+  }
+
+  createTheme() {
+    const { overtimeWindow, overtimeWindowIsActive } = this.companySettings
+    if ((!overtimeWindow || overtimeWindow === 'Close') && overtimeWindowIsActive) {
+      this.message = 'Claim request window is temporarily open'
+      this.backgroundColor = '#ffc107';
+    } else if (!overtimeWindow || overtimeWindow === 'Close') {
+      this.message = `Claim request window is currently closed and would reopen on ${this.reopenDate}`;
+      this.backgroundColor = '#bf360c';
+    } else {
+      this.message = `Claim request window is currently open and would close on ${this.closingDate}`;
+      this.backgroundColor = '#2e7d32';
     }
   }
 }

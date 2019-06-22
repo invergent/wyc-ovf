@@ -36,9 +36,6 @@
       </div>
       <div class="settings-card">
         <div class="card-body">
-          <div class="edit-icon" (click)="runModalDisplay('claimRequestWindowModal', 'Claim Request Window', 'claimRequest')">
-            <i class="fas fa-edit"></i>
-          </div>
           <div class="card-description">
             Allow claim request submission irrespective of claim request window status.
           </div>
@@ -48,6 +45,7 @@
               <p id="off">Off</p>
               <div class="knob" id="knob" (click)="toggleKnob()"></div>
             </div>
+            <p *ngIf="displaySwitchOffMessage" class="switching-off">Switching off...</p>
           </div>
         </div>
       </div>
