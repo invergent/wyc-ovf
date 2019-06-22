@@ -25,6 +25,7 @@ export class AdminSettingsComponent implements OnInit {
 
   // knob control
   knobIsOn: boolean;
+  displaySwitchOffMessage: boolean = false;
 
   // confirm modal controls
   displayConfirmModal: string = 'none';
@@ -81,6 +82,7 @@ export class AdminSettingsComponent implements OnInit {
       await this.settingsService.syncWithAPI();
       await this.initialiseData();
       this.displayConfirmSpinner = false;
+      this.displaySwitchOffMessage = false;
       this.closeConfirmationModal();
       return this.toastr.success(message); 
     } catch (error) {
@@ -90,7 +92,7 @@ export class AdminSettingsComponent implements OnInit {
   }
 
   switchKnobOn() {
-    this.jQuery('#knob').css('left', '63.5%');
+    this.jQuery('#knob').css('left', '66%');
     this.jQuery('#on').css('opacity', '1');
     this.jQuery('#off').css('opacity', '0');
     this.jQuery('#switch').css('background-color', '#5CA1FF');
@@ -105,6 +107,8 @@ export class AdminSettingsComponent implements OnInit {
 
   toggleKnob() {
     if (this.settings.overtimeWindowIsActive) {
+      this.displaySwitchOffMessage = true;
+      this.switchKnobOff();
       return this.openClaimRequestWindow();
     } 
     if (this.settings.overtimeWindow === 'Open') {
