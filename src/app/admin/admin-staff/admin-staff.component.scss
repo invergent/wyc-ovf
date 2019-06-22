@@ -2,7 +2,7 @@
 @import '../../../assets/global-styles/variables';
 
 .active {
-  background-color: $brand-color-light !important;
+  background-color: $brand-color-3 !important;
   color: $color-white !important;
 }
 .staff {
@@ -20,7 +20,7 @@
       input {
         width: 250px;
         padding: 10px 15px;
-        border: 1px solid $brand-color-light;
+        border: 1px solid $brand-color-3;
         border-radius: 8px;
         box-sizing: border-box;
         &:focus {
@@ -34,7 +34,7 @@
       .add-buttons-wrapper {
         display: flex;
         width: 250px;
-        border: 1px solid $brand-color-light;
+        border: 1px solid $brand-color-3;
         border-radius: 8px;
         .add-buttons {
           flex: 1;
@@ -47,7 +47,7 @@
           }
         }
         .single {
-          border-right: 1px solid $brand-color-light;
+          border-right: 1px solid $brand-color-3;
           border-radius: 8px 0 0 8px;
         }
         .bulk {
@@ -130,7 +130,7 @@
                 width: 13px;
                 height: 13px;
                 margin: 5px auto;
-                background-color: $brand-color-light;
+                background-color: $brand-color-3;
                 border-radius: 1000px;
               }
             }
@@ -160,7 +160,7 @@
       width: 200px;
       margin: auto;
       .prev, .next {
-        color: $brand-color-light;
+        color: $brand-color-3;
         cursor: pointer;
       }
       .prev {

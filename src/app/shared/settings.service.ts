@@ -27,7 +27,6 @@ export class SettingsService {
 
   async fetchAdminSettings() {
     if (!this.settings) await this.initialiseSettingsData();
-    console.log(this.settings, 'frooommmm')
     return this.settings;
   }
 

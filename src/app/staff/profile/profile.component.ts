@@ -202,7 +202,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this.jQuery('#knob').css('left', '63.5%');
       this.jQuery('#on').css('opacity', '1');
       this.jQuery('#off').css('opacity', '0');
-      this.jQuery('#switch').css('background-color', '#5CA1FF');
+      this.jQuery('#switch').css('background-color', '#84120B');
     } else {
       this.editMode = 'none';
       this.jQuery('#knob').css('left', '3.5%');

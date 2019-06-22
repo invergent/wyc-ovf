@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/invergent/overtime-frontend.svg?branch=develop)](https://travis-ci.org/invergent/overtime-frontend) [![Maintainability](https://api.codeclimate.com/v1/badges/74732fac5e0a132db878/maintainability)](https://codeclimate.com/github/invergent/overtime-frontend/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/74732fac5e0a132db878/test_coverage)](https://codeclimate.com/github/invergent/overtime-frontend/test_coverage)
+[![Build Status](https://travis-ci.org/invergent/vla-ovf.svg?branch=develop)](https://travis-ci.org/invergent/vla-ovf)
 
 # OvertimeFrontend
 
