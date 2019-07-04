@@ -128,7 +128,7 @@ export class AdminSettingsComponent implements OnInit {
       return acc;
     }, '');
 
-    return `0 ${this.emailScheduleModal ? 8 : 2 } ${cronTimeDays} * *`;
+    return `0 ${this.emailScheduleModal ? 7 : 1 } ${cronTimeDays} * *`;
   }
 
   checkEntries(input): IValidatedForm {
