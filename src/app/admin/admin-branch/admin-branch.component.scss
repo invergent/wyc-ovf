@@ -70,15 +70,16 @@
     }
   }
   .wrapper {
-    padding: 40vh 8px 0px;
+    padding: 10vh 8px 0px;
     text-align: center;
     box-sizing: border-box;
     .spinner {
       .fa {
-        font-size: 150px;
+        font-size: 50px;
+        color: $brand-color;
       }
       .waiting {
-        font-size: 25px;
+        font-size: 15px;
       }
     }
     @media screen and (max-width: 500px) {

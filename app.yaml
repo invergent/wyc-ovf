@@ -1,0 +1,7 @@
+service: default #if you change this name it will create a new service in GCP
+runtime: nodejs10
+handlers:
+- url: /.*
+  script: auto
+  secure: always
+  redirect_http_response_code: 301

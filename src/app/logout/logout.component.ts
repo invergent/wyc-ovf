@@ -32,6 +32,7 @@ export class LogoutComponent implements OnInit {
     try {
       await this.authService.logout();
       this.authService.isAuthenticated = false;
+      this.authService.isAdmin = false;
       this.authService.currentStaff = null;
       this.overtimeService.staffClaimData = null;
       this.overtimeService.adminClaimData = null;

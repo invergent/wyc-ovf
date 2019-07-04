@@ -39,7 +39,7 @@ nav {
     .brand {
       display: flex;
       align-items: center;
-      width: 120px;
+      width: 100px;
       cursor: pointer;
       .logo {
         width: 100%;
@@ -131,7 +131,7 @@ nav {
         outline: none;
         .avatar {
           display: inline-block;
-          width: 50px;
+          width: 40px;
           margin-right: 10px;
           img {
             width: 100%
@@ -170,13 +170,13 @@ nav {
   @media screen and (max-width: 1024px) {
     section {
       .brand {
-        width: 120px;
+        width: 100px;
         .logo {
           margin-right: 15px;
         }
         .hamburger-icon {
           display: inline-block;
-          font-size: 30px;
+          font-size: 20px;
         }
       }
       .nav-items {

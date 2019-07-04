@@ -12,7 +12,7 @@ export class AdminClaimsComponent implements OnInit {
   displaySpinnerMark: boolean = false;
   displaySpinnerExport: boolean = false;
   errorMessage: string = '';
-  statuses: string[] = ['All', 'Processing', 'Awaiting supervisor', 'Awaiting BSM'];
+  statuses: string[] = ['All', 'Completed', 'Processing', 'Awaiting supervisor', 'Awaiting BSM'];
   claims: IClaim[] = [];
 
 

@@ -21,7 +21,7 @@
       <p class="waiting">Fetching...</p>
     </div>
   </div>
-  <div class="staff-table">
+  <div *ngIf="!displayFetchSpinner" class="staff-table">
     <p *ngIf="!visibleStaffList.length">No records.</p>
     <div *ngIf="!!visibleStaffList.length" class="table-wrapper">
       <table>

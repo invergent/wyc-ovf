@@ -22,6 +22,13 @@ export class NewClaimComponent implements OnInit {
   weekend
   displaySpinner = false;
 
+  claimMonthDate: Date;
+  totalDaysInClaimMonth: number;
+
+  overlapDays: number[] = [];
+  weekdayEntries: string[] = [];
+  weekendEntries: string[] = [];
+
   constructor(
     private authService: AuthService,
     private overtimeService: OvertimeService,
@@ -35,19 +42,25 @@ export class NewClaimComponent implements OnInit {
     this.staffRole = this.authService.currentStaff.role;
     this.companySettings = await this.settingService.fetchAdminSettings();
     const { overtimeWindow, overtimeWindowIsActive } = this.companySettings;
-
+    
     if (overtimeWindow === 'Open' || overtimeWindowIsActive) {
       this.windowIsActive = true;
     } else {
       this.windowIsActive = false;
       this.reopenDate = this.settingService.getReopenDate(this.companySettings.overtimeWindowStart);
     }
+
+    // set dates and counters values
+    this.claimMonthDate = this.previousMonthDate();
+    this.totalDaysInClaimMonth = this.claimMonthDate.getDate();
   }
 
   initializeDatePicker(element, daysToDisable) {
     this.jQuery(element).datepicker({
-      startDate: this.previousMonthDate(),
+      startDate: this.previousMonthDate(1),
       firstDay: 1,
+      minDate: this.previousMonthDate(1),
+      maxDate: this.previousMonthDate(),
       onRenderCell: (date, cellType) => {
         if (cellType == 'day') {
           const day = date.getDay();
@@ -70,11 +83,23 @@ export class NewClaimComponent implements OnInit {
     setTimeout(() => this.jQuery('#datepickers-container').css('z-index', '99999'), 400);
   }
 
-  previousMonthDate() {
+  previousMonthDate(day?: number) {
     const today = new Date();
     const thisYear = today.getFullYear();
     const thisMonth = today.getMonth();
-    return new Date(thisYear, thisMonth - 1, 1);
+    const month = day ? (thisMonth - 1) : thisMonth;
+    return new Date(thisYear, month, day || 0);
+  }
+
+  checkOverlaps(dates, inputName) {
+    dates.forEach((date) => {
+      if (inputName === 'atm') {
+        if (this.weekdayEntries.includes(date) || this.weekendEntries.includes(date)) {
+          const overlapDay = date.split('/')[1];
+          this.overlapDays.push(overlapDay);
+        }
+      }
+    });
   }
 
   checkEntries(input): IValidatedForm {
@@ -84,10 +109,33 @@ export class NewClaimComponent implements OnInit {
     const inputNameValue = this.jQuery(`#${inputName}Input`).val();
     const dates = inputNameValue.split(', ');
 
-    if(!dateRegex.test(dates[0])) error.push(`Enter a valid value for ${inputName}.`);
+    if(!dateRegex.test(dates[0])) {
+      error.push(`Enter a valid value for ${inputName}.`);
+    } else {
+      this[`${inputName}Entries`] = dates;
+      this.checkOverlaps(dates, inputName);
+    }
 
     validField[inputName] = dates.length;
     return { validField, error };
+  }
+
+  createOverlapErrorMessage() {
+    const overlapDays = this.overlapDays.reduce((acc, day, index) => {
+      if (acc === '') {
+        return `${day}`;
+      } else if (index === (this.overlapDays.length - 1)) {
+        return `${acc} and ${day}`;
+      } else {
+        return `${acc}, ${day}`;
+      }
+    }, '');
+
+    return `Your ATM Days entry have ${
+      this.overlapDays.length > 1 ? '': 'an'
+    } overlap${
+      this.overlapDays.length > 1 ? 's': ''
+    } on day ${overlapDays}`;
   }
 
   getOvertimeEntries() {
@@ -103,7 +151,15 @@ export class NewClaimComponent implements OnInit {
       }
     });
 
+    if (this.overlapDays.length) errors.push(this.createOverlapErrorMessage());
+
     return { overtimeRequest, errors };
+  }
+
+  clearEntries() {
+    this.weekdayEntries = [];
+    this.weekendEntries = [];
+    this.overlapDays = [];
   }
 
   async handleSubmit() {
@@ -111,7 +167,8 @@ export class NewClaimComponent implements OnInit {
 
     if (errors.length) {
       this.displaySpinner = false;
-      return errors.forEach(error => this.toastr.error(error));
+      errors.forEach(error => this.toastr.error(error));
+      return this.clearEntries();
     }
 
     try {

@@ -21,7 +21,7 @@
       <p class="waiting">Fetching...</p>
     </div>
   </div>
-  <div class="branch-table">
+  <div *ngIf="!displayFetchSpinner" class="branch-table">
     <p *ngIf="!visibleBranches.length">No records.</p>
     <div *ngIf="!!visibleBranches.length" class="table-wrapper">
       <table>
