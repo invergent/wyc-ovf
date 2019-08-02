@@ -25,10 +25,10 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display app name V-Timer', () => {
+  it('should display app name CleonTime', () => {
     const fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.app-name p').textContent).toContain('V-Timer');
+    expect(compiled.querySelector('.app-name p').textContent).toContain('CleonTime');
   });
 });
