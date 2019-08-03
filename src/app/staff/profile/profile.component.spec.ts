@@ -104,10 +104,10 @@ describe('Profile Component', () => {
     expect(mockText).toHaveBeenCalledWith(branchPayload.name);
     expect(newComponent.branchId).toBe(branchPayload.id);
 
-    newComponent.handleSelect('supervisor', lineManagerPayload);
+    newComponent.handleSelect('lineManager', lineManagerPayload);
 
-    expect(newComponent.supervisorFirstName).toBe(lineManagerPayload.firstname);
-    expect(newComponent.supervisorDropdown).toBe(false);
+    expect(newComponent.lineManagerFirstName).toBe(lineManagerPayload.firstname);
+    expect(newComponent.lineManagerDropdown).toBe(false);
   });
 
   it('should create a new array with filtered content based on user"s input', () => {

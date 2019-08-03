@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import {
   IGetLineManagers, IGetBranches, IGetRoles, IProfileData, IPutProfile, IProfileUpdate,
-  IPostImage, IGetStaffProfile, IGetStaffList, ICreateStaffData
+  IPostImage, IGetStaffList, ICreateStaffData
 } from "./models";
 
 @Injectable()
