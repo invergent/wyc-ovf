@@ -5,16 +5,14 @@ export interface IStaff {
   middlename: string
   emailAddress: string
   phone: string
+  accountNumber: string
   image: string
   role: string
   branch: string
   changedPassword: boolean
-  supervisorFirstName: string
-  supervisorLastName: string
-  supervisorEmailAddress: string
-  bsmFirstName: string
-  bsmLastName: string
-  bsmEmailAddress: string
+  lineManagerFirstName: string
+  lineManagerLastName: string
+  lineManagerEmailAddress: string
 }
 
 export interface IStaffForAdmin {
@@ -26,20 +24,19 @@ export interface IStaffForAdmin {
 }
 
 export interface IProfileUpdate {
-  staffId?: string,
-  firstname?: string,
-  lastname?: string,
-  middlename?: string,
-  emailAddress?: string,
-  image?: string,
-  roleId?: number,
-  branchId?: number,
-  supervisorFirstName?: string,
-  supervisorLastName?: string,
-  supervisorEmailAddress?: string,
-  bsmFirstName?: string,
-  bsmLastName?: string,
-  bsmEmailAddress?: string
+  staffId?: string
+  firstname?: string
+  lastname?: string
+  middlename?: string
+  emailAddress?: string
+  phone?: string
+  accountNumber?: string
+  image?: string
+  roleId?: number
+  branchId?: number
+  lineManagerFirstName?: string
+  lineManagerLastName?: string
+  lineManagerEmailAddress?: string
 }
 
 export interface ILineManager {

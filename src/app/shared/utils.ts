@@ -5,4 +5,5 @@ export const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
 export const emptyRegex = /^\w+$/;
 export const numberRegex = /^\d+$/;
 export const phoneNumberRegex = /^\d{11}$/;
+export const accNumberRegex = /^\d{10}$/;
 export const addressRegex = /^[.0-9a-zA-Z\s,-]+$/

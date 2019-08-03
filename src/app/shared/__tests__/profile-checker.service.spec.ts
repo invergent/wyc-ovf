@@ -10,6 +10,6 @@ describe('ProfileCheckerService', () => {
 
   it('should return an array of string representing the names of pending fields', () => {
     const pendingFields = service.getPendingFields();
-    expect(pendingFields).toHaveLength(4);
+    expect(pendingFields).toHaveLength(5);
   })
 })

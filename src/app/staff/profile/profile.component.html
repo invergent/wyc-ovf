@@ -56,47 +56,41 @@
         <p class="details-item">{{currentStaff?.branch || '--'}}</p>
       </div>
     </div>
-    <div class="lm supervisor">
-      <div class="edit-icon" (click)="runModalDisplay('supervisorModal', 'Supervisor')">
+    <div class="lm lineManager">
+      <div class="edit-icon" (click)="runModalDisplay('lineManagerModal', 'Supervisor')">
         <i class="fas fa-edit"></i>
       </div>
       <div class="lm-details-header">
-        <p>Supervisor</p>
+        <p>Line Manager</p>
       </div>
       <div class="lm-details-body">
         <div class="details-header">
           <p>Name</p>
         </div>
         <div class="name details-item">
-          <p>{{currentStaff?.supervisorFirstName || '--'}} {{currentStaff?.supervisorLastName}}</p>
+          <p>{{currentStaff?.lineManagerFirstName || '--'}} {{currentStaff?.lineManagerLastName}}</p>
         </div>
         <div class="email details-header">
           <p>Email Address</p>
         </div>
         <div class="email details-item">
-          <p>{{currentStaff?.supervisorEmailAddress || '--'}}</p>
+          <p>{{currentStaff?.lineManagerEmailAddress || '--'}}</p>
         </div>
       </div>
     </div>
-    <div class="lm BSM">
-      <div class="edit-icon" (click)="runModalDisplay('bsmModal', 'BSM')">
+    <div class="lm account-details">
+      <div class="edit-icon" (click)="runModalDisplay('accountDetailsModal', 'Account Details')">
         <i class="fas fa-edit"></i>
       </div>
       <div class="lm-details-header">
-        <p>BSM</p>
+        <p>Account Details</p>
       </div>
       <div class="lm-details-body">
         <div class="details-header">
-          <p>Name</p>
+          <p>Account Number</p>
         </div>
         <div class="name details-item">
-          <p>{{currentStaff?.bsmFirstName || '--'}} {{currentStaff?.bsmLastName}}</p>
-        </div>
-        <div class="email details-header">
-          <p>Email Address</p>
-        </div>
-        <div class="email details-item">
-          <p>{{currentStaff?.bsmEmailAddress || '--'}}</p>
+          <p>{{currentStaff?.accountNumber || '00987654333'}} {{currentStaff?.bsmLastName}}</p>
         </div>
       </div>
     </div>
@@ -162,50 +156,32 @@
               </div>
             </div>
           </ng-template>
-          <ng-template [ngSwitchCase]="supervisorModal">
+          <ng-template [ngSwitchCase]="accountDetailsModal">
             <div class="input">
-              <input
-                [(ngModel)]="supervisorEmailAddress"
-                name="email"
-                type="email"
-                placeholder="Enter supervisor's email address"
-                (input)="handleInput($event.target.value, 'lineManagers', 'supervisor')"
-                required>
-              <div *ngIf="supervisorDropdown && filteredlineManagers.length" class="dropdown-list">
-                <div *ngFor="let lm of filteredlineManagers" class="multi-list-item" (click)="handleSelect('supervisor', lm)">
-                  <p class="lm-name">{{lm.firstname}} {{lm.lastname}}</p>
-                  <p class="lm-email">{{lm.email}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="input">
-              <input [(ngModel)]="supervisorFirstName" name="firstname" type="text" placeholder="Enter supervisor's first name" required>
-            </div>
-            <div class="input">
-              <input [(ngModel)]="supervisorLastName" name="lastname" type="text" placeholder="Enter supervisor's last name" required>
+              <input [(ngModel)]="accountNumber" name="accountNumber" type="text" placeholder="Enter your account number" required>
             </div>
           </ng-template>
-          <ng-template [ngSwitchCase]="bsmModal">
+          <ng-template [ngSwitchCase]="lineManagerModal">
             <div class="input">
               <input
-                [(ngModel)]="bsmEmailAddress"
+                [(ngModel)]="lineManagerEmailAddress"
                 name="email"
                 type="email"
-                placeholder="Enter BSM email address"
-                (input)="handleInput($event.target.value, 'lineManagers', 'bsm')"
+                placeholder="Enter line manager's email address"
+                (input)="handleInput($event.target.value, 'lineManagers', 'lineManager')"
                 required>
-              <div *ngIf="bsmDropdown" class="dropdown-list">
-                <div *ngFor="let lm of filteredlineManagers" class="multi-list-item" (click)="handleSelect('bsm', lm)">
+              <div *ngIf="lineManagerDropdown && filteredlineManagers.length" class="dropdown-list">
+                <div *ngFor="let lm of filteredlineManagers" class="multi-list-item" (click)="handleSelect('lineManager', lm)">
                   <p class="lm-name">{{lm.firstname}} {{lm.lastname}}</p>
                   <p class="lm-email">{{lm.email}}</p>
                 </div>
               </div>
             </div>
             <div class="input">
-              <input [(ngModel)]="bsmFirstName" name="firstname" type="text" placeholder="Enter BSM first name" required>
+              <input [(ngModel)]="lineManagerFirstName" name="firstname" type="text" placeholder="Enter Line Manager's first name" required>
             </div>
             <div class="input">
-              <input [(ngModel)]="bsmLastName" name="lastname" type="text" placeholder="Enter BSM last name" required>
+              <input [(ngModel)]="lineManagerLastName" name="lastname" type="text" placeholder="Enter Line Manager's last name" required>
             </div>
           </ng-template>
           <div class="button">
