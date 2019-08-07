@@ -69,15 +69,14 @@ export interface ILineManagerData {
 }
 
 export interface IClaim {
-  id: number,
-  monthOfClaim: string,
-  weekday: number,
-  weekend: number,
-  atm: number,
-  shift: number,
-  amount: number,
-  status: string,
-  createdAt: Date,
+  id: number
+  monthOfClaim: string
+  claimElements: number
+  details: any
+  amount: number
+  status: string
+  createdAt: Date
+  editRequested: boolean
   approvalHistory?: any[]
 }
 
@@ -113,9 +112,9 @@ export interface IChangePassword {
 }
 
 export interface IValidClaimRequest {
-  weekday?: number
-  weekend?: number
-  shift?: number
+  claimElements?: number
+  amount?: number
+  details?: any
 }
 
 export interface INotification {
@@ -130,6 +129,13 @@ export interface IToastr {
   info(message: string, title?: string): void,
   warning(message: string, title?: string): void,
   error(message: string, title?: string): void
+}
+
+export interface ILocalStorage {
+  setItem(name: string, item: any)
+  getItem(name: string)
+  removeItem(name: string)
+  clear(name: string)
 }
 
 type SingleEventCallbackFunction = () => void;
@@ -162,6 +168,7 @@ export interface IStaffClaimData {
   pendingClaim?: IClaim[],
   activities?: IActivity[]
   claimHistory?: IClaim[]
+  holidays?: IHolidays[]
 }
 
 export interface IAdminClaimData {
@@ -184,6 +191,12 @@ export interface IChartData {
   Oct: number
   Nov: number
   Dec: number
+}
+
+export interface IHolidays {
+  id: number
+  name: string
+  date: string
 }
 
 export interface IChartSourceData {
@@ -274,11 +287,6 @@ export interface IApprovedClaim {
   data: IClaim
 }
 
-export interface IValidatedForm {
-  validField: IValidClaimRequest,
-  error: string[]
-}
-
 export interface IGetClaimForLineManager {
   message: string,
   data: ILineManagerData
@@ -331,6 +339,11 @@ export interface IGetChartStatistics {
 export interface IGetSettings {
   message: string
   data: ISettings
+}
+
+export interface IGetHolidays {
+  message: string
+  data: IHolidays[]
 }
 
 export interface IPutSettings extends IPutProfile {}

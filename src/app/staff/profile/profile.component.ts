@@ -121,17 +121,28 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.autoDisplay = false; // just so leadusertonextfield is not called again
   }
 
+  composeVerb(field) {
+    switch (field) {
+      case 'role':
+        return 'select your Position';
+      case 'phone':
+      case 'accountNumber':
+        return `fill in your ${field === 'phone' ? 'phone' : 'account'} number`;
+      case 'branch':
+      case 'lineManager':
+        return `fill in ${field === 'branch' ? 'branch' : 'line manager'} details`;
+      default:
+        return '';
+    }
+  }
+
   leadUserToNextField() {
     this.updatePendingField();
 
     const randNum = Math.floor(Math.random() * this.empoweringWords.length);
-    const verb = this.pendingFields[0] === 'role' ? 'select your Position' : `fill in ${this.pendingFields[0]} details`;
+    const verb = this.composeVerb(this.pendingFields[0]);
 
-    if (this.pendingFields.length) {
-      return this.displayFlashMessage(
-        `${this.empoweringWords[randNum]}! Now, ${verb}.`
-      );
-    }
+    if (this.pendingFields.length) return this.displayFlashMessage(`${this.empoweringWords[randNum]}! Now, ${verb}.`);
     this.runModalDisplay('thanksModal', '');
 
     setTimeout(() => {
@@ -151,6 +162,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   async initialiseData() {
     this.currentStaff = this.authService.currentStaff;
+    console.log(this.currentStaff)
 
     this.firstname = this.authService.currentStaff.firstname;
     this.lastname = this.authService.currentStaff.lastname;

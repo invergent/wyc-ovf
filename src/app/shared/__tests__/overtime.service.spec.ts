@@ -21,6 +21,8 @@ describe('Overtime Service', () => {
     const activities = jest.spyOn(service, 'fetchStaffActivities').mockResolvedValue([{}]);
     // @ts-ignore-start
     const staffClaimHistory = jest.spyOn(service, 'fetchStaffClaimHistory').mockResolvedValue([{}]);
+    // @ts-ignore-start
+    const fetchHolidays = jest.spyOn(service, 'fetchHolidays').mockResolvedValue([{}]);
 
 
     const result = await service.initialiseStaffData();
@@ -30,6 +32,7 @@ describe('Overtime Service', () => {
     expect(pendingClaim).toHaveBeenCalled();
     expect(activities).toHaveBeenCalled();
     expect(staffClaimHistory).toHaveBeenCalled();
+    expect(fetchHolidays).toHaveBeenCalled();
   });
 
   it('should initialise admin data.', async () => {
@@ -126,7 +129,7 @@ describe('Overtime Service', () => {
 
   it('should make a post request to create overtime request.', () => {
     const httpPost = jest.spyOn(httpMock, 'post');
-    const overtimeRequest = { weekday: 2, weekend: 3 };
+    const overtimeRequest = { claimElements: 2, amount: 3 };
     const url = 'http://overtime-api.vla.com:7000/users/claim';
 
     service.createOvertimeRequest(overtimeRequest);

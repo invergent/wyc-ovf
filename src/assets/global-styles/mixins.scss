@@ -61,13 +61,23 @@
 @mixin li-last-child {
   border: none;
 }
+
+@mixin submit-button {
+  padding: 8px 18px;
+  font-size: 18px;
+  color: $brand-color;
+  border: 1px solid $brand-color;
+  border-radius: 80000px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
 @mixin white-button {
   background-color: $color-white;
   padding: 10px 18px;
   font-size: 18px;
   border: 1px solid $faint-border-color;
-  border-radius: 8px;
-  box-shadow: 4px 4px 10px 0 $faint-color-ex-light;
+  border-radius: 80000px;
   cursor: pointer;
   transition: all .2s ease-in-out;
   color: $color-red;
@@ -108,4 +118,17 @@
   &:hover > .edit-icon {
     display: block;
   }
+}
+
+@mixin modal-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  display: inline-block;
+  background-color: $color-white;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 40px;
+  border-radius: 8px;
 }

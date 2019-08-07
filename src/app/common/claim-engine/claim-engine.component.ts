@@ -1,0 +1,366 @@
+import { Component, OnInit, Inject, HostListener, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import {
+  JQUERY_TOKEN, AuthService, dateRegex, TOASTR_TOKEN, IToastr,
+  OvertimeService, ISettings, SettingsService, claimPrice, LOCALSTORAGE_TOKEN,
+  ILocalStorage, IStaffClaimData
+} from '../../shared';
+
+@Component({
+  selector: 'claim-engine',
+  templateUrl: './claim-engine.component.html',
+  styleUrls: ['./claim-engine.component.scss']
+})
+export class ClaimEngineComponent implements OnInit {
+  @Input() callingComponent: string = '';
+
+  companySettings: ISettings;
+  staffClaimData: IStaffClaimData;
+  reopenDate: string = '';
+  windowIsActive: boolean = false;
+  staffId: string
+
+  // claim
+  total: number = 0;
+
+  // claims button controls
+  overtimeClicked: boolean = false;
+  weekendClicked: boolean = false;
+  shiftDutyClicked: boolean = false;
+  atmDutyClicked: boolean = false;
+  atmSupportClicked: boolean = false;
+  outstationClicked: boolean = false;
+  claimBtns: string[] = ['overtime', 'weekend', 'shiftDuty', 'atmDuty', 'atmSupport', 'holiday', 'outstation'];
+  currentlyPressedBtn: string;
+
+  // pane controls
+  outstation: number = 0;
+
+  showCalendarPlaceholder: boolean = true;
+  showSummaryPlaceholder: boolean = true;
+
+  // visible panes controls
+  visiblePaneItems: number = 0;
+  currentPane: string = 'calendar';
+
+  allSelectedDates: number[] = [];
+  disableWeekdays = [1,2,3,4,5];
+  disableWeekends = [6,0];
+  holidaysInClaimMonth: number[] = [12, 17];
+
+  // window controls
+  screenWidth
+
+  // autoSave controls
+  autoSaveId: number
+  savedRequest: any;
+
+  // modal controls
+  displayModal: string = 'none';
+  confirmSubmit: boolean = false;
+
+
+  staffRole: string;
+  weekend
+  displaySpinner = false;
+
+  claimMonthDate: Date;
+  totalDaysInClaimMonth: number;
+
+  overlapDays: number[] = [];
+  weekdayEntries: string[] = [];
+  weekendEntries: string[] = [];
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+  }
+
+  constructor(
+    private authService: AuthService,
+    private overtimeService: OvertimeService,
+    private settingService: SettingsService,
+    private router: Router,
+    @Inject(TOASTR_TOKEN) private toastr: IToastr,
+    @Inject(JQUERY_TOKEN) private jQuery,
+    @Inject(LOCALSTORAGE_TOKEN) private save: ILocalStorage
+  ) { }
+
+  async ngOnInit() {
+    this.screenWidth = window.innerWidth;
+    this.staffRole = this.authService.currentStaff.role;
+    this.staffId = this.authService.currentStaff.staffId;
+    this.companySettings = await this.settingService.fetchAdminSettings();
+    this.staffClaimData = await this.overtimeService.fetchStaffData();
+    const { overtimeWindow, overtimeWindowIsActive } = this.companySettings;
+    
+    if (overtimeWindow === 'Open' || overtimeWindowIsActive) {
+      this.windowIsActive = true;
+    } else {
+      this.windowIsActive = false;
+      this.reopenDate = this.settingService.getReopenDate(this.companySettings.overtimeWindowStart);
+    }
+
+    this.holidaysInClaimMonth = this.staffClaimData.holidays.map(holiday => new Date(holiday.date).getDate());
+    
+    // set dates and counters values
+    this.claimMonthDate = this.previousMonthDate();
+    this.totalDaysInClaimMonth = this.claimMonthDate.getDate();
+
+    const previousWork = this.save.getItem(this.staffId);
+    if (previousWork) this.restorePreviousWork(previousWork);
+  }
+
+  initializeDatePicker(element: string, datesToDisable?: number[], daysToDisable?: number[]) {
+    const prop = element.substr(1).split('-calendar')[0];
+    let preSelectedDates = [];
+    let selfSelectDates = [];
+
+    if (this[prop]) {
+      preSelectedDates = this[prop].selectedDates;
+      selfSelectDates = preSelectedDates.map(date => date.getDate());
+    }
+    if (prop === 'overtime') {
+      // merge holidays uniquely to datesToDisable for overtime calendar
+      const holidaysAdded = datesToDisable.concat(this.holidaysInClaimMonth);
+      datesToDisable = holidaysAdded.filter((date, index) => holidaysAdded.indexOf(date) === index);
+    }
+
+    this[prop] = this.jQuery(element).datepicker({
+      inline: true,
+      multipleDates: true,
+      startDate: this.previousMonthDate(1),
+      firstDay: 1,
+      minDate: this.previousMonthDate(1),
+      maxDate: this.previousMonthDate(),
+      onRenderCell: (date, cellType) => {
+        if (cellType === 'day' && datesToDisable.length) {
+          // do not disable selected days on a calendar on which they were selected
+          const disabled = datesToDisable.includes(date.getDate()) && !selfSelectDates.includes(date.getDate());
+          if (disabled) return { disabled };
+        }
+        if ((prop === 'holiday') && this.holidaysInClaimMonth.length) {
+          return { disabled: !this.holidaysInClaimMonth.includes(date.getDate()) };
+        }
+        if (cellType === 'day' && daysToDisable) {
+          return { disabled: daysToDisable.includes(date.getDay()) };
+        }
+      },
+      onSelect: () => {
+        this.mergeAllSelectedDates();
+        this.calculateClaimAmount();
+        this.autoSave();
+      }
+    }).data('datepicker');
+
+    if (preSelectedDates.length) this[prop].selectDate(preSelectedDates);
+  }
+
+  toggleButtonPress(clickedButton, daysToDisable?: number[]) {
+    const claimItem = clickedButton.split('Clicked')[0];
+    this[clickedButton] = this[clickedButton] ? false : true;
+    
+    if (this[clickedButton]) {
+      if (this.currentPane === 'summary') this.switchPane();
+      this.showCalendarPlaceholder = false;
+      this.showSummaryPlaceholder = false;
+
+      // no do increment for already visible panes
+      if (!this[claimItem]) this.visiblePaneItems += 1;
+      
+      // if button is turned on, ensure others are turned off
+      this.claimBtns.forEach(btn => `${btn}Clicked` === clickedButton ? '' : (this[`${btn}Clicked`] = false));
+      
+      setTimeout(() => {
+
+        // check if a calendar is currently displayed, animate removal before initialising a new one
+        if (this.currentlyPressedBtn) this.fadeOutCalendar(this.currentlyPressedBtn);
+        if (claimItem !== 'outstation') {
+          this.initializeDatePicker(`#${claimItem}-calendar`, this.allSelectedDates, daysToDisable);
+        }
+
+        this.fadeInCalendar(claimItem);
+        this.slideInPaneItem(claimItem);
+        this.currentlyPressedBtn = claimItem;
+        
+      }, 1);
+    } else {
+      this.fadeOutCalendar(this.currentlyPressedBtn);
+      this.currentlyPressedBtn = null;
+      // wait for calendar to disappear before displaying placeholder text
+      setTimeout(() => (this.showCalendarPlaceholder = true), 1000);
+      
+    }
+  }
+
+  slideInPaneItem(claimItem) {
+    const paneEl = this.jQuery(`#${claimItem}`).css({ display: 'flex' });
+    setTimeout(() => paneEl.css({ marginLeft: '0', opacity: '1'}), 100);
+  }
+
+  removePaneItem(claimItem) {
+    this.visiblePaneItems -= 1;
+
+    // slide left and disappear
+    const paneEl = this.jQuery(`#${claimItem}`).css({ marginLeft: '-100px', opacity: '0'});
+    setTimeout(() => paneEl.css({ display: 'none' }), 1000);
+
+    if (claimItem === 'outstation') {
+      this[claimItem] = 0;
+    } else {
+      this[claimItem].clear ? this[claimItem].clear() : (this[claimItem].selectedDates = []);
+    }
+
+    if (claimItem === this.currentlyPressedBtn && this[`${claimItem}Clicked`]) {
+      this.toggleButtonPress(`${claimItem}Clicked`);
+    } 
+    setTimeout(() => {
+      this[claimItem] = null;
+      this.calculateClaimAmount();
+      this.autoSave();
+    }, 950);
+
+    if (this.visiblePaneItems < 1) {
+      setTimeout(() => {
+        this.save.clear(this.staffId);
+        this.showSummaryPlaceholder = true
+      }, 1000);
+    }
+  }
+
+  fadeInCalendar(calendarId) {
+    const isOutstation = calendarId === 'outstation';
+    // wait for fade out to finish before fading in
+    setTimeout(() => {
+      const calendar = this.jQuery(`#${calendarId}${isOutstation ? '-input' : '-calendar'}`)
+        .css({ transition: 'all 1s ease-out' });
+      calendar.css({ opacity: '1' });
+    }, 400);
+  }
+  
+  fadeOutCalendar(currentCalendarId) {
+    const calendar = this.jQuery(`#${currentCalendarId}-calendar`).css({ transition: 'all .3s ease-out' });
+    setTimeout(() => calendar.css({ opacity: '0' }), 50);
+  }
+
+  mergeAllSelectedDates() {
+    const arrayOfArrayOfDates = this.claimBtns.map((btnName) => {
+      if (!this[btnName] || (btnName === 'outstation')) return [];
+      return this[btnName].selectedDates.map(date => date.getDate());
+    });
+    this.allSelectedDates = Array.prototype.concat(...arrayOfArrayOfDates);
+  }
+
+  handleInput(input) {
+    this.outstation = input;
+    this.calculateClaimAmount();
+    this.autoSave();
+  }
+
+  switchPane() {
+    const calendarPane = this.jQuery('.calendar-pane');
+    const summaryPane = this.jQuery('.summary-pane');
+    if (this.currentPane === 'calendar') {
+      this.currentPane = 'summary';
+      calendarPane.css({ opacity: '0' });
+      setTimeout(() => calendarPane.css({ display: 'none' }), 300);
+      setTimeout(() => summaryPane.css({ display: 'block' }), 290)
+      setTimeout(() => summaryPane.css({ opacity: '1' }), 300)
+    } else {
+      this.currentPane = 'calendar';
+      summaryPane.css({ opacity: '0' });
+      setTimeout(() => summaryPane.css({ display: 'none' }), 400);
+      setTimeout(() => calendarPane.css({ display: 'block' }), 410)
+      setTimeout(() => calendarPane.css({ opacity: '1' }), 420)
+    }
+  }
+
+  calculateClaimAmount() {
+    const calcClaim = (acc, item) => {
+      if (this[item]) {
+        return item === 'outstation'
+          ? (acc += +this[item])
+          : (acc += (this[item].selectedDates.length * claimPrice[item]));
+      }
+      return acc;
+    }
+    this.total = this.claimBtns.reduce(calcClaim, 0);
+  }
+
+  autoSave(submit?: boolean) {
+    const savedWork = this.claimBtns.reduce((acc, item) => {
+      if (this[item]) {
+        acc[item] = item === 'outstation'
+          ? this[item]
+          : { selectedDates: this[item].selectedDates };
+        return acc;
+      }
+      return acc;
+    }, {});
+    savedWork['allSelectedDates'] = this.allSelectedDates;
+    savedWork['total'] = this.total;
+    savedWork['currentlyPressedBtn'] = this.currentlyPressedBtn;
+    savedWork['visiblePaneItems'] = this.visiblePaneItems;
+    if (submit) return savedWork;
+    this.save.setItem(this.staffId, JSON.stringify(savedWork));
+  }
+
+  restorePreviousWork(previousWork) {
+    const savedWork = JSON.parse(previousWork);
+    this.showSummaryPlaceholder = false;
+
+    Object.keys(savedWork).forEach((claimName) => {
+      this[claimName] = savedWork[claimName];
+      if (this.claimBtns.includes(claimName)) {
+        let { selectedDates } = this[claimName];
+        if (selectedDates) this[claimName].selectedDates = selectedDates.map(date => new Date(date));
+        setTimeout(() => this.slideInPaneItem(claimName), 100);
+      }
+    });
+  }
+
+  previousMonthDate(day?: number) {
+    const today = new Date();
+    const thisYear = today.getFullYear();
+    const thisMonth = today.getMonth();
+    const month = day ? (thisMonth - 1) : thisMonth;
+    return new Date(thisYear, month, day || 0);
+  }
+
+  toggleModal(displayType) {
+    this.displayModal = displayType;
+    if (displayType === 'block') {
+      this.confirmSubmit = true;
+    } else {
+      this.confirmSubmit = false;
+    }
+  }
+
+  createClaimRequest() {
+    const createdClaim = this.autoSave(true);
+    return {
+      claimElements: createdClaim['visiblePaneItems'],
+      amount: createdClaim['total'],
+      details: JSON.stringify(createdClaim)
+    }
+  }
+
+  async handleSubmit() {
+    const claimRequest = this.createClaimRequest();
+
+    try {
+      const { message } = await this.overtimeService.createOvertimeRequest(claimRequest);
+
+      await this.overtimeService.syncWithAPI();
+      this.toastr.success(message);
+      this.save.clear(this.staffId);
+      return this.router.navigate(['/staff/dashboard']);
+    } catch(e) {
+      this.toggleModal('none');
+      if (e.error.errors) {
+        return e.error.errors.forEach(error => this.toastr.error(error));
+      }
+      return this.toastr.error(e.error.message || 'An error occurred. Check your connectivity.');
+    }
+  }
+}
