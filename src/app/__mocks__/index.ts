@@ -35,6 +35,7 @@ export const overtimeServiceMock: any = {
   fetchChartStatistics: () => Promise.resolve({ data: {} }),
   exportApprovedClaims: () => Promise.resolve({}),
   markClaimsAsCompleted: () => ({ message: 'Completed' }),
+  fetchHolidays: () => Promise.resolve({}),
   adminClaimData: {
     chartStats: {
       Jan: null,
@@ -146,6 +147,13 @@ export const mockJQuery: any = jest.fn().mockReturnValue({
   prop: () => {},
   text: () => {},
   click: () => {}
+})
+
+export const mockLocalStorage: any = jest.fn().mockReturnValue({
+  setItem: () => {},
+  getItem: () => {},
+  removeItem: () => {},
+  clear: () => {}
 })
 
 export const routerMock: any = {

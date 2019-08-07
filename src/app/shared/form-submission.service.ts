@@ -72,8 +72,7 @@ export class FormSubmissionService {
   getUpdateMethod(openModal) {
     const updateMethods = {
       imageModal: 'updateImage',
-      bsmModal: 'updateLineManagerInfo',
-      supervisorModal: 'updateLineManagerInfo',
+      lineManagerModal: 'updateLineManagerInfo',
       bulkModal: 'createBulk',
       singleModal: 'createSingle'
     };

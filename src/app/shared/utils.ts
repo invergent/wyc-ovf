@@ -6,4 +6,12 @@ export const emptyRegex = /^\w+$/;
 export const numberRegex = /^\d+$/;
 export const phoneNumberRegex = /^\d{11}$/;
 export const accNumberRegex = /^\d{10}$/;
-export const addressRegex = /^[.0-9a-zA-Z\s,-]+$/
+export const addressRegex = /^[.0-9a-zA-Z\s,-]+$/;
+export const claimPrice = {
+  overtime: 150,
+  weekend: 800,
+  shiftDuty: 800,
+  atmDuty: 3000,
+  atmSupport: 2500,
+  holiday: 800
+}

@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {
   IGetStatistics, IGetPendingClaim, IGetActivities, IPostOvertimeRequest, IValidClaimRequest,
-  IStaffClaimData, IGetClaimHistory, IGetAdminClaimsData, IAdminDashboardData, IGetChartStatistics
+  IStaffClaimData, IGetClaimHistory, IGetAdminClaimsData, IAdminDashboardData, IGetChartStatistics,
+  IHolidays, IGetHolidays
 } from './models';
 
 @Injectable()
@@ -23,7 +24,8 @@ export class OvertimeService {
       const { data: pendingClaim } = await this.fetchStaffPendingClaim();
       const { data: activities } = await this.fetchStaffActivities();
       const { data: claimHistory } = await this.fetchStaffClaimHistory();
-      this.staffClaimData = { activities, pendingClaim, claimStatistics, claimHistory };
+      const { data: holidays } = await this.fetchHolidays();
+      this.staffClaimData = { activities, pendingClaim, claimStatistics, claimHistory, holidays };
       return true;
     } catch(e) {
       throw new Error();
@@ -99,6 +101,10 @@ export class OvertimeService {
 
   markClaimsAsCompleted(): Promise<any> {
     return this.http.put<any>(`${this.api}/admin/claims/completed`, {}, this.options).toPromise();
+  }
+
+  fetchHolidays(): Promise<IGetHolidays> {
+    return this.http.get<IGetHolidays>(`${this.api}/admin/holidays`, this.options).toPromise();
   }
 }
 

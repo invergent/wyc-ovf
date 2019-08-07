@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { SettingsService, ISettings, JQUERY_TOKEN, dateRegex, TOASTR_TOKEN, IToastr, IValidatedForm } from '../../shared';
+import { SettingsService, ISettings, JQUERY_TOKEN, dateRegex, TOASTR_TOKEN, IToastr } from '../../shared';
 import { error } from 'util';
 
 @Component({
@@ -131,7 +131,7 @@ export class AdminSettingsComponent implements OnInit {
     return `0 ${this.emailScheduleModal ? 7 : 1 } ${cronTimeDays} * *`;
   }
 
-  checkEntries(input): IValidatedForm {
+  checkEntries(input) {
     const validField = {};
     const error = [];
     const inputValue = this.jQuery(`#${input}Input`).val();

@@ -7,15 +7,6 @@
       </div>
     </div>
 
-    <div [ngClass]="{grey: approvalHistory.length<1}" class="connector"></div>
-
-    <div [ngClass]="{grey: approvalHistory.length<1}" class="outter-ellipse">
-      <div [ngClass]="{white: approvalHistory.length<1}" *ngIf="approvalHistory.length<=1" class="inner-ellipse"></div>
-      <div *ngIf="approvalHistory.length>1" class="checkmark-wrapper">
-        <img src="/assets/images/check-white.png" alt="Check Image">
-      </div>
-    </div>
-
     <div [ngClass]="{grey: approvalHistory.length<2}" class="connector"></div>
     
     <div [ngClass]="{grey: approvalHistory.length<2}" class="outter-ellipse">
@@ -26,8 +17,7 @@
     </div>
   </div>
   <div class="label-wrapper">
-    <p>Supervisor</p>
-    <p>BSM</p>
+    <p>Line Manager</p>
     <p>Completed</p>
   </div>
 </div>

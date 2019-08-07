@@ -10,3 +10,18 @@ body, html {
 button, .app-name {
   outline: none;
 }
+.datepicker--cell.-selected-,
+.datepicker--cell.-selected-.-current-,
+.datepicker--cell.-selected-.-focus- {
+  background-color: $brand-color;
+}
+.datepicker--day-name {
+  color: $brand-color;
+}
+.datepicker {
+  color: $color-black;
+}
+.datepicker--cell.-disabled- {
+  color: #cccccc;
+  cursor: not-allowed;
+}

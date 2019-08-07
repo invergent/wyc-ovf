@@ -152,9 +152,9 @@ describe('Profile Component', () => {
     expect(init).toHaveBeenCalledTimes(1);
   });
 
-  it('should successfully send update request to server for supervisor', async () => {
+  it('should successfully send update request to server for line Manager', async () => {
     jest.clearAllMocks()
-    const validFormData = { supervisorFirstname: 'John', supervisorLastname: 'Doe', email: 'email@email.com' };
+    const validFormData = { lineManagerFirstname: 'John', lineManagerLastname: 'Doe', email: 'email@email.com' };
 
     const mockToastrSuccess = jest.spyOn(mockToastr, 'success');
     const mockULMI = jest.spyOn(profileServiceMock, 'updateLineManagerInfo');
@@ -162,7 +162,7 @@ describe('Profile Component', () => {
     const mockSyncOvertime = jest.spyOn(overtimeServiceMock, 'syncWithAPI');
     const init = jest.spyOn(component, 'initialiseData');
 
-    await component.handleSubmit(validFormData, 'supervisorModal');
+    await component.handleSubmit(validFormData, 'lineManagerModal');
 
     expect(mockToastrSuccess).toHaveBeenCalledTimes(1);
     expect(mockULMI).toHaveBeenCalledTimes(1);

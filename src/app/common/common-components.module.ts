@@ -12,10 +12,11 @@ import { PasswordChangeComponent } from './password-change/password-change.compo
 import { PipesModule } from '../pipes/pipes.module';
 import { ClaimsGraphComponent } from './claims-graph/claims-graph.component';
 import { ClaimWindowComponent } from './claim-window/claim-window.component';
+import { ClaimEngineComponent } from './claim-engine/claim-engine.component';
 
 const declarations = [
   TopNav, ClaimsComponent, ActivityBlock, ApprovalProgressBar, PasswordChangeComponent,
-  ClaimsGraphComponent, jqxChartComponent, ClaimWindowComponent
+  ClaimsGraphComponent, jqxChartComponent, ClaimWindowComponent, ClaimEngineComponent
 ];
 
 @NgModule({

@@ -15,7 +15,8 @@ import {
   AuthService, ProfileService, OvertimeService, RedirectToDashboard, TOASTR_TOKEN,
   JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService,
   EnforceProfileUpdateService, ProfileCheckerService, AdminOnlyGuard, StaffOnlyGuard,
-  PUSHER_TOKEN, CRONSTRUE_TOKEN, ICronstrue, SettingsService
+  PUSHER_TOKEN, CRONSTRUE_TOKEN, ICronstrue, SettingsService, LOCALSTORAGE_TOKEN,
+  ILocalStorage
 } from './shared';
 import { environment } from 'src/environments/environment';
 import { PipesModule } from './pipes/pipes.module';
@@ -24,6 +25,7 @@ const jQuery: Object = window['$'];
 const toastr: IToastr = window['toastr'];
 const pusher: IPusher = new window['Pusher'](environment.API_KEY, { cluster: 'eu' });
 const cronstrue: ICronstrue = window['cronstrue'];
+const localStorage: ILocalStorage = window['localStorage'];
 
 @NgModule({
   imports: [
@@ -57,7 +59,8 @@ const cronstrue: ICronstrue = window['cronstrue'];
     { provide: JQUERY_TOKEN, useValue: jQuery },
     { provide: TOASTR_TOKEN, useValue: toastr },
     { provide: PUSHER_TOKEN, useValue: pusher },
-    { provide: CRONSTRUE_TOKEN, useValue: cronstrue }
+    { provide: CRONSTRUE_TOKEN, useValue: cronstrue },
+    { provide: LOCALSTORAGE_TOKEN, useValue: localStorage }
   ],
   bootstrap: [OvertimeComponent]
 })
