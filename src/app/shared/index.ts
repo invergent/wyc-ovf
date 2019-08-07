@@ -14,4 +14,5 @@ export * from './enforce-profile-update.service';
 export * from './admin-only.guard';
 export * from './staff-only.guard';
 export * from './cronstrue.service';
+export * from './local-storage.service';
 export * from './settings.service';

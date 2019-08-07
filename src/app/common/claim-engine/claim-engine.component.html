@@ -1,0 +1,119 @@
+<section class="new-claim">
+  <div class="page-title">
+    <p>{{callingComponent}}</p>
+  </div>
+  <div *ngIf="!windowIsActive" class="window-closed">
+    <p>You cannot submit claim requests until <strong>{{reopenDate}}</strong></p>
+  </div>
+  <div *ngIf="windowIsActive" class="claim-content">
+    <div class="new-claim-button-wrapper">
+      <button
+        (click)="toggleButtonPress('overtimeClicked', disableWeekends)"
+        [ngClass]="{buttonPressed: overtimeClicked}"
+        type="button"
+        name="button">Overtime</button>
+      <button
+        (click)="toggleButtonPress('weekendClicked', disableWeekdays)"
+        [ngClass]="{buttonPressed: weekendClicked}"
+        type="button"
+        name="button">Weekend</button>
+      <button
+        (click)="toggleButtonPress('shiftDutyClicked')"
+        [ngClass]="{buttonPressed: shiftDutyClicked}"
+        type="button"
+        name="button">Shift Duty</button>
+      <button
+        (click)="toggleButtonPress('atmDutyClicked')"
+        [ngClass]="{buttonPressed: atmDutyClicked}"
+        type="button"
+        name="button">ATM Duty</button>
+      <button
+        (click)="toggleButtonPress('atmSupportClicked')"
+        [ngClass]="{buttonPressed: atmSupportClicked}"
+        type="button"
+        name="button">ATM Support</button>
+      <button
+        (click)="toggleButtonPress('holidayClicked', disableWeekends)"
+        [ngClass]="{buttonPressed: holidayClicked}"
+        type="button"
+        name="button">Holiday</button>
+      <button
+        (click)="toggleButtonPress('outstationClicked')"
+        [ngClass]="{buttonPressed: outstationClicked}"
+        type="button"
+        name="button">Out of Station</button>
+    </div>
+    <div class="claim-preview-pane">
+      <div [ngSwitch]="true" class="preview-pane-wrapper">
+        <div class="summary-pane">
+          <p *ngSwitchCase="showSummaryPlaceholder" class="pane-placeholder">Your request summary would appear here</p>
+          <p *ngSwitchCase="!showSummaryPlaceholder" class="pane-header">Claim summary</p>
+          <div *ngFor="let paneItem of claimBtns" class="pane-item" id='{{paneItem}}'>
+            <div class="pane-item-name">{{paneItem | formatPaneItemName}}</div>
+            <div class="pane-item-value">{{paneItem === 'outstation' ? ('₦' + (outstation | number)) : this[paneItem]?.selectedDates.length}}</div>
+            <div class="pane-item-remove-icon"><i (click)="removePaneItem(paneItem)" class="fas fa-trash-alt"></i></div>
+          </div>
+        </div>
+        <div class="calendar-pane">
+          <p *ngSwitchCase="showCalendarPlaceholder" class="pane-placeholder">Click an overtime type to display calendar</p>
+          <div class="calendar-wrapper">
+            <p *ngSwitchCase="!showCalendarPlaceholder" class="pane-header">{{(currentlyPressedBtn | formatPaneItemName)}} {{currentlyPressedBtn ? 'calendar' : 'loading...'}}</p>
+            <div *ngSwitchCase="overtimeClicked" id="overtime-calendar" data-language='en' data-multiple-dates-separator=", "></div>
+            <div *ngSwitchCase="weekendClicked" id="weekend-calendar" data-language='en' data-multiple-dates-separator=", "></div>
+            <div *ngSwitchCase="shiftDutyClicked" id="shiftDuty-calendar" data-language='en' data-multiple-dates-separator=", "></div>
+            <div *ngSwitchCase="atmDutyClicked" id="atmDuty-calendar" data-language='en' data-multiple-dates-separator=", "></div>
+            <div *ngSwitchCase="atmSupportClicked" id="atmSupport-calendar" data-language='en' data-multiple-dates-separator=", "></div>
+            <div *ngSwitchCase="holidayClicked" id="holiday-calendar" data-language='en' data-multiple-dates-separator=", "></div>
+            <input
+              #outstationInput
+              *ngSwitchCase="outstationClicked"
+              [(ngModel)]="outstation"
+              class="outstation-input"
+              id="outstation-input"
+              type="number"
+              (input)="handleInput(outstationInput.value)"/>
+          </div>
+        </div>
+        <div *ngIf="!showSummaryPlaceholder || !showCalendarPlaceholder" class="total">Total: ₦{{total}}</div>
+      </div>
+    </div>
+    <div class="submit-btn-wrapper">
+      <button (click)="toggleModal('block')">Submit request</button>
+    </div>
+  </div>
+  <div *ngIf="screenWidth<768" (click)="switchPane()" class="pane-switch">
+    <img src="/assets/images/switch.png" alt="Switch">
+  </div>
+  <section [ngStyle]="{display: displayModal}" class="create-claim-modal-section">
+    <div *ngIf="confirmSubmit" class="create-claim-modal">
+      <div class="modal-title">
+        <p>Just checking...</p>
+      </div>
+      <p>Once your claim is submitted, you would not be able to edit it unless requested by your line manager.</p>
+      <p>Do you wish to proceed?</p>
+      <div class="action-buttons">
+        <button
+          class="yes-cancel"
+          type="button"
+          name="button"
+          (click)="handleSubmit()">Yes! Proceed.</button>
+        <button
+          class="no-cancel"
+          type="button"
+          name="button"
+          (click)="toggleModal('none')">Wait! Let me double-check.</button>
+      </div>
+    </div>
+    <div *ngIf="displaySubmitSpinner" class="submit-loader">
+      <i class="fa fa-spinner fa-spin"></i>
+      <p>Submitting claim...</p>
+    </div>
+    <div *ngIf="displayCelebrate" class="celebrate">
+      <div class="celebrate-icon-wrapper">
+        <img src="/assets/images/dance_dribbble.gif" alt="gif">
+      </div>
+      <h1>Well done!</h1>
+      <p class="close" (click)="closeModal(currentModal)">Close</p>
+    </div>
+  </section>
+</section>

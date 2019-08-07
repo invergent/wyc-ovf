@@ -24,10 +24,7 @@
           <tr>
             <th></th>
             <th>Month of claim</th>
-            <th>Weekday</th>
-            <th>Weekend</th>
-            <th>ATM Duty</th>
-            <th>Shift</th>
+            <th>Claim Elements</th>
             <th>Amount(₦)</th>
             <th>Status</th>
             <th></th>
@@ -46,10 +43,7 @@
               </div>
             </td>
             <td>{{claim?.monthOfClaim}}</td>
-            <td>{{claim?.weekday || '--'}}</td>
-            <td>{{claim?.weekend || '--'}}</td>
-            <td>{{claim?.atm || '--'}}</td>
-            <td>{{claim?.shift || '--'}}</td>
+            <td>{{claim?.claimElements || '--'}}</td>
             <td>{{claim?.amount}}</td>
             <td>{{claim?.status}}</td>
             <td>{{claim?.createdAt | timeAgo}}</td>
