@@ -1,0 +1,116 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.datepicker-inline {
+  .datepicker {
+    width: 100% !important;
+    margin: auto !important;
+  }
+}
+.holidays-management {
+  .page-title {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .holidays {
+    .calendar {
+    }
+  }
+}
+
+// .holidays-management {
+//   .page-title {
+//     font-size: 30px;
+//     text-align: center;
+//     margin-bottom: 40px;
+//   }
+//   .holidays {
+//     .holiday-dates-section, .calendar-section {
+//       display: inline-block;
+//       vertical-align: top;
+//       width: 50%;
+//     }
+//     .calendar-section {
+//       .calender-wrapper {
+//         width: 252px;
+//         margin: auto;
+//         .calendar {
+//           margin-bottom: 30px;
+//         }
+//         .holiday-name-input {
+//           background-color: $color-white;
+//           width: 100%;
+//           height: 40px;
+//           padding: 0 10px;
+//           text-align: right;
+//           border-radius: 5px;
+//           box-sizing: border-box;
+//           box-sizing: border-box;
+//           text-align: left;
+//           @include placeholder {
+//             color: rgba(0,0,0,.2);
+//             font-style: italic;
+//           }
+//           &:focus {
+//             outline-color: $brand-color;
+//           }
+//         }
+//         .submit-btn-wrapper {
+//           text-align: center;
+//           padding: 30px 0;
+//           button {
+//             @include submit-button;
+//             background-color: $brand-color;
+//             width: 100%;
+//             color: $color-white;
+//             padding: 8px 50px;
+//             &:disabled {
+//               background-color: #80808060;
+//               border: none;
+//               cursor: not-allowed;
+//             }
+//           }
+//         }
+//       }
+//     }
+//     .holiday-dates-section {
+//       .dates-wrapper {
+//         display: flex;
+//         align-items: center;
+//         background-color: $color-white;
+//         width: 270px;
+//         margin-bottom: 10px;
+//         padding: 5px 10px;
+//         border-radius: 5px;
+//         box-sizing: border-box;
+//         h5, p {
+//           margin: 10px;
+//         }
+//         p { font-size: 14px }
+//         .holiday-name-date {
+//           flex: 7
+//         }
+//         .remove-icon {
+//           flex: 1;
+//           color: $xta-color-1;
+//           .fa-trash-alt {
+//             cursor: pointer;
+//           }
+//         }
+//       }
+//     }
+//   }
+//   @media screen and (max-width: 600px) {
+//     .holidays {
+//       .holiday-dates-section, .calendar-section {
+//         display: block;
+//         width: 100%;
+//         margin: auto auto 30px;
+//         .dates-wrapper {
+//           margin: auto auto 10px;
+//         }
+//       }
+//     }
+//   }
+// }

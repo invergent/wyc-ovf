@@ -168,7 +168,6 @@ export interface IStaffClaimData {
   pendingClaim?: IClaim[],
   activities?: IActivity[]
   claimHistory?: IClaim[]
-  holidays?: IHolidays[]
 }
 
 export interface IAdminClaimData {
@@ -196,7 +195,8 @@ export interface IChartData {
 export interface IHolidays {
   id: number
   name: string
-  date: string
+  date: number
+  fullDate: Date
 }
 
 export interface IChartSourceData {
@@ -204,9 +204,9 @@ export interface IChartSourceData {
   claims: number
 }
 
-export interface IAdminDashboardData {
+export interface IAdminData {
   monthlyStat: IAdminClaimData
-  chartStats: IChartData
+  chartStats: IChartData,
 }
 
 export interface IProfileData {

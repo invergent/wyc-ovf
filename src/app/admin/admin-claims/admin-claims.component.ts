@@ -12,7 +12,7 @@ export class AdminClaimsComponent implements OnInit {
   displaySpinnerMark: boolean = false;
   displaySpinnerExport: boolean = false;
   errorMessage: string = '';
-  statuses: string[] = ['All', 'Completed', 'Processing', 'Awaiting supervisor', 'Awaiting BSM'];
+  statuses: string[] = ['All', 'Completed', 'Processing', 'Pending'];
   claims: IClaim[] = [];
 
 
@@ -22,11 +22,16 @@ export class AdminClaimsComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    await this.initialiseClaimData();
+  }
+
+  async initialiseClaimData() {
     try {
       const { monthlyStat: { submittedClaims: claims } } = await this.overtimeService.fetchAdminData();
       this.claims = claims;
       this.showLoader = false;
-    } catch (error) {
+    }
+    catch (error) {
       this.displayError();
     }
   }
@@ -55,6 +60,8 @@ export class AdminClaimsComponent implements OnInit {
       const { message } = await this.overtimeService.markClaimsAsCompleted();
       this.toastr.success(message);
       this.displaySpinnerMark = false;
+      await this.overtimeService.syncAdminWithAPI();
+      await this.initialiseClaimData();
     } catch (error) {
       this.displaySpinnerMark = false;
       this.toastr.error('An error occurred while marking claims as completed.');

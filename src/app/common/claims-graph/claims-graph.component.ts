@@ -26,15 +26,15 @@ export class ClaimsGraphComponent implements OnInit, AfterViewInit {
 
   valueAxis = {
     minValue: 0,
-    maxValue: 500,
-    unitInterval: 100,
+    maxValue: 6000,
+    unitInterval: 1000,
     title: { text: 'Claims' },
     tickMarks: { color: '#CACACA' },
-    gridLines: { color: '#CACACA40' }
+    gridLines: { color: '#CACACA25' }
   }
 
   seriesGroups = [{
-    type: 'splinearea',
+    type: 'spline',
     alignEndPointsWithIntervals: false,
     series: [
       { dataField: 'claims', displayText: 'Claims' }

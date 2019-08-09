@@ -21,8 +21,6 @@ describe('Overtime Service', () => {
     const activities = jest.spyOn(service, 'fetchStaffActivities').mockResolvedValue([{}]);
     // @ts-ignore-start
     const staffClaimHistory = jest.spyOn(service, 'fetchStaffClaimHistory').mockResolvedValue([{}]);
-    // @ts-ignore-start
-    const fetchHolidays = jest.spyOn(service, 'fetchHolidays').mockResolvedValue([{}]);
 
 
     const result = await service.initialiseStaffData();
@@ -32,7 +30,6 @@ describe('Overtime Service', () => {
     expect(pendingClaim).toHaveBeenCalled();
     expect(activities).toHaveBeenCalled();
     expect(staffClaimHistory).toHaveBeenCalled();
-    expect(fetchHolidays).toHaveBeenCalled();
   });
 
   it('should initialise admin data.', async () => {

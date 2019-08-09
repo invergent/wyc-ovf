@@ -13,6 +13,7 @@ import { AdminStaffComponent } from './admin-staff/admin-staff.component';
 import { AdminBranchComponent } from './admin-branch/admin-branch.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
+import { HolidaysComponent } from './holidays/holidays.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
     AdminStaffComponent,
     AdminBranchComponent,
     AdminProfileComponent,
-    AdminSettingsComponent
+    AdminSettingsComponent,
+    HolidaysComponent
   ]
 })
 export class AdminModule { }
