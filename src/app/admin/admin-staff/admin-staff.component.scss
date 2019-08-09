@@ -20,7 +20,7 @@
       input {
         width: 250px;
         padding: 10px 15px;
-        border: 1px solid $brand-color-3;
+        border: 1px solid $brand-color;
         border-radius: 8px;
         box-sizing: border-box;
         &:focus {
@@ -34,7 +34,7 @@
       .add-buttons-wrapper {
         display: flex;
         width: 250px;
-        border: 1px solid $brand-color-3;
+        border: 1px solid $brand-color;
         border-radius: 8px;
         .add-buttons {
           flex: 1;
@@ -47,7 +47,7 @@
           }
         }
         .single {
-          border-right: 1px solid $brand-color-3;
+          border-right: 1px solid $brand-color;
           border-radius: 8px 0 0 8px;
         }
         .bulk {

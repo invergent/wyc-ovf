@@ -9,6 +9,7 @@ import { AdminBranchComponent } from './admin-branch/admin-branch.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { AdminChangePasswordComponent } from './admin-change-password/admin-change-password.component';
+import { HolidaysComponent } from './holidays/holidays.component';
 
 const routes: Routes = [{
   path: '',
@@ -18,6 +19,7 @@ const routes: Routes = [{
     { path: 'claims', component: AdminClaimsComponent },
     { path: 'staff', component: AdminStaffComponent },
     { path: 'branch', component: AdminBranchComponent },
+    { path: 'holidays', component: HolidaysComponent },
     { path: 'settings', component: AdminSettingsComponent },
     { path: 'profile', component: AdminProfileComponent },
     { path: 'change-password', component: AdminChangePasswordComponent }

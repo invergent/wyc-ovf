@@ -49,6 +49,16 @@
         <p>Branch</p>
       </a>
       <a
+        [routerLink]="['/admin/holidays']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-snowman"></i>
+        </div>
+        <p>Holidays</p>
+      </a>
+      <a
         [routerLink]="['/admin/settings']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
