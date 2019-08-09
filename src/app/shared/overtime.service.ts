@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {
   IGetStatistics, IGetPendingClaim, IGetActivities, IPostOvertimeRequest, IValidClaimRequest,
-  IStaffClaimData, IGetClaimHistory, IGetAdminClaimsData, IAdminDashboardData, IGetChartStatistics,
+  IStaffClaimData, IGetClaimHistory, IGetAdminClaimsData, IAdminData, IGetChartStatistics,
   IHolidays, IGetHolidays
 } from './models';
 
@@ -16,7 +16,7 @@ export class OvertimeService {
     withCredentials: true
   }
   staffClaimData: IStaffClaimData
-  adminClaimData: IAdminDashboardData
+  adminClaimData: IAdminData
 
   async initialiseStaffData(): Promise<boolean> {
     try {
@@ -24,8 +24,7 @@ export class OvertimeService {
       const { data: pendingClaim } = await this.fetchStaffPendingClaim();
       const { data: activities } = await this.fetchStaffActivities();
       const { data: claimHistory } = await this.fetchStaffClaimHistory();
-      const { data: holidays } = await this.fetchHolidays();
-      this.staffClaimData = { activities, pendingClaim, claimStatistics, claimHistory, holidays };
+      this.staffClaimData = { activities, pendingClaim, claimStatistics, claimHistory };
       return true;
     } catch(e) {
       throw new Error();
@@ -60,6 +59,14 @@ export class OvertimeService {
 
   syncAdminWithAPI() {
     return this.initialiseAdminData();
+  }
+
+  previousMonthDate(day?: number) {
+    const today = new Date();
+    const thisYear = today.getFullYear();
+    const thisMonth = today.getMonth();
+    const month = day ? (thisMonth - 1) : thisMonth;
+    return new Date(thisYear, month, day || 0);
   }
 
   fetchStaffClaimStatistics(): Promise<IGetStatistics> {
@@ -103,8 +110,16 @@ export class OvertimeService {
     return this.http.put<any>(`${this.api}/admin/claims/completed`, {}, this.options).toPromise();
   }
 
-  fetchHolidays(): Promise<IGetHolidays> {
-    return this.http.get<IGetHolidays>(`${this.api}/admin/holidays`, this.options).toPromise();
+  fetchHolidays(month?: number): Promise<IGetHolidays> {
+    return this.http.get<IGetHolidays>(`${this.api}/admin/holidays?month=${month || ''}`, this.options).toPromise();
+  }
+
+  addHoliday(datePayload): Promise<IGetHolidays> {
+    return this.http.post<IGetHolidays>(`${this.api}/admin/holidays`, datePayload, this.options).toPromise();
+  }
+
+  removeHoliday(fullDate: string): Promise<IGetHolidays> {
+    return this.http.delete<IGetHolidays>(`${this.api}/admin/holidays?fullDate=${fullDate}`, this.options).toPromise();
   }
 }
 

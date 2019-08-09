@@ -1,0 +1,41 @@
+<section class="holidays-management">
+  <div class="page-title">
+    <p>Holidays</p>
+  </div>
+  <section class="holidays">
+    <div class="calendar" id="calendar" data-language='en'></div>
+  </section>
+</section>
+
+<!-- <section class="holidays-management">
+    <div class="page-title">
+      <p>Holidays</p>
+    </div>
+    <section class="holidays">
+      <div class="calendar-section">
+        <div class="calender-wrapper">
+          <div class="calendar" id="calendar" data-language='en'></div>
+          <input
+            #holidayNameInput
+            (ngModel)="holidayName"
+            class="holiday-name-input"
+            placeholder="Enter holiday name"
+            type="text"/>
+          <div class="submit-btn-wrapper">
+            <button
+              [disabled]="!holidayNameInput.value || !holidayCalendar.selectedDates.length"
+              (click)="toggleModal('block')">Add holiday</button>
+          </div>
+        </div>
+      </div>
+      <div class="holiday-dates-section">
+        <div *ngFor="let holiday of holidays" class="dates-wrapper">
+          <div class="holiday-name-date">
+            <h5 class="holiday-name">{{holiday?.name}}</h5>
+            <p class="holiday-date">{{holiday?.date}}</p>
+          </div>
+          <div class="remove-icon"><i class="fas fa-trash-alt"></i></div>
+        </div>
+      </div>
+    </section>
+  </section> -->

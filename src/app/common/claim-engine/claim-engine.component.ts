@@ -46,7 +46,7 @@ export class ClaimEngineComponent implements OnInit {
   allSelectedDates: number[] = [];
   disableWeekdays = [1,2,3,4,5];
   disableWeekends = [6,0];
-  holidaysInClaimMonth: number[] = [12, 17];
+  holidaysInClaimMonth: number[] = [];
 
   // window controls
   screenWidth
@@ -63,6 +63,7 @@ export class ClaimEngineComponent implements OnInit {
   staffRole: string;
   weekend
   displaySpinner = false;
+  displaySubmitSpinner: boolean = false;
 
   claimMonthDate: Date;
   totalDaysInClaimMonth: number;
@@ -91,7 +92,7 @@ export class ClaimEngineComponent implements OnInit {
     this.staffRole = this.authService.currentStaff.role;
     this.staffId = this.authService.currentStaff.staffId;
     this.companySettings = await this.settingService.fetchAdminSettings();
-    this.staffClaimData = await this.overtimeService.fetchStaffData();
+    
     const { overtimeWindow, overtimeWindowIsActive } = this.companySettings;
     
     if (overtimeWindow === 'Open' || overtimeWindowIsActive) {
@@ -100,12 +101,14 @@ export class ClaimEngineComponent implements OnInit {
       this.windowIsActive = false;
       this.reopenDate = this.settingService.getReopenDate(this.companySettings.overtimeWindowStart);
     }
-
-    this.holidaysInClaimMonth = this.staffClaimData.holidays.map(holiday => new Date(holiday.date).getDate());
     
     // set dates and counters values
-    this.claimMonthDate = this.previousMonthDate();
+    this.claimMonthDate = this.overtimeService.previousMonthDate();
     this.totalDaysInClaimMonth = this.claimMonthDate.getDate();
+
+    // get holidays for the claim month
+    const { data : holidays} = await this.overtimeService.fetchHolidays(this.claimMonthDate.getMonth());
+    this.holidaysInClaimMonth = holidays.map(holiday => holiday.date);
 
     const previousWork = this.save.getItem(this.staffId);
     if (previousWork) this.restorePreviousWork(previousWork);
@@ -129,17 +132,17 @@ export class ClaimEngineComponent implements OnInit {
     this[prop] = this.jQuery(element).datepicker({
       inline: true,
       multipleDates: true,
-      startDate: this.previousMonthDate(1),
+      startDate: this.overtimeService.previousMonthDate(1),
       firstDay: 1,
-      minDate: this.previousMonthDate(1),
-      maxDate: this.previousMonthDate(),
+      minDate: this.overtimeService.previousMonthDate(1),
+      maxDate: this.overtimeService.previousMonthDate(),
       onRenderCell: (date, cellType) => {
         if (cellType === 'day' && datesToDisable.length) {
           // do not disable selected days on a calendar on which they were selected
           const disabled = datesToDisable.includes(date.getDate()) && !selfSelectDates.includes(date.getDate());
           if (disabled) return { disabled };
         }
-        if ((prop === 'holiday') && this.holidaysInClaimMonth.length) {
+        if (prop === 'holiday') {
           return { disabled: !this.holidaysInClaimMonth.includes(date.getDate()) };
         }
         if (cellType === 'day' && daysToDisable) {
@@ -319,14 +322,6 @@ export class ClaimEngineComponent implements OnInit {
     });
   }
 
-  previousMonthDate(day?: number) {
-    const today = new Date();
-    const thisYear = today.getFullYear();
-    const thisMonth = today.getMonth();
-    const month = day ? (thisMonth - 1) : thisMonth;
-    return new Date(thisYear, month, day || 0);
-  }
-
   toggleModal(displayType) {
     this.displayModal = displayType;
     if (displayType === 'block') {
@@ -346,6 +341,7 @@ export class ClaimEngineComponent implements OnInit {
   }
 
   async handleSubmit() {
+    this.displaySubmitSpinner = true;
     const claimRequest = this.createClaimRequest();
 
     try {
@@ -356,6 +352,7 @@ export class ClaimEngineComponent implements OnInit {
       this.save.clear(this.staffId);
       return this.router.navigate(['/staff/dashboard']);
     } catch(e) {
+      this.displaySubmitSpinner = false;
       this.toggleModal('none');
       if (e.error.errors) {
         return e.error.errors.forEach(error => this.toastr.error(error));
