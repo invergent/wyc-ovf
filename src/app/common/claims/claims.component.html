@@ -19,37 +19,33 @@
       No claims in this stage
     </div>
     <div *ngIf="currentPageClaims?.length" class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Month of claim</th>
-            <th>Claim Elements</th>
-            <th>Amount(₦)</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let claim of currentPageClaims">
-          <tr>
-            <td>
-              <div *ngIf="claim?.status.includes('ing')" class="outter-ellipse">
-                <div class="inner-ellipse"></div>
-              </div>
-              <div *ngIf="!claim?.status.includes('ing')" class="claim-icon">
-                <img *ngIf="claim?.status==='Declined'" src="/assets/images/declined.png" alt="Status Icon">
-                <img *ngIf="claim?.status==='Completed'" src="/assets/images/completed.png" alt="Status Icon">
-                <img *ngIf="claim?.status==='Cancelled'" src="/assets/images/cancelled.png" alt="Status Icon">
-              </div>
-            </td>
-            <td>{{claim?.monthOfClaim}}</td>
-            <td>{{claim?.claimElements || '--'}}</td>
-            <td>{{claim?.amount}}</td>
-            <td>{{claim?.status}}</td>
-            <td>{{claim?.createdAt | timeAgo}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-head">
+        <div></div>
+        <div>Month of claim</div>
+        <div>Claim Elements</div>
+        <div>Amount(₦)</div>
+        <div>Status</div>
+        <div></div>
+      </div>
+      <div *ngFor="let claim of currentPageClaims" class="table-body">
+        <div class="content-wrapper">
+          <div class="bullet">
+            <div *ngIf="claim?.status.includes('ing')" class="outter-ellipse">
+              <div class="inner-ellipse"></div>
+            </div>
+            <div *ngIf="!claim?.status.includes('ing')" class="claim-icon">
+              <img *ngIf="claim?.status==='Declined'" src="/assets/images/declined.png" alt="Status Icon">
+              <img *ngIf="claim?.status==='Completed'" src="/assets/images/completed.png" alt="Status Icon">
+              <img *ngIf="claim?.status==='Cancelled'" src="/assets/images/cancelled.png" alt="Status Icon">
+            </div>
+          </div>
+          <div class="claim-month">{{claim?.monthOfClaim}}</div>
+          <div class="claim-elements">{{claim?.claimElements || '--'}}</div>
+          <div class="claim-amount">{{claim?.amount | number}}</div>
+          <div class="claim-status">{{claim?.status}}</div>
+          <div class="claim-created-at">{{claim?.createdAt | timeAgo}}</div>
+        </div>
+      </div>
     </div>
   </div>
   <div *ngIf="visibleClaims?.length>claimsPerPage" class="pagination">

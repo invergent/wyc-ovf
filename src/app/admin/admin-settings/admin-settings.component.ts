@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { SettingsService, ISettings, JQUERY_TOKEN, dateRegex, TOASTR_TOKEN, IToastr } from '../../shared';
-import { error } from 'util';
 
 @Component({
   selector: 'app-admin-settings',

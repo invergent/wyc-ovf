@@ -25,3 +25,58 @@ button, .app-name {
   color: #cccccc;
   cursor: not-allowed;
 }
+.selected-custom-cell.-disabled- {
+  color: $color-black;
+  cursor: pointer !important;
+  &:hover {
+    color: $color-black;
+  }
+}
+.overtime-bg {
+  background-color: #43A047;
+  color: $color-white !important;
+  cursor: pointer !important;
+  &:hover {
+    background-color: #43A047;
+  }
+}
+.weekend-bg {
+  background-color: #F4511E;
+  color: $color-white !important;
+  cursor: pointer !important;
+  &:hover {
+    background-color: #F4511E;
+  }
+}
+.shiftDuty-bg {
+  background-color: #26c6da;
+  color: $color-white !important;
+  cursor: pointer !important;
+  &:hover {
+    background-color: #26c6da;
+  }
+}
+.atmDuty-bg {
+  background-color: #2196F3;
+  color: $color-white !important;
+  cursor: pointer !important;
+  &:hover {
+    background-color: #2196F3;
+  }
+}
+.atmSupport-bg {
+  background-color: #9C27B0;
+  color: $color-white !important;
+  cursor: pointer !important;
+  &:hover {
+    background-color: #9C27B0;
+  }
+}
+.holiday-bg {
+  background-color: #22328a;
+  color: $color-white !important;
+  cursor: pointer !important;
+  &:hover {
+    background-color: #22328a;
+  }
+}

@@ -59,24 +59,28 @@
     }
     .table-wrapper {
       min-width: 750px;
-      table {
-        width: 100%;
-        text-align: center;
-        border-collapse:separate; 
-        border-spacing: 0 5px;
-        thead {
-          color: $faint-color;
-          th {
-            font-weight: 100;
-            padding-bottom: 15px;
-          }
+      .table-head, .table-body .content-wrapper {
+        display: flex;
+        align-items: center;
+        div {
+          flex: 1;
+          text-align: center;
         }
-        tbody {
+      }
+      .table-head {
+        margin-bottom: 10px;
+        color: $faint-color;
+      }
+      .table-body {
+        .content-wrapper {
           background-color: $color-white;
           border-radius: 8px;
-          td {
-            padding: 20px;
+          margin-bottom: 10px;
+          padding: 20px;
+          box-sizing: border-box;
+          .bullet {
             box-sizing: border-box;
+            margin: auto -20px auto 20px;
             .outter-ellipse {
               width: 25px;
               height: 25px;
@@ -101,13 +105,18 @@
               }
             }
           }
-          td:first-child {
-            border-radius: 8px 0 0 8px;
+          .claim-month {
+            margin: auto 20px auto -20px;
           }
-          td:last-child {
+          .claim-status {
+            margin: auto -10px auto 5px;
+          }
+          .claim-created-at {
             color: $faint-color;
-            border-radius: 0 8px 8px 0;
           }
+        }
+        .approval-progress-bar {
+          text-align: center;
         }
       }
     }

@@ -1,6 +1,6 @@
 import { ClaimEngineComponent } from './claim-engine.component';
 import {
-  authServiceMock, settingsServiceMock, routerMock, mockToastr, mockJQuery,
+  authServiceMock, routerMock, mockToastr, mockJQuery,
   overtimeServiceMock, mockLocalStorage
 } from 'src/app/__mocks__';
 
@@ -9,7 +9,7 @@ describe('ClaimEngineComponent', () => {
 
   beforeEach(() => {
     component = new ClaimEngineComponent(
-      authServiceMock, overtimeServiceMock, settingsServiceMock, routerMock, mockToastr, mockJQuery, mockLocalStorage
+      authServiceMock, overtimeServiceMock, routerMock, mockToastr, mockJQuery, mockLocalStorage
     )
   });
 

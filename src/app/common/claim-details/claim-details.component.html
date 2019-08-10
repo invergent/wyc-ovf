@@ -1,0 +1,18 @@
+<section class="claim-details">
+  <div class="content-wrapper">
+    <div class="claim-elements">
+      <div class="claim-elements-wrapper">
+        <div *ngFor="let selected of selectedElements" class="claim-item" [ngClass]="[selected==='outstation'?'outstation':'']">
+          <div class="key-box">
+            <div class="key" [ngClass]="[selected]"></div>
+          </div>
+          <div class="name">{{selected | formatPaneItemName}}</div>
+          <div class="value">{{selected === 'outstation' ? ('₦' + (claimDetails[selected] | number)) : claimDetails[selected]?.selectedDates?.length}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="claim-calendar">
+      <div class="calendar" id="calendar" data-language='en'></div>
+    </div>
+  </div>
+</section>

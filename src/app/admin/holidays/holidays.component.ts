@@ -50,9 +50,7 @@ export class HolidaysComponent implements OnInit {
         }
       },
       onSelect: (fd, airdate, inst) => {
-        console.log(this.holidays)
         if (this.canSelect) {
-          console.log(airdate)
           const addedDate = airdate[inst.selectedDates.length - 1];
 
           const selectedDates = inst.selectedDates.map(date => date.toLocaleDateString());
