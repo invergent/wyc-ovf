@@ -2,10 +2,7 @@
   <div class="page-title">
     <p>{{callingComponent}}</p>
   </div>
-  <div *ngIf="!windowIsActive" class="window-closed">
-    <p>You cannot submit claim requests until <strong>{{reopenDate}}</strong></p>
-  </div>
-  <div *ngIf="windowIsActive" class="claim-content">
+  <div class="claim-content">
     <div class="new-claim-button-wrapper">
       <button
         (click)="toggleButtonPress('overtimeClicked', disableWeekends)"
@@ -74,7 +71,7 @@
               (input)="handleInput(outstationInput.value)"/>
           </div>
         </div>
-        <div *ngIf="!showSummaryPlaceholder || !showCalendarPlaceholder" class="total">Total: ₦{{total}}</div>
+        <div *ngIf="!showSummaryPlaceholder || !showCalendarPlaceholder" class="total">Total: ₦{{total | number}}</div>
       </div>
     </div>
     <div class="submit-btn-wrapper">

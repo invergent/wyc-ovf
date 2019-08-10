@@ -1,1 +1,13 @@
-<claim-engine [callingComponent]="'New Claim'"></claim-engine>
+<div *ngIf="showLoader || !!errorMessage" class="loader">
+  <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
+  <p *ngIf="!!errorMessage">{{errorMessage}}</p>
+</div>
+<div *ngIf="!(showLoader || !!errorMessage)" >
+  <div *ngIf="!windowIsActive" class="window-closed">
+    <p>You cannot submit claim requests until <strong>{{reopenDate}}</strong></p>
+  </div>
+  <div *ngIf="windowIsActive && pendingClaim?.length" class="window-closed">
+    <p>You currently have a pending claim. If you wish to submit a new claim cancel the current claim and revisit this page.</p>
+  </div>
+  <claim-engine *ngIf="windowIsActive && !pendingClaim?.length"  [callingComponent]="'New Claim'"></claim-engine>
+</div>

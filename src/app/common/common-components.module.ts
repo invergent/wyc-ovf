@@ -13,10 +13,12 @@ import { PipesModule } from '../pipes/pipes.module';
 import { ClaimsGraphComponent } from './claims-graph/claims-graph.component';
 import { ClaimWindowComponent } from './claim-window/claim-window.component';
 import { ClaimEngineComponent } from './claim-engine/claim-engine.component';
+import { ClaimDetailsComponent } from './claim-details/claim-details.component';
 
 const declarations = [
   TopNav, ClaimsComponent, ActivityBlock, ApprovalProgressBar, PasswordChangeComponent,
-  ClaimsGraphComponent, jqxChartComponent, ClaimWindowComponent, ClaimEngineComponent
+  ClaimsGraphComponent, jqxChartComponent, ClaimWindowComponent, ClaimEngineComponent,
+  ClaimDetailsComponent
 ];
 
 @NgModule({
