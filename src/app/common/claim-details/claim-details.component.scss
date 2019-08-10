@@ -1,0 +1,75 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.claim-details {
+  margin: 50px auto;
+  .content-wrapper {
+    display: flex;
+    div {
+      flex: 1;
+    }
+    .claim-elements {
+      .claim-elements-wrapper {
+        background-color: $color-white;
+        width: 270px;
+        margin: auto;
+        padding: 2px;
+        border-radius: 5px;
+        box-sizing: border-box;
+        .claim-item {
+          display: flex;
+          align-items: center;
+          width: 220px;
+          margin: 10px auto;
+          .key-box {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            .key {
+              flex: 0 0 15px;
+              width: 10px;
+              height: 15px;
+              border-radius: 2px;
+            }
+          }
+          .name {
+            flex: 5
+          }
+          .value {
+            flex: 1;
+            text-align: center;
+          }
+        }
+      }
+    }
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+      .claim-elements, .claim-calendar {
+        margin: 20px auto;
+      }
+    }
+  }
+}
+
+.overtime {
+  background-color: #43A047;
+}
+.weekend {
+  background-color: #F4511E;
+}
+.shiftDuty {
+  background-color: #26c6da;
+}
+.atmDuty {
+  background-color: #2196F3;
+}
+.atmSupport {
+  background-color: #9C27B0;
+}
+.holiday {
+  background-color: #22328a;
+}
+
+.outstation {
+  margin-top: 20px !important;
+}

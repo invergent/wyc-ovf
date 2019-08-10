@@ -14,10 +14,6 @@ import {
 export class ClaimEngineComponent implements OnInit {
   @Input() callingComponent: string = '';
 
-  companySettings: ISettings;
-  staffClaimData: IStaffClaimData;
-  reopenDate: string = '';
-  windowIsActive: boolean = false;
   staffId: string
 
   // claim
@@ -29,6 +25,7 @@ export class ClaimEngineComponent implements OnInit {
   shiftDutyClicked: boolean = false;
   atmDutyClicked: boolean = false;
   atmSupportClicked: boolean = false;
+  holidayClicked: boolean = false;
   outstationClicked: boolean = false;
   claimBtns: string[] = ['overtime', 'weekend', 'shiftDuty', 'atmDuty', 'atmSupport', 'holiday', 'outstation'];
   currentlyPressedBtn: string;
@@ -50,10 +47,6 @@ export class ClaimEngineComponent implements OnInit {
 
   // window controls
   screenWidth
-
-  // autoSave controls
-  autoSaveId: number
-  savedRequest: any;
 
   // modal controls
   displayModal: string = 'none';
@@ -80,7 +73,6 @@ export class ClaimEngineComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private overtimeService: OvertimeService,
-    private settingService: SettingsService,
     private router: Router,
     @Inject(TOASTR_TOKEN) private toastr: IToastr,
     @Inject(JQUERY_TOKEN) private jQuery,
@@ -91,16 +83,6 @@ export class ClaimEngineComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.staffRole = this.authService.currentStaff.role;
     this.staffId = this.authService.currentStaff.staffId;
-    this.companySettings = await this.settingService.fetchAdminSettings();
-    
-    const { overtimeWindow, overtimeWindowIsActive } = this.companySettings;
-    
-    if (overtimeWindow === 'Open' || overtimeWindowIsActive) {
-      this.windowIsActive = true;
-    } else {
-      this.windowIsActive = false;
-      this.reopenDate = this.settingService.getReopenDate(this.companySettings.overtimeWindowStart);
-    }
     
     // set dates and counters values
     this.claimMonthDate = this.overtimeService.previousMonthDate();
@@ -293,9 +275,11 @@ export class ClaimEngineComponent implements OnInit {
   autoSave(submit?: boolean) {
     const savedWork = this.claimBtns.reduce((acc, item) => {
       if (this[item]) {
-        acc[item] = item === 'outstation'
-          ? this[item]
-          : { selectedDates: this[item].selectedDates };
+        if (item === 'outstation') {
+          acc[item] = this[item];
+        } else if (this[item].selectedDates.length) {
+          acc[item] = { selectedDates: this[item].selectedDates };
+        }
         return acc;
       }
       return acc;

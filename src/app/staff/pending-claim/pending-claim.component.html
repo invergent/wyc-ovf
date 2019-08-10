@@ -6,10 +6,9 @@
   <div class="page-title">
     <p>Pending Claim</p>
   </div>
-  <claims [claims]="pendingClaim" [statuses]="[]"></claims>
-  <section *ngIf="!!pendingClaim.length" class="approval-progress-bar-wrapper">
-    <approval-progress-bar [approvalHistory]="pendingClaim[0].approvalHistory"></approval-progress-bar>
-  </section>
+  <claims [claims]="pendingClaim" [statuses]="[]" [showClaimDetails]="true" [showApprovalProgress]="true"></claims>
+  <claim-details *ngIf="pendingClaim.length" [claimDetails]="pendingClaim[0]?.details"></claim-details>
+  <approval-progress-bar *ngIf="pendingClaim.length" [approvalHistory]="pendingClaim[0]?.approvalHistory" class="approval-progress-bar"></approval-progress-bar>
   <section *ngIf="!(pendingClaim[0]?.approvalHistory?.length>0 || !pendingClaim.length)" class="button-section">
     <button type="button" name="button" (click)="displayModal='block'">Cancel this claim</button>
   </section>
