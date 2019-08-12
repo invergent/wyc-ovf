@@ -10,55 +10,39 @@
   </div>
   <div class="claim-requests-wrapper">
     <div><p>{{errorMessage}}</p></div>
-    <div *ngFor="let claim of claimsToApprove" class="claim-request" id="{{claim.id}}">
-      <div class="month-of-claim-title">
-        <p>{{claim?.monthOfClaim}}</p>
-      </div>
-      <div class="claim-body">
-        <div class="request-section staff-profile">
-          <div class="image-wrapper">
-            <img src="{{claim?.image | transformImage}}" alt="Staff Avater">
+    <div *ngFor="let claim of claimsToApprove" tabindex="0" class="claim-request" id="{{claim.id}}">
+      <div class="direction-icon"><i class="fa fa-chevron-right"></i></div>
+      <div class="request-details">
+        <div class="claim-body" id="claim{{claim.id}}">
+          <div class="staff-image">
+            <div class="image-wrapper">
+              <img src="{{claim?.image | transformImage}}" alt="Staff Avater">
+            </div>
           </div>
-          <div class="name-wrapper">
-            <p class="name">{{claim?.lastname}} {{claim?.firstname}} {{claim?.middlename?.substring(0,1)}}</p>
+          <div class="claim-details">
+            <div class="name-wrapper">
+              <p class="name">{{claim?.lastname}} {{claim?.firstname}} {{claim?.middlename?.substring(0,1)}} (₦{{claim?.amount | number}})</p>
+              <p class="claim-elements">{{claim?.claimElements}} claim elements</p>
+            </div>
+          </div>
+          <div class="approval-buttons">
+            <div class="buttons-wrapper">
+              <div class="approval-btn approve" (mousedown)="runApproval($event, 'approve '+claim.id)">
+                <span class="toolTip">Approve</span>          
+                <img src="/assets/images/green-check.png" alt="Approve Icon">
+              </div>
+              <div class="approval-btn request-edit" (mousedown)="toggleModalDisplay('requestEditModal', claim, $event)">
+                <span class="toolTip">Request edit</span>          
+                <img src="/assets/images/edit.png" alt="Request Edit Icon">
+              </div>
+              <div class="approval-btn decline" (mousedown)="runApproval($event, 'decline '+claim.id)">
+                <span class="toolTip">Decline</span>            
+                <img src="/assets/images/declined.png" alt="Decline Icon">
+              </div>
+            </div>
           </div>
         </div>
-        <div class="request-section claim-details">
-          <div *ngIf="!!claim?.weekday" class="claim-unit">
-            <div class="claim-item">
-              <p>Weekday:</p>
-            </div>
-            <div class="claim-item-value"><span>{{claim?.weekday}}</span></div>
-          </div>
-          <div *ngIf="!!claim?.weekend" class="claim-unit">
-            <div class="claim-item">
-              <p>Weekend:</p>
-            </div>
-            <div class="claim-item-value"><span>{{claim?.weekend}}</span></div>
-          </div>
-          <div *ngIf="!!claim?.atm" class="claim-unit">
-            <div class="claim-item">
-              <p>ATM Duty:</p>
-            </div>
-            <div class="claim-item-value"><span>{{claim?.atm}}</span></div>
-          </div>
-          <div *ngIf="!!claim?.shift" class="claim-unit">
-            <div class="claim-item">
-              <p>shift:</p>
-            </div>
-            <div class="claim-item-value"><span>{{claim?.shift}}</span></div>
-          </div>
-        </div>
-        <div class="request-section approval-buttons">
-          <div class="approval-btn approve" (click)="runApproval('approve '+claim.id)">
-            <span class="toolTip">Approve</span>          
-            <img src="/assets/images/green-check.png" alt="Approve Icon">
-          </div>
-          <div class="approval-btn decline" (click)="runApproval('decline '+claim.id)">
-            <span class="toolTip">Decline</span>            
-            <img src="/assets/images/declined.png" alt="">
-          </div>
-        </div>
+        <claim-details [claim]="claim"></claim-details>          
       </div>
     </div>
   </div>
@@ -69,7 +53,28 @@
     </div>
   </div>
   <section [ngStyle]="{display: displayThanks}" class="thanks-modal-section">
-    <div class="thanks-modal">
+    <div *ngIf="requestEditModal" class="request-edit-modal">
+      <div class="request-edit-content">
+        <div class="content-wrapper">
+          <h3>Please type a message to {{currentClaim?.firstname}}.</h3>
+          <div #editMessage class="textarea" contenteditable="true" placeholder="What should be changed?"></div>
+          <div class="action-buttons">
+            <button
+              class="yes-cancel"
+              type="button"
+              name="button"
+              (click)="toggleModalDisplay('requestEditModal')">Cancel</button>
+            <button
+              class="no-cancel"
+              type="button"
+              name="button"
+              (click)="sendRequestEdit(editMessage.innerText)">Request edit</button>
+          </div>
+          <div *ngIf="requestEditSpinner" class="request-edit-loader"><i class="fa fa-spinner fa-spin"></i></div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="thanksModal" class="thanks-modal">
       <div class="thanks-content">
         <div class="thanks-icon-wrapper">
           <img src="/assets/images/dance_dribbble.gif" alt="">
@@ -79,7 +84,7 @@
         </div>
         <div class="action-buttons">
           <button
-            class="no-cancel"
+            class="close"
             type="button"
             name="button"
             (click)="displayThanks='none'">Close</button>
