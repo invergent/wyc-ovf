@@ -9,6 +9,7 @@ import { ClaimHistoryComponent } from './claim-history/claim-history.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EnforceProfileUpdateService } from '../shared';
+import { UpdateClaimComponent } from './update-claim/update-claim.component';
 
 const routes: Routes = [{
   path: '',
@@ -16,6 +17,7 @@ const routes: Routes = [{
   children: [
     { path: 'dashboard', canActivate: [EnforceProfileUpdateService], component: DashboardComponent },
     { path: 'new', canActivate: [EnforceProfileUpdateService], component: NewClaimComponent },
+    { path: 'update', canActivate: [EnforceProfileUpdateService], component: UpdateClaimComponent },
     { path: 'pending-claim', canActivate: [EnforceProfileUpdateService], component: PendingClaimComponent },
     { path: 'claim-history', canActivate: [EnforceProfileUpdateService], component: ClaimHistoryComponent },
     { path: 'profile', component: ProfileComponent },

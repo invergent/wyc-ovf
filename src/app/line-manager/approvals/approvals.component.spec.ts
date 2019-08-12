@@ -49,7 +49,7 @@ describe('Approval component', () => {
     //@ts-ignore
     component.claimsToApprove = [];
 
-    await component.runApproval('approve 1');
+    await component.runApproval({ preventDefault: () => {} }, 'approve 1');
     jest.runAllTimers();
 
     expect(runApprovalFn).toHaveBeenCalledWith('approve', '1');

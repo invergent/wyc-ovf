@@ -38,112 +38,118 @@
     padding: 0 20px;
     box-sizing: border-box;
     .claim-request {
-      background-color: $color-white;
-      margin: auto auto 10px;
+      display: flex;
       width: 620px;
-      padding: 15px;
-      border: 1px solid $faint-border-color;
+      height: 120px;
+      overflow: hidden;
+      margin: auto auto 10px;
       border-radius: 8px;
-      opacity: 1;
-      transition: all 1s ease-in-out;
-      .month-of-claim-title {
-        text-align: center;
-        margin-bottom: 15px;
-        p {
-          margin: 0;
+      transition: all .4s ease-in-out;
+      &:focus {
+        height: 440px;
+        outline: none;
+      }
+      &:focus .fa-chevron-right {
+        transform: rotate(90deg);
+      }
+      .direction-icon {
+        flex: 0 0 35px;
+        margin-top: 30px;
+        .fa-chevron-right {
+          font-size: 30px;
+          color: $brand-color;
+          margin-left: 5px;
+          transition: all .4s ease-out;
         }
+      }
+      .request-details {
+        flex: 1;
       }
       .claim-body {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        .request-section {
-          flex: 1;
-        }
-        .staff-profile {
-          flex: 0 0 200px;
+        background-color: $color-white;
+        padding: 10px 15px;
+        border: 1px solid $faint-border-color;
+        border-radius: 8px;
+        opacity: 1;
+        transition: all 1s ease-in-out;
+        .staff-image {
+          flex: 0 0 100px;
           text-align: center;
           .image-wrapper {
-            height: 50px;
+            padding-top: 10px;
+            height: 60px;
             margin: auto auto 10px;
             img {
               height: 100%;
             }
           }
+        }
+        .claim-details {
+          flex: 1;
+          display: flex;
+          align-items: center;
           .name-wrapper {
+            margin: auto;
+            text-align: center;
             .name {
               margin: 0;
             }
-          }
-        }
-        .claim-details {
-          display: flex;
-          flex-direction: column;
-          align-content: center;
-          align-items: center;
-          .claim-unit {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            .claim-item {
-              width: 100px;
-              p {
-                margin: 0;
-                padding: 5px;
-                color: $faint-color;
-              }
-            }
-            .claim-item-value {
-              width: 60px;
-              text-align: center;
-              span {
-                font-size: 18px;
-              }
+            .claim-elements {
+              color: $faint-color;
+              margin-bottom: 0;
+              font-size: .7rem;
             }
           }
         }
         .approval-buttons {
           flex: 0 0 200px;
-          display: flex;
-          align-items: center;
-          .approval-btn {
-            position: relative;
-            width: 50px;
-            cursor: pointer;
-            img {
-              width: 100%;
+          .buttons-wrapper {
+            display: flex;
+            align-items: center;
+            padding-top: 25px;
+            .approval-btn {
+              position: relative;
+              width: 30px;
+              cursor: pointer;
+              img {
+                width: 100%;
+              }
+              .toolTip {
+                position: absolute;
+                top: -35px;
+                left: -37px;
+                background: rgba(0,0,0,.6);
+                min-width: 80px;
+                padding: 5px;
+                font-size: 14px;
+                border-radius: 5px;
+                color: $color-white;
+                visibility: hidden;
+                text-align: center;
+              }
+              .toolTip::after {
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translate(-50%);
+                content: ' ';
+                border-style: solid;
+                border-width: 5px;
+                border-color: rgba(0,0,0,.6) transparent transparent transparent;
+              }
+              &:hover .toolTip {
+                visibility: visible;
+              }
             }
-            .toolTip {
-              position: absolute;
-              top: -35px;
-              left: -5px;
-              background: rgba(0,0,0,.6);
-              padding: 5px;
-              font-size: 14px;
-              border-radius: 5px;
-              color: $color-white;
-              visibility: hidden;
+            .approve {
+              margin: auto;
             }
-            .toolTip::after {
-              position: absolute;
-              bottom: -10px;
-              left: 50%;
-              transform: translate(-50%);
-              content: ' ';
-              border-style: solid;
-              border-width: 5px;
-              border-color: rgba(0,0,0,.6) transparent transparent transparent;
+            .decline {
+              margin: auto 10px auto auto;
             }
-            &:hover .toolTip {
-              visibility: visible;
-            }
-          }
-          .approve {
-            margin: auto;
-          }
-          .decline {
-            width: 40px;
-            margin: auto 10px auto auto;
           }
         }
       }
@@ -177,24 +183,56 @@
   }
   .thanks-modal-section {
     position: absolute;
-    text-align: center;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     background-color: $modal-background-tint;
     z-index: 9999;
-    .thanks-modal {
+    .thanks-modal, .request-edit-modal {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 70%;
+      width: 600px;
       display: inline-block;
       background-color: $color-white;
       transform: translate(-50%, -50%);
       box-sizing: border-box;
       padding: 40px;
       border-radius: 8px;
+      .request-edit-content {
+        .content-wrapper {
+          width: 400px;
+          margin: auto;
+          h3 {
+            text-align: center
+          }
+          .textarea {
+            margin: 20px auto;
+            min-height: 50px;
+            border: 1px solid $faint-border-color;
+            border-radius: 15px;
+            padding: 15px;
+            &:focus {
+              outline: none;
+            }
+          }
+          [contenteditable=true]:empty:before {
+            content: attr(placeholder);
+            display: block; /* For Firefox */
+            font-style: italic;
+            color: $faint-color;
+          }
+          .request-edit-loader {
+            text-align: center;
+            padding: 10px;
+            .fa-spinner {
+              font-size: 18px;
+              color: $brand-color;
+            }
+          }
+        }
+      }
       .thanks-icon-wrapper {
         width: 400px;
         margin: auto;
@@ -212,11 +250,20 @@
       }
       .action-buttons {
         margin: 10px auto;
+        text-align: center;
         .yes-cancel {
           @include white-button;
-          margin-right: 30%;
+          float: left;
         }
         .no-cancel {
+          @include white-button;
+          color: $brand-color;
+          float: right;
+          &:hover {
+            background-color: $brand-color;
+          }
+        }
+        .close {
           @include white-button;
           color: $brand-color;
           &:hover {
@@ -235,52 +282,19 @@
     .claim-requests-wrapper {
       .claim-request {
         width: unset;
-        .month-of-claim-title {
-          p {
-          }
-        }
-        .claim-body {
-          .request-section {
-          }
-          .staff-profile {
-            .image-wrapper {
-              img {
-              }
-            }
-            .name-wrapper {
-              .name {
-              }
-            }
-          }
-          .claim-details {
-            .claim-unit {
-              .claim-item {
-                p {
-                }
-              }
-              .claim-item-value {
-                span {
-                }
-              }
-            }
-          }
-          .approval-buttons {
-            .approval-btn {
-              img {
-              }
-            }
-            .approval-btn {
-            }
-            .approve {
-            }
-            .decline {
-            }
-          }
-        }
       }
     }
     .claims-counter {
       display: none;
+    }
+    .thanks-modal-section {
+      .request-edit-modal {
+        .request-edit-content {
+          .content-wrapper {
+            width: 100%;
+          }
+        }
+      }
     }
   }
   @media screen and (max-width: 630px) {
@@ -291,13 +305,15 @@
     }
     .claim-requests-wrapper {
       .claim-request {
-        
+        height: 175px;
+        &:focus {
+          height: 770px;
+        }
         .month-of-claim-title {
           p {
           }
         }
         .claim-body {
-          flex-direction: column;
           .request-section {
           }
           .staff-profile {
@@ -324,18 +340,25 @@
             }
           }
           .approval-buttons {
-            flex-basis: 100px;
-            width: 220px;
-            margin: auto;
-            .approval-btn {
-              width: 40px;
-              img {
+            flex-basis: 100%;
+            width: 10px;
+            padding: 10px 0 0;
+            border-top: 1px solid $faint-border-color;
+            box-sizing: border-box;
+            .buttons-wrapper {
+              width: 200px;
+              margin: auto;
+              .approval-btn {
+                width: 30px;
+                img {
+                }
               }
             }
             .approval-btn {
+              width: 10px;
             }
             .approve {
-              margin: auto auto auto 20px;
+              margin: auto;
             }
             .decline {
               margin: auto 20px auto auto;
@@ -345,7 +368,7 @@
       }
     }
     .thanks-modal-section {
-      .thanks-modal {
+      .thanks-modal, .request-edit-modal {
         width: 95%;
         padding: 20px 5px;
         .thanks-icon-wrapper {
@@ -368,6 +391,9 @@
             @include white-button-responsive-450;
           }
         }
+      }
+      .request-edit-modal {
+        padding: 20px;
       }
     }
   }

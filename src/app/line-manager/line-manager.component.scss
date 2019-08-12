@@ -9,7 +9,7 @@
     width: 100%;
     background-color: $color-white;
     box-sizing: border-box;
-    padding: 15px 20px;
+    padding: 10px 20px;
     text-align: center;
     box-shadow: 2px 0px 10px 0px $faint-color-light;
     section {
@@ -19,8 +19,8 @@
         width: 220px;
         margin: auto;
         .logo {
-          width: 220px;
-          margin-right: 8px;
+          width: 120px;
+          margin: auto;
         }
         .hamburger-icon {
           display: none;

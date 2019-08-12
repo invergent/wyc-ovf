@@ -1,0 +1,7 @@
+<div *ngIf="showLoader || !!errorMessage" class="loader">
+  <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
+  <p *ngIf="!!errorMessage">{{errorMessage}}</p>
+</div>
+<section *ngIf="!showLoader && !errorMessage" class="update-claim">
+  <claim-engine [claim]="pendingClaim[0]" [callingComponent]="'Update claim'"></claim-engine>
+</section>
