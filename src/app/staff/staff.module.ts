@@ -12,6 +12,7 @@ import { ClaimHistoryComponent } from './claim-history/claim-history.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { UpdateClaimComponent } from './update-claim/update-claim.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { PipesModule } from '../pipes/pipes.module';
     PendingClaimComponent,
     ClaimHistoryComponent,
     ProfileComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    UpdateClaimComponent
   ],
   providers: [
 

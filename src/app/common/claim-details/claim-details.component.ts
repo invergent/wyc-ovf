@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { JQUERY_TOKEN, OvertimeService } from 'src/app/shared';
+import { JQUERY_TOKEN, OvertimeService, IClaim } from 'src/app/shared';
 
 @Component({
   selector: 'claim-details',
@@ -7,7 +7,8 @@ import { JQUERY_TOKEN, OvertimeService } from 'src/app/shared';
   styleUrls: ['./claim-details.component.scss']
 })
 export class ClaimDetailsComponent implements OnInit {
-  @Input() claimDetails: any = {};
+  @Input() claim: IClaim
+  claimDetails: any = {};
   elementsClassNames = {
     overtime: 'overtime',
     weekend: 'weekend',
@@ -25,9 +26,15 @@ export class ClaimDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.claimDetails = JSON.parse(this.claimDetails);
+    console.log(this.claim)
+    if (!this.claim.details.visiblePaneItems) {
+      this.claimDetails = JSON.parse(this.claim.details);
+    } else {
+      this.claimDetails = this.claim.details;
+    }
     this.selectedElements = Object.keys(this.claimDetails).filter(element => this.claimElements.includes(element));
-    this.initializeDatePicker('#calendar')
+    this.attachUniqueIdToElement(this.claim.id);
+    this.initializeDatePicker(`#calendar${this.claim.id}`);
   }
 
   initializeDatePicker(element: string) {
@@ -44,6 +51,10 @@ export class ClaimDetailsComponent implements OnInit {
         return { disabled: true, classes }
       }
     }).data('datepicker');
+  }
+
+  attachUniqueIdToElement(claimId) {
+    this.jQuery('#calendar').prop('id', `calendar${claimId}`)
   }
 
   styleDayCellForClaimType(calendarDate) {

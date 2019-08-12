@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import {
   JQUERY_TOKEN, AuthService, dateRegex, TOASTR_TOKEN, IToastr,
   OvertimeService, ISettings, SettingsService, claimPrice, LOCALSTORAGE_TOKEN,
-  ILocalStorage, IStaffClaimData
+  ILocalStorage, IStaffClaimData, IClaim
 } from '../../shared';
 
 @Component({
@@ -13,6 +13,7 @@ import {
 })
 export class ClaimEngineComponent implements OnInit {
   @Input() callingComponent: string = '';
+  @Input() claim: IClaim
 
   staffId: string
 
@@ -92,7 +93,7 @@ export class ClaimEngineComponent implements OnInit {
     const { data : holidays} = await this.overtimeService.fetchHolidays(this.claimMonthDate.getMonth());
     this.holidaysInClaimMonth = holidays.map(holiday => holiday.date);
 
-    const previousWork = this.save.getItem(this.staffId);
+    const previousWork = this.claim ? this.claim.details : this.save.getItem(this.staffId);
     if (previousWork) this.restorePreviousWork(previousWork);
   }
 
@@ -284,10 +285,11 @@ export class ClaimEngineComponent implements OnInit {
       }
       return acc;
     }, {});
+    
+    savedWork['visiblePaneItems'] = Object.keys(savedWork).length;
     savedWork['allSelectedDates'] = this.allSelectedDates;
     savedWork['total'] = this.total;
     savedWork['currentlyPressedBtn'] = this.currentlyPressedBtn;
-    savedWork['visiblePaneItems'] = this.visiblePaneItems;
     if (submit) return savedWork;
     this.save.setItem(this.staffId, JSON.stringify(savedWork));
   }
@@ -327,9 +329,11 @@ export class ClaimEngineComponent implements OnInit {
   async handleSubmit() {
     this.displaySubmitSpinner = true;
     const claimRequest = this.createClaimRequest();
+    const method = `${this.callingComponent.includes('Update') ? 'update' : 'create'}OvertimeRequest`;
+    const claimId = this.callingComponent.includes('Update') ? this.claim.id : null;
 
     try {
-      const { message } = await this.overtimeService.createOvertimeRequest(claimRequest);
+      const { message } = await this.overtimeService[method](claimRequest, claimId);
 
       await this.overtimeService.syncWithAPI();
       this.toastr.success(message);

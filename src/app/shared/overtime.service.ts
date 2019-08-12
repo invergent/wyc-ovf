@@ -89,6 +89,10 @@ export class OvertimeService {
     return this.http.post<IPostOvertimeRequest>(`${this.api}/users/claim`, overtimeRequest, this.options).toPromise();
   }
 
+  updateOvertimeRequest(overtimeRequest: IValidClaimRequest, claimId: number): Promise<IPostOvertimeRequest> {
+    return this.http.put<IPostOvertimeRequest>(`${this.api}/users/claims/${claimId}`, overtimeRequest, this.options).toPromise();
+  }
+
   cancelClaim(claimId: number): Promise<IPostOvertimeRequest> {
     return this.http.delete<IPostOvertimeRequest>(`${this.api}/users/claims/${claimId}`, this.options).toPromise();
   }

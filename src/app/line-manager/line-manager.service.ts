@@ -26,4 +26,8 @@ export class LineManagerService {
   verifyLineManager(hash: string): Promise<any> {
     return this.http.get(`${this.api}/line-manager/verify?hash=${hash}`, this.options).toPromise();
   }
+
+  requestEdit(payload, claimId: number): Promise<IApprovedClaim> {
+    return this.http.put<IApprovedClaim>(`${this.api}/line-manager/claims/pending/${claimId}/request-edit`, payload, this.options).toPromise();
+  }
 }
