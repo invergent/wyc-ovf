@@ -10,6 +10,8 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { AdminChangePasswordComponent } from './admin-change-password/admin-change-password.component';
 import { HolidaysComponent } from './holidays/holidays.component';
+import { ViewStaffComponent } from './view-staff/view-staff.component';
+import { ViewClaimComponent } from './view-claim/view-claim.component';
 
 const routes: Routes = [{
   path: '',
@@ -17,7 +19,9 @@ const routes: Routes = [{
   children: [
     { path: 'dashboard', component: AdminDashboardComponent },
     { path: 'claims', component: AdminClaimsComponent },
+    { path: 'claims/:claimId', component: ViewClaimComponent },
     { path: 'staff', component: AdminStaffComponent },
+    { path: 'staff/:staffId', component: ViewStaffComponent },
     { path: 'branch', component: AdminBranchComponent },
     { path: 'holidays', component: HolidaysComponent },
     { path: 'settings', component: AdminSettingsComponent },

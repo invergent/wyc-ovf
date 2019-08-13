@@ -116,6 +116,10 @@
         tbody {
           background-color: $color-white;
           border-radius: 8px;
+          cursor: pointer;
+          &:focus {
+            outline: none;
+          }
           td {
             padding: 10px;
             box-sizing: border-box;

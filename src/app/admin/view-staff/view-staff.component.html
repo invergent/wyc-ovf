@@ -1,0 +1,70 @@
+<div *ngIf="showLoader || !!errorMessage" class="loader">
+  <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
+  <p *ngIf="!!errorMessage">{{errorMessage}}</p>
+</div>
+<section *ngIf="!showLoader && !errorMessage" class="view-staff">
+  <div class="page-title">
+    <p>Staff Profile</p>
+  </div>
+  <div class="profile-info">
+    <div class="profile-image">
+      <div class="image-wrapper">
+        <img src="{{staff?.image | transformImage}}" alt="Staff Image">
+      </div>
+    </div>
+    <div class="profile-details">
+      <div class="details">
+        <p class="details-header">Name</p>
+        <p class="details-item">{{staff?.lastname}} {{staff?.firstname}} {{staff?.middlename?.substring(0,1)}}</p>
+      </div>
+      <div class="details">
+        <p class="details-header">Position</p>
+        <p class="details-item">{{staff?.role || '--'}}</p>
+      </div>
+      <div class="details">
+        <p class="details-header">Phone Number</p>
+        <p class="details-item">{{staff?.phone}}</p>
+      </div>
+      <div class="details">
+        <p class="details-header">Email Address</p>
+        <p class="details-item">{{staff?.emailAddress}}</p>
+      </div>
+      <div class="details">
+        <p class="details-header">Branch</p>
+        <p class="details-item">{{staff?.branch || '--'}}</p>
+      </div>
+    </div>
+    <div class="lm lineManager">
+      <div class="lm-details-header">
+        <p>Line Manager</p>
+      </div>
+      <div class="lm-details-body">
+        <div class="details-header">
+          <p>Name</p>
+        </div>
+        <div class="name details-item">
+          <p>{{staff?.lineManagerFirstName || '--'}} {{staff?.lineManagerLastName}}</p>
+        </div>
+        <div class="email details-header">
+          <p>Email Address</p>
+        </div>
+        <div class="email details-item">
+          <p>{{staff?.lineManagerEmailAddress || '--'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="lm account-details">
+      <div class="lm-details-header">
+        <p>Account Details</p>
+      </div>
+      <div class="lm-details-body">
+        <div class="details-header">
+          <p>Account Number</p>
+        </div>
+        <div class="name details-item">
+          <p>{{staff?.accountNumber}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

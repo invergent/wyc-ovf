@@ -79,9 +79,6 @@
       </div>
     </div>
     <div class="lm account-details">
-      <div class="edit-icon" (click)="runModalDisplay('accountDetailsModal', 'Account Details')">
-        <i class="fas fa-edit"></i>
-      </div>
       <div class="lm-details-header">
         <p>Account Details</p>
       </div>
@@ -154,11 +151,6 @@
               <div *ngIf="branchDropdown && filteredbranches.length" class="dropdown-list">
                 <div *ngFor="let branch of filteredbranches" class="list-item" (click)="handleSelect('branch', branch)">{{branch.name}}</div>
               </div>
-            </div>
-          </ng-template>
-          <ng-template [ngSwitchCase]="accountDetailsModal">
-            <div class="input">
-              <input [(ngModel)]="accountNumber" name="accountNumber" type="text" placeholder="Enter your account number" required>
             </div>
           </ng-template>
           <ng-template [ngSwitchCase]="lineManagerModal">

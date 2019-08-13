@@ -6,8 +6,8 @@
   <div class="page-title">
     <p>Pending Claim</p>
   </div>
-  <claims [claims]="pendingClaim" [statuses]="[]" [showClaimDetails]="true" [showApprovalProgress]="true"></claims>
-  <div *ngIf="pendingClaim[0].editRequested" class="edit-message-section">
+  <claims [claims]="pendingClaim" [statuses]="[]"></claims>
+  <div *ngIf="pendingClaim[0]?.editRequested" class="edit-message-section">
     <div class="edit-message">
       <h4>Your line manager said:</h4>
       <p>"{{pendingClaim[0].editMessage}}"</p>

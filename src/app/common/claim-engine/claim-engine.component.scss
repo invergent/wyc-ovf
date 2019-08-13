@@ -165,7 +165,7 @@
     height: 100vh;
     background-color: $modal-background-tint;
     z-index: 9999;
-    .create-claim-modal, .celebrate {
+    .create-claim-modal {
       @include modal-child;
       .modal-title {
         font-size: 30px;
@@ -215,6 +215,7 @@
     }
     .submit-loader {
       @include modal-child;
+      background-color: #00000030;
       .fa {
         font-size: 70px;
         margin-bottom: 50px;

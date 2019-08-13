@@ -28,7 +28,7 @@
         <div></div>
       </div>
       <div *ngFor="let claim of currentPageClaims" class="table-body">
-        <div class="content-wrapper">
+        <div class="content-wrapper" [routerLink]="isAdmin ? ['/admin/claims', claim.id] : []">
           <div class="bullet">
             <div *ngIf="claim?.status.includes('ing')" class="outter-ellipse">
               <div class="inner-ellipse"></div>
