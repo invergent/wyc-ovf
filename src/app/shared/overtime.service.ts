@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import {
   IGetStatistics, IGetPendingClaim, IGetActivities, IPostOvertimeRequest, IValidClaimRequest,
   IStaffClaimData, IGetClaimHistory, IGetAdminClaimsData, IAdminData, IGetChartStatistics,
-  IHolidays, IGetHolidays
+  IHolidays, IGetHolidays, IGetSingleClaim
 } from './models';
 
 @Injectable()
@@ -99,6 +99,10 @@ export class OvertimeService {
 
   fetchAdminClaimsData(): Promise<IGetAdminClaimsData> {
     return this.http.get<IGetAdminClaimsData>(`${this.api}/admin/claims`, this.options).toPromise();
+  }
+
+  fetchSingleClaimForAdmin(claimId: number): Promise<IGetSingleClaim> {
+    return this.http.get<IGetSingleClaim>(`${this.api}/admin/claims/${claimId}`, this.options).toPromise();
   }
 
   fetchChartStatistics(): Promise<IGetChartStatistics> {

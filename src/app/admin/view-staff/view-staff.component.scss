@@ -1,0 +1,121 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.loader {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  .fa {
+    position: absolute;
+    top: 30vh;
+    left: 45%;
+    font-size: 100px;
+    transform: translateX(-50%);
+  }
+  p {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+  }
+}
+.view-staff {
+  .page-title {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .profile-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    padding: 0 7%;
+    .edit-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: none;
+      color: $faint-color;
+      cursor: pointer;
+    }
+    .profile-image {
+      @include profile-grid-item;
+      .image-wrapper {
+        width: 300px;
+        margin: auto;
+        img {
+          width: 100%;
+        }
+      }
+    }
+    .profile-details {
+      display: grid;
+      grid-auto-rows: 1fr;
+      grid-gap: 5px;
+      .details {
+        @include profile-grid-item;
+        padding: 10px;
+        p {
+          margin: 0;
+          overflow-x: auto;
+        }
+        .details-header {
+          color: $faint-color;
+          margin-bottom: 10px;
+        }
+      }
+    }
+    .lm {
+      @include profile-grid-item;
+      p {
+        margin: 0;
+        overflow-x: auto;
+      }
+      .lm-details-header {
+        color: $faint-color;
+        margin-bottom: 30px;
+        font-size: 20px;
+      }
+      .lm-details-body {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        margin: auto;
+        text-align: left;
+        padding: 0 15px;
+        .details-header {
+          color: $faint-color;
+        }
+        .name {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .profile-info {
+      grid-template-columns: repeat(1, minmax(250px, 1fr));
+      padding: 0;
+      .profile-image {
+        .image-wrapper {
+          width: 100%;
+        }
+      }
+      .profile-details {
+        grid-template-columns: repeat(1, minmax(250px, 1fr));
+      }
+      .lm {
+        .lm-details-body {
+          grid-template-columns: repeat(1, minmax(250px, 1fr));
+          text-align: center;
+          padding: 0;
+          .name {
+            margin-bottom: 20px;
+          }
+        }
+      }
+    }
+  }
+}

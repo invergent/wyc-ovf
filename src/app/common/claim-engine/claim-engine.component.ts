@@ -46,6 +46,8 @@ export class ClaimEngineComponent implements OnInit {
   disableWeekends = [6,0];
   holidaysInClaimMonth: number[] = [];
 
+  claimRequest: any = {}
+
   // window controls
   screenWidth
 
@@ -309,6 +311,9 @@ export class ClaimEngineComponent implements OnInit {
   }
 
   toggleModal(displayType) {
+    this.claimRequest = this.createClaimRequest();
+    if (!this.claimRequest.claimElements) return this.toastr.error('Claim request is empty');
+
     this.displayModal = displayType;
     if (displayType === 'block') {
       this.confirmSubmit = true;
@@ -328,12 +333,11 @@ export class ClaimEngineComponent implements OnInit {
 
   async handleSubmit() {
     this.displaySubmitSpinner = true;
-    const claimRequest = this.createClaimRequest();
     const method = `${this.callingComponent.includes('Update') ? 'update' : 'create'}OvertimeRequest`;
     const claimId = this.callingComponent.includes('Update') ? this.claim.id : null;
 
     try {
-      const { message } = await this.overtimeService[method](claimRequest, claimId);
+      const { message } = await this.overtimeService[method](this.claimRequest, claimId);
 
       await this.overtimeService.syncWithAPI();
       this.toastr.success(message);

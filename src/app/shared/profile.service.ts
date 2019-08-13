@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import {
   IGetLineManagers, IGetBranches, IGetRoles, IProfileData, IPutProfile, IProfileUpdate,
-  IPostImage, IGetStaffList, ICreateStaffData
+  IPostImage, IGetStaffList, ICreateStaffData, IGetSingleStaff
 } from "./models";
 
 @Injectable()
@@ -58,6 +58,10 @@ export class ProfileService {
 
   fetchStaff(): Promise<IGetStaffList> {
     return this.http.get<IGetStaffList>(`${this.api}/admin/staff`, this.options).toPromise();
+  }
+
+  fetchSingleStaff(staffId: string): Promise<IGetSingleStaff> {
+    return this.http.get<IGetSingleStaff>(`${this.api}/admin/staff/${staffId}`, this.options).toPromise();
   }
 
   updateImage(imageData): Promise<IPostImage> {

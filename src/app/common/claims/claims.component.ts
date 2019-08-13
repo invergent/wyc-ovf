@@ -9,8 +9,7 @@ import { IClaim } from '../../shared';
 export class ClaimsComponent implements OnChanges {
   @Input() claims: IClaim[] = []
   @Input() statuses: string[] = [];
-  @Input() showClaimDetails: boolean = false;
-  @Input() showApprovalProgress: boolean = false;
+  @Input() isAdmin: boolean = false;
   visibleClaims: IClaim[]
   currentPageClaims: IClaim[]
   numberOfFilteredClaims: number

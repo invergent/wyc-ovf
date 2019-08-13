@@ -34,7 +34,7 @@
             <th>Email address</th>
           </tr>
         </thead>
-        <tbody *ngFor="let staff of currentPageStaffList">
+        <tbody *ngFor="let staff of currentPageStaffList" [routerLink]="['/admin/staff', staff.staffId]">
           <tr>
             <td>
               <div class="avatar">
