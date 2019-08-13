@@ -12,6 +12,7 @@
     padding: 10px 20px;
     text-align: center;
     box-shadow: 2px 0px 10px 0px $faint-color-light;
+    z-index: 9999;
     section {
       .brand {
         display: flex;

@@ -80,6 +80,13 @@ export interface IClaim {
   approvalHistory?: any[]
 }
 
+export interface ISingleClaim extends IClaim {
+  staffId: string
+  firstname: string
+  lastname: string
+  middlename: string
+}
+
 export interface IActivity {
   activity: string,
   createdAt: Date
@@ -252,6 +259,11 @@ export interface IGetStaffProfile {
   data: IStaff
 }
 
+export interface IGetSingleStaff {
+  message: string,
+  data: IProfileUpdate
+}
+
 export interface IGetStaffList {
   message: string,
   data: IStaffForAdmin[]
@@ -344,6 +356,11 @@ export interface IGetSettings {
 export interface IGetHolidays {
   message: string
   data: IHolidays[]
+}
+
+export interface IGetSingleClaim {
+  message: string
+  data: ISingleClaim
 }
 
 export interface IPutSettings extends IPutProfile {}

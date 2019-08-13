@@ -78,6 +78,10 @@
           margin-bottom: 10px;
           padding: 20px;
           box-sizing: border-box;
+          cursor: pointer;
+          &:focus {
+            outline: none;
+          }
           .bullet {
             box-sizing: border-box;
             margin: auto -20px auto 20px;
