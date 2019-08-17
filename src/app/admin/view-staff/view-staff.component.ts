@@ -22,6 +22,7 @@ export class ViewStaffComponent implements OnInit {
     const staffId = this.route.snapshot.paramMap.get('staffId');
     try {
       const { data } = await this.profileService.fetchSingleStaff(staffId);
+      console.log(data)
       this.staff = data
       this.showLoader = false;
     } catch (error) {
