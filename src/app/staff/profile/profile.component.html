@@ -39,7 +39,7 @@
           <i class="fas fa-edit"></i>
         </div>
         <p class="details-header">Phone Number</p>
-        <p class="details-item">{{currentStaff?.phone}}</p>
+        <p class="details-item">{{currentStaff?.phone}}{{currentStaff?.altPhone ? ('; '+currentStaff?.altPhone) : ''}}</p>
       </div>
       <div class="details">
         <div class="edit-icon" (click)="runModalDisplay('emailModal', 'Email Address')">
@@ -65,10 +65,22 @@
       </div>
       <div class="lm-details-body">
         <div class="details-header">
+          <p>ID Number</p>
+        </div>
+        <div class="id-number details-item">
+          <p>{{currentStaff?.lineManagerIdNumber || '--'}}</p>
+        </div>
+        <div class="details-header">
           <p>Name</p>
         </div>
         <div class="name details-item">
           <p>{{currentStaff?.lineManagerFirstName || '--'}} {{currentStaff?.lineManagerLastName}}</p>
+        </div>
+        <div class="phone details-header">
+          <p>Phone Number</p>
+        </div>
+        <div class="phone details-item">
+          <p>{{currentStaff?.lineManagerPhone || '--'}}</p>
         </div>
         <div class="email details-header">
           <p>Email Address</p>
@@ -128,6 +140,9 @@
             <div class="input">
               <input [(ngModel)]="phone" name="phone" type="tel" placeholder="Enter your phone number" required>
             </div>
+            <div class="input">
+              <input [(ngModel)]="altPhone" name="altPhone" type="tel" placeholder="Other number (optional)" required>
+            </div>
           </ng-template>
           <ng-template [ngSwitchCase]="roleModal">
             <div class="input role-input-wrapper" tabindex="0" (blur)="roleDropdown=false">
@@ -156,15 +171,15 @@
           <ng-template [ngSwitchCase]="lineManagerModal">
             <div class="input">
               <input
-                [(ngModel)]="lineManagerEmailAddress"
-                name="email"
-                type="email"
-                placeholder="Enter line manager's email address"
+                [(ngModel)]="lineManagerIdNumber"
+                name="idNumber"
+                type="text"
+                placeholder="Enter line manager's ID number"
                 (input)="handleInput($event.target.value, 'lineManagers', 'lineManager')"
                 required>
               <div *ngIf="lineManagerDropdown && filteredlineManagers.length" class="dropdown-list">
                 <div *ngFor="let lm of filteredlineManagers" class="multi-list-item" (click)="handleSelect('lineManager', lm)">
-                  <p class="lm-name">{{lm.firstname}} {{lm.lastname}}</p>
+                  <p class="lm-name">{{lm.firstname}} {{lm.lastname}} ({{lm.idNumber}})</p>
                   <p class="lm-email">{{lm.email}}</p>
                 </div>
               </div>
@@ -175,10 +190,16 @@
             <div class="input">
               <input [(ngModel)]="lineManagerLastName" name="lastname" type="text" placeholder="Enter Line Manager's last name" required>
             </div>
+            <div class="input">
+              <input [(ngModel)]="lineManagerEmailAddress" name="email" type="email" placeholder="Enter line manager's email address" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="lineManagerPhone" name="phone" type="tel" placeholder="Enter line manager's phone number" required>
+            </div>
           </ng-template>
           <div class="button">
             <button
-              [disabled]="profileForm.invalid || (imageModal && fileInvalid)"
+              [disabled]="imageModal && fileInvalid"
               (click)="displaySpinner=true"
               type="submit"
               name="submit">
