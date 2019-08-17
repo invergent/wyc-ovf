@@ -113,12 +113,12 @@ describe('Profile Component', () => {
   it('should create a new array with filtered content based on user"s input', () => {
     // @ts-ignore
     component.branches = [{ id: 2, name: 'Some branch'}];
-    component.lineManagers = [{ firstname: 'John', lastname: 'Doe', email: 'email' }];
+    component.lineManagers = [{ idNumber: 'some ID', firstname: 'John', lastname: 'Doe', phone: 'phone', email: 'email' }];
     
     component.handleInput('bra', 'branches', 'branch');
     expect(component.filteredbranches).toHaveLength(1);
 
-    component.handleInput('em', 'lineManagers', 'supervisor');
+    component.handleInput('some', 'lineManagers', 'lineManager');
     expect(component.filteredlineManagers).toHaveLength(1);
   });
 

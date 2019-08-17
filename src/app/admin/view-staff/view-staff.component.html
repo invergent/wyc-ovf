@@ -23,7 +23,7 @@
       </div>
       <div class="details">
         <p class="details-header">Phone Number</p>
-        <p class="details-item">{{staff?.phone}}</p>
+        <p class="details-item">{{staff?.phone}}{{staff?.altPhone ? ('; '+staff?.altPhone) : ''}}</p>
       </div>
       <div class="details">
         <p class="details-header">Email Address</p>
@@ -40,10 +40,22 @@
       </div>
       <div class="lm-details-body">
         <div class="details-header">
+          <p>ID Number</p>
+        </div>
+        <div class="id-number details-item">
+          <p>{{staff?.lineManagerIdNumber || '--'}}</p>
+        </div>
+        <div class="details-header">
           <p>Name</p>
         </div>
         <div class="name details-item">
           <p>{{staff?.lineManagerFirstName || '--'}} {{staff?.lineManagerLastName}}</p>
+        </div>
+        <div class="phone details-header">
+          <p>Phone Number</p>
+        </div>
+        <div class="phone details-item">
+          <p>{{staff?.lineManagerPhone || '--'}}</p>
         </div>
         <div class="email details-header">
           <p>Email Address</p>

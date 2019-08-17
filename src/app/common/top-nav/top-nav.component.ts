@@ -68,7 +68,7 @@ export class TopNav implements OnInit {
     this.jQuery('#close').css('display', 'none');
     setTimeout(() => this.jQuery('#flash-message').css('right', '15px'), 1000);
     setTimeout(() => this.notificationService.playAudio('../../../assets/audio/notif.mp3'), 1500);
-    setTimeout(() => this.jQuery('#flash-message').css('right', '-400px'), 6000);
+    setTimeout(() => this.jQuery('#flash-message').css('right', '-400px'), 10000);
   }
 
   toggleNavItems(navItem) {

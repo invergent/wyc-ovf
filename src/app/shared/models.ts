@@ -5,13 +5,16 @@ export interface IStaff {
   middlename: string
   emailAddress: string
   phone: string
+  altPhone: string;
   accountNumber: string
   image: string
   role: string
   branch: string
   changedPassword: boolean
+  lineManagerIdNumber: string;
   lineManagerFirstName: string
   lineManagerLastName: string
+  lineManagerPhone: string;
   lineManagerEmailAddress: string
 }
 
@@ -40,8 +43,10 @@ export interface IProfileUpdate {
 }
 
 export interface ILineManager {
+  idNumber: string
   firstname: string
   lastname: string
+  phone: string
   email?: string
 }
 

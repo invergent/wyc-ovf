@@ -46,12 +46,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   middlename: string
   email: string
   phone: string
+  altPhone: string
   accountNumber: string
   position: string
   branch: string
+  lineManagerIdNumber: string
   lineManagerFirstName: string
   lineManagerLastName: string
   lineManagerEmailAddress: string
+  lineManagerPhone: string
 
   // image
   imagePreview: any
@@ -88,10 +91,11 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     await this.initialiseData();
     this.updatePendingField();
   }
+
   ngAfterViewInit() {
     this.firstTimeLogin = this.route.snapshot.queryParams['m'];
     this.autoDisplay = true;
-    
+
     if (this.firstTimeLogin) {
       const message = this.firstTimeLogin === 'p-lm'
         ? 'Great job changing your password! Just a few more to go.'
@@ -151,7 +155,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         if(this.countDown <= 0) clearInterval(countDown); 
       }, 1000);
     }, 500);
-  
+
     setTimeout(() => {
       this.notificationService.playAudio('/assets/audio/tada.mp3');
       this.jQuery('#welldone').click(() => this.router.navigate(['/logout'], { queryParams: { m: 'c' } }))
@@ -162,18 +166,20 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   async initialiseData() {
     this.currentStaff = this.authService.currentStaff;
-    console.log(this.currentStaff)
 
     this.firstname = this.authService.currentStaff.firstname;
     this.lastname = this.authService.currentStaff.lastname;
     this.middlename = this.authService.currentStaff.middlename;
     this.email = this.authService.currentStaff.emailAddress;
     this.phone = this.authService.currentStaff.phone;
+    this.altPhone = this.authService.currentStaff.altPhone;
     this.accountNumber = this.authService.currentStaff.accountNumber;
     this.position = this.authService.currentStaff.role;
     this.branch = this.authService.currentStaff.branch;
+    this.lineManagerIdNumber = this.authService.currentStaff.lineManagerIdNumber;
     this.lineManagerFirstName = this.authService.currentStaff.lineManagerFirstName;
     this.lineManagerLastName = this.authService.currentStaff.lineManagerLastName;
+    this.lineManagerPhone = this.authService.currentStaff.lineManagerPhone;
     this.lineManagerEmailAddress = this.authService.currentStaff.lineManagerEmailAddress;
 
     const { lineManagers, branches, roles } = await this.profileService.fetchProfileData();
@@ -235,8 +241,10 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this.currentStaff[`${field}EmailAddress`] = fieldValue.email;
 
       // update modal form
+      this[`${field}IdNumber`] = fieldValue.idNumber;
       this[`${field}FirstName`] = fieldValue.firstname;
       this[`${field}LastName`] = fieldValue.lastname;
+      this[`${field}Phone`] = fieldValue.phone;
       this[`${field}EmailAddress`] = fieldValue.email;
     }
     this[`${field}Dropdown`] = false; // hide dropdown
@@ -253,7 +261,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         const itemName = item.name.toLowerCase();
         return itemName.includes(value.toLowerCase()) && !itemName.includes('admin');
       }
-      return item.email.includes(value.toLowerCase());
+      return item.idNumber.toLowerCase().includes(value.toLowerCase());
     });
   }
 

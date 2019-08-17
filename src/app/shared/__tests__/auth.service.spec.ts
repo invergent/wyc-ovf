@@ -42,7 +42,7 @@ describe('AuthService Service', () => {
 
   it('should make a get request to the api to verify password reset request.', async () => {
     const httpGet = jest.spyOn(httpMock, 'get');
-    const url = 'http://overtime-api.vla.com:7000/confirm-reset-request?hash=somehash'
+    const url = 'http://overtime-api.example.com:7000/confirm-reset-request?hash=somehash'
 
     await service.verifyPasswordResetRequest('somehash');
 
