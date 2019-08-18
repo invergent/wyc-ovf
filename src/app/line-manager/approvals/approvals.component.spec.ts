@@ -57,4 +57,37 @@ describe('Approval component', () => {
     expect(mockJQuery).toHaveBeenCalled();
     expect(playAudioMock).toHaveBeenCalled();
   });
+
+  it('should display validation errors if edit request contains errors', async () => {
+    const toastrErrFn = jest.spyOn(mockToastr, 'error');
+
+    component.sendRequestEdit('');
+    component.sendRequestEdit('short')
+
+    expect(toastrErrFn).toHaveBeenCalledTimes(2);
+  });
+
+  it('should send edit request', async () => {
+    const requestEditMock = jest.spyOn(lineManagerServiceMock, 'requestEdit');
+    const toastrSucFn = jest.spyOn(mockToastr, 'success');
+    // @ts-ignore
+    component.currentClaim = { id: 1 };
+
+    await component.sendRequestEdit('A long enough message');
+
+    expect(requestEditMock).toHaveBeenCalled();
+    expect(toastrSucFn).toHaveBeenCalled();
+  });
+
+  it('should display error message if edit request fails', async () => {
+    jest.spyOn(lineManagerServiceMock, 'requestEdit').mockRejectedValueOnce('err');
+    const toastrErrFn = jest.spyOn(mockToastr, 'error');
+    // @ts-ignore
+    component.currentClaim = { id: 1 };
+
+    await component.sendRequestEdit('A long enough message');
+    
+    expect(toastrErrFn).toHaveBeenCalledWith('There was an error requesting edit on this claim.');
+    expect(component.requestEditSpinner).toBe(false);
+  });
 });

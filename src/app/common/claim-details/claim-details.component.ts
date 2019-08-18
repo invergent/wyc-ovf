@@ -26,7 +26,6 @@ export class ClaimDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.claim)
     if (!this.claim.details.visiblePaneItems) {
       this.claimDetails = JSON.parse(this.claim.details);
     } else {
