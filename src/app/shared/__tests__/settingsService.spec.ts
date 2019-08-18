@@ -57,4 +57,14 @@ describe('Overtime Service', () => {
     expect(httpGet).toHaveBeenCalledTimes(1);
     expect(httpPut).toHaveBeenCalledTimes(1);
   });
+
+  it('should determine the next reopen date.', () => {
+    // called twice with an early and late date in the month so test could run through both
+    // sides of the IF statement
+    const date = service.getReopenDate('0 1 1 * *');
+    const date2 = service.getReopenDate('0 1 27 * *');
+    // just check that a datestring is returned
+    expect(date.split(' ')).toHaveLength(4);
+    expect(date2.split(' ')).toHaveLength(4);
+  });
 });

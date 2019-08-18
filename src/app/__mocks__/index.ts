@@ -6,8 +6,7 @@ export const authServiceMock: any = {
     role: 'someRole',
     staffId: 'someId',
     changePassword: false,
-    supervisorEmailAddress: null,
-    bsmEmailAddress: null,
+    lineManagerEmailAddress: null,
     branch: null
   },
   authenticate: () => Promise.resolve({ data: {} }),
@@ -24,7 +23,7 @@ export const authServiceMock: any = {
 export const overtimeServiceMock: any = {
   api: 'some-url',
   initialiseStaffData: () => Promise.resolve({ claimStatistics: {}, activities: [], pendingClaim: {} }),
-  fetchStaffData: () => Promise.resolve({ claimStatistics: {}, activities: [], pendingClaim: {} }),
+  fetchStaffData: () => Promise.resolve({ claimStatistics: {}, activities: [], pendingClaim: [{}] }),
   syncWithAPI: () => {},
   fetchStaffClaimStatistics: () => Promise.resolve('value'),
   fetchStaffClaimHistory: () => Promise.resolve('value'),
@@ -64,7 +63,7 @@ export const settingsServiceMock: any = {
   api: 'some-url',
   settings: {},
   initialiseSettingsData: () => Promise.resolve(true),
-  fetchAdminSettings: () => Promise.resolve({ lineManagers: [], branches: [], roles: [], staffList: [] }),
+  fetchAdminSettings: () => Promise.resolve({}),
   getReopenDate: () => {},
   syncWithAPI: () => {},
   fetchSettingsData: () => Promise.resolve({ data: ['value'] }),
@@ -130,7 +129,8 @@ export const lineManagerServiceMock: any = {
   api: 'some-url',
   fetchClaimsToApprove: () => Promise.resolve({ data: { lineManager: {}, pendingClaims: [] } }),
   runApproval: () => Promise.resolve({ message: 'some message' }),
-  verifyLineManager: () => Promise.resolve('value')
+  verifyLineManager: () => Promise.resolve('value'),
+  requestEdit: () => Promise.resolve({ message: 'some message' })
 }
 
 export const mockToastr: any = {
