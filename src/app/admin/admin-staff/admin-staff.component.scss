@@ -239,6 +239,8 @@
         cursor: pointer;
       }
       .form-wrapper {
+        max-height: 700px;
+        overflow: auto;
         form {
           width: 100%;
           margin: auto;

@@ -64,10 +64,6 @@ export class ClaimEngineComponent implements OnInit {
   claimMonthDate: Date;
   totalDaysInClaimMonth: number;
 
-  overlapDays: number[] = [];
-  weekdayEntries: string[] = [];
-  weekendEntries: string[] = [];
-
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;

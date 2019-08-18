@@ -68,16 +68,51 @@ describe('Overtime Service', () => {
     }
   });
 
-  it('should fetch staff data.', async () => {
+  it('should make a post request to create overtime request.', () => {
+    const httpPost = jest.spyOn(httpMock, 'post');
+    const overtimeRequest = { claimElements: 2, amount: 3 };
+    const url = 'http://overtime-api.example.com:7000/users/claim';
+
+    service.createOvertimeRequest(overtimeRequest);
+
+    expect(httpPost).toHaveBeenCalledWith(url, overtimeRequest, service.options);
+  });
+
+  it('should make a delete request to cancel pending claim.', () => {
+    const httpDelete = jest.spyOn(httpMock, 'delete');
+    const url = 'http://overtime-api.example.com:7000/users/claims/1';
+
+    service.cancelClaim(1);
+
+    expect(httpDelete).toHaveBeenCalledWith(url, service.options);
+  });
+
+  it('should send request to API as requested.', async () => {
+    jest.clearAllMocks();
     const httpGet = jest.spyOn(httpMock, 'get');
+    const httpPost = jest.spyOn(httpMock, 'post');
+    const httpPut = jest.spyOn(httpMock, 'put');
+    const httpDelete = jest.spyOn(httpMock, 'delete');
 
     await service.fetchStaffClaimStatistics();
     await service.fetchStaffPendingClaim();
     await service.fetchStaffActivities();
     await service.fetchAdminClaimsData();
     await service.fetchChartStatistics();
+    await service.fetchHolidays();
+    await service.fetchSingleClaimForAdmin(1)
 
-    expect(httpGet).toHaveBeenCalledTimes(5);
+    await service.addHoliday({});
+
+    await service.markClaimsAsCompleted();
+    await service.updateOvertimeRequest({}, 1)
+
+    await service.removeHoliday('some date');
+
+    expect(httpGet).toHaveBeenCalledTimes(7);
+    expect(httpPost).toHaveBeenCalledTimes(1);
+    expect(httpPut).toHaveBeenCalledTimes(2);
+    expect(httpDelete).toHaveBeenCalledTimes(1);
   });
 
   it('should prompt data initialisation', async () => {
@@ -124,24 +159,7 @@ describe('Overtime Service', () => {
     expect(initialiseAdminData).toHaveBeenCalled();
   });
 
-  it('should make a post request to create overtime request.', () => {
-    const httpPost = jest.spyOn(httpMock, 'post');
-    const overtimeRequest = { claimElements: 2, amount: 3 };
-    const url = 'http://overtime-api.example.com:7000/users/claim';
-
-    service.createOvertimeRequest(overtimeRequest);
-
-    expect(httpPost).toHaveBeenCalledWith(url, overtimeRequest, service.options);
-  });
-
-  it('should make a delete request to cancel pending claim.', () => {
-    const httpDelete = jest.spyOn(httpMock, 'delete');
-    const url = 'http://overtime-api.example.com:7000/users/claims/1';
-
-    service.cancelClaim(1);
-
-    expect(httpDelete).toHaveBeenCalledWith(url, service.options);
-  });
+  
 
   it('should make a get request to fetch staff claim history.', async () => {
     const httpGet = jest.spyOn(httpMock, 'get').mockImplementation(() => ({ toPromise: () => {} }));
@@ -158,5 +176,12 @@ describe('Overtime Service', () => {
     await service.exportApprovedClaims();
 
     expect(httpGet).toHaveBeenCalled();
+  });
+
+  it('should return previous month date.', async () => {
+    const date = 12;
+    const prevDate = service.previousMonthDate(date);
+
+    expect(prevDate.getDate()).toBe(date);
   });
 });
