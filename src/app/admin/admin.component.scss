@@ -11,8 +11,8 @@ top-nav {
 }
 
 .active {
-  background-color: $brand-color !important;
-  color: $color-white !important;
+  background-color: $dashboard-background-color !important;
+  color: $color-black !important;
 }
 
 .content-wrapper {
@@ -22,7 +22,7 @@ top-nav {
   box-sizing: border-box;
   .side-nav {
     flex: 0 0 250px;
-    background-color: $color-white;
+    background-color: $brand-color;
     transition: all .4s ease-in-out;
     overflow-y: auto;
     .side-nav-tags {
@@ -31,7 +31,7 @@ top-nav {
       p {
         margin: 0 0 0 30px;
         font-size: 18px;
-        color: $faint-color;
+        color: $faint-text-color;
       }
       &:first-child {
         padding: 15px 0 10px;
@@ -39,7 +39,7 @@ top-nav {
     }
     .side-nav-link {
       display: block;
-      color: $color-black;
+      color: $color-white;
       .icon-wrapper {
         display: inline-block;
         width: 20px;
@@ -53,11 +53,7 @@ top-nav {
         margin: 10px auto;
       }
       &:hover:not(.active) {
-        background-color: $dashboard-background-color;
-      }
-      .active {
-        background-color: $brand-color;
-        color: $color-white !important;
+        background-color: $brand-color-light !important;
       }
     }
   }

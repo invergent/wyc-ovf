@@ -15,11 +15,11 @@
         background-color: $color-white;
         border-radius: 8px;
         td {
-          padding: 10px;
+          padding: 15px;
           box-sizing: border-box;
           .image-wrapper {
-            width: 40px;
-            margin: auto auto auto 20px;
+            width: 30px;
+            margin: auto auto auto 43px;
             img {
               width: 100%;
             }
@@ -33,7 +33,7 @@
           text-align: left;
         }
         td:last-child {
-          width: 130px;
+          width: 200px;
           color: $faint-color;
           border-radius: 0 8px 8px 0;
         }
