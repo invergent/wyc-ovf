@@ -73,7 +73,7 @@
           <ng-template [ngSwitchCase]="bulkModal">
             <div class="input">
               <p (click)="triggerFileInput()" class="input-button">Click to select excel file</p>
-              <input #fileInput type="file" id="fileInput" (input)="handleFileInput(fileInput)" accept=".xlsx" required>
+              <input #fileInput type="file" id="fileInput" (input)="handleFileInput(fileInput)" accept=".csv, .xlsx" required>
             </div>
           </ng-template>
           <ng-template [ngSwitchCase]="singleModal">

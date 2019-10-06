@@ -31,7 +31,7 @@ describe('AdminClaimsComponent', () => {
   it('should download and save file', async () => {
     const saveAsMock = jest.spyOn(fileSaver, 'saveAs').mockImplementation(() => {});
 
-    await component.exportClaims();
+    await component.exportClaims('csv');
 
     expect(saveAsMock).toHaveBeenCalled();
   });
