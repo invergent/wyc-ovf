@@ -32,11 +32,9 @@ top-nav {
         background-color: transparent;
         border: 1px solid $color-white;
         color: $color-white;
-        box-shadow: 2px 2px 10px 0 $faint-color-ex-light;
         transition: all .2s ease-in-out;
         &:hover {
           background-color: $brand-color-light;
-          box-shadow: 0 0 0 0 $faint-color-ex-light;
         }
         &:focus {
           outline: none;

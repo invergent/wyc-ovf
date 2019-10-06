@@ -109,7 +109,7 @@ export class AdminBranchComponent implements OnInit {
   async handleSubmit(formValues, currentModal) {
     const updateMethod = this.formSubmissionService.getUpdateMethod(currentModal);
     const submissionData = currentModal === 'bulkModal'
-      ? this.formSubmissionService.fileSubmit('excelDoc', this.excelFile)
+      ? this.formSubmissionService.fileSubmit('doc', this.excelFile)
       : this.formSubmissionService.profileInfoSubmit(formValues);
 
     if (submissionData.errors.length) {

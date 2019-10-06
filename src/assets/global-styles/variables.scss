@@ -1,5 +1,5 @@
 $brand-color: #ec1e8d;
-$brand-color-light: rgba($color: #FFFFFF, $alpha: 42);
+$brand-color-light: rgba(255, 255, 255, 0.20);
 $brand-color-2: #808184;
 $brand-color-3: #673AB7;
 $xta-color-1: #5CA1FF;
@@ -7,15 +7,16 @@ $brand-color-ex-light: rgba($color: #5CA1FF, $alpha: 30);
 $faint-color: #797979;
 $faint-text-color: rgba(255, 255, 255, 42);
 $faint-color-light: rgba(97,97,97,.25);
-$faint-color-ex-light: rgba($color: #616161, $alpha: 30);
-$faint-color-xx-light: rgba($color: #616161, $alpha: 10);
-$faint-border-color: rgba($color: #707070, $alpha: 20);
+$faint-color-ex-light: rgba(97,97,97,.30);
+$faint-color-xx-light: rgba(97,97,97,.10);
+$faint-border-color: rgba(112, 112, 112, .20);
 $faint-border-color-2: #F5F5F5;
 $color-red: #bf0b00;
 $color-white: #FFFFFF;
 $color-black: #000000;
 $dashboard-background-color: #F0F2F5;
 $modal-background-tint: rgba(0, 0, 0, 0.60);
+$white-box-show-color: rgba(255, 255, 255, 0.20);
 
 $primary-btn-size: 1.5rem;
 $home-btn-box-shadow: 4px 5px 8px -1px #e0e0e0;
