@@ -15,6 +15,14 @@ export class AdminClaimsComponent implements OnInit {
   statuses: string[] = ['All', 'Completed', 'Processing', 'Pending'];
   claims: IClaim[] = [];
 
+  // modal controls
+  modalTitle: string
+  currentModal: string
+  displayModal: string = 'none';
+  displaySpinner: boolean = false;
+  markAsCompletedModal: boolean = false;
+  exportModal: boolean = false;
+
 
   constructor(
     private overtimeService: OvertimeService,
@@ -23,6 +31,18 @@ export class AdminClaimsComponent implements OnInit {
 
   async ngOnInit() {
     await this.initialiseClaimData();
+  }
+
+  runModalDisplay(modal, title) {
+    this.modalTitle = title;
+    this.displayModal = 'block';
+    this.currentModal = modal;
+    this[modal] = true;
+  }
+
+  closeModal(modal) {
+    this.displayModal = 'none';
+    this[modal] = false;
   }
 
   async initialiseClaimData() {
@@ -41,11 +61,17 @@ export class AdminClaimsComponent implements OnInit {
     this.errorMessage = 'Unable to load content. Please reload';
   }
 
-  async exportClaims() {
+  async exportClaims(docType) {
     this.displaySpinnerExport = true;
+    this.closeModal(this.currentModal);
+
+    const type = docType === 'xlsx'
+      ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      : 'text/csv;charset=utf-8;';
+
     try {
-      const excelBlob = await this.overtimeService.exportApprovedClaims();
-      const blob = new Blob([excelBlob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const excelBlob = await this.overtimeService.exportApprovedClaims(docType);
+      const blob = new Blob([excelBlob], { type });
       saveAs(blob, `Approved Claims (${new Date().toDateString().substr(4)})`);
       this.displaySpinnerExport = false;
     } catch (error) {

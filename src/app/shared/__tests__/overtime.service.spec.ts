@@ -173,7 +173,7 @@ describe('Overtime Service', () => {
   it('should make a get request to download claims.', async () => {
     const httpGet = jest.spyOn(httpMock, 'get').mockImplementation(() => ({ toPromise: () => {} }));
 
-    await service.exportApprovedClaims();
+    await service.exportApprovedClaims('csv');
 
     expect(httpGet).toHaveBeenCalled();
   });
