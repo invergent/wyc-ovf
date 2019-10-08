@@ -19,6 +19,8 @@ export class NewClaimComponent {
   reopenDate: string = '';
   windowIsActive: boolean = false;
 
+  claimContentToDisplay: string;
+
   constructor(
     private overtimeService: OvertimeService,
     private settingsService: SettingsService
@@ -30,12 +32,33 @@ export class NewClaimComponent {
       this.companySettings = await this.settingsService.fetchAdminSettings();
       this.pendingClaim = pendingClaim;
 
-      this.runClaimWindowCheck();
-
+      this.displayPageContent();
       this.showLoader = false;
     } catch(e) {
       this.showLoader = false;
       this.errorMessage = 'Unable to load content. Please reload';
+    }
+  }
+
+  displayPageContent() {
+    this.runClaimWindowCheck();
+
+    switch (true) {
+      case this.windowIsActive:
+        this.claimContentToDisplay = 'windowInfo';
+        break;
+
+      case 
+        this.claimContentToDisplay = 'claimEngine';
+        break;
+
+      case !!this.pendingClaim.length:
+        this.claimContentToDisplay = 'pendingClaimMessage';
+        break;
+  
+      default:
+        this.claimContentToDisplay = 'claimEngine';
+        break;
     }
   }
 
