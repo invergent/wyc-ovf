@@ -11,6 +11,7 @@ export interface IStaff {
   role: string
   branch: string
   changedPassword: boolean
+  permittedMonths: string[]
   lineManagerIdNumber: string;
   lineManagerFirstName: string
   lineManagerLastName: string

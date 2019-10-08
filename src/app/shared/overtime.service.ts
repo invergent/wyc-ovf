@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import {
   IGetStatistics, IGetPendingClaim, IGetActivities, IPostOvertimeRequest, IValidClaimRequest,
   IStaffClaimData, IGetClaimHistory, IGetAdminClaimsData, IAdminData, IGetChartStatistics,
-  IHolidays, IGetHolidays, IGetSingleClaim
+  IGetHolidays, IGetSingleClaim
 } from './models';
 
 @Injectable()
@@ -36,7 +36,7 @@ export class OvertimeService {
       const { data: monthlyStat } = await this.fetchAdminClaimsData();
       const { data: chartStats } = await this.fetchChartStatistics();
       this.adminClaimData = { monthlyStat, chartStats };
-      
+
       return true;
     } catch(e) {
       throw new Error();
