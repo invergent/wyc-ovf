@@ -84,4 +84,8 @@ export class ProfileService {
   createSingle(staffData: ICreateStaffData, route: string = 'staff') {
     return this.http.post(`${this.api}/admin/${route}/single`, staffData, this.options).toPromise();
   }
+
+  resendLoginCredentials(staffId: string) {
+    return this.http.post<IPutProfile>(`${this.api}/admin/staff/resend-credentials`, { staffId }, this.options).toPromise();
+  }
 }

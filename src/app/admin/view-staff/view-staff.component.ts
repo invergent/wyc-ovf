@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OvertimeService, ProfileService, IProfileUpdate } from 'src/app/shared';
+import { OvertimeService, ProfileService, IProfileUpdate, IToastr, TOASTR_TOKEN } from 'src/app/shared';
 
 @Component({
   selector: 'app-view-staff',
@@ -12,17 +12,18 @@ export class ViewStaffComponent implements OnInit {
 
   showLoader: boolean = true;
   errorMessage: string = '';
+  displaySpinner: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    @Inject(TOASTR_TOKEN) private toastr: IToastr
   ) { }
 
   async ngOnInit() {
     const staffId = this.route.snapshot.paramMap.get('staffId');
     try {
       const { data } = await this.profileService.fetchSingleStaff(staffId);
-      console.log(data)
       this.staff = data
       this.showLoader = false;
     } catch (error) {
@@ -31,4 +32,16 @@ export class ViewStaffComponent implements OnInit {
     }
   }
 
+  async resendLoginCredentials(staffId) {
+    this.displaySpinner = true;
+    try {
+      const { message } = await this.profileService.resendLoginCredentials(staffId);
+      this.displaySpinner = false;
+      return this.toastr.success(message);
+    } catch (error) {
+      this.displaySpinner = false;
+      if (error.error) return this.toastr.error(error.error.message);
+      return this.toastr.error('An error occurred');
+    }
+  }
 }
