@@ -56,7 +56,8 @@ export const profileServiceMock: any = {
   updatePersonalInfo: () => Promise.resolve('value'),
   updateLineManagerInfo: () => Promise.resolve('value'),
   createSingle: () => Promise.resolve({ message: 'value' }),
-  createBulk: () => Promise.resolve({ message: 'value' })
+  createBulk: () => Promise.resolve({ message: 'value' }),
+  resendLoginCredentials: () => Promise.resolve({ message: 'message' })
 }
 
 export const settingsServiceMock: any = {

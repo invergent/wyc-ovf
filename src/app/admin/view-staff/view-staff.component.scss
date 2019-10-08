@@ -28,6 +28,27 @@
     text-align: center;
     margin-bottom: 40px;
   }
+  .action-buttons {
+    position: relative;
+    padding: 0 7% 20px;
+    text-align: center;
+    button {
+      @include default-button;
+      background-color: $brand-color-2;
+      color: white;
+      &:hover {
+        background-color: $brand-color;
+      }
+    }
+    i {
+      position: absolute;
+      left: 50%;
+      top: -50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      color: $brand-color;
+    }
+  }
   .profile-info {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -95,6 +116,9 @@
     }
   }
   @media screen and (max-width: 768px) {
+    .action-buttons {
+      padding: 0 5px 20px;
+    }
     .profile-info {
       grid-template-columns: repeat(1, minmax(250px, 1fr));
       padding: 0;
