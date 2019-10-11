@@ -9,12 +9,5 @@
   <div class="claim-creator">
     <h4 [routerLink]="['/admin/staff', claim[0]?.staffId]">{{claim[0].firstname}} {{claim[0].lastname}}{{claim[0]?.middlename ? (' '+claim[0]?.middlename.substring(0,1)) : ''}}</h4>
   </div>
-  <claims [claims]="claim" [statuses]="[]"></claims>
-  <div *ngIf="claim[0]?.editRequested" class="edit-message-section">
-    <div class="edit-message">
-      <h4>Your line manager said:</h4>
-      <p>"{{claim[0]?.editMessage}}"</p>
-    </div>
-  </div>
-  <claim-details [claim]="claim[0]"></claim-details>
+  <claims [claims]="claim" [statuses]="[]" [showDetails]="true"></claims>
 </section>

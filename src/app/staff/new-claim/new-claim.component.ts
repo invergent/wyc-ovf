@@ -1,8 +1,10 @@
-import { Component, OnInit, Inject, HostListener, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Inject } from '@angular/core';
 import {
-  JQUERY_TOKEN, AuthService, dateRegex, TOASTR_TOKEN, IToastr,
-  OvertimeService, ISettings, SettingsService, claimPrice, LOCALSTORAGE_TOKEN, ILocalStorage, IStaffClaimData, IClaim
+  AuthService, OvertimeService, ISettings, SettingsService, IClaim, IStaff,
+  months,
+  ProfileService,
+  IToastr,
+  TOASTR_TOKEN
 } from '../../shared';
 
 @Component({
@@ -11,6 +13,7 @@ import {
   styleUrls: ['./new-claim.component.scss']
 })
 export class NewClaimComponent {
+  staff: IStaff;
   showLoader: boolean = true;
   errorMessage: string = '';
   pendingClaim: IClaim[] = [];
@@ -20,13 +23,19 @@ export class NewClaimComponent {
   windowIsActive: boolean = false;
 
   claimContentToDisplay: string;
+  applyingMonth: string;
+  permittedMonths: string[];
 
   constructor(
+    private authService: AuthService,
     private overtimeService: OvertimeService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private profileService: ProfileService,
+    @Inject(TOASTR_TOKEN) private toastr: IToastr
   ) { }
-  
+
   async ngOnInit() {
+    this.staff = this.authService.currentStaff;
     try {
       const { pendingClaim } = await this.overtimeService.fetchStaffData();
       this.companySettings = await this.settingsService.fetchAdminSettings();
@@ -40,28 +49,6 @@ export class NewClaimComponent {
     }
   }
 
-  displayPageContent() {
-    this.runClaimWindowCheck();
-
-    switch (true) {
-      case this.windowIsActive:
-        this.claimContentToDisplay = 'windowInfo';
-        break;
-
-      case 
-        this.claimContentToDisplay = 'claimEngine';
-        break;
-
-      case !!this.pendingClaim.length:
-        this.claimContentToDisplay = 'pendingClaimMessage';
-        break;
-  
-      default:
-        this.claimContentToDisplay = 'claimEngine';
-        break;
-    }
-  }
-
   private runClaimWindowCheck() {
     const { overtimeWindow, overtimeWindowIsActive } = this.companySettings;
     if (overtimeWindow === 'Open' || overtimeWindowIsActive) {
@@ -70,6 +57,62 @@ export class NewClaimComponent {
     else {
       this.windowIsActive = false;
       this.reopenDate = this.settingsService.getReopenDate(this.companySettings.overtimeWindowStart);
+    }
+  }
+
+  runMultipleClaimAuthorisationCheck() {
+    // if there is only one month to apply for just proceed to claim engine
+    // otherwise show the months for staff to choose which month claim engine should activate
+    if (this.staff.permittedMonths) {
+      this.permittedMonths = this.staff.permittedMonths.map(yearMonth => {
+        const month = Number(yearMonth.split('/')[1])
+        return months[month];
+      });
+
+      if (this.permittedMonths.length > 1) {
+        return true;
+      } else {
+        this.applyingMonth = this.staff.permittedMonths[0];
+        return false;
+      }
+    }
+  }
+
+  showClaimEngine(month) {
+    this.applyingMonth = month;
+    this.claimContentToDisplay = 'claimEngine';
+  }
+
+  displayPageContent() {
+    this.runClaimWindowCheck();
+
+    switch (true) {
+      case !this.windowIsActive:
+        this.claimContentToDisplay = 'windowInfo';
+        break;
+
+      case this.runMultipleClaimAuthorisationCheck():
+        this.claimContentToDisplay = 'chooseClaimMonth';
+        break;
+
+      case this.pendingClaim.length && !this.staff.permittedMonths:
+        this.claimContentToDisplay = 'pendingClaimMessage';
+        break;
+
+      default:
+        this.claimContentToDisplay = 'claimEngine';
+        break;
+    }
+  }
+
+  async claimMonthProcessed(processedMonth) {
+    const newPermittedMonths = this.staff.permittedMonths.filter(month => (month !== processedMonth));
+    const payload = { permittedMonths: newPermittedMonths.length ? newPermittedMonths : null };
+    try {
+      await this.profileService.updatePersonalInfo(payload);
+      this.authService.syncWithAPI();
+    } catch (e) {
+      this.toastr.error('Error updating permitted months');
     }
   }
 }

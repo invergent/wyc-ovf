@@ -58,7 +58,7 @@
       text-align: center;
     }
     .table-wrapper {
-      min-width: 750px;
+      min-width: 600px;
       .table-head, .table-body .content-wrapper {
         display: flex;
         align-items: center;
@@ -68,10 +68,45 @@
         }
       }
       .table-head {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         color: $faint-color;
       }
       .table-body {
+        height: 65px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        transition: all .4s ease-in;
+        &:active, &:focus {
+          height: 600px;
+          outline: none;
+        }
+        &:active .see-more-button, &:focus .see-more-button {
+          opacity: 0;
+        }
+        @media screen and (max-width: 630px) {
+          &:active, &:focus {
+            height: 700px;
+          }
+        }
+        .see-more-button {
+          position: relative;
+          color: $color-white;
+          font-size: 15px;
+          text-align: center;
+          opacity: .7;
+          cursor: pointer;
+          transition: all .6s ease-in;
+          i {
+            position: absolute;
+            top: -29px;
+            background-color: $brand-color-2;
+            height: 15px;
+            padding: 5px 2px;
+            border-radius: 1000px 0 0 1000px;
+            transform: rotate(90deg);
+          }
+        }
         .content-wrapper {
           background-color: $color-white;
           border-radius: 8px;
@@ -96,6 +131,7 @@
               .inner-ellipse {
                 width: 13px;
                 height: 13px;
+                padding: 0;
                 margin: 5px auto;
                 background-color: $color-white;
                 border-radius: 1000px;

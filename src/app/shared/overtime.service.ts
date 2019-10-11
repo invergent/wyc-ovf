@@ -61,12 +61,21 @@ export class OvertimeService {
     return this.initialiseAdminData();
   }
 
-  previousMonthDate(day?: number) {
-    const today = new Date();
-    const thisYear = today.getFullYear();
-    const thisMonth = today.getMonth();
-    const month = day ? (thisMonth - 1) : thisMonth;
-    return new Date(thisYear, month, day || 0);
+  claimMonthDate(yearMonth: string, lastDay?: string) {
+    const date = yearMonth || this.currentClaimYearMonth();
+    return lastDay ? this.lastDayOfTheMonth(date) : new Date(date);
+  }
+
+  currentClaimYearMonth() {
+    const [date, month, year] = new Date().toLocaleDateString().split('/');
+    const previousMonth = +month - 1;
+    return `${year}/${previousMonth < 10 ? '0' : ''}${previousMonth}`;
+  }
+
+  lastDayOfTheMonth(yearMonth) {
+    const [year, month] = yearMonth.split('/');
+    // current month turns next month due to javascript's date zero index implementation
+    return new Date(year, month, 0);
   }
 
   fetchStaffClaimStatistics(): Promise<IGetStatistics> {
@@ -118,8 +127,8 @@ export class OvertimeService {
     return this.http.put<any>(`${this.api}/admin/claims/completed`, {}, this.options).toPromise();
   }
 
-  fetchHolidays(month?: number): Promise<IGetHolidays> {
-    return this.http.get<IGetHolidays>(`${this.api}/admin/holidays?month=${month || ''}`, this.options).toPromise();
+  fetchHolidays(yearMonth?: string): Promise<IGetHolidays> {
+    return this.http.get<IGetHolidays>(`${this.api}/admin/holidays?yearMonth=${yearMonth || ''}`, this.options).toPromise();
   }
 
   addHoliday(datePayload): Promise<IGetHolidays> {

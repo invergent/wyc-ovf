@@ -166,6 +166,9 @@ export const activatedRouteMock: any = {
     queryParams: {
       hash: 'somehash',
       m: 'value'
+    },
+    paramMap: {
+      get: () => 1
     }
   }
 }

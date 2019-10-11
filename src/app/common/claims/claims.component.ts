@@ -10,6 +10,8 @@ export class ClaimsComponent implements OnChanges {
   @Input() claims: IClaim[] = []
   @Input() statuses: string[] = [];
   @Input() isAdmin: boolean = false;
+  @Input() showDetails: boolean = false;
+  @Input() canModify: boolean = false;
   visibleClaims: IClaim[]
   currentPageClaims: IClaim[]
   numberOfFilteredClaims: number

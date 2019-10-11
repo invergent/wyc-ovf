@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { JQUERY_TOKEN, OvertimeService, IClaim } from 'src/app/shared';
+import { JQUERY_TOKEN, OvertimeService, IClaim, TOASTR_TOKEN, IToastr } from 'src/app/shared';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'claim-details',
@@ -8,6 +9,8 @@ import { JQUERY_TOKEN, OvertimeService, IClaim } from 'src/app/shared';
 })
 export class ClaimDetailsComponent implements OnInit {
   @Input() claim: IClaim
+  @Input() showDetails: boolean;
+  @Input() canModify: boolean;
   claimDetails: any = {};
   elementsClassNames = {
     overtime: 'overtime',
@@ -20,8 +23,15 @@ export class ClaimDetailsComponent implements OnInit {
   claimElements: string[] = ['overtime', 'weekend', 'shiftDuty', 'atmDuty', 'atmSupport', 'holiday', 'outstation'];
   selectedElements: string[] = [];
 
+  showLoader: boolean = true;
+  errorMessage: string = '';
+  displayModal: string = 'none';
+  displayCancelSpinner: boolean = false;
+
   constructor(
+    private router: Router,
     private overtimeService: OvertimeService,
+    @Inject(TOASTR_TOKEN) private toastr: IToastr,
     @Inject(JQUERY_TOKEN) private jQuery
   ) { }
 
@@ -33,15 +43,15 @@ export class ClaimDetailsComponent implements OnInit {
     }
     this.selectedElements = Object.keys(this.claimDetails).filter(element => this.claimElements.includes(element));
     this.attachUniqueIdToElement(this.claim.id);
-    this.initializeDatePicker(`#calendar${this.claim.id}`);
+    this.initializeDatePicker(`#calendar${this.claim.id}`, this.claimDetails.applyingMonth);
   }
 
-  initializeDatePicker(element: string) {
+  initializeDatePicker(element: string, applyingMonth: string) {
     this.jQuery(element).datepicker({
       inline: true,
       firstDay: 1,
-      minDate: this.overtimeService.previousMonthDate(1),
-      maxDate: this.overtimeService.previousMonthDate(),
+      minDate: this.overtimeService.claimMonthDate(applyingMonth),
+      maxDate: this.overtimeService.claimMonthDate(applyingMonth, 'lastDay'),
       onRenderCell: (date, cellType) => {
         let classes = 'selected-custom-cell ';
         const isoDate = date.toISOString();
@@ -70,4 +80,15 @@ export class ClaimDetailsComponent implements OnInit {
     }, '')
   }
 
+  async cancelClaim() {
+    try {
+      await this.overtimeService.cancelClaim(this.claim.id);
+      await this.overtimeService.syncWithAPI();
+      this.toastr.success('Claim cancelled successfully!');
+      return this.router.navigate(['/staff/claim-history']);
+    } catch(e) {
+      this.displayModal = 'none';
+      return this.toastr.error(e.error.message || 'Unable to cancel claim.');
+    }
+  }
 }

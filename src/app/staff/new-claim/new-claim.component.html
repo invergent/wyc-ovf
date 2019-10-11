@@ -2,12 +2,24 @@
   <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
   <p *ngIf="!!errorMessage">{{errorMessage}}</p>
 </div>
-<div *ngIf="!(showLoader || !!errorMessage)">
+<div *ngIf="!(showLoader || !!errorMessage)" class="content">
   <div *ngIf="claimContentToDisplay === 'windowInfo'" class="window-closed">
     <p>You cannot submit claim requests until <strong>{{reopenDate}}</strong></p>
   </div>
   <div *ngIf="claimContentToDisplay === 'pendingClaimMessage'" class="window-closed">
     <p>You currently have a pending claim. If you wish to submit a new claim cancel the current claim and revisit this page.</p>
   </div>
-  <claim-engine *ngIf="claimContentToDisplay === 'claimEngine'"  [callingComponent]="'New Claim'"></claim-engine>
+  <div *ngIf="claimContentToDisplay === 'chooseClaimMonth'" class="choose-claim-month">
+    <p>Choose the month you wish to apply for:</p>
+    <button
+      *ngFor="let month of permittedMonths; let i = index"
+      (click)="showClaimEngine(staff.permittedMonths[i])"
+      class="margin-right"
+    >{{month}}</button>
+  </div>
+  <claim-engine
+    *ngIf="claimContentToDisplay === 'claimEngine'"
+    [callingComponent]="'New Claim'"
+    [applyingMonth]="applyingMonth"
+    (claimMonthProcessedEvent)="claimMonthProcessed($event)"></claim-engine>
 </div>

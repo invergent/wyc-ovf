@@ -14,7 +14,7 @@
   }
   p {
     position: absolute;
-    top: 30%;
+    top: 50%;
     left: 50%;
     width: 100%;
     text-align: center;
@@ -22,6 +22,27 @@
     font-size: 16px;
   }
 }
+.content {
+  height: 100%;
+  div {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .choose-claim-month {
+    button {
+      @include default-button;
+      background-color: $brand-color;
+      margin-bottom: 10px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
 .window-closed {
   margin-top: 25vh;
   text-align: center;
