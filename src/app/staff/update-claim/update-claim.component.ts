@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OvertimeService, IClaim } from 'src/app/shared';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-update-claim',
@@ -16,13 +16,17 @@ export class UpdateClaimComponent implements OnInit {
 
   constructor(
     private overtimeService: OvertimeService,
+    private route: ActivatedRoute,
     private router: Router
   ) { }
 
   async ngOnInit() {
+    const claimId = this.route.snapshot.paramMap.get('claimId');
     try {
       const { pendingClaim } = await this.overtimeService.fetchStaffData();
       this.pendingClaim = pendingClaim;
+      this.pendingClaim = pendingClaim.filter(claim => claim.id === +claimId);
+      
       if (!this.pendingClaim[0] || !this.pendingClaim[0].editRequested) {
         return this.router.navigate(['/staff/pending-claim'])
       }

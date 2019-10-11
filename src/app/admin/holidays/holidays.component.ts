@@ -52,7 +52,6 @@ export class HolidaysComponent implements OnInit {
       onSelect: (fd, airdate, inst) => {
         if (this.canSelect) {
           const addedDate = airdate[inst.selectedDates.length - 1];
-
           const selectedDates = inst.selectedDates.map(date => date.toLocaleDateString());
           const removedDate = this.holidays.filter(date => !selectedDates.includes(date));
 
@@ -60,9 +59,9 @@ export class HolidaysComponent implements OnInit {
             const [date, month, year] = removedDate[0].split('/');
             this.removeHoliday(new Date(`${year}/${month}/${date}`).toISOString())
           } else {
+            const [day, month, year] = addedDate.toLocaleDateString().split('/')
             const datePayload = {
-              month: addedDate.getMonth(),
-              date: addedDate.getDate(),
+              yearMonth: `${year}/${month}`,
               fullDate: addedDate.toISOString()
             }
             this.addHoliday(datePayload);
@@ -74,7 +73,7 @@ export class HolidaysComponent implements OnInit {
       }
     }).data('datepicker');
     this.holidayCalendar.selectDate(this.preSelectedHolidays);
-    this.canSelect = true;
+    this.canSelect = true; // Runs logic in onSelect only after initialisation
   }
 
   styleCalendar() {

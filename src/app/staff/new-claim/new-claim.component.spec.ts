@@ -1,11 +1,11 @@
 import { NewClaimComponent } from './new-claim.component';
-import { overtimeServiceMock, settingsServiceMock } from 'src/app/__mocks__';
+import { overtimeServiceMock, settingsServiceMock, profileCheckerServiceMock, mockToastr, authServiceMock } from 'src/app/__mocks__';
 
 describe('ClaimEngineComponent', () => {
   let component: NewClaimComponent;
 
   beforeEach(() => {
-    component = new NewClaimComponent(overtimeServiceMock, settingsServiceMock);
+    component = new NewClaimComponent(authServiceMock, overtimeServiceMock, settingsServiceMock, profileCheckerServiceMock, mockToastr);
   });
 
   it('should allow claim application when overtimeWindow is open', async () => {
