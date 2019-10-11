@@ -1,15 +1,15 @@
 import { UpdateClaimComponent } from './update-claim.component';
-import { overtimeServiceMock, routerMock } from 'src/app/__mocks__';
+import { overtimeServiceMock, routerMock, activatedRouteMock } from 'src/app/__mocks__';
 
 describe('ClaimEngineComponent', () => {
   let component: UpdateClaimComponent;
 
   beforeEach(() => {
-    component = new UpdateClaimComponent(overtimeServiceMock, routerMock);
+    component = new UpdateClaimComponent(overtimeServiceMock, activatedRouteMock, routerMock);
   });
 
   it('should navigate staff to pending claim if staff has no pending claim or edit was not request', async () => {
-    const fetchStaffDataMock = jest.spyOn(overtimeServiceMock, 'fetchStaffData');
+    const fetchStaffDataMock = jest.spyOn(overtimeServiceMock, 'fetchStaffData').mockResolvedValueOnce({ pendingClaim: [] });
     const navigate = jest.spyOn(routerMock, 'navigate');
 
     await component.ngOnInit();
@@ -19,7 +19,7 @@ describe('ClaimEngineComponent', () => {
   });
 
   it('should navigate display claim edit page', async () => {
-    const response = { pendingClaim: [{ editRequested: true }]};
+    const response = { pendingClaim: [{ id: 1, editRequested: true }]};
     const fetchStaffDataMock = jest.spyOn(overtimeServiceMock, 'fetchStaffData').mockResolvedValueOnce(response);
 
     await component.ngOnInit();

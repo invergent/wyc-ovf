@@ -15,3 +15,7 @@ export const claimPrice = {
   atmSupport: 2500,
   holiday: 800
 }
+export const months = [
+  'empty', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+  'October', 'November', 'December'
+]

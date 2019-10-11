@@ -1,4 +1,10 @@
 <section class="claim-details">
+  <div *ngIf="claim?.editRequested" class="edit-message-section">
+    <div class="edit-message">
+      <h4>Your line manager said:</h4>
+      <p>"{{claim?.editMessage}}"</p>
+    </div>
+  </div>
   <div class="content-wrapper">
     <div class="claim-elements">
       <div class="claim-elements-wrapper">
@@ -15,4 +21,41 @@
       <div class="calendar" id="calendar" data-language='en'></div>
     </div>
   </div>
+  <section *ngIf="claim?.approvalHistory?.length<1 && canModify" class="button-section">
+    <button class="cancel" type="button" name="button" (click)="displayModal='block'">Cancel</button>
+    <button
+      *ngIf="claim?.editRequested"
+      [routerLink]="['/staff/claims/' + claim.id + '/update']"
+      class="update"
+      type="button"
+      name="button">Update</button>
+  </section>
+  <section [ngStyle]="{display: displayModal}" class="cancel-modal-section">
+    <div class="cancel-modal">
+      <div *ngIf="!displayCancelSpinner" class="cancel-content">
+        <div class="cancel-icon-wrapper">
+          <img src="/assets/images/cancelled.png" alt="">
+        </div>
+        <div class="confirmation-text">
+          <p>Are you sure you want to cancel this claim request? This cannot be undone!</p>
+        </div>
+        <div class="action-buttons">
+          <button
+            class="yes-cancel"
+            type="button"
+            name="button"
+            (click)="displayCancelSpinner=true; cancelClaim();">Yes, Cancel it.</button>
+          <button
+            class="no-cancel"
+            type="button"
+            name="button"
+            (click)="displayModal='none'">No! Mistake.</button>
+        </div>
+      </div>
+      <div *ngIf="displayCancelSpinner" class="cancel-loader">
+        <i class="fa fa-spinner fa-spin"></i>
+        <p>Cancelling claim...</p>
+      </div>
+    </div>
+  </section>
 </section>

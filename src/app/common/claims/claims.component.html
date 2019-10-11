@@ -27,7 +27,7 @@
         <div>Status</div>
         <div></div>
       </div>
-      <div *ngFor="let claim of currentPageClaims" class="table-body">
+      <div *ngFor="let claim of currentPageClaims" class="table-body" tabindex="0">
         <div class="content-wrapper" [routerLink]="isAdmin ? ['/admin/claims', claim.id] : []">
           <div class="bullet">
             <div *ngIf="claim?.status.includes('ing')" class="outter-ellipse">
@@ -45,6 +45,8 @@
           <div class="claim-status">{{claim?.status}}</div>
           <div class="claim-created-at">{{claim?.createdAt | timeAgo}}</div>
         </div>
+        <div *ngIf="showDetails" class="see-more-button"><i class="fa fa-chevron-right"></i></div>
+        <claim-details *ngIf="showDetails" [claim]="claim" [canModify]="canModify"></claim-details>
       </div>
     </div>
   </div>

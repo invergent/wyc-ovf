@@ -36,6 +36,7 @@ export interface IProfileUpdate {
   phone?: string
   accountNumber?: string
   image?: string
+  permittedMonths?: string[]
   roleId?: number
   branchId?: number
   lineManagerFirstName?: string

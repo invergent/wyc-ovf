@@ -179,9 +179,20 @@ describe('Overtime Service', () => {
   });
 
   it('should return previous month date.', async () => {
-    const date = 12;
-    const prevDate = service.previousMonthDate(date);
+    const prevDate = service.currentClaimYearMonth();
 
-    expect(prevDate.getDate()).toBe(date);
+    expect(prevDate.split('/')).toHaveLength(2);
+  });
+
+  it('should return date object of the provided claim month date.', async () => {
+    const claimMonth = '2019/08';
+    let date = service.claimMonthDate(claimMonth);
+
+    expect(date.getFullYear()).toBe(+claimMonth.split('/')[0]);
+    expect(date.getDate()).toBe(1);
+
+    date = service.claimMonthDate(claimMonth, 'lastDay');
+
+    expect(date.getDate()).toBeGreaterThan(28);
   });
 });

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { IStaff, AuthService } from '../shared';
+import { Component } from '@angular/core';
 
 @Component({
   templateUrl: './staff.component.html',

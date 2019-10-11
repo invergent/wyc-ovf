@@ -17,7 +17,7 @@ const routes: Routes = [{
   children: [
     { path: 'dashboard', canActivate: [EnforceProfileUpdateService], component: DashboardComponent },
     { path: 'new', canActivate: [EnforceProfileUpdateService], component: NewClaimComponent },
-    { path: 'update', canActivate: [EnforceProfileUpdateService], component: UpdateClaimComponent },
+    { path: 'claims/:claimId/update', canActivate: [EnforceProfileUpdateService], component: UpdateClaimComponent },
     { path: 'pending-claim', canActivate: [EnforceProfileUpdateService], component: PendingClaimComponent },
     { path: 'claim-history', canActivate: [EnforceProfileUpdateService], component: ClaimHistoryComponent },
     { path: 'profile', component: ProfileComponent },

@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, HostListener, Input } from '@angular/core';
+import { Component, OnInit, Inject, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   JQUERY_TOKEN, AuthService, dateRegex, TOASTR_TOKEN, IToastr,
   OvertimeService, ISettings, SettingsService, claimPrice, LOCALSTORAGE_TOKEN,
-  ILocalStorage, IStaffClaimData, IClaim
+  ILocalStorage, IStaffClaimData, IClaim, months
 } from '../../shared';
 
 @Component({
@@ -13,7 +13,9 @@ import {
 })
 export class ClaimEngineComponent implements OnInit {
   @Input() callingComponent: string = '';
-  @Input() claim: IClaim
+  @Input() claim: IClaim;
+  @Input() applyingMonth: string;
+  @Output() claimMonthProcessedEvent = new EventEmitter();
 
   staffId: string
 
@@ -46,7 +48,9 @@ export class ClaimEngineComponent implements OnInit {
   disableWeekends = [6,0];
   holidaysInClaimMonth: number[] = [];
 
-  claimRequest: any = {}
+  claimRequest: any = {};
+
+  autoSaveId: string;
 
   // window controls
   screenWidth
@@ -82,17 +86,18 @@ export class ClaimEngineComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.staffRole = this.authService.currentStaff.role;
     this.staffId = this.authService.currentStaff.staffId;
-    
-    // set dates and counters values
-    this.claimMonthDate = this.overtimeService.previousMonthDate();
-    this.totalDaysInClaimMonth = this.claimMonthDate.getDate();
+    this.autoSaveId = `${this.staffId}${this.applyingMonth}`;
 
-    // get holidays for the claim month
-    const { data : holidays} = await this.overtimeService.fetchHolidays(this.claimMonthDate.getMonth());
-    this.holidaysInClaimMonth = holidays.map(holiday => holiday.date);
-
-    const previousWork = this.claim ? this.claim.details : this.save.getItem(this.staffId);
+    const previousWork = this.claim ? this.claim.details : this.save.getItem(this.autoSaveId);
     if (previousWork) this.restorePreviousWork(previousWork);
+
+    // set dates and counters values
+    this.claimMonthDate = this.overtimeService.claimMonthDate(this.applyingMonth);
+    this.totalDaysInClaimMonth = this.claimMonthDate.getDate();
+    
+    // get holidays for the claim month
+    const { data: holidays } = await this.overtimeService.fetchHolidays(this.applyingMonth);
+    this.holidaysInClaimMonth = holidays.map(holiday => new Date(holiday.fullDate).getDate());
   }
 
   initializeDatePicker(element: string, datesToDisable?: number[], daysToDisable?: number[]) {
@@ -113,10 +118,10 @@ export class ClaimEngineComponent implements OnInit {
     this[prop] = this.jQuery(element).datepicker({
       inline: true,
       multipleDates: true,
-      startDate: this.overtimeService.previousMonthDate(1),
+      startDate: this.claimMonthDate,
       firstDay: 1,
-      minDate: this.overtimeService.previousMonthDate(1),
-      maxDate: this.overtimeService.previousMonthDate(),
+      minDate: this.claimMonthDate,
+      maxDate: this.overtimeService.claimMonthDate(this.applyingMonth, 'lastDay'),
       onRenderCell: (date, cellType) => {
         if (cellType === 'day' && datesToDisable.length) {
           // do not disable selected days on a calendar on which they were selected
@@ -156,7 +161,6 @@ export class ClaimEngineComponent implements OnInit {
       this.claimBtns.forEach(btn => `${btn}Clicked` === clickedButton ? '' : (this[`${btn}Clicked`] = false));
       
       setTimeout(() => {
-
         // check if a calendar is currently displayed, animate removal before initialising a new one
         if (this.currentlyPressedBtn) this.fadeOutCalendar(this.currentlyPressedBtn);
         if (claimItem !== 'outstation') {
@@ -166,14 +170,12 @@ export class ClaimEngineComponent implements OnInit {
         this.fadeInCalendar(claimItem);
         this.slideInPaneItem(claimItem);
         this.currentlyPressedBtn = claimItem;
-        
       }, 1);
     } else {
       this.fadeOutCalendar(this.currentlyPressedBtn);
       this.currentlyPressedBtn = null;
       // wait for calendar to disappear before displaying placeholder text
       setTimeout(() => (this.showCalendarPlaceholder = true), 1000);
-      
     }
   }
 
@@ -206,7 +208,7 @@ export class ClaimEngineComponent implements OnInit {
 
     if (this.visiblePaneItems < 1) {
       setTimeout(() => {
-        this.save.clear(this.staffId);
+        this.save.removeItem(this.autoSaveId);
         this.showSummaryPlaceholder = true
       }, 1000);
     }
@@ -288,8 +290,9 @@ export class ClaimEngineComponent implements OnInit {
     savedWork['allSelectedDates'] = this.allSelectedDates;
     savedWork['total'] = this.total;
     savedWork['currentlyPressedBtn'] = this.currentlyPressedBtn;
+    savedWork['applyingMonth']= this.applyingMonth;
     if (submit) return savedWork;
-    this.save.setItem(this.staffId, JSON.stringify(savedWork));
+    this.save.setItem(this.autoSaveId, JSON.stringify(savedWork));
   }
 
   restorePreviousWork(previousWork) {
@@ -307,7 +310,7 @@ export class ClaimEngineComponent implements OnInit {
   }
 
   toggleModal(displayType) {
-    this.claimRequest = this.createClaimRequest();
+    this.claimRequest = this.createClaimRequest(this.applyingMonth);
     if (!this.claimRequest.claimElements) return this.toastr.error('Claim request is empty');
 
     this.displayModal = displayType;
@@ -318,9 +321,11 @@ export class ClaimEngineComponent implements OnInit {
     }
   }
 
-  createClaimRequest() {
+  createClaimRequest(yearMonth) {
     const createdClaim = this.autoSave(true);
+    const [year, month] = yearMonth.split('/');
     return {
+      monthOfClaim: `${months[Number(month)].substr(0, 3)}, ${year}`,
       claimElements: createdClaim['visiblePaneItems'],
       amount: createdClaim['total'],
       details: JSON.stringify(createdClaim)
@@ -337,7 +342,9 @@ export class ClaimEngineComponent implements OnInit {
 
       await this.overtimeService.syncWithAPI();
       this.toastr.success(message);
-      this.save.clear(this.staffId);
+      this.save.removeItem(this.autoSaveId);
+      this.claimMonthProcessedEvent.emit(this.applyingMonth);
+
       return this.router.navigate(['/staff/dashboard']);
     } catch(e) {
       this.displaySubmitSpinner = false;
