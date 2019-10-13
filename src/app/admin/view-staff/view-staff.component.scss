@@ -115,6 +115,67 @@
       }
     }
   }
+  .modal-section {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $modal-background-tint;
+    z-index: 9999;
+    .modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      display: inline-block;
+      background-color: $color-white;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      padding: 40px;
+      border-radius: 8px;
+      .page-title {
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        p {
+          margin: 10px 0 0;
+        }
+      }
+      #calendar {
+        width: 251px;
+        margin: auto auto 30px;
+      }
+      .submit-button {
+        position: relative;
+        margin-bottom: 30px;
+        button {
+          @include white-button;
+          background-color: $brand-color;
+          color: $color-white;
+          &:hover {
+            background-color: $brand-color;
+          }
+        }
+        i {
+          position: absolute;
+          top: 12px;
+          margin-left: 10px;
+          color: $brand-color;
+        }
+      }
+      .modal-content {
+      }
+      .close {
+        cursor: pointer;
+      }
+      @media screen and (max-width: 600px) {
+        width: 90%;
+        padding: 15px;
+      }
+    }
+  }
   @media screen and (max-width: 768px) {
     .action-buttons {
       padding: 0 5px 20px;

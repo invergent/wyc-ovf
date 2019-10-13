@@ -41,10 +41,8 @@ export class HolidaysComponent implements OnInit {
       inline: true,
       multipleDates: true,
       firstDay: 1,
+      startDate: new Date(),
       onRenderCell: (date, cellType) => {
-        if (daysToDisable) {
-          return { disabled: daysToDisable.includes(date.getDay()) };
-        }
         if (daysToDisable) {
           return { disabled: daysToDisable.includes(date.getDay()) };
         }

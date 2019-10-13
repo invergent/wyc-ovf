@@ -46,6 +46,15 @@
     </div> -->
   </section>
   <section class="window-info">
-    <claim-window-info [companySettings]='companySettings'></claim-window-info>
+    <claim-window-info [companySettings]='companySettings' (windowMessageEvent)="displayWindowModal($event)"></claim-window-info>
+  </section>
+  <section [ngStyle]="{display: displayModal}" class="modal-section">
+    <div class="modal">
+      <div class="page-title">
+        <p>Claim Window Notice!</p>
+      </div>
+      <div class="notice" [ngStyle]="{backgroundColor: backgroundColor}">{{windowMessage}}</div>
+      <p class="close" (click)="closeModal(currentModal)">Close</p>
+    </div>
   </section>
 </section>

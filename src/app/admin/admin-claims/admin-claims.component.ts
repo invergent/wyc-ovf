@@ -9,8 +9,6 @@ import { IClaim, OvertimeService, TOASTR_TOKEN, IToastr } from '../../shared';
 })
 export class AdminClaimsComponent implements OnInit {
   showLoader: boolean = true;
-  displaySpinnerMark: boolean = false;
-  displaySpinnerExport: boolean = false;
   errorMessage: string = '';
   statuses: string[] = ['All', 'Completed', 'Processing', 'Pending'];
   claims: IClaim[] = [];
@@ -62,8 +60,7 @@ export class AdminClaimsComponent implements OnInit {
   }
 
   async exportClaims(docType) {
-    this.displaySpinnerExport = true;
-    this.closeModal(this.currentModal);
+    this.displaySpinner = true;
 
     const type = docType === 'xlsx'
       ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -73,23 +70,25 @@ export class AdminClaimsComponent implements OnInit {
       const excelBlob = await this.overtimeService.exportApprovedClaims(docType);
       const blob = new Blob([excelBlob], { type });
       saveAs(blob, `Approved Claims (${new Date().toDateString().substr(4)})`);
-      this.displaySpinnerExport = false;
+      this.closeModal(this.currentModal);
+      this.displaySpinner = false;
     } catch (error) {
-      this.displaySpinnerExport = false;
+      this.displaySpinner = false;
       // TODO display error modal on fail
     }
   }
 
   async markClaimsAsCompleted() {
-    this.displaySpinnerMark = true;
+    this.displaySpinner = true;
     try {
       const { message } = await this.overtimeService.markClaimsAsCompleted();
       this.toastr.success(message);
-      this.displaySpinnerMark = false;
+      this.closeModal(this.currentModal);
+      this.displaySpinner = false;
       await this.overtimeService.syncAdminWithAPI();
       await this.initialiseClaimData();
     } catch (error) {
-      this.displaySpinnerMark = false;
+      this.displaySpinner = false;
       this.toastr.error('An error occurred while marking claims as completed.');
     }
   }

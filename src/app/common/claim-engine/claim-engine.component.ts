@@ -83,6 +83,9 @@ export class ClaimEngineComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    if (!this.applyingMonth) {
+      this.applyingMonth = this.overtimeService.currentClaimYearMonth();
+    }
     this.screenWidth = window.innerWidth;
     this.staffRole = this.authService.currentStaff.role;
     this.staffId = this.authService.currentStaff.staffId;
@@ -97,6 +100,7 @@ export class ClaimEngineComponent implements OnInit {
     
     // get holidays for the claim month
     const { data: holidays } = await this.overtimeService.fetchHolidays(this.applyingMonth);
+    console.log(holidays)
     this.holidaysInClaimMonth = holidays.map(holiday => new Date(holiday.fullDate).getDate());
   }
 

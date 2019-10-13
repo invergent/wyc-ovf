@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { JQUERY_TOKEN, OvertimeService, IClaim, TOASTR_TOKEN, IToastr } from 'src/app/shared';
+import { JQUERY_TOKEN, OvertimeService, IClaim, TOASTR_TOKEN, IToastr, AuthService } from 'src/app/shared';
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,6 +30,7 @@ export class ClaimDetailsComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private overtimeService: OvertimeService,
     @Inject(TOASTR_TOKEN) private toastr: IToastr,
     @Inject(JQUERY_TOKEN) private jQuery
@@ -84,6 +85,7 @@ export class ClaimDetailsComponent implements OnInit {
     try {
       await this.overtimeService.cancelClaim(this.claim.id);
       await this.overtimeService.syncWithAPI();
+      await this.authService.syncWithAPI(); // we need current state of extraMonthsData
       this.toastr.success('Claim cancelled successfully!');
       return this.router.navigate(['/staff/claim-history']);
     } catch(e) {

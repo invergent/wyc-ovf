@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
 
       await this.authService.authenticate();
       
-      return this.router.navigate([`/${this.isAdmin ? 'admin' : 'staff'}/dashboard`]);
+      return this.router.navigate([`/${this.isAdmin ? 'admin' : 'staff'}/dashboard`], { queryParams: { login: true } });
     } catch(e) {
       this.displaySpinner = false;
       return this.toastr.error(e.error.message || 'Login failed. Check your connectivity.');

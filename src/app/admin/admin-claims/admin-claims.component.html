@@ -9,7 +9,6 @@
   <section *ngIf="claims.length" class="export-button-section">
     <button class="export-button mark-as-completed" (click)="runModalDisplay('markAsCompletedModal', 'Mark as completed')">
       Mark as completed
-      <i *ngIf="displaySpinnerMark" class="fa fa-spinner fa-spin"></i>
     </button>
     <button class="export-button" (click)="runModalDisplay('exportModal', 'Export')">
       Export to excel
@@ -27,20 +26,26 @@
       </div>
       <div [ngSwitch]="true" class="modal-content">
         <ng-template [ngSwitchCase]="markAsCompletedModal">
-          <p>All claims in the processing stage would be marked as completed. <b>Ensure you have exported the claims to excel before proceeding.</b></p>
+          <div class="mark-as-completed-content">
+            <p>The following actions would be executed:</p>
+            <ol>
+              <li>All claims in the processing stage would be marked as completed.</li>
+              <li>Multiple claims authorisation would be reset</li>
+            </ol>
+            <b>Ensure you have exported the claims to excel before proceeding.</b>
+          </div>
         </ng-template>
         <ng-template [ngSwitchCase]="exportModal">
             <p>All claims in the processing stage would be exported. Please choose a format.</p>
         </ng-template>
         <div class="action-buttons">
-          <button class="no-cancel" (click)="currentModal === 'exportModal' ? exportClaims('csv') : ''">
+          <button class="no-cancel" (click)="currentModal === 'exportModal' ? exportClaims('csv') : closeModal(currentModal)">
             {{currentModal === 'exportModal' ? 'CSV' : 'Wait! Let me export.'}}
-            <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
           </button>
-          <button class="yes-cancel" (click)="currentModal === 'exportModal' ? exportClaims('xlsx') : ''">
+          <button class="yes-cancel" (click)="currentModal === 'exportModal' ? exportClaims('xlsx') : markClaimsAsCompleted()">
             {{currentModal === 'exportModal' ? 'XLSX' : 'Already exported. Proceed!'}}
-            <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
           </button>
+          <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
         </div>
       </div>
       <p class="close" (click)="closeModal(currentModal)">Close</p>

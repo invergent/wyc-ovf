@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OvertimeService } from 'src/app/shared';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-claim',
@@ -14,13 +14,17 @@ export class ViewClaimComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private overtimeService: OvertimeService
   ) { }
 
   async ngOnInit() {
     const claimId = this.route.snapshot.paramMap.get('claimId');
+    if (Number.isNaN(+claimId)) return this.router.navigate(['admin/claims']);
+    
     try {
       const { data } = await this.overtimeService.fetchSingleClaimForAdmin(+claimId);
+      if (!Object.keys(data).length) return this.router.navigate(['admin/claims']);
       this.claim = [data]
       this.showLoader = false;
     } catch (error) {
