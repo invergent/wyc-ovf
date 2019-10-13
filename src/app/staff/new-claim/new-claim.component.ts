@@ -44,6 +44,7 @@ export class NewClaimComponent {
       this.displayPageContent();
       this.showLoader = false;
     } catch(e) {
+      console.log(e)
       this.showLoader = false;
       this.errorMessage = 'Unable to load content. Please reload';
     }
@@ -63,16 +64,17 @@ export class NewClaimComponent {
   runMultipleClaimAuthorisationCheck() {
     // if there is only one month to apply for just proceed to claim engine
     // otherwise show the months for staff to choose which month claim engine should activate
-    if (this.staff.permittedMonths) {
-      this.permittedMonths = this.staff.permittedMonths.map(yearMonth => {
+    if (this.staff.extraMonthsPermitted) {
+      const { permittedMonths } = this.staff.extraMonthsData;
+      this.permittedMonths = permittedMonths.map(yearMonth => {
         const month = Number(yearMonth.split('/')[1])
-        return months[month];
+        return months[+month];
       });
 
       if (this.permittedMonths.length > 1) {
         return true;
       } else {
-        this.applyingMonth = this.staff.permittedMonths[0];
+        this.applyingMonth = permittedMonths[0];
         return false;
       }
     }
@@ -95,7 +97,7 @@ export class NewClaimComponent {
         this.claimContentToDisplay = 'chooseClaimMonth';
         break;
 
-      case this.pendingClaim.length && !this.staff.permittedMonths:
+      case this.pendingClaim.length && !this.staff.extraMonthsPermitted:
         this.claimContentToDisplay = 'pendingClaimMessage';
         break;
 
@@ -106,8 +108,15 @@ export class NewClaimComponent {
   }
 
   async claimMonthProcessed(processedMonth) {
-    const newPermittedMonths = this.staff.permittedMonths.filter(month => (month !== processedMonth));
-    const payload = { permittedMonths: newPermittedMonths.length ? newPermittedMonths : null };
+    const { permittedMonths, appliedMonths } = this.staff.extraMonthsData;
+    const newPermittedMonths = permittedMonths.filter(month => (month !== processedMonth));
+    const newAppliedMonths = [...appliedMonths, processedMonth]
+    const payload = {
+      extraMonthsData: {
+        permittedMonths: newPermittedMonths,
+        appliedMonths: newAppliedMonths
+      }
+    };
     try {
       await this.profileService.updatePersonalInfo(payload);
       this.authService.syncWithAPI();

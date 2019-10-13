@@ -88,4 +88,8 @@ export class ProfileService {
   resendLoginCredentials(staffId: string) {
     return this.http.post<IPutProfile>(`${this.api}/admin/staff/resend-credentials`, { staffId }, this.options).toPromise();
   }
+
+  authoriseMultipleClaims(payload) {
+    return this.http.put<IPutProfile>(`${this.api}/admin/staff/multiple-claims`, payload, this.options).toPromise();
+  }
 }

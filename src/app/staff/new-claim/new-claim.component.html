@@ -13,7 +13,7 @@
     <p>Choose the month you wish to apply for:</p>
     <button
       *ngFor="let month of permittedMonths; let i = index"
-      (click)="showClaimEngine(staff.permittedMonths[i])"
+      (click)="showClaimEngine(staff.extraMonthsData.permittedMonths[i])"
       class="margin-right"
     >{{month}}</button>
   </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ISettings, SettingsService } from '../../shared';
 
 @Component({
@@ -8,6 +8,7 @@ import { ISettings, SettingsService } from '../../shared';
 })
 export class ClaimWindowComponent implements OnInit {
   @Input() companySettings: ISettings
+  @Output() windowMessageEvent = new EventEmitter();
   backgroundColor: string = 'transparent';
   reopenDate
   closingDate
@@ -24,6 +25,7 @@ export class ClaimWindowComponent implements OnInit {
     this.closingDate = this.settingService.getReopenDate(overtimeWindowEnd);
     this.windowStatus = this.companySettings.overtimeWindow;
     this.createTheme();
+    this.windowMessageEvent.emit({ message: this.message, backgroundColor: this.backgroundColor });
   }
 
   displayInfo() {

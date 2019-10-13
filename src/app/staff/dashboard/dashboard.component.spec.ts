@@ -1,13 +1,13 @@
 import { DashboardComponent } from './dashboard.component';
 import {
-  authServiceMock, overtimeServiceMock
+  authServiceMock, overtimeServiceMock, activatedRouteMock
 } from '../../__mocks__';
 
 describe('Dashboard', () => {
   let component: DashboardComponent;
 
   beforeEach(() => {
-    component = new DashboardComponent(authServiceMock, overtimeServiceMock);
+    component = new DashboardComponent(authServiceMock, activatedRouteMock, overtimeServiceMock);
   });
 
   it('should should fetch staff details and claim statistics when component loads', () => {

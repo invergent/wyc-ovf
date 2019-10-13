@@ -47,7 +47,7 @@ describe('LoginComponent', () => {
 
     expect(authServiceLogin).toHaveBeenCalled();
     expect(toastrSuccess).toHaveBeenCalled();
-    expect(routerNavigate).toHaveBeenCalledWith(['/staff/dashboard']);
+    expect(routerNavigate).toHaveBeenCalledWith(['/staff/dashboard'], { queryParams: { login: true } });
   });
 
   it('should return errors if provided email fails emailRegex test.', async () => {
@@ -68,7 +68,7 @@ describe('LoginComponent', () => {
     
     expect(authServiceLogin).toHaveBeenCalled();
     expect(toastrSuccess).toHaveBeenCalled();
-    expect(routerNavigate).toHaveBeenCalledWith(['/admin/dashboard']);
+    expect(routerNavigate).toHaveBeenCalledWith(['/admin/dashboard'], { queryParams: { login: true } });
   });
   it('should display error message if login fails.', async () => {
     jest.spyOn(authServiceMock, 'login').mockRejectedValue({ error: { message: 'failed' } });

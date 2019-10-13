@@ -80,8 +80,18 @@
         }
       }
       .modal-content {
+        .mark-as-completed-content {
+          text-align: left;
+        }
         .action-buttons {
+          position: relative;
           margin: 30px auto;
+          i {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            color: $brand-color;
+          }
           .yes-cancel {
             @include white-button;
             color: $brand-color;
@@ -103,6 +113,9 @@
       }
       .close {
         cursor: pointer;
+      }
+      @media screen and (max-width: 600px) {
+        width: 90%;
       }
     }
   }

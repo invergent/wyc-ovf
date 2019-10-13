@@ -8,7 +8,7 @@
   </div>
   <div class="action-buttons">
     <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
-    <button class="margin-right">Permit multiple claims</button>
+    <button class="margin-right" (click)="runModalDisplay()">Permit multiple claims</button>
     <button *ngIf="!staff?.changedPassword" (click)="resendLoginCredentials(staff?.staffId)">Resend login details</button>
   </div>
   <div class="profile-info">
@@ -84,4 +84,22 @@
       </div>
     </div>
   </div>
+  <section [ngStyle]="{display: displayModal}" class="modal-section">
+    <div class="modal">
+      <div class="page-title">
+        <p>Authorise multiple claims</p>
+      </div>
+      <div *ngIf="showCalendar" class="calendar">
+        <div id="calendar" data-language='en' data-min-view="months" data-view="months"></div>
+      </div>
+      <div class="submit-button">
+        <button
+          type="button"
+          name="button"
+          (click)="permitMultipleMonths();">Authorise {{staff.firstname}}</button>
+        <i *ngIf="displayAuthoriseSpinner" class="fa fa-spinner fa-spin"></i>
+      </div>
+      <p class="close" (click)="closeModal(currentModal)">Close</p>
+    </div>
+  </section>
 </section>
