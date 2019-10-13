@@ -11,12 +11,18 @@ export interface IStaff {
   role: string
   branch: string
   changedPassword: boolean
-  permittedMonths: string[]
+  extraMonthsPermitted: boolean
+  extraMonthsData: IExtraMonthsData
   lineManagerIdNumber: string;
   lineManagerFirstName: string
   lineManagerLastName: string
   lineManagerPhone: string;
   lineManagerEmailAddress: string
+}
+
+export interface IExtraMonthsData {
+  permittedMonths: string[]
+  appliedMonths: string[]
 }
 
 export interface IStaffForAdmin {
@@ -36,7 +42,7 @@ export interface IProfileUpdate {
   phone?: string
   accountNumber?: string
   image?: string
-  permittedMonths?: string[]
+  extraMonthsData?: IExtraMonthsData
   roleId?: number
   branchId?: number
   lineManagerFirstName?: string

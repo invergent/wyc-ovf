@@ -22,6 +22,7 @@ export class UpdateClaimComponent implements OnInit {
 
   async ngOnInit() {
     const claimId = this.route.snapshot.paramMap.get('claimId');
+    if (Number.isNaN(+claimId)) return this.router.navigate(['staff/dashboard']);
     try {
       const { pendingClaim } = await this.overtimeService.fetchStaffData();
       this.pendingClaim = pendingClaim;

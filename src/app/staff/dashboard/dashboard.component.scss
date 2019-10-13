@@ -85,6 +85,49 @@
     bottom: 30px;
     right: 30px;
   }
+  .modal-section {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $modal-background-tint;
+    z-index: 9999;
+    .modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      display: inline-block;
+      background-color: $color-white;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      padding: 40px;
+      border-radius: 8px;
+      .page-title {
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        p {
+          margin: 10px 0 0;
+        }
+      }
+      .notice {
+        margin-bottom: 50px;
+        padding: 20px;
+        border-radius: 8px;
+        color: white;
+      }
+      .close {
+        cursor: pointer;
+      }
+      @media screen and (max-width: 600px) {
+        width: 90%;
+        padding: 15px;
+      }
+    }
+  }
 
   @media screen and (max-width: 768px) {
     .page-title {
