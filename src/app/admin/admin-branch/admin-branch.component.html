@@ -69,6 +69,7 @@
       <div class="form-wrapper">
         <form [ngSwitch]="true" #addBranchForm="ngForm" (ngSubmit)="handleSubmit(addBranchForm.value, currentModal)" autocomplete="off" novalidate>
           <ng-template [ngSwitchCase]="bulkModal">
+            <a class="format" href="https://docs.google.com/spreadsheets/d/1Xdgy_YzIV0o9EXe7gl_oGya54CehAXH8NiIKXx7DF6o/export?gid=0&format=xlsx">Download format</a>
             <div class="input">
               <p (click)="triggerFileInput()" class="input-button">Click to select excel file</p>
               <input #fileInput type="file" id="fileInput" (input)="handleFileInput(fileInput)" accept=".csv, .xlsx" required>
