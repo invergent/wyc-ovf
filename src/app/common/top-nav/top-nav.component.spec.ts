@@ -45,27 +45,4 @@ describe('Comfirm password reset', () => {
     component.toggleSideNav();
     expect(emitMethod).toHaveBeenCalled();
   });
-
-  it('should toggle nav items', () => {
-    expect(component.profileMenu).toBe(false);
-    expect(component.notificationMenu).toBe(false);
-
-    component.toggleNavItems('profileMenu');
-
-    expect(component.profileMenu).toBe(true);
-    expect(component.notificationMenu).toBe(false);
-
-    component.toggleNavItems('notificationMenu');
-
-    expect(component.profileMenu).toBe(false);
-    expect(component.notificationMenu).toBe(true);
-
-    component.newNotificationsCount = 2;
-    component.toggleNavItems('notificationMenu');
-
-    expect(component.profileMenu).toBe(false);
-    expect(component.notificationMenu).toBe(false);
-  });
-
-
 });
