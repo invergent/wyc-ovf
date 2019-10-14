@@ -43,10 +43,6 @@ export class TopNav implements OnInit {
     this.notificationService.channel.bind_global((triggeredEvent, payload) => this.notificationEventHandler(triggeredEvent, payload));
   }
 
-  menuItemLinks() {
-
-  }
-
   async notificationEventHandler(triggeredEvent, payload) {
     if (payload.message) {
       // sync data with API
@@ -71,15 +67,6 @@ export class TopNav implements OnInit {
     setTimeout(() => this.jQuery('#flash-message').css('right', '-400px'), 10000);
   }
 
-  toggleNavItems(navItem) {
-    this.toggleSideNav('navItem') // force close sideNav if open
-    if (navItem === 'notificationMenu') this.markNotificationsAsViewed();
-    
-    const oppositeItem = navItem === 'profileMenu' ? 'notificationMenu' : 'profileMenu';
-    this[navItem] = this[navItem] ? false : true;
-    if (this[navItem]) this[oppositeItem] = !this[navItem];
-  }
-
   async markNotificationsAsViewed() {
     if (this.newNotificationsCount !== 0) {
       this.newNotificationsCount = 0;
@@ -88,11 +75,7 @@ export class TopNav implements OnInit {
     }
   }
 
-  toggleSideNav(fromSideNav?: string) {
-    if (!fromSideNav) {
-      this.profileMenu = false;
-      this.notificationMenu = false;
-    }
-    this.sideNavToggleEvent.emit(fromSideNav);
+  toggleSideNav() {
+    this.sideNavToggleEvent.emit();
   }
 }

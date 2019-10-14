@@ -52,15 +52,4 @@ describe('ClaimWindowComponent', () => {
     expect(reopenMock).toHaveBeenCalledTimes(2);
     expect(component.backgroundColor).toBe('#2e7d32');
   });
-
-  it('should toggle info display', () => {
-    component.displayInfo();
-    expect(component.infoDisplay).toBe('block');
-
-    component.displayInfo();
-    expect(component.infoDisplay).toBe('none');
-    
-    component.displayInfo();
-    expect(component.infoDisplay).toBe('block');
-  });
 });

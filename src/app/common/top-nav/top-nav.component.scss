@@ -58,9 +58,17 @@ nav {
       display: flex;
       align-items: center;
       margin-left: auto;
+      .user, .notify {
+        &:focus, &:active {
+          outline: 0;
+        }
+      }
       .notify {
         position: relative;
         margin-right: 50px;
+        &:focus .notifications, &:active .notifications {
+          @include dropdown-wrapper-display;
+        }
         .icons-wrapper {
           cursor: pointer;
           outline: none;
@@ -77,9 +85,7 @@ nav {
             font-size: 12px;
             border-radius: 1000px;
           }
-          &:focus ~ .notifications {
-            @include dropdown-wrapper-display;
-          }
+          
         }
         .notifications {
           @include dropdown-wrapper;
@@ -129,6 +135,9 @@ nav {
         align-items: center;
         cursor: pointer;
         outline: none;
+        &:focus .dropdown-menu, &:active .dropdown-menu {
+          @include dropdown-wrapper-display;
+        }
         .avatar {
           display: inline-block;
           width: 40px;
@@ -139,9 +148,6 @@ nav {
         }
         .fa-caret-down {
           display: inline-block;
-        }
-        &:focus ~ .dropdown-menu {
-          @include dropdown-wrapper-display;
         }
       }
       .dropdown-menu {

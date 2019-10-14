@@ -28,14 +28,6 @@ export class ClaimWindowComponent implements OnInit {
     this.windowMessageEvent.emit({ message: this.message, backgroundColor: this.backgroundColor });
   }
 
-  displayInfo() {
-    if (this.infoDisplay === 'none') {
-      this.infoDisplay = 'block';
-    } else {
-      this.infoDisplay = 'none';
-    }
-  }
-
   createTheme() {
     const { overtimeWindow, overtimeWindowIsActive } = this.companySettings
     if ((!overtimeWindow || overtimeWindow === 'Close') && overtimeWindowIsActive) {

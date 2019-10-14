@@ -13,12 +13,12 @@
       </div>
     </div>
     <div class="nav-items">
-      <div class="notify" (click)="toggleNavItems('notificationMenu')">
+      <div class="notify" tabindex="0" (click)="markNotificationsAsViewed()">
         <div class="icons-wrapper">
           <i class='far fa-bell'></i>
           <span *ngIf="!!newNotificationsCount">{{newNotificationsCount}}</span>
         </div>
-        <div *ngIf="notificationMenu" class="notifications">
+        <div class="notifications">
           <div class="notifications-wrapper">
             <div class="spike"></div>
             <div *ngIf="!notifications.length" class="nothing-here">Nothing here...</div>
@@ -33,12 +33,12 @@
           </div>
         </div>
       </div>
-      <div class="user" (click)="toggleNavItems('profileMenu')">
+      <div class="user" tabindex="0">
         <div class="avatar" >
           <img src="{{userImage | transformImage}}" alt="User Avatar">
         </div>
         <i class="fa fa-caret-down"></i>
-        <div *ngIf="profileMenu" class="dropdown-menu">
+        <div class="dropdown-menu">
           <div class="ul-wrapper">
             <div class="spike"></div>
             <ul>
