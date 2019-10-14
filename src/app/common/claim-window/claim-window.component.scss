@@ -4,6 +4,13 @@
   border-radius: 200px;
   box-sizing: border-box;
   transition: all .4s ease-in-out;
+  cursor: pointer;
+  &:focus {
+    outline: 0;
+  }
+  &:focus .info {
+    display: block;
+  }
   .info {
     display: none;
     position: absolute;
