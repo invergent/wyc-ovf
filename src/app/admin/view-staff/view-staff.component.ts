@@ -86,9 +86,13 @@ export class ViewStaffComponent implements OnInit {
     }
   }
 
+  convertToDateString(date) {
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  }
+
   createAuthorisationPayload() {
     const selectedMonths = this.selectedMonths.map((selectedMonth) => {
-      const [date, month, year] = selectedMonth.toLocaleDateString().split('/');
+      const [date, month, year] = this.convertToDateString(selectedMonth).split('/');
       return `${year}/${month}`;
     });
 

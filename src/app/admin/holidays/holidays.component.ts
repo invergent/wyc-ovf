@@ -22,9 +22,13 @@ export class HolidaysComponent implements OnInit {
     const { data: holidays } = await this.overtimeService.fetchHolidays();
     this.preSelectedHolidays = holidays.map((holiday) => new Date(holiday.fullDate));
     // keep a copy of the dates in date string at the start for comparism when new dates are selected
-    this.holidays = this.preSelectedHolidays.map(date => date.toLocaleDateString())
+    this.holidays = this.preSelectedHolidays.map(date => this.convertToDateString(date))
     this.initializeDatePicker('#calendar', [6,0]);
     this.styleCalendar();
+  }
+
+  convertToDateString(date) {
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   }
 
   // async ngOnInit() {
@@ -50,14 +54,14 @@ export class HolidaysComponent implements OnInit {
       onSelect: (fd, airdate, inst) => {
         if (this.canSelect) {
           const addedDate = airdate[inst.selectedDates.length - 1];
-          const selectedDates = inst.selectedDates.map(date => date.toLocaleDateString());
+          const selectedDates = inst.selectedDates.map(date => this.convertToDateString(date));
           const removedDate = this.holidays.filter(date => !selectedDates.includes(date));
 
           if (removedDate.length) {
             const [date, month, year] = removedDate[0].split('/');
             this.removeHoliday(new Date(`${year}/${month}/${date}`).toISOString())
           } else {
-            const [day, month, year] = addedDate.toLocaleDateString().split('/')
+            const [day, month, year] = this.convertToDateString(addedDate).split('/');
             const datePayload = {
               yearMonth: `${year}/${month}`,
               fullDate: addedDate.toISOString()
