@@ -8,8 +8,9 @@
   </div>
   <div class="action-buttons">
     <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
-    <button class="margin-right" (click)="runModalDisplay()">Permit multiple claims</button>
-    <button *ngIf="!staff?.changedPassword" (click)="resendLoginCredentials(staff?.staffId)">Resend login details</button>
+    <button class="margin-right" (click)="runModalDisplay('calendarModal', 'Authorise multiple claims')">Permit multiple claims</button>
+    <button *ngIf="!staff?.changedPassword" class="margin-right" (click)="resendLoginCredentials(staff?.staffId)">Resend login details</button>
+    <button (click)="runModalDisplay('removeStaffModal', 'Remove Staff')">Remove</button>
   </div>
   <div class="profile-info">
     <div class="profile-image">
@@ -28,7 +29,7 @@
       </div>
       <div class="details">
         <p class="details-header">Phone Number</p>
-        <p class="details-item">{{staff?.phone}}{{staff?.altPhone ? ('; '+staff?.altPhone) : ''}}</p>
+        <p class="details-item">0{{staff?.phone}}{{staff?.altPhone ? ('; 0'+staff?.altPhone) : ''}}</p>
       </div>
       <div class="details">
         <p class="details-header">Email Address</p>
@@ -87,17 +88,26 @@
   <section [ngStyle]="{display: displayModal}" class="modal-section">
     <div class="modal">
       <div class="page-title">
-        <p>Authorise multiple claims</p>
+        <p>{{modalTitle}}</p>
       </div>
-      <div *ngIf="showCalendar" class="calendar">
-        <div id="calendar" data-language='en' data-min-view="months" data-view="months"></div>
+      <div [ngSwitch]="true">
+        <ng-template [ngSwitchCase]="calendarModal">
+          <div class="calendar">
+            <div id="calendar" data-language='en' data-min-view="months" data-view="months"></div>
+          </div>
+        </ng-template>
+        <ng-template [ngSwitchCase]="removeStaffModal">
+          <div class="remove-staff">
+            <p>If you proceed, {{staff.firstname}} would be removed from CleonTime. If you change your mind in the future, you would have to add {{staff.firstname}} again.</p>
+          </div>
+        </ng-template>
       </div>
       <div class="submit-button">
         <button
           type="button"
           name="button"
-          (click)="permitMultipleMonths();">Authorise {{staff.firstname}}</button>
-        <i *ngIf="displayAuthoriseSpinner" class="fa fa-spinner fa-spin"></i>
+          (click)="handleSubmit()">{{calendarModal ? 'Authorise' : 'Proceed'}}</button>
+        <i *ngIf="displayActionSpinner" class="fa fa-spinner fa-spin"></i>
       </div>
       <p class="close" (click)="closeModal(currentModal)">Close</p>
     </div>

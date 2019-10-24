@@ -18,7 +18,7 @@ const sampleFormValues = {
   firstname: 'Johnny',
   lastname: 'Lastjohn',
   email: 'jon@last.com',
-  phone: '08034567823'
+  phone: '8034567823'
 }
 
 describe('AdminStaffComponent', () => {

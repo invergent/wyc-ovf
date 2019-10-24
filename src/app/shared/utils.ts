@@ -1,11 +1,10 @@
 export const staffIdRegex = /^[DdFfGgSsTt][DdCcEeRrSsNn][0-9]{5,6}$/;
-export const solIdRegex = /^\d{4}$/;
+export const solIdRegex = /^\d{3}$/;
 export const emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{3})+$/;
 export const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
 export const emptyRegex = /^\w+$/;
 export const numberRegex = /^\d+$/;
-export const phoneNumberRegex = /^\d{11}$/;
-export const accNumberRegex = /^\d{10}$/;
+export const phoneAccRegex = /^\d{10}$/;
 export const addressRegex = /^[.0-9a-zA-Z\s,-]+$/;
 export const claimPrice = {
   overtime: 150,

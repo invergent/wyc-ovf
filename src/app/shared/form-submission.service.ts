@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { emptyRegex, emailRegex, phoneNumberRegex, staffIdRegex, solIdRegex, addressRegex, accNumberRegex } from "./utils";
+import { emptyRegex, emailRegex, phoneAccRegex, staffIdRegex, solIdRegex, addressRegex } from "./utils";
 
 @Injectable()
 export class FormSubmissionService {
@@ -14,11 +14,13 @@ export class FormSubmissionService {
     if (lastname) errors.push(...this.checkFields('Last name', lastname, emptyRegex));
     if (middlename) errors.push(...this.checkFields('Middle name', middlename, emptyRegex));
     if (email) errors.push(...this.checkFields('Email address', email, emailRegex));
-    if (phone) errors.push(...this.checkFields('Phone number', phone, phoneNumberRegex));
-    if (altPhone) errors.push(...this.checkFields('Alternative Phone number', altPhone, phoneNumberRegex));
-    if (accountNumber) errors.push(...this.checkFields('Account number', accountNumber, accNumberRegex));
+    if (phone) errors.push(...this.checkFields('Phone number', phone, phoneAccRegex));
+    if (altPhone) errors.push(...this.checkFields('Alternative Phone number', altPhone, phoneAccRegex));
+    if (accountNumber) errors.push(...this.checkFields('Account number', accountNumber, phoneAccRegex));
     if (solId) errors.push(...this.checkFields('SOL ID', solId, solIdRegex));
-    if (name) errors.push(...this.checkFields('Branch name', name, emptyRegex));
+    if (name) {
+      if (!name.trim()) errors.push(...this.checkFields('Branch name', name, emptyRegex));
+    } 
     if (address) errors.push(...this.checkFields('Branch address', address, addressRegex));
 
     return errors;
@@ -35,7 +37,7 @@ export class FormSubmissionService {
     return { data: formData, errors: [] };
   }
 
-  profileInfoSubmit(formValues) {
+   profileInfoSubmit(formValues) {
     let { staffId, firstname, lastname, middlename, email, phone, altPhone, solId, name, address, accountNumber } = formValues;
     const errors = this.validateProfileInfo(formValues);
 
