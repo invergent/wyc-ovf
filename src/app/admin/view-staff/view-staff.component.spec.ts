@@ -1,11 +1,11 @@
 import { ViewStaffComponent } from './view-staff.component';
-import { activatedRouteMock, profileServiceMock, mockToastr, mockJQuery } from 'src/app/__mocks__';
+import { activatedRouteMock, profileServiceMock, mockToastr, mockJQuery, routerMock } from 'src/app/__mocks__';
 
 describe('ClaimEngineComponent', () => {
   let component: ViewStaffComponent;
 
   beforeEach(() => {
-    component = new ViewStaffComponent(activatedRouteMock, profileServiceMock, mockToastr, mockJQuery);
+    component = new ViewStaffComponent(activatedRouteMock, profileServiceMock, routerMock, mockToastr, mockJQuery);
   });
 
   it('should resend activation email to selected staff', async () => {

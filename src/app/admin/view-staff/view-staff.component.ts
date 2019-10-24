@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { OvertimeService, ProfileService, IProfileUpdate, IToastr, TOASTR_TOKEN, JQUERY_TOKEN } from 'src/app/shared';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProfileService, IProfileUpdate, IToastr, TOASTR_TOKEN, JQUERY_TOKEN } from 'src/app/shared';
 
 @Component({
   selector: 'app-view-staff',
@@ -16,13 +16,18 @@ export class ViewStaffComponent implements OnInit {
   showLoader: boolean = true;
   errorMessage: string = '';
   displaySpinner: boolean = false;
-  displayAuthoriseSpinner: boolean = false;
+  displayActionSpinner: boolean = false;
 
   displayModal: string = 'none';
+  currentModal: string
+  modalTitle: string
+  removeStaffModal: boolean;
+  calendarModal: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private profileService: ProfileService,
+    private router: Router,
     @Inject(TOASTR_TOKEN) private toastr: IToastr,
     @Inject(JQUERY_TOKEN) private jQuery
   ) { }
@@ -38,16 +43,18 @@ export class ViewStaffComponent implements OnInit {
       this.errorMessage = 'Unable to load content. Please reload';
     }
   }
-  
-  runModalDisplay() {
-    this.showCalendar = true;
-    setTimeout(() => this.initializeDatePicker(), 1);
+
+  runModalDisplay(modal, title) {
+    this.modalTitle = title;
     this.displayModal = 'block';
+    this.currentModal = modal;
+    setTimeout(() => this.initializeDatePicker(), 1);
+    this[modal] = true;
   }
 
-  closeModal() {
+  closeModal(modal) {
     this.displayModal = 'none';
-    this.showCalendar = false;
+    this[modal] = false;
   }
 
   initializeDatePicker(daysToDisable?: number[]) {
@@ -106,20 +113,27 @@ export class ViewStaffComponent implements OnInit {
     }
   }
 
-  async permitMultipleMonths() {
-    if(this.selectedMonths.length < 2) return this.toastr.error('Please select a month to authorise');
-    this.displayAuthoriseSpinner = true;
-    
-    const payload = this.createAuthorisationPayload();
+  async handleSubmit() {
+    let payload;
+    const method = this.currentModal === 'calendarModal' ? 'authoriseMultipleClaims' : 'removeStaff';
+    if (method === 'authoriseMultipleClaims') {
+      if(this.selectedMonths.length < 2) return this.toastr.error('Please select a month to authorise');
+      
+      payload = this.createAuthorisationPayload();
+    }
+
+    this.displayActionSpinner = true;
 
     try {
-      const { message } = await this.profileService.authoriseMultipleClaims(payload);
+      const { message } = await this.profileService[method](payload || this.staff.staffId);
       this.toastr.success(message);
-      this.displayAuthoriseSpinner = false;
-      this.closeModal();
+      await this.profileService.syncWithAPI(true);
+      this.displayActionSpinner = false;
+      if (method === 'removeStaff') return this.router.navigate(['/admin/staff']);
+      this.closeModal(this.currentModal);
     } catch (e) {
       console.log(e)
-      this.displayAuthoriseSpinner = false;
+      this.displayActionSpinner = false;
       this.toastr.error(e.error.message);
     }
   }

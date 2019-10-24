@@ -39,7 +39,7 @@
           <i class="fas fa-edit"></i>
         </div>
         <p class="details-header">Phone Number</p>
-        <p class="details-item">{{currentStaff?.phone}}{{currentStaff?.altPhone ? ('; '+currentStaff?.altPhone) : ''}}</p>
+        <p class="details-item">0{{currentStaff?.phone}}{{currentStaff?.altPhone ? ('; 0'+currentStaff?.altPhone) : ''}}</p>
       </div>
       <div class="details">
         <div class="edit-icon" (click)="runModalDisplay('emailModal', 'Email Address')">

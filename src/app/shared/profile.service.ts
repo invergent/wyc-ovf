@@ -92,4 +92,8 @@ export class ProfileService {
   authoriseMultipleClaims(payload) {
     return this.http.put<IPutProfile>(`${this.api}/admin/staff/multiple-claims`, payload, this.options).toPromise();
   }
+
+  removeStaff(staffId) {
+    return this.http.delete<IPutProfile>(`${this.api}/admin/staff/${staffId}`, this.options).toPromise();
+  }
 }

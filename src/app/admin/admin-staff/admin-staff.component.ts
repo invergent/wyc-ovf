@@ -102,11 +102,33 @@ export class AdminStaffComponent implements OnInit {
     this.excelFile = fileInput.files[0];
   }
 
+  checkForEmptyFields(formValues) {
+    const invalidFields = Object.keys(formValues).reduce((acc, field) => {
+      if((field !== 'middlename') && !formValues[field]) acc.push(`${field} is required`);
+      return acc;
+    }, []);
+
+    if (invalidFields.length) {
+      this.displaySpinner = false;
+      invalidFields.forEach(error => this.toastr.error(error));
+      return false; // do not execute codes below this function when called
+    } else {
+      return true // no errors, execute other codes below this function when called
+    }
+  }
+
   async handleSubmit(formValues, currentModal) {
     const updateMethod = this.formSubmissionService.getUpdateMethod(currentModal);
-    const submissionData = currentModal === 'bulkModal'
-      ? this.formSubmissionService.fileSubmit('doc', this.excelFile)
-      : this.formSubmissionService.profileInfoSubmit(formValues);
+    let submissionData
+    
+    if (currentModal === 'bulkModal') {
+      submissionData = this.formSubmissionService.fileSubmit('doc', this.excelFile)
+    } else {
+      const valid = this.checkForEmptyFields(formValues);
+
+      if (!valid) return;
+      submissionData = this.formSubmissionService.profileInfoSubmit(formValues);
+    }
 
     if (submissionData.errors.length) {
       this.displaySpinner = false;
