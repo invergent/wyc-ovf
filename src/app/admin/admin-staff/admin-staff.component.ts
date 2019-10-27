@@ -23,10 +23,14 @@ export class AdminStaffComponent implements OnInit {
 
   bulkModal: boolean = false;
   singleModal: boolean = false;
+  excelErrorModal: boolean = false;
   excelFile: any
 
   // input controls
   fileInvalid: boolean = true
+
+  excelErrors;
+  excelErrorsToDisplay;
 
   constructor(
     private profileService: ProfileService,
@@ -117,6 +121,13 @@ export class AdminStaffComponent implements OnInit {
     }
   }
 
+  displayUploadErrors(currentModal) {
+    this[currentModal] = false;
+    this.modalTitle = 'Errors'
+    this.excelErrorModal = true;
+    this.currentModal = 'excelErrorModal';
+  }
+
   async handleSubmit(formValues, currentModal) {
     const updateMethod = this.formSubmissionService.getUpdateMethod(currentModal);
     let submissionData
@@ -149,7 +160,12 @@ export class AdminStaffComponent implements OnInit {
     } catch (error) {
       this.displaySpinner = false;
       if(error.error) {
-        const { error: { message, errors } } = error;
+        const { error: { message, errors, rowsWithErrors } } = error;
+        if (rowsWithErrors) {
+          this.excelErrors = rowsWithErrors;
+          this.excelErrorsToDisplay = rowsWithErrors.slice(0, 9);
+          return this.displayUploadErrors(this.currentModal);
+        }
         if (errors) return errors.forEach(err => this.toastr.error(err));
         return this.toastr.error(message);
       }

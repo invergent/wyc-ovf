@@ -100,7 +100,20 @@
               <input [(ngModel)]="accountNumber" name="accountNumber" type="text" placeholder="Account number" required>
             </div>
           </ng-template>
-          <div class="button">
+          <ng-template [ngSwitchCase]="excelErrorModal">
+            <div class="excel-errors">
+              <div class="displayed-errors">
+                <div *ngFor="let error of excelErrorsToDisplay" class="errors">
+                  <h4>Line {{error.line}}</h4>
+                  <p *ngFor="let errorMessage of error.errors">{{errorMessage}}</p>
+                </div>
+              </div>
+              <div *ngIf="!!(excelErrors.length - excelErrorsToDisplay.length)" class="more-errors">
+                <p>and similar errors in {{excelErrors.length - excelErrorsToDisplay.length}} other lines</p>
+              </div>
+            </div>
+          </ng-template>
+          <div *ngIf="!excelErrorModal" class="button">
             <button
               [disabled]="(bulkModal && fileInvalid)"
               (click)="displaySpinner=true"
