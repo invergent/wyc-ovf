@@ -196,6 +196,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   runModalDisplay(modal, title) {
+    if (modal === 'lineManagerModal' && this.lineManagerIdNumber && !this.canUpdateLineManager) {
+      return this.toastr.error('Contact admin for permission to update your line manager.');
+    }
     this.modalTitle = title;
     this.displayModal = 'block';
     this.currentModal = modal;
@@ -288,8 +291,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this.displaySpinner = false;
       return formData.errors.forEach(error => this.toastr.error(error));
     }
-          
-    if (currentModal === 'lineManagerModal') formData.data.lineManagerRole = 'Line manager';
 
     try {
       const { message } = await this.profileService[updateMethod](formData.data);
