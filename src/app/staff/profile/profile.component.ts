@@ -50,6 +50,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   accountNumber: string
   position: string
   branch: string
+  canUpdateLineManager: boolean
   lineManagerIdNumber: string
   lineManagerFirstName: string
   lineManagerLastName: string
@@ -176,6 +177,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.accountNumber = this.authService.currentStaff.accountNumber;
     this.position = this.authService.currentStaff.role;
     this.branch = this.authService.currentStaff.branch;
+    this.canUpdateLineManager = this.authService.currentStaff.canUpdateLineManager;
     this.lineManagerIdNumber = this.authService.currentStaff.lineManagerIdNumber;
     this.lineManagerFirstName = this.authService.currentStaff.lineManagerFirstName;
     this.lineManagerLastName = this.authService.currentStaff.lineManagerLastName;
