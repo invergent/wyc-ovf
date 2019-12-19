@@ -196,6 +196,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   runModalDisplay(modal, title) {
+    if (modal === 'lineManagerModal' && !this.canUpdateLineManager) {
+      return this.toastr.error('Contact admin for permission to update your line manager.');
+    }
     this.modalTitle = title;
     this.displayModal = 'block';
     this.currentModal = modal;
