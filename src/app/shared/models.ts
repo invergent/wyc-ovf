@@ -11,6 +11,7 @@ export interface IStaff {
   role: string
   branch: string
   changedPassword: boolean
+  canUpdateLineManager: boolean
   extraMonthsPermitted: boolean
   extraMonthsData: IExtraMonthsData
   lineManagerIdNumber: string;

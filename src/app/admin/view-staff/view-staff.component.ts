@@ -80,10 +80,10 @@ export class ViewStaffComponent implements OnInit {
     return { preselectMonth, maxDate };
   }
 
-  async resendLoginCredentials(staffId) {
+  async runAuthorisation(staffId, action) {
     this.displaySpinner = true;
     try {
-      const { message } = await this.profileService.resendLoginCredentials(staffId);
+      const { message } = await this.profileService[action](staffId);
       this.displaySpinner = false;
       return this.toastr.success(message);
     } catch (error) {

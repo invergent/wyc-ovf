@@ -57,7 +57,7 @@
       </div>
     </div>
     <div class="lm lineManager">
-      <div class="edit-icon" (click)="runModalDisplay('lineManagerModal', 'Supervisor')">
+      <div *ngIf="!currentStaff.lineManagerIdNumber || currentStaff.canUpdateLineManager" class="edit-icon" (click)="runModalDisplay('lineManagerModal', 'Supervisor')">
         <i class="fas fa-edit"></i>
       </div>
       <div class="lm-details-header">
@@ -81,12 +81,6 @@
         </div>
         <div class="phone details-item">
           <p>{{currentStaff?.lineManagerPhone || '--'}}</p>
-        </div>
-        <div class="email details-header">
-          <p>Email Address</p>
-        </div>
-        <div class="email details-item">
-          <p>{{currentStaff?.lineManagerEmailAddress || '--'}}</p>
         </div>
       </div>
     </div>
@@ -179,8 +173,8 @@
                 required>
               <div *ngIf="lineManagerDropdown && filteredlineManagers.length" class="dropdown-list">
                 <div *ngFor="let lm of filteredlineManagers" class="multi-list-item" (click)="handleSelect('lineManager', lm)">
-                  <p class="lm-name">{{lm.firstname}} {{lm.lastname}} ({{lm.idNumber}})</p>
-                  <p class="lm-email">{{lm.email}}</p>
+                  <p class="lm-name">{{lm.idNumber}}</p>
+                  <p class="lm-email">{{lm.firstname}} {{lm.lastname}}</p>
                 </div>
               </div>
             </div>
@@ -189,9 +183,6 @@
             </div>
             <div class="input">
               <input [(ngModel)]="lineManagerLastName" name="lastname" type="text" placeholder="Enter Line Manager's last name" required>
-            </div>
-            <div class="input">
-              <input [(ngModel)]="lineManagerEmailAddress" name="email" type="email" placeholder="Enter line manager's email address" required>
             </div>
             <div class="input">
               <input [(ngModel)]="lineManagerPhone" name="phone" type="tel" placeholder="Enter line manager's phone number" required>

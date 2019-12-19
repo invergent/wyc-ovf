@@ -12,7 +12,7 @@ describe('ClaimEngineComponent', () => {
     const resendLoginMock = jest.spyOn(profileServiceMock, 'resendLoginCredentials');
     const toastrSucMock = jest.spyOn(mockToastr, 'success');
 
-    await component.resendLoginCredentials('someStaffId');
+    await component.runAuthorisation('someStaffId', 'resendLoginCredentials');
 
     expect(resendLoginMock).toHaveBeenCalledWith('someStaffId');
     expect(toastrSucMock).toHaveBeenCalledWith('message');
