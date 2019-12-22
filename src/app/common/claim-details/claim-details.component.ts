@@ -73,7 +73,7 @@ export class ClaimDetailsComponent implements OnInit {
         const itsPresent = this.claimDetails[item].selectedDates.includes(calendarDate);
         // itsPresent would be true for only one claim element at a time
         if (itsPresent) {
-          acc += `${this.elementsClassNames[item]}-bg`;
+          acc = `${acc ? ('overtime-' + this.elementsClassNames[item]) : this.elementsClassNames[item]}-bg`;
           return acc;
         }
       }

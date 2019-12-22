@@ -1,9 +1,8 @@
 import { Component, OnInit, Inject, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-  JQUERY_TOKEN, AuthService, dateRegex, TOASTR_TOKEN, IToastr,
-  OvertimeService, ISettings, SettingsService, claimPrice, LOCALSTORAGE_TOKEN,
-  ILocalStorage, IStaffClaimData, IClaim, months
+  JQUERY_TOKEN, AuthService, TOASTR_TOKEN, IToastr, OvertimeService, claimPrice, LOCALSTORAGE_TOKEN,
+  ILocalStorage, IClaim, months
 } from '../../shared';
 
 @Component({
@@ -104,17 +103,35 @@ export class ClaimEngineComponent implements OnInit {
 
   initializeDatePicker(element: string, datesToDisable?: number[], daysToDisable?: number[]) {
     const prop = element.substr(1).split('-calendar')[0];
+    const isATMDutyOrSupport = prop === 'atmDuty' || prop === 'atmSupport';
     let preSelectedDates = [];
     let selfSelectDates = [];
+
+    let selectedOnOvertimeCalendar = [];
+    let selectedOnATMDutyAndSupport = [];
 
     if (this[prop]) {
       preSelectedDates = this[prop].selectedDates;
       selfSelectDates = preSelectedDates.map(date => date.getDate());
     }
     if (prop === 'overtime') {
+      let dutyDates = [];
+      let supportDates = [];
+      // merge ATM Duty and ATM Support dates
+      if (this['atmDuty']) {
+        dutyDates = this['atmDuty'].selectedDates.map(date => date.getDate());
+      }
+      if (this['atmSupport']) {
+        supportDates = this['atmSupport'].selectedDates.map(date => date.getDate());
+      }
+      selectedOnATMDutyAndSupport = dutyDates.concat(supportDates);
+
       // merge holidays uniquely to datesToDisable for overtime calendar
       const holidaysAdded = datesToDisable.concat(this.holidaysInClaimMonth);
       datesToDisable = holidaysAdded.filter((date, index) => holidaysAdded.indexOf(date) === index);
+    }
+    if (isATMDutyOrSupport && this['overtime']) {
+      selectedOnOvertimeCalendar = this['overtime'].selectedDates.map(date => date.getDate());
     }
 
     this[prop] = this.jQuery(element).datepicker({
@@ -126,8 +143,22 @@ export class ClaimEngineComponent implements OnInit {
       maxDate: this.overtimeService.claimMonthDate(this.applyingMonth, 'lastDay'),
       onRenderCell: (date, cellType) => {
         if (cellType === 'day' && datesToDisable.length) {
+          let condition3 = true;
+          let condition4 = true;
+          // disable day if it has been selected on a different calendar
+          const condition1 = datesToDisable.includes(date.getDate());
           // do not disable selected days on a calendar on which they were selected
-          const disabled = datesToDisable.includes(date.getDate()) && !selfSelectDates.includes(date.getDate());
+          const condition2 = !selfSelectDates.includes(date.getDate());
+          // if calendar is ATM Duty or ATM Support, do not disable dates selected on Overtime calendar
+          if (isATMDutyOrSupport) {
+            condition3 = !selectedOnOvertimeCalendar.includes(date.getDate());
+          }
+          // if calendar is Overtime, do not disable dates selected on ATM Duty or ATM Support calendar
+          if (prop === 'overtime') {
+            condition4 = !selectedOnATMDutyAndSupport.includes(date.getDate());
+          }
+
+          const disabled = condition1 && condition2 && condition3 && condition4;
           if (disabled) return { disabled };
         }
         if (prop === 'holiday') {
