@@ -81,6 +81,24 @@ button, .app-name {
   }
 }
 
+.overtime-atmDuty-bg {
+  background: linear-gradient(90deg, #43A047 50%, #2196F3 50%);
+  color: $color-white !important;
+  cursor: pointer !important;
+  &:hover {
+    background: linear-gradient(90deg, #43A047 50%, #2196F3 50%);
+  }
+}
+
+.overtime-atmSupport-bg {
+  background: linear-gradient(90deg, #43A047 50%, #9C27B0 50%);
+  color: $color-white !important;
+  cursor: pointer !important;
+  &:hover {
+    background: linear-gradient(90deg, #43A047 50%, #9C27B0 50%);
+  }
+}
+
 .margin-right {
   margin-right: 10px;
 }
