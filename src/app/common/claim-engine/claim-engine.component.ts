@@ -109,14 +109,14 @@ export class ClaimEngineComponent implements OnInit {
 
     let selectedOnOvertimeCalendar = [];
     let selectedOnATMDutyAndSupport = [];
+    let dutyDates = [];
+    let supportDates = [];
 
     if (this[prop]) {
       preSelectedDates = this[prop].selectedDates;
       selfSelectDates = preSelectedDates.map(date => date.getDate());
     }
-    if (prop === 'overtime') {
-      let dutyDates = [];
-      let supportDates = [];
+    if (prop === 'overtime' || isATMDutyOrSupport) {
       // merge ATM Duty and ATM Support dates
       if (this['atmDuty']) {
         dutyDates = this['atmDuty'].selectedDates.map(date => date.getDate());
@@ -149,13 +149,21 @@ export class ClaimEngineComponent implements OnInit {
           const condition1 = datesToDisable.includes(date.getDate());
           // do not disable selected days on a calendar on which they were selected
           const condition2 = !selfSelectDates.includes(date.getDate());
-          // if calendar is ATM Duty or ATM Support, do not disable dates selected on Overtime calendar
-          if (isATMDutyOrSupport) {
-            condition3 = !selectedOnOvertimeCalendar.includes(date.getDate());
-          }
           // if calendar is Overtime, do not disable dates selected on ATM Duty or ATM Support calendar
           if (prop === 'overtime') {
-            condition4 = !selectedOnATMDutyAndSupport.includes(date.getDate());
+            condition3 = !selectedOnATMDutyAndSupport.includes(date.getDate());
+          }
+          // if date has been selected on Overtime and either of duty or support
+          // then disable for either duty or support
+          if (isATMDutyOrSupport) {
+            const inOvertime = selectedOnOvertimeCalendar.includes(date.getDate());
+            const inDuty = dutyDates.includes(date.getDate());
+            const inSupport = supportDates.includes(date.getDate());
+            if (prop === 'atmDuty') {
+              condition4 =  (inOvertime && inSupport) || inSupport;
+            } else {
+              condition4 = (inOvertime && inDuty) || inDuty;;
+            }
           }
 
           const disabled = condition1 && condition2 && condition3 && condition4;
@@ -232,7 +240,8 @@ export class ClaimEngineComponent implements OnInit {
 
     if (claimItem === this.currentlyPressedBtn && this[`${claimItem}Clicked`]) {
       this.toggleButtonPress(`${claimItem}Clicked`);
-    } 
+    }
+
     setTimeout(() => {
       this[claimItem] = null;
       this.calculateClaimAmount();
