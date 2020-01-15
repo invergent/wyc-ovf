@@ -7,13 +7,17 @@ import { JQUERY_TOKEN, OvertimeService, IChartSourceData } from 'src/app/shared'
   styleUrls: ['./claims-graph.component.scss']
 })
 export class ClaimsGraphComponent implements OnInit, AfterViewInit {
+  today: Date = new Date();
+  month;
+  year;
+  isJanuary: boolean
   
   constructor(
     private overtimeSerice: OvertimeService,
     @Inject(JQUERY_TOKEN) private jQuery
   ) { }
   
-  title: string = `Claims Report ${new Date().getFullYear()}`;
+  title: string;
   description: string = 'Showing statistics for total claims paid monthly'
   padding: any = { left: 15, top: 5, right: 20, bottom: 5 };
   titlePadding: any = { left: 10, top: 0, right: 0, bottom: 10 };
@@ -48,6 +52,10 @@ export class ClaimsGraphComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.month = this.today.getMonth();
+    this.year = this.today.getFullYear();
+    this.isJanuary = this.month === 0;
+    this.title = `Claims Report ${this.isJanuary ? (this.year - 1) : this.year}`;
     this.source = this.createDataForChart(this.overtimeSerice.adminClaimData.chartStats);
   }
 
