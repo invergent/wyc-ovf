@@ -11,6 +11,7 @@ export * from './notification.service';
 export * from './pusher.service';
 export * from './profile-checker.service';
 export * from './enforce-profile-update.service';
+export * from './admin-auditor.guard';
 export * from './admin-only.guard';
 export * from './staff-only.guard';
 export * from './cronstrue.service';

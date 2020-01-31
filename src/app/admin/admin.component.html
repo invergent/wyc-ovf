@@ -3,9 +3,10 @@
   <article class="content-wrapper">
     <section class="side-nav" (click)="toggleSideNav('self')" [ngStyle]="{left: sideNavLeft}">
       <div class="side-nav-tags">
-        <p>Overview</p>
+        <p>{{authService.currentStaff.role !== 'Auditor' ? 'Overview' : ' '}}</p>
       </div>
       <a
+        *ngIf="authService.currentStaff.role !== 'Auditor'"
         [routerLink]="['/admin/dashboard']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
@@ -25,10 +26,11 @@
         </div>
         <p>Claims</p>
       </a>
-      <div class="side-nav-tags">
+      <div *ngIf="authService.currentStaff.role !== 'Auditor'" class="side-nav-tags">
         <p>Administration</p>
       </div>
       <a
+        *ngIf="authService.currentStaff.role !== 'Auditor'"
         [routerLink]="['/admin/staff']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
@@ -39,6 +41,7 @@
         <p>Staff</p>
       </a>
       <a
+        *ngIf="authService.currentStaff.role !== 'Auditor'"
         [routerLink]="['/admin/branch']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
@@ -49,6 +52,7 @@
         <p>Branch</p>
       </a>
       <a
+        *ngIf="authService.currentStaff.role !== 'Auditor'"
         [routerLink]="['/admin/holidays']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
@@ -59,6 +63,7 @@
         <p>Holidays</p>
       </a>
       <a
+        *ngIf="authService.currentStaff.role !== 'Auditor'"
         [routerLink]="['/admin/settings']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"
@@ -68,10 +73,22 @@
         </div>
         <p>Settings</p>
       </a>
-      <div class="side-nav-tags">
+      <a
+        *ngIf="authService.currentStaff.role !== 'Admin'"
+        [routerLink]="['/admin/logs']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-cogs"></i>
+        </div>
+        <p>Logs</p>
+      </a>
+      <div *ngIf="authService.currentStaff.role !== 'Auditor'" class="side-nav-tags">
         <p>Personal</p>
       </div>
       <a
+        *ngIf="authService.currentStaff.role !== 'Auditor'"
         [routerLink]="['/admin/profile']"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{exact:true}"

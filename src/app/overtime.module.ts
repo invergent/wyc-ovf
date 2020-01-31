@@ -14,7 +14,7 @@ import { LogoutComponent } from './logout/logout.component';
 import {
   AuthService, ProfileService, OvertimeService, RedirectToDashboard, TOASTR_TOKEN,
   JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService,
-  EnforceProfileUpdateService, ProfileCheckerService, AdminOnlyGuard, StaffOnlyGuard,
+  EnforceProfileUpdateService, ProfileCheckerService, AdminAuditorGuard, AdminOnlyGuard, StaffOnlyGuard,
   PUSHER_TOKEN, CRONSTRUE_TOKEN, ICronstrue, SettingsService, LOCALSTORAGE_TOKEN,
   ILocalStorage
 } from './shared';
@@ -49,6 +49,7 @@ const localStorage: ILocalStorage = window['localStorage'];
     OvertimeService,
     ProfileService,
     RedirectToDashboard,
+    AdminAuditorGuard,
     AdminOnlyGuard,
     StaffOnlyGuard,
     EnforceProfileUpdateService,
