@@ -12,20 +12,23 @@ import { AdminChangePasswordComponent } from './admin-change-password/admin-chan
 import { HolidaysComponent } from './holidays/holidays.component';
 import { ViewStaffComponent } from './view-staff/view-staff.component';
 import { ViewClaimComponent } from './view-claim/view-claim.component';
+import { LogsComponent } from './logs/logs.component';
+import { AdminOnlyGuard } from '../shared';
 
 const routes: Routes = [{
   path: '',
   component: AdminComponent,
   children: [
-    { path: 'dashboard', component: AdminDashboardComponent },
+    { path: 'dashboard', canActivate: [AdminOnlyGuard], component: AdminDashboardComponent },
     { path: 'claims', component: AdminClaimsComponent },
     { path: 'claims/:claimId', component: ViewClaimComponent },
-    { path: 'staff', component: AdminStaffComponent },
-    { path: 'staff/:staffId', component: ViewStaffComponent },
-    { path: 'branch', component: AdminBranchComponent },
-    { path: 'holidays', component: HolidaysComponent },
-    { path: 'settings', component: AdminSettingsComponent },
-    { path: 'profile', component: AdminProfileComponent },
+    { path: 'staff', canActivate: [AdminOnlyGuard], component: AdminStaffComponent },
+    { path: 'staff/:staffId', canActivate: [AdminOnlyGuard], component: ViewStaffComponent },
+    { path: 'branch', canActivate: [AdminOnlyGuard], component: AdminBranchComponent },
+    { path: 'holidays', canActivate: [AdminOnlyGuard], component: HolidaysComponent },
+    { path: 'settings', canActivate: [AdminOnlyGuard], component: AdminSettingsComponent },
+    { path: 'logs', component: LogsComponent },
+    { path: 'profile', canActivate: [AdminOnlyGuard], component: AdminProfileComponent },
     { path: 'change-password', component: AdminChangePasswordComponent }
   ]
 }];

@@ -8,7 +8,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ConfirmPasswordResetComponent } from './confirm-password-reset/confirm-password-reset.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { RedirectToDashboard } from './shared/redirect-to-dashboard.service';
-import { AdminOnlyGuard, StaffOnlyGuard } from './shared';
+import { AdminAuditorGuard, StaffOnlyGuard } from './shared';
 
 const routes: Routes = [
   { path: 'login', canActivate: [RedirectToDashboard], component: LoginComponent },
@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'staff', redirectTo: '/staff/dashboard', pathMatch: 'full' },
   { path: 'staff', canActivate: [StaffOnlyGuard], loadChildren: './staff/staff.module#StaffModule' },
   { path: 'admin', redirectTo: '/admin/dashboard', pathMatch: 'full' },
-  { path: 'admin', canActivate: [AdminOnlyGuard], loadChildren: './admin/admin.module#AdminModule' },
+  { path: 'admin', canActivate: [AdminAuditorGuard], loadChildren: './admin/admin.module#AdminModule' },
   { path: 'line-manager', redirectTo: '/line-manager/verify', pathMatch: 'full' },
   { path: 'line-manager', loadChildren: './line-manager/line-manager.module#LineManagerModule' },
   { path: '', component: HomeComponent }

@@ -16,6 +16,7 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
 import { HolidaysComponent } from './holidays/holidays.component';
 import { ViewStaffComponent } from './view-staff/view-staff.component';
 import { ViewClaimComponent } from './view-claim/view-claim.component';
+import { LogsComponent } from './logs/logs.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { ViewClaimComponent } from './view-claim/view-claim.component';
     AdminSettingsComponent,
     HolidaysComponent,
     ViewStaffComponent,
-    ViewClaimComponent
+    ViewClaimComponent,
+    LogsComponent
   ]
 })
 export class AdminModule { }

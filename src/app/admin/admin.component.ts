@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../shared';
 
 @Component({
   templateUrl: './admin.component.html',
@@ -7,7 +8,7 @@ import { Component } from '@angular/core';
 export class AdminComponent {
   sideNavLeft = '-300px';
 
-  constructor(){}
+  constructor(private authService: AuthService){}
 
   toggleSideNav(source) {
     if (source === 'navItem') {
