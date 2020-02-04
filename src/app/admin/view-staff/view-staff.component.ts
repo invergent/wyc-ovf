@@ -132,7 +132,6 @@ export class ViewStaffComponent implements OnInit {
       if (method === 'removeStaff') return this.router.navigate(['/admin/staff']);
       this.closeModal(this.currentModal);
     } catch (e) {
-      console.log(e)
       this.displayActionSpinner = false;
       this.toastr.error(e.error.message);
     }

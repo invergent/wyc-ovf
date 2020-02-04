@@ -44,7 +44,6 @@ export class NewClaimComponent {
       this.displayPageContent();
       this.showLoader = false;
     } catch(e) {
-      console.log(e)
       this.showLoader = false;
       this.errorMessage = 'Unable to load content. Please reload';
     }

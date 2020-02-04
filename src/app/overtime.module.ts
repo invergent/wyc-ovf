@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule }   from '@angular/forms';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { OvertimeRoutingModule } from './overtime-routing.module';
 import { OvertimeComponent } from './overtime.component';
@@ -16,7 +17,7 @@ import {
   JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService,
   EnforceProfileUpdateService, ProfileCheckerService, AdminAuditorGuard, AdminOnlyGuard, StaffOnlyGuard,
   PUSHER_TOKEN, CRONSTRUE_TOKEN, ICronstrue, SettingsService, LOCALSTORAGE_TOKEN,
-  ILocalStorage
+  ILocalStorage, LogService
 } from './shared';
 import { environment } from 'src/environments/environment';
 import { PipesModule } from './pipes/pipes.module';
@@ -33,7 +34,8 @@ const localStorage: ILocalStorage = window['localStorage'];
     OvertimeRoutingModule,
     HttpClientModule,
     FormsModule,
-    PipesModule
+    PipesModule,
+    InfiniteScrollModule
   ],
   declarations: [
     OvertimeComponent,
@@ -57,6 +59,7 @@ const localStorage: ILocalStorage = window['localStorage'];
     FormSubmissionService,
     NotificationService,
     SettingsService,
+    LogService,
     { provide: JQUERY_TOKEN, useValue: jQuery },
     { provide: TOASTR_TOKEN, useValue: toastr },
     { provide: PUSHER_TOKEN, useValue: pusher },

@@ -237,6 +237,12 @@ export interface IProfileData {
   staffList?: IStaffForAdmin[]
 }
 
+export interface ILogData {
+  activity?: string,
+  staffId?: string,
+  createdAt: string
+}
+
 export interface IApprovalHistory {
   id: number,
   claimId: number,

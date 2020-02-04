@@ -71,6 +71,11 @@ export const settingsServiceMock: any = {
   updateSettings: () => Promise.resolve({ message: 'value' })
 }
 
+export const logServiceMock: any = {
+  api: 'some-url',
+  createQueryString: () => {}
+}
+
 export const notificationServiceMock: any = {
   api: 'some-url',
   channel: { bind_global: () => {} },
