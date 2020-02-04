@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { PipesModule } from '../pipes/pipes.module';
 import { CommonComponentsModule } from '../common/common-components.module';
@@ -24,7 +25,8 @@ import { LogsComponent } from './logs/logs.component';
     FormsModule,
     CommonComponentsModule,
     PipesModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    InfiniteScrollModule
   ],
   declarations: [
     AdminComponent,

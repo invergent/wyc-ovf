@@ -1,10 +1,11 @@
 import { AdminComponent } from './admin.component';
+import { authServiceMock } from '../__mocks__';
 
 describe('AdminComponent', () => {
   let component: AdminComponent;
 
   beforeEach(() => {
-    component = new AdminComponent()
+    component = new AdminComponent(authServiceMock)
   });
 
   it('should toggle the left value of the sideNavLeft', () => {

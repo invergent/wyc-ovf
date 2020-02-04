@@ -20,7 +20,6 @@ export class AuthService {
       const { data } = await this.fetchStaffProfile();
       this.currentStaff = data;
       this.isAuthenticated = true;
-      console.log(this.currentStaff)
       if (['Admin', 'Auditor'].includes(this.currentStaff.role)) this.isAdmin = true;
       return true;
     } catch(e) {

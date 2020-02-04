@@ -1,22 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LogsComponent } from './logs.component';
+import { overtimeServiceMock, mockToastr, mockJQuery, logServiceMock, profileServiceMock } from 'src/app/__mocks__';
 
-describe('LogsComponent', () => {
+describe('ClaimEngineComponent', () => {
   let component: LogsComponent;
-  let fixture: ComponentFixture<LogsComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ LogsComponent ]
-    })
-    .compileComponents();
-  }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LogsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new LogsComponent(logServiceMock, profileServiceMock, mockToastr, mockJQuery);
   });
 
   it('should create', () => {

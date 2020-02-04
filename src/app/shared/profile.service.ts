@@ -36,7 +36,7 @@ export class ProfileService {
   }
 
   async fetchProfileData(includeStaff?: boolean) {
-    if (!this.profileData) await this.initialiseProfileData(includeStaff);
+    if (!this.profileData || includeStaff) await this.initialiseProfileData(includeStaff);
     return this.profileData;
   }
 
@@ -56,8 +56,10 @@ export class ProfileService {
     return this.http.get<IGetRoles>(`${this.api}/roles`, this.options).toPromise();
   }
 
-  fetchStaff(): Promise<IGetStaffList> {
-    return this.http.get<IGetStaffList>(`${this.api}/admin/staff`, this.options).toPromise();
+  fetchStaff(staffId?: string, limit?: number): Promise<IGetStaffList> {
+    return this.http
+      .get<IGetStaffList>(`${this.api}/admin/staff?staffId=${staffId || ''}&limit=${limit || 10000000}`, this.options)
+      .toPromise();
   }
 
   fetchSingleStaff(staffId: string): Promise<IGetSingleStaff> {

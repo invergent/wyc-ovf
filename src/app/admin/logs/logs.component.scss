@@ -1,0 +1,223 @@
+@import '../../../assets/global-styles/mixins';
+@import '../../../assets/global-styles/variables';
+
+.page-title {
+  font-size: 30px;
+  text-align: center;
+}
+
+.filter {
+  margin-bottom: 50px;
+  .inputs {
+    margin-bottom: 10px;
+    .input-wrapper, .range-input {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .range-input {
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input {
+        background: transparent;
+        border: none;
+        min-width: 250px;
+        height: 40px;
+      }
+    }
+  }
+  .btn-wrapper {
+    button {
+      border-radius: 1000px;
+      background-color: $brand-color;
+      color: $color-white;
+      border: none;
+      padding: 10px 30px;
+      cursor: pointer;
+    }
+  }
+}
+
+.inline-block {
+  display: inline-block;
+  text-align: left;
+}
+
+.input-wrapper {
+  margin-bottom: 10px;
+  position: relative;
+  label {
+    display: block;
+    margin-bottom: 10px;
+    color: $faint-color;
+  }
+  input, select {
+    background-color: $color-white;
+    width: 250px;
+    padding: 10px 15px;
+    border: 1px solid $brand-color;
+    border-radius: 8px;
+    box-sizing: border-box;
+    &:focus {
+      outline: none;
+    }
+  }
+  select {
+    height: 40px;
+  }
+  .staff-list {
+    position: absolute;
+    background-color: $color-white;
+    width: 100%;
+    max-height: 300px;
+    border-radius: 5px;
+    margin-top: 5px;
+    border-bottom: 20px solid $color-white;
+    border-top: 20px solid $color-white;
+    overflow: auto;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    .staff {
+      padding: 10px;
+      border-bottom: 1px solid $faint-color-light;
+      cursor: pointer;
+      &:hover {
+        background-color: $brand-color;
+        color: $color-white;
+      }
+      span {
+        display: block;
+      }
+      .staff-name {
+        font-style: italic;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.logs {
+  .spinner {
+    text-align: center;
+    .fa-spinner {
+      font-size: 100px;
+      color: $brand-color;
+    }
+  }
+  .empty-state {
+    background-color: $color-white;
+    border-radius: 10px;
+    .empty-state-message {
+      max-width: 300px;
+      padding: 30px 0;
+      margin: auto;
+      text-align: center;
+    }
+  }
+  .header, .body {
+    display: flex;
+    .timestamp, .username {
+      flex: 2;
+    }
+    .userid {
+      flex: 1;
+    }
+    .activity {
+      flex: 3;
+      .fa-spinner {
+        font-size: 20px;
+        color: $brand-color;
+        float: right;
+      }
+    }
+  }
+  .header {
+    color: $faint-color;
+    padding: 20px 20px 0;
+    margin-bottom: 10px;
+  }
+  .body-conainer {
+    height: 420px;
+    overflow: auto;
+    .body {
+      padding: 20px;
+      margin-bottom: 10px;
+      background-color: $color-white;
+      border-radius: 10px;
+    }
+  }
+
+}
+
+.confirm-modal-section {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: $modal-background-tint;
+  z-index: 9999;
+  .confirm-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 700px;
+    display: inline-block;
+    background-color: $color-white;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 40px;
+    border-radius: 8px;
+    .modal-title {
+      font-size: 30px;
+      margin-bottom: 30px;
+    }
+    .dates-selected {
+      margin-bottom: 30px;
+      .from, .to {
+        width: 150px;
+        margin-right: 5px;
+      }
+    }
+    .calendar {
+      width: 255px;
+      margin: auto;
+    }
+    .action-buttons {
+      margin: 30px auto;
+      .yes-cancel {
+        @include white-button;
+        margin-right: 80px;
+      }
+      .no-cancel {
+        @include white-button;
+        color: $brand-color;
+        &:hover {
+          background-color: $brand-color;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .confirm-modal-section {
+    .confirm-modal {
+      width: 90%;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .confirm-modal-section {
+    .confirm-modal {
+      width: 95%;
+    }
+    .action-buttons {
+      .yes-cancel {
+        margin-right: 30px !important;
+      }
+    }
+  }
+}
