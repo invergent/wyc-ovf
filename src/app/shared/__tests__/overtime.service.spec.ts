@@ -104,14 +104,13 @@ describe('Overtime Service', () => {
 
     await service.addHoliday({});
 
-    await service.markClaimsAsCompleted();
     await service.updateOvertimeRequest({}, 1)
 
     await service.removeHoliday('some date');
 
     expect(httpGet).toHaveBeenCalledTimes(7);
     expect(httpPost).toHaveBeenCalledTimes(1);
-    expect(httpPut).toHaveBeenCalledTimes(2);
+    expect(httpPut).toHaveBeenCalledTimes(1);
     expect(httpDelete).toHaveBeenCalledTimes(1);
   });
 

@@ -10,7 +10,7 @@ import { IClaim, OvertimeService, TOASTR_TOKEN, IToastr } from '../../shared';
 export class AdminClaimsComponent implements OnInit {
   showLoader: boolean = true;
   errorMessage: string = '';
-  statuses: string[] = ['All', 'Completed', 'Processing', 'Pending'];
+  statuses: string[] = ['All', 'Completed', 'Pending'];
   claims: IClaim[] = [];
 
   // modal controls
@@ -18,7 +18,6 @@ export class AdminClaimsComponent implements OnInit {
   currentModal: string
   displayModal: string = 'none';
   displaySpinner: boolean = false;
-  markAsCompletedModal: boolean = false;
   exportModal: boolean = false;
 
 
@@ -75,21 +74,6 @@ export class AdminClaimsComponent implements OnInit {
     } catch (error) {
       this.displaySpinner = false;
       // TODO display error modal on fail
-    }
-  }
-
-  async markClaimsAsCompleted() {
-    this.displaySpinner = true;
-    try {
-      const { message } = await this.overtimeService.markClaimsAsCompleted();
-      this.toastr.success(message);
-      this.closeModal(this.currentModal);
-      this.displaySpinner = false;
-      await this.overtimeService.syncAdminWithAPI();
-      await this.initialiseClaimData();
-    } catch (error) {
-      this.displaySpinner = false;
-      this.toastr.error('An error occurred while marking claims as completed.');
     }
   }
 }

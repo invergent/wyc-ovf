@@ -123,10 +123,6 @@ export class OvertimeService {
       { responseType: 'arrayBuffer' as 'json', withCredentials: true }).toPromise();
   }
 
-  markClaimsAsCompleted(): Promise<any> {
-    return this.http.put<any>(`${this.api}/admin/claims/completed`, {}, this.options).toPromise();
-  }
-
   fetchHolidays(yearMonth?: string): Promise<IGetHolidays> {
     return this.http.get<IGetHolidays>(`${this.api}/admin/holidays?yearMonth=${yearMonth || ''}`, this.options).toPromise();
   }

@@ -39,7 +39,7 @@
               <img *ngIf="claim?.status==='Cancelled'" src="/assets/images/cancelled.png" alt="Status Icon">
             </div>
           </div>
-          <div class="claim-month">{{claim?.monthOfClaim}}</div>
+          <div class="claim-month">{{claim?.monthOfClaim}}, {{claim?.year}}</div>
           <div class="claim-elements">{{claim?.claimElements || '--'}}</div>
           <div class="claim-amount">{{claim?.amount | number}}</div>
           <div class="claim-status">{{claim?.status}}</div>
