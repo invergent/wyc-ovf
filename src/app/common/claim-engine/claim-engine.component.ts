@@ -367,7 +367,8 @@ export class ClaimEngineComponent implements OnInit {
     const createdClaim = this.autoSave(true);
     const [year, month] = yearMonth.split('/');
     return {
-      monthOfClaim: `${months[Number(month)].substr(0, 3)}, ${year}`,
+      year,
+      monthOfClaim: `${months[Number(month)].substr(0, 3)}`,
       claimElements: createdClaim['visiblePaneItems'],
       amount: createdClaim['total'],
       details: JSON.stringify(createdClaim)

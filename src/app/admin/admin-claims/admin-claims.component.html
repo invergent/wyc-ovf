@@ -7,9 +7,6 @@
     <p>Claims</p>
   </section>
   <section *ngIf="claims.length" class="export-button-section">
-    <button class="export-button mark-as-completed" (click)="runModalDisplay('markAsCompletedModal', 'Mark as completed')">
-      Mark as completed
-    </button>
     <button class="export-button" (click)="runModalDisplay('exportModal', 'Export')">
       Export to excel
       <i *ngIf="displaySpinnerExport" class="fa fa-spinner fa-spin"></i>
@@ -24,27 +21,11 @@
       <div class="page-title">
         <p>{{modalTitle}}</p>
       </div>
-      <div [ngSwitch]="true" class="modal-content">
-        <ng-template [ngSwitchCase]="markAsCompletedModal">
-          <div class="mark-as-completed-content">
-            <p>The following actions would be executed:</p>
-            <ol>
-              <li>mark all claims in Processing stage as completed</li>
-              <li>reset all multiple claims authorisations</li>
-            </ol>
-            <b>Ensure you have exported the claims to excel before proceeding.</b>
-          </div>
-        </ng-template>
-        <ng-template [ngSwitchCase]="exportModal">
-            <p>All claims in the processing stage would be exported. Please choose a format.</p>
-        </ng-template>
+      <div class="modal-content">
+        <p>All completed claims would be exported. Please choose a format.</p>
         <div class="action-buttons">
-          <button class="no-cancel" (click)="currentModal === 'exportModal' ? exportClaims('csv') : closeModal(currentModal)">
-            {{currentModal === 'exportModal' ? 'CSV' : 'Wait! Let me export.'}}
-          </button>
-          <button class="yes-cancel" (click)="currentModal === 'exportModal' ? exportClaims('xlsx') : markClaimsAsCompleted()">
-            {{currentModal === 'exportModal' ? 'XLSX' : 'Already exported. Proceed!'}}
-          </button>
+          <button class="no-cancel" (click)="exportClaims('csv')">CSV</button>
+          <button class="yes-cancel" (click)="exportClaims('xlsx')">XLSX</button>
           <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
         </div>
       </div>
