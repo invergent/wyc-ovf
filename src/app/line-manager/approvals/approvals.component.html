@@ -9,7 +9,6 @@
     <p>Hi {{lineManager?.firstname}}, {{message}}.</p>
   </div>
   <div class="claim-requests-wrapper">
-    <div><p>{{errorMessage}}</p></div>
     <div *ngFor="let claim of claimsToApprove" tabindex="0" class="claim-request" id="{{claim.id}}">
       <div class="direction-icon"><i class="fa fa-chevron-right"></i></div>
       <div class="request-details">

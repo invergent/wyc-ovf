@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class ClaimDetailsComponent implements OnInit {
   @Input() claim: IClaim
   @Input() showDetails: boolean;
-  @Input() canModify: boolean;
+  @Input() showActionButtons: boolean;
   claimDetails: any = {};
   elementsClassNames = {
     overtime: 'overtime',

@@ -1,4 +1,109 @@
+<div *ngIf="showFilters" class="filter">
+  <div class="inputs">
+    <div class="input-wrapper">
+      <label for="year">Year</label>
+      <select [(ngModel)]="year" type="text" name="year" (change)="onSelectChange()" class="short-input">
+        <option *ngFor="let claimYear of claimYears" [value]="claimYear">{{claimYear}}</option>
+      </select>
+    </div>
+    <div class="input-wrapper">
+      <label for="month">Month</label>
+      <select [(ngModel)]="month" type="text" name="month" class="short-input">
+        <option *ngFor="let claimMonth of claimMonths" [value]="claimMonth === 'All' ? '' : claimMonth">{{claimMonth}}</option>
+      </select>
+    </div>
+    <div class="input-wrapper">
+      <label for="status">Status</label>
+      <select [(ngModel)]="status" type="text" name="month" class="short-input">
+        <option *ngFor="let claimStatus of claimStatuses" [value]="claimStatus === 'All' ? '' : claimStatus">{{claimStatus}}</option>
+      </select>
+    </div>
+    <div class="input-wrapper">
+      <label for="requester">Staff</label>
+      <input
+      #staffInput
+      [(ngModel)]="staffId"
+      type="text"
+      name="staffId"
+      placeholder="Staff ID or email"
+      (focus)="userFocused=true"
+      (blur)="userFocused=false">
+      <div *ngIf="staffList?.length&&userFocused" class="staff-list">
+        <div *ngFor="let staff of staffList" class="staff" (mousedown)="handleSelect(staff)">
+          <span class="staff-id">{{staff.staffId}}</span>
+          <span class="staff-name">{{staff.firstname}} {{staff.lastname}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btn-wrapper">
+    <button [disabled]="showSpinner" (click)="fetchClaims()">Search</button>
+  </div>
+  <section *ngIf="true" class="export-button-section">
+    <button [disabled]="showSpinner" class="export-button" (click)="runModalDisplay('exportModal', 'Export')">
+      Export results
+      <i *ngIf="displaySpinnerExport" class="fa fa-spinner fa-spin"></i>
+    </button>
+    <div class="doc-types">
+      
+    </div>
+  </section>
+</div>
 <div class="claims">
+  <div *ngIf="!claims?.length" class="empty-state">
+    <div class="empty-state-message">
+      Nothing! Please refine your search parameters to see results.
+    </div>
+  </div>
+  <div *ngIf="claims?.length">
+    <div
+      class="body-container"
+      [ngClass]="{'add-height': showFilters}"
+      infiniteScroll [infiniteScrollDistance]="1"[infiniteScrollThrottle]="1500" (scrolled)="onScroll()" [scrollWindow]="false">
+      <div class="claim-requests-wrapper">
+        <div *ngFor="let claim of claims" [attr.tabindex]="showDetails ? 0 : null" class="claim-request" id="{{claim.id}}">
+          <div class="claim-body" id="claim{{claim.id}}">
+            <div *ngIf="showDetails" class="direction-icon"><i class="fa fa-chevron-right"></i></div>
+            <div class="staff-image">
+              <div class="image-wrapper">
+                <img src="{{claim?.image}}" alt="Staff Avatar">
+              </div>
+            </div>
+            <div class="claim-details">
+              <p class="name">{{claim?.fullname}}</p>
+              <p class="claim-elements">{{claim?.claimElements}} claim elements</p>
+            </div>
+            <div class="claim-amount">₦{{claim?.amount | number}}</div>
+            <div class="claim-status">{{claim?.status}}</div>
+            <div *ngIf="!showApprovalButtons" class="claim-age">{{claim?.createdAt | timeAgo}}</div>
+            <div *ngIf="showApprovalButtons" class="approval-buttons">
+              <div class="buttons-wrapper">
+                <div class="approval-btn approve" (mousedown)="runApproval($event, 'approve '+claim.id)">
+                  <span class="toolTip">Approve</span>          
+                  <img src="/assets/images/green-check.png" alt="Approve Icon">
+                </div>
+                <div class="approval-btn request-edit" (mousedown)="toggleModalDisplay('requestEditModal', claim, $event)">
+                  <span class="toolTip">Request edit</span>
+                  <img src="/assets/images/edit.png" alt="Request Edit Icon">
+                </div>
+                <div class="approval-btn decline" (mousedown)="runApproval($event, 'decline '+claim.id)">
+                  <span class="toolTip">Decline</span>            
+                  <img src="/assets/images/declined.png" alt="Decline Icon">
+                </div>
+              </div>
+            </div>
+          </div>
+          <claim-details [claim]="claim" [showActionButtons]="showActionButtons"></claim-details>          
+        </div>
+        <div *ngIf="itsFetching" class="spinner">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="claims">
   <div *ngIf="claims.length && statuses?.length" class="filter">
     <div class="filter-title">
         <p>Filter by status:</p>
@@ -58,4 +163,4 @@
     </div>
   </div>
 </div>
-
+ -->

@@ -17,7 +17,6 @@ export class ClaimHistoryComponent {
   async ngOnInit() {
     try {
       const { claimHistory } = await this.overtimeService.fetchStaffData();
-      
       this.staffClaimsHistory = claimHistory;
       this.showLoader = false;
     } catch(e) {

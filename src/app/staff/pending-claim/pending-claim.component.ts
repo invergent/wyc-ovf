@@ -11,7 +11,7 @@ export class PendingClaimComponent implements OnInit {
   errorMessage: string = '';
   displayModal: string = 'none';
   displayCancelSpinner: boolean = false;
-  pendingClaim: IClaim[] = [];
+  pendingClaims: IClaim[] = [];
 
   constructor(
     private overtimeService: OvertimeService,
@@ -21,8 +21,8 @@ export class PendingClaimComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      const { pendingClaim } = await this.overtimeService.fetchStaffData();
-      this.pendingClaim = pendingClaim;
+      const { pendingClaims } = await this.overtimeService.fetchStaffData();
+      this.pendingClaims = pendingClaims;
       this.showLoader = false;
     } catch(e) {
       this.showLoader = false;
@@ -32,7 +32,7 @@ export class PendingClaimComponent implements OnInit {
 
   async cancelClaim() {
     try {
-      await this.overtimeService.cancelClaim(this.pendingClaim[0].id);
+      await this.overtimeService.cancelClaim(this.pendingClaims[0].id);
       await this.overtimeService.syncWithAPI();
       this.toastr.success('Claim cancelled successfully!');
       return this.router.navigate(['/staff/claim-history']);

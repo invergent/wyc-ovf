@@ -76,18 +76,12 @@ export class LogsComponent implements OnInit {
       startDate: new Date(),
       onSelect: (fd, airdate, inst) => this.handleDateSelection(airdate)
     }).data('datepicker');
-    // this.logsCalendar.selectDate(this.preSelectedHolidays);
-    // this.canSelect = true; // Runs logic in onSelect only after initialisation
   }
 
   updateRangeInput() {
     if (!this.from) return 'Please select a date';
     this.range = this.to ? `${this.from} — ${this.to}` : `${this.from}`;
     this.logsCalendar.selectedDates = [];
-  }
-
-  fetchStaffList() {
-    
   }
 
   handleDateSelection(dates) {

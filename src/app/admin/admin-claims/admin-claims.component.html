@@ -6,30 +6,11 @@
   <section class="page-title">
     <p>Claims</p>
   </section>
-  <section *ngIf="claims.length" class="export-button-section">
-    <button class="export-button" (click)="runModalDisplay('exportModal', 'Export')">
-      Export to excel
-      <i *ngIf="displaySpinnerExport" class="fa fa-spinner fa-spin"></i>
-    </button>
-    <div class="doc-types">
-
-    </div>
-  </section>
-  <claims [claims]="claims" [statuses]="statuses" [isAdmin]="true"></claims>
-  <section [ngStyle]="{display: displayModal}" class="edit-modal-section">
-    <div class="edit-modal">
-      <div class="page-title">
-        <p>{{modalTitle}}</p>
-      </div>
-      <div class="modal-content">
-        <p>All completed claims would be exported. Please choose a format.</p>
-        <div class="action-buttons">
-          <button class="no-cancel" (click)="exportClaims('csv')">CSV</button>
-          <button class="yes-cancel" (click)="exportClaims('xlsx')">XLSX</button>
-          <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
-        </div>
-      </div>
-      <p class="close" (click)="closeModal(currentModal)">Close</p>
-    </div>
-  </section>
+  <claims
+    [claims]="claims"
+    [claimStatuses]="claimStatuses"
+    [showDetails]="true"
+    [showFilters]="true"
+    [itsFetching]="itsFetching"
+    (fetchClaimsEvent)="fetchClaimsEvent($event)"></claims>
 </section>

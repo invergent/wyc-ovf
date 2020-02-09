@@ -1,16 +1,16 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { saveAs } from 'file-saver';
-import { IClaim, OvertimeService, TOASTR_TOKEN, IToastr } from '../../shared';
+import { IClaim, OvertimeService, TOASTR_TOKEN, IToastr, months } from '../../shared';
 
 @Component({
   selector: 'app-admin-claims',
   templateUrl: './admin-claims.component.html',
-  styleUrls: ['./admin-claims.component.scss']
+  styleUrls: ['../logs/logs.component.scss', './admin-claims.component.scss']
 })
 export class AdminClaimsComponent implements OnInit {
   showLoader: boolean = true;
   errorMessage: string = '';
-  statuses: string[] = ['All', 'Completed', 'Pending'];
+  claimStatuses: string[] = ['All', 'Completed', 'Pending'];
   claims: IClaim[] = [];
 
   // modal controls
@@ -21,13 +21,27 @@ export class AdminClaimsComponent implements OnInit {
   exportModal: boolean = false;
 
 
+  status
+  itsFetching: boolean = false;
+
+
   constructor(
     private overtimeService: OvertimeService,
-    @Inject(TOASTR_TOKEN) private toastr: IToastr
+    @Inject(TOASTR_TOKEN) private toastr: IToastr,
   ) {}
 
   async ngOnInit() {
-    await this.initialiseClaimData();
+    await this.fetchClaims(this.defaultQueries());
+  }
+
+  defaultQueries() {
+    const now = new Date();
+    const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+    return {
+      year: lastMonth.getFullYear(),
+      month: months[lastMonth.getMonth() + 1].substr(0,3),
+      page: 1
+    };
   }
 
   runModalDisplay(modal, title) {
@@ -42,20 +56,31 @@ export class AdminClaimsComponent implements OnInit {
     this[modal] = false;
   }
 
-  async initialiseClaimData() {
-    try {
-      const { monthlyStat: { submittedClaims: claims } } = await this.overtimeService.fetchAdminData();
-      this.claims = claims;
-      this.showLoader = false;
-    }
-    catch (error) {
-      this.displayError();
-    }
-  }
-
   displayError() {
     this.showLoader = false;
     this.errorMessage = 'Unable to load content. Please reload';
+  }
+
+  fetchClaimsEvent(queries) {
+    this.fetchClaims(queries);
+  }
+
+  async fetchClaims(queries) {
+    this.itsFetching = true;
+    try {
+      const { data: claims } = await this.overtimeService.fetchAdminClaimsForAdmin(queries);
+      if (queries.page === 1) {
+        this.claims = claims;
+      } else {
+        this.claims = [...this.claims, ...claims];
+      }
+      this.itsFetching = false;
+      this.showLoader = false;
+    } catch (error) {
+      this.itsFetching = false;
+      this.showLoader = false;
+      this.toastr.error('Error fetching claims');
+    }
   }
 
   async exportClaims(docType) {
@@ -73,7 +98,7 @@ export class AdminClaimsComponent implements OnInit {
       this.displaySpinner = false;
     } catch (error) {
       this.displaySpinner = false;
-      // TODO display error modal on fail
+      this.toastr.error('Error exporting claims');
     }
   }
 }

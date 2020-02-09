@@ -12,7 +12,7 @@ export class UpdateClaimComponent implements OnInit {
   errorMessage: string = '';
   displayModal: string = 'none';
   displayCancelSpinner: boolean = false;
-  pendingClaim: IClaim[] = [];
+  pendingClaims: IClaim[] = [];
 
   constructor(
     private overtimeService: OvertimeService,
@@ -24,11 +24,11 @@ export class UpdateClaimComponent implements OnInit {
     const claimId = this.route.snapshot.paramMap.get('claimId');
     if (Number.isNaN(+claimId)) return this.router.navigate(['staff/dashboard']);
     try {
-      const { pendingClaim } = await this.overtimeService.fetchStaffData();
-      this.pendingClaim = pendingClaim;
-      this.pendingClaim = pendingClaim.filter(claim => claim.id === +claimId);
+      const { pendingClaims } = await this.overtimeService.fetchStaffData();
+      this.pendingClaims = pendingClaims;
+      this.pendingClaims = pendingClaims.filter(claim => claim.id === +claimId);
       
-      if (!this.pendingClaim[0] || !this.pendingClaim[0].editRequested) {
+      if (!this.pendingClaims[0] || !this.pendingClaims[0].editRequested) {
         return this.router.navigate(['/staff/pending-claim'])
       }
       this.showLoader = false;

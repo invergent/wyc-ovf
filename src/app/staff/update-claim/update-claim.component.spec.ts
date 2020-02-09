@@ -9,7 +9,7 @@ describe('ClaimEngineComponent', () => {
   });
 
   it('should navigate staff to pending claim if staff has no pending claim or edit was not request', async () => {
-    const fetchStaffDataMock = jest.spyOn(overtimeServiceMock, 'fetchStaffData').mockResolvedValueOnce({ pendingClaim: [] });
+    const fetchStaffDataMock = jest.spyOn(overtimeServiceMock, 'fetchStaffData').mockResolvedValueOnce({ pendingClaims: [] });
     const navigate = jest.spyOn(routerMock, 'navigate');
 
     await component.ngOnInit();
@@ -19,7 +19,7 @@ describe('ClaimEngineComponent', () => {
   });
 
   it('should navigate display claim edit page', async () => {
-    const response = { pendingClaim: [{ id: 1, editRequested: true }]};
+    const response = { pendingClaims: [{ id: 1, editRequested: true }]};
     const fetchStaffDataMock = jest.spyOn(overtimeServiceMock, 'fetchStaffData').mockResolvedValueOnce(response);
 
     await component.ngOnInit();

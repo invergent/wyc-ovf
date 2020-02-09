@@ -16,7 +16,7 @@ export class NewClaimComponent {
   staff: IStaff;
   showLoader: boolean = true;
   errorMessage: string = '';
-  pendingClaim: IClaim[] = [];
+  pendingClaims: IClaim[] = [];
 
   companySettings: ISettings;
   reopenDate: string = '';
@@ -37,9 +37,9 @@ export class NewClaimComponent {
   async ngOnInit() {
     this.staff = this.authService.currentStaff;
     try {
-      const { pendingClaim } = await this.overtimeService.fetchStaffData();
+      const { pendingClaims } = await this.overtimeService.fetchStaffData();
       this.companySettings = await this.settingsService.fetchAdminSettings();
-      this.pendingClaim = pendingClaim;
+      this.pendingClaims = pendingClaims;
 
       this.displayPageContent();
       this.showLoader = false;
@@ -96,7 +96,7 @@ export class NewClaimComponent {
         this.claimContentToDisplay = 'chooseClaimMonth';
         break;
 
-      case this.pendingClaim.length && !this.staff.extraMonthsPermitted:
+      case this.pendingClaims.length && !this.staff.extraMonthsPermitted:
         this.claimContentToDisplay = 'pendingClaimMessage';
         break;
 

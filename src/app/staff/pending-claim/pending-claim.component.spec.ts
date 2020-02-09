@@ -7,7 +7,7 @@ describe('Pending Claim', () => {
   beforeEach(() => {
     component = new PendingClaimComponent(overtimeServiceMock, routerMock, mockToastr);
     //@ts-ignore
-    component.pendingClaim = [{ id: 1}];
+    component.pendingClaims = [{ id: 1}];
   });
 
   it('should fetch and update component with staff pending claim data', async () => {
