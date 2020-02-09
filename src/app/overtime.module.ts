@@ -15,9 +15,9 @@ import { LogoutComponent } from './logout/logout.component';
 import {
   AuthService, ProfileService, OvertimeService, RedirectToDashboard, TOASTR_TOKEN,
   JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService,
-  EnforceProfileUpdateService, ProfileCheckerService, AdminAuditorGuard, AdminOnlyGuard, StaffOnlyGuard,
+  EnforceProfileUpdateService, ProfileCheckerService, AdminsAuditorGuard, AdminOnlyGuard, StaffOnlyGuard,
   PUSHER_TOKEN, CRONSTRUE_TOKEN, ICronstrue, SettingsService, LOCALSTORAGE_TOKEN,
-  ILocalStorage, LogService
+  ILocalStorage, LogService, SuperAdminAuditorGuard, SuperAdminGuard
 } from './shared';
 import { environment } from 'src/environments/environment';
 import { PipesModule } from './pipes/pipes.module';
@@ -51,7 +51,9 @@ const localStorage: ILocalStorage = window['localStorage'];
     OvertimeService,
     ProfileService,
     RedirectToDashboard,
-    AdminAuditorGuard,
+    SuperAdminAuditorGuard,
+    SuperAdminGuard,
+    AdminsAuditorGuard,
     AdminOnlyGuard,
     StaffOnlyGuard,
     EnforceProfileUpdateService,

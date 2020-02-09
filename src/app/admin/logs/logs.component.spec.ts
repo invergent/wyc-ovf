@@ -1,7 +1,7 @@
 import { LogsComponent } from './logs.component';
-import { overtimeServiceMock, mockToastr, mockJQuery, logServiceMock, profileServiceMock } from 'src/app/__mocks__';
+import { mockToastr, mockJQuery, logServiceMock, profileServiceMock } from 'src/app/__mocks__';
 
-describe('ClaimEngineComponent', () => {
+describe('LogsComponent', () => {
   let component: LogsComponent;
 
   beforeEach(() => {

@@ -13,7 +13,8 @@ import { HolidaysComponent } from './holidays/holidays.component';
 import { ViewStaffComponent } from './view-staff/view-staff.component';
 import { ViewClaimComponent } from './view-claim/view-claim.component';
 import { LogsComponent } from './logs/logs.component';
-import { AdminOnlyGuard } from '../shared';
+import { AdminOnlyGuard, SuperAdminAuditorGuard, SuperAdminGuard } from '../shared';
+import { AdminsComponent } from './admins/admins.component';
 
 const routes: Routes = [{
   path: '',
@@ -27,7 +28,8 @@ const routes: Routes = [{
     { path: 'branch', canActivate: [AdminOnlyGuard], component: AdminBranchComponent },
     { path: 'holidays', canActivate: [AdminOnlyGuard], component: HolidaysComponent },
     { path: 'settings', canActivate: [AdminOnlyGuard], component: AdminSettingsComponent },
-    { path: 'logs', component: LogsComponent },
+    { path: 'logs', canActivate: [SuperAdminAuditorGuard], component: LogsComponent },
+    { path: 'admins', canActivate: [SuperAdminGuard], component: AdminsComponent },
     { path: 'profile', canActivate: [AdminOnlyGuard], component: AdminProfileComponent },
     { path: 'change-password', component: AdminChangePasswordComponent }
   ]
