@@ -1,0 +1,92 @@
+<div class="staff">
+  <div class="page-title">
+    <p>Admins</p>
+  </div>
+  <div class="function-div">
+    <div class="add-section">
+      <button class="add-buttons single" (click)="runModalDisplay('addAdminModal', 'Add Admin')">+ Add admin</button>
+    </div>
+  </div>
+  <div *ngIf="displayFetchSpinner" class="wrapper">
+    <div class="spinner">
+      <i class="fa fa-spinner fa-spin"></i>
+      <p class="waiting">Fetching...</p>
+    </div>
+  </div>
+  <div *ngIf="!displayFetchSpinner" class="staff-table">
+    <p *ngIf="!staffList?.length">No records.</p>
+    <div *ngIf="staffList?.length" class="table-wrapper">
+      <div class="header">
+        <div class="empty"></div>
+        <div class="staff-id">Staff ID</div>
+        <div class="lastname">Last name</div>
+        <div class="firstname">First name</div>
+        <div class="email">Email address</div>
+        <div class="role">Role</div>
+      </div>
+      <div *ngFor="let staff of staffList" class="body">
+        <div class="empty">
+          <div class="avatar">
+            <img src="{{staff.image}}" alt="Avatar">
+          </div>
+        </div>
+        <div class="staff-id">{{staff?.staffId}}</div>
+        <div class="lastname">{{staff?.lastname || '--'}}</div>
+        <div class="firstname">{{staff?.firstname || '--'}}</div>
+        <div class="email">{{staff?.emailAddress}}</div>
+        <div class="role">{{staff?.role?.name}}</div>
+        <div
+          *ngIf="staff.role.name !== 'Super Admin'"
+          class="remove-admin"
+          (click)="runModalDisplay('deleteAdminModal', 'Delete Admin', staff.role.name === 'Super Admin' ? null : staff?.staffId)">Delete</div>
+      </div>
+    </div>
+  </div>
+  <section [ngStyle]="{display: displayModal}" class="add-modal-section">
+    <div class="add-modal">
+      <div class="page-title">
+        <p>{{modalTitle}}</p>
+      </div>
+      <div [ngSwitch]="true" class="form-wrapper">
+        <ng-template [ngSwitchCase]="addAdminModal">
+          <form  #addAdminForm="ngForm" (ngSubmit)="handleSubmit(addAdminForm.value)" autocomplete="off" novalidate>
+            <div class="input">
+              <input [(ngModel)]="staffId" name="staffId" type="text" placeholder="Admin ID (e.g Admin001)" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="firstname" name="firstname" type="text" placeholder="First name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="lastname" name="lastname" type="text" placeholder="Last name" required>
+            </div>
+            <div class="input">
+              <input [(ngModel)]="email" name="email" type="email" placeholder="Email address" required>
+            </div>
+            <div class="input">
+              <select [(ngModel)]="roleId" name="roleId" required>
+                <option *ngFor="let role of roleList" [value]="role.id">{{role.name}}</option>
+              </select>
+            </div>
+            <div class="button">
+              <button
+                [disabled]="addAdminForm.invalid"
+                (click)="displaySpinner=true"
+                type="submit"
+                name="submit">
+                Submit
+                <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
+              </button>
+            </div>
+          </form>
+        </ng-template>
+        <ng-template [ngSwitchCase]="deleteAdminModal">
+          <div class="remove-warning">
+            If you proceed, this admin would be deleted and would no longer have access to CleonTime.
+          </div>
+          <div (click)="removeAdmin()" class="proceed">Proceed <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i></div>
+        </ng-template>
+      </div>
+      <p class="close" (click)="closeModal(currentModal)">Close</p>
+    </div>
+  </section>
+</div>

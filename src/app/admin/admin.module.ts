@@ -18,6 +18,7 @@ import { HolidaysComponent } from './holidays/holidays.component';
 import { ViewStaffComponent } from './view-staff/view-staff.component';
 import { ViewClaimComponent } from './view-claim/view-claim.component';
 import { LogsComponent } from './logs/logs.component';
+import { AdminsComponent } from './admins/admins.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { LogsComponent } from './logs/logs.component';
     HolidaysComponent,
     ViewStaffComponent,
     ViewClaimComponent,
-    LogsComponent
+    LogsComponent,
+    AdminsComponent
   ]
 })
 export class AdminModule { }

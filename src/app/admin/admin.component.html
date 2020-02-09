@@ -41,6 +41,17 @@
         <p>Staff</p>
       </a>
       <a
+        *ngIf="authService.currentStaff.role === 'Super Admin'"
+        [routerLink]="['/admin/admins']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-snowman"></i>
+        </div>
+        <p>Admins</p>
+      </a>
+      <a
         *ngIf="authService.currentStaff.role !== 'Auditor'"
         [routerLink]="['/admin/branch']"
         routerLinkActive="active"

@@ -52,8 +52,12 @@ export class ProfileService {
     return this.http.get<IGetBranches>(`${this.api}/branches`, this.options).toPromise();
   }
 
-  fetchRoles(): Promise<IGetRoles> {
-    return this.http.get<IGetRoles>(`${this.api}/roles`, this.options).toPromise();
+  fetchRoles(adminsOnly?: boolean): Promise<IGetRoles> {
+    return this.http.get<IGetRoles>(`${this.api}/roles${adminsOnly ? '?adminsOnly=true':''}`, this.options).toPromise();
+  }
+
+  fetchAdmins(): Promise<IGetStaffList> {
+    return this.http.get<IGetStaffList>(`${this.api}/admin/admins`, this.options).toPromise();
   }
 
   fetchStaff(staffId?: string, limit?: number, staffOnly?: boolean): Promise<IGetStaffList> {
@@ -87,6 +91,10 @@ export class ProfileService {
     return this.http.post(`${this.api}/admin/${route}/single`, staffData, this.options).toPromise();
   }
 
+  createAdmin(adminData: ICreateStaffData) {
+    return this.http.post(`${this.api}/admin/admins`, adminData, this.options).toPromise();
+  }
+
   resendLoginCredentials(staffId: string) {
     return this.http.post<IPutProfile>(`${this.api}/admin/staff/resend-credentials`, { staffId }, this.options).toPromise();
   }
@@ -101,5 +109,9 @@ export class ProfileService {
 
   removeStaff(staffId) {
     return this.http.delete<IPutProfile>(`${this.api}/admin/staff/${staffId}`, this.options).toPromise();
+  }
+
+  removeAdmin(adminId) {
+    return this.http.delete<IPutProfile>(`${this.api}/admin/admins/${adminId}`, this.options).toPromise();
   }
 }
