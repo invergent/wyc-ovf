@@ -20,7 +20,7 @@ export class AdminDashboardComponent implements OnInit {
     try {
       const { monthlyStat } = await this.overtimeService.fetchAdminData();
       
-      this.claimStatistics = monthlyStat.statistics;
+      this.claimStatistics = monthlyStat;
       this.staffFirstName = this.authService.currentStaff.firstname;
       this.showLoader = false;
     } catch(e) {

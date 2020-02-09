@@ -21,7 +21,7 @@
       <div class="calendar" id="calendar" data-language='en'></div>
     </div>
   </div>
-  <section *ngIf="claim?.approvalHistory?.length<1 && canModify" class="button-section">
+  <section *ngIf="claim?.status === 'Pending' && showActionButtons" class="button-section">
     <button class="cancel" type="button" name="button" (click)="displayModal='block'">Cancel</button>
     <button
       *ngIf="claim?.editRequested"

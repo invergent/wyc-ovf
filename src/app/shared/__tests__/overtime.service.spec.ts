@@ -34,7 +34,7 @@ describe('Overtime Service', () => {
 
   it('should initialise admin data.', async () => {
     // @ts-ignore-start
-    const adminData = jest.spyOn(service, 'fetchAdminClaimsData').mockResolvedValue({});
+    const adminData = jest.spyOn(service, 'fetchDashboardData').mockResolvedValue({});
     // @ts-ignore-start
     const chartData = jest.spyOn(service, 'fetchChartStatistics').mockResolvedValue({});
 
@@ -59,7 +59,7 @@ describe('Overtime Service', () => {
 
   it('should throw an error if error occurs while initialising admin data.', async () => {
     // @ts-ignore-start
-    jest.spyOn(service, 'fetchAdminClaimsData').mockRejectedValue('err');
+    jest.spyOn(service, 'fetchDashboardData').mockRejectedValue('err');
 
     try {
       await service.initialiseAdminData();
@@ -96,8 +96,8 @@ describe('Overtime Service', () => {
 
     await service.fetchStaffClaimStatistics();
     await service.fetchStaffPendingClaim();
+    await service.fetchDashboardData();
     await service.fetchStaffActivities();
-    await service.fetchAdminClaimsData();
     await service.fetchChartStatistics();
     await service.fetchHolidays();
     await service.fetchSingleClaimForAdmin(1)

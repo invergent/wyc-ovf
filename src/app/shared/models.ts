@@ -186,7 +186,7 @@ export interface IClaimStatistics {
 
 export interface IStaffClaimData {
   claimStatistics?: IClaimStatistics,
-  pendingClaim?: IClaim[],
+  pendingClaims?: IClaim[],
   activities?: IActivity[]
   claimHistory?: IClaim[]
 }
@@ -226,7 +226,7 @@ export interface IChartSourceData {
 }
 
 export interface IAdminData {
-  monthlyStat: IAdminClaimData
+  monthlyStat: IClaimStatistics
   chartStats: IChartData,
 }
 
@@ -303,6 +303,8 @@ export interface IGetClaimHistory {
   message: string,
   data: IClaim[]
 }
+
+export interface IGetClaimsForAdmin extends IGetClaimHistory {}
 
 export interface IGetActivities {
   message: string,

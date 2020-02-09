@@ -56,9 +56,9 @@ export class ProfileService {
     return this.http.get<IGetRoles>(`${this.api}/roles`, this.options).toPromise();
   }
 
-  fetchStaff(staffId?: string, limit?: number): Promise<IGetStaffList> {
+  fetchStaff(staffId?: string, limit?: number, staffOnly?: boolean): Promise<IGetStaffList> {
     return this.http
-      .get<IGetStaffList>(`${this.api}/admin/staff?staffId=${staffId || ''}&limit=${limit || 10000000}`, this.options)
+      .get<IGetStaffList>(`${this.api}/admin/staff?staffId=${staffId || ''}&limit=${limit || 10000000}&staffOnly=${staffOnly || false}`, this.options)
       .toPromise();
   }
 

@@ -3,8 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {
   IGetStatistics, IGetPendingClaim, IGetActivities, IPostOvertimeRequest, IValidClaimRequest,
-  IStaffClaimData, IGetClaimHistory, IGetAdminClaimsData, IAdminData, IGetChartStatistics,
-  IGetHolidays, IGetSingleClaim
+  IStaffClaimData, IGetClaimHistory, IAdminData, IGetChartStatistics, IGetHolidays, IGetSingleClaim, IGetClaimsForAdmin
 } from './models';
 
 @Injectable()
@@ -21,10 +20,10 @@ export class OvertimeService {
   async initialiseStaffData(): Promise<boolean> {
     try {
       const { data: claimStatistics } = await this.fetchStaffClaimStatistics();
-      const { data: pendingClaim } = await this.fetchStaffPendingClaim();
+      const { data: pendingClaims } = await this.fetchStaffPendingClaim();
       const { data: activities } = await this.fetchStaffActivities();
       const { data: claimHistory } = await this.fetchStaffClaimHistory();
-      this.staffClaimData = { activities, pendingClaim, claimStatistics, claimHistory };
+      this.staffClaimData = { activities, pendingClaims, claimStatistics, claimHistory };
       return true;
     } catch(e) {
       throw new Error();
@@ -33,7 +32,7 @@ export class OvertimeService {
 
   async initialiseAdminData(): Promise<boolean> {
     try {
-      const { data: monthlyStat } = await this.fetchAdminClaimsData();
+      const { data: monthlyStat } = await this.fetchDashboardData();
       const { data: chartStats } = await this.fetchChartStatistics();
       this.adminClaimData = { monthlyStat, chartStats };
 
@@ -78,6 +77,14 @@ export class OvertimeService {
     return new Date(year, month, 0);
   }
 
+  createQueryString(queries) {
+    return Object.keys(queries).reduce((acc, key) => {
+      if (acc) acc += '&';
+      if (queries[key]) acc += `${key}=${queries[key]}`;
+      return acc;
+    }, '')
+  }
+
   fetchStaffClaimStatistics(): Promise<IGetStatistics> {
     return this.http.get<IGetStatistics>(`${this.api}/users/claims/statistics`, this.options).toPromise();
   }
@@ -106,8 +113,13 @@ export class OvertimeService {
     return this.http.delete<IPostOvertimeRequest>(`${this.api}/users/claims/${claimId}`, this.options).toPromise();
   }
 
-  fetchAdminClaimsData(): Promise<IGetAdminClaimsData> {
-    return this.http.get<IGetAdminClaimsData>(`${this.api}/admin/claims`, this.options).toPromise();
+  fetchAdminClaimsForAdmin(queries): Promise<IGetClaimsForAdmin> {
+    const queryString = this.createQueryString(queries);
+    return this.http.get<IGetClaimsForAdmin>(`${this.api}/admin/claims?${queryString}`, this.options).toPromise();
+  }
+
+  fetchDashboardData(): Promise<IGetStatistics> {
+    return this.http.get<IGetStatistics>(`${this.api}/admin/claims/dashboard-statistics`, this.options).toPromise();
   }
 
   fetchSingleClaimForAdmin(claimId: number): Promise<IGetSingleClaim> {
@@ -133,6 +145,10 @@ export class OvertimeService {
 
   removeHoliday(fullDate: string): Promise<IGetHolidays> {
     return this.http.delete<IGetHolidays>(`${this.api}/admin/holidays?fullDate=${fullDate}`, this.options).toPromise();
+  }
+
+  getClaimYears() {
+    return [2020, 2019, 2018];
   }
 }
 

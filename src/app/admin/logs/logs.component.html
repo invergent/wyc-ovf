@@ -30,8 +30,7 @@
           name="staffId"
           placeholder="Staff ID or email"
           (focus)="userFocused=true"
-          (blur)="userFocused=false"
-          (input)="fetchStaffList()">
+          (blur)="userFocused=false">
         <div *ngIf="staffList.length&&userFocused" class="staff-list">
           <div *ngFor="let staff of staffList" class="staff" (mousedown)="handleSelect(staff.staffId)">
             <span class="staff-id">{{staff.staffId}}</span>

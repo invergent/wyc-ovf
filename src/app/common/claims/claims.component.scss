@@ -1,188 +1,472 @@
 @import '../../../assets/global-styles/mixins';
 @import '../../../assets/global-styles/variables';
 
-.active {
-  background-color: $brand-color-2 !important;
-  color: $color-white !important;
+.page-title {
+  font-size: 30px;
+  text-align: center;
 }
-.claims {
-  .filter {
-    margin-bottom: 30px;
-    .filter-title {
-      display: flex;
-      font-size: 15px;
-      p {
-        flex: 1;
-      }
-      .claims-count {
-        text-align: right;
-      }
+
+.filter {
+  margin-bottom: 20px;
+  .inputs {
+    margin-bottom: 10px;
+    .input-wrapper, .range-input {
+      display: inline-block;
+      margin-right: 10px;
     }
-    .statuses {
-      display: flex;
-      background-color: $color-white;
-      border-radius: 8px;
-      cursor: pointer;
-      .status {
-        flex: 1;
-        margin: 0;
-        padding: 8px 0;
-        border: 1px solid $brand-color-2;
-        text-align: center;
+    .range-input {
+      label {
+        display: block;
+        margin-bottom: 10px;
       }
-      .status:first-child {
-        border-radius: 8px 0 0 8px;
-        margin-right: -1px;
-      }
-      .status:nth-child(2) {
-        margin-right: -1px;
-      }
-      .status:last-child {
-        margin-left: -1px;
-        border-radius: 0 8px 8px 0;
+      input {
+        background: transparent;
+        border: none;
+        min-width: 250px;
+        height: 40px;
       }
     }
   }
-  .empty-filter {
+  .btn-wrapper, .export-button-section {
+    display: inline-block;
+  }
+  .btn-wrapper {
+    margin-right: 10px;
+    button {
+      border-radius: 1000px;
+      background-color: $brand-color;
+      color: $color-white;
+      border: none;
+      padding: 10px 30px;
+      cursor: pointer;
+      &:disabled {
+        background-color: #80808060;
+        cursor: not-allowed;
+      }
+    }
+  }
+  .export-button-section {
+    text-align: right;
+    .export-button {
+      background-color: $brand-color;
+      color: $color-white;
+      border: none;
+      border-radius: 1000px;
+      padding: 10px 30px;
+      margin: auto 0 auto auto;
+      box-sizing: border-box;
+      cursor: pointer;
+      &:disabled {
+        background-color: #80808060;
+        cursor: not-allowed;
+      }
+    }
+    @media screen and (max-width: 350px) {
+      text-align: center;
+      .export-button {
+        width: 100%;
+        margin: auto auto 10px;
+      }
+    }
+  }
+}
+
+.inline-block {
+  display: inline-block;
+  text-align: left;
+}
+
+.short-input {
+  width: 110px !important;
+}
+
+.input-wrapper {
+  margin-bottom: 10px;
+  position: relative;
+  label {
+    display: block;
+    margin-bottom: 10px;
+    color: $faint-color;
+  }
+  input, select {
+    background-color: $color-white;
+    width: 250px;
+    padding: 10px 15px;
+    border: 1px solid $brand-color;
+    border-radius: 8px;
+    box-sizing: border-box;
+    &:focus {
+      outline: none;
+    }
+  }
+  select {
+    height: 40px;
+  }
+  .staff-list {
+    position: absolute;
     background-color: $color-white;
     width: 100%;
-    text-align: center;
-    border-radius: 8px;
-    padding: 25px;
-    box-sizing: border-box;
-  }
-  .claim-table {
-    margin-bottom: 5px;
-    overflow-x: auto;
-    p {
-      text-align: center;
-    }
-    .table-wrapper {
-      min-width: 600px;
-      .table-head, .table-body .content-wrapper {
-        display: flex;
-        align-items: center;
-        div {
-          flex: 1;
-          text-align: center;
-        }
-      }
-      .table-head {
-        margin-bottom: 20px;
-        color: $faint-color;
-      }
-      .table-body {
-        height: 65px;
-        overflow: hidden;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        transition: all .4s ease-in;
-        &:active, &:focus {
-          height: 600px;
-          outline: none;
-        }
-        &:active .see-more-button, &:focus .see-more-button {
-          opacity: 0;
-        }
-        @media screen and (max-width: 630px) {
-          &:active, &:focus {
-            height: 700px;
-          }
-        }
-        .see-more-button {
-          position: relative;
-          color: $color-white;
-          font-size: 15px;
-          text-align: center;
-          opacity: .7;
-          cursor: pointer;
-          transition: all .6s ease-in;
-          i {
-            position: absolute;
-            top: -29px;
-            background-color: $brand-color-2;
-            height: 15px;
-            padding: 5px 2px;
-            border-radius: 1000px 0 0 1000px;
-            transform: rotate(90deg);
-          }
-        }
-        .content-wrapper {
-          background-color: $color-white;
-          border-radius: 8px;
-          margin-bottom: 10px;
-          padding: 20px;
-          box-sizing: border-box;
-          cursor: pointer;
-          &:focus {
-            outline: none;
-          }
-          .bullet {
-            box-sizing: border-box;
-            margin: auto -20px auto 20px;
-            .outter-ellipse {
-              width: 25px;
-              height: 25px;
-              margin: auto auto auto 20px;
-              padding: 1px;
-              background-color: $brand-color;
-              border-radius: 1000px;
-              box-sizing: border-box;
-              .inner-ellipse {
-                width: 13px;
-                height: 13px;
-                padding: 0;
-                margin: 5px auto;
-                background-color: $color-white;
-                border-radius: 1000px;
-              }
-            }
-            .claim-icon {
-              width: 25px;
-              margin: auto auto auto 20px;
-              img {
-                width: 100%;
-              }
-            }
-          }
-          .claim-month {
-            margin: auto 20px auto -20px;
-          }
-          .claim-status {
-            margin: auto -10px auto 5px;
-          }
-          .claim-created-at {
-            color: $faint-color;
-          }
-        }
-        .approval-progress-bar {
-          text-align: center;
-        }
-      }
-    }
-  }
-  .pagination {
-    margin-top: 20px;
-    .navigation {
-      display: flex;
-      align-items: center;
-      width: 200px;
-      margin: auto;
-      .prev, .next {
-        color: $brand-color-3;
-        cursor: pointer;
-      }
-      .prev {
-        margin-right: 20px;
-        @include pagination-button;
-      }
-      .next {
-        margin-left: 20px;
-        @include pagination-button;
+    max-height: 300px;
+    border-radius: 5px;
+    margin-top: 5px;
+    border-bottom: 20px solid $color-white;
+    border-top: 20px solid $color-white;
+    overflow: auto;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    .staff {
+      padding: 10px;
+      border-bottom: 1px solid $faint-color-light;
+      cursor: pointer;
+      &:hover {
+        background-color: $brand-color;
+        color: $color-white;
       }
       span {
-        margin: auto 10px;
+        display: block;
+      }
+      .staff-name {
+        font-style: italic;
+        font-size: 14px;
       }
     }
   }
 }
+
+
+
+.claims {
+  .spinner {
+    text-align: center;
+    .fa-spinner {
+      font-size: 20px;
+      color: $brand-color;
+    }
+  }
+  .empty-state {
+    background-color: $color-white;
+    border-radius: 10px;
+    .empty-state-message {
+      max-width: 300px;
+      padding: 30px 0;
+      margin: auto;
+      text-align: center;
+    }
+  }
+  .body-container {
+    overflow: auto;
+    .body {
+      padding: 20px;
+      margin-bottom: 10px;
+      background-color: $color-white;
+      border-radius: 10px;
+    }
+  }
+}
+
+.claim-requests-wrapper {
+  .claim-request {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: all .4s ease-in-out;
+    &:focus {
+      height: 480px;
+      outline: none;
+    }
+    &:focus .fa-chevron-right {
+      transform: rotate(90deg);
+    }
+    
+    .request-details {
+      flex: 1;
+    }
+    .claim-body {
+      display: flex;
+      align-items: center;
+      position: relative;
+      background-color: $color-white;
+      padding: 10px 15px;
+      border: 1px solid $faint-border-color;
+      border-radius: 8px;
+      opacity: 1;
+      transition: all 1s ease-in-out;
+      .direction-icon {
+        .fa-chevron-right {
+          font-size: 30px;
+          color: $brand-color;
+          margin-left: 5px;
+          transition: all .4s ease-out;
+        }
+      }
+      .staff-image, .claim-details, .claim-amount, .claim-status, .approval-buttons {
+        flex: 1;
+      }
+      .claim-age {
+        flex: 0 0 150px;
+      }
+      .staff-image {
+        text-align: center;
+        .image-wrapper {
+          padding-top: 10px;
+          height: 60px;
+          margin: auto auto 10px;
+          img {
+            height: 100%;
+            border-radius: 10000px;
+          }
+        }
+      }
+      .claim-details {
+        .name {
+          margin: 0;
+        }
+        .claim-elements {
+          color: $faint-color;
+          margin: 0;
+          font-size: .7rem;
+        }
+      }
+      .approval-buttons {
+        flex: 0 0 200px;
+        .buttons-wrapper {
+          display: flex;
+          align-items: center;
+          .approval-btn {
+            position: relative;
+            width: 30px;
+            cursor: pointer;
+            img {
+              width: 100%;
+            }
+            .toolTip {
+              position: absolute;
+              top: -35px;
+              left: -37px;
+              background: rgba(0,0,0,.6);
+              min-width: 80px;
+              padding: 5px;
+              font-size: 14px;
+              border-radius: 5px;
+              color: $color-white;
+              visibility: hidden;
+              text-align: center;
+            }
+            .toolTip::after {
+              position: absolute;
+              bottom: -10px;
+              left: 50%;
+              transform: translate(-50%);
+              content: ' ';
+              border-style: solid;
+              border-width: 5px;
+              border-color: rgba(0,0,0,.6) transparent transparent transparent;
+            }
+            &:hover .toolTip {
+              visibility: visible;
+            }
+          }
+          .approve {
+            margin: auto;
+          }
+          .decline {
+            margin: auto 10px auto auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+.add-height {
+  height: 520px;
+}
+
+// @import '../../../assets/global-styles/mixins';
+// @import '../../../assets/global-styles/variables';
+
+// .active {
+//   background-color: $brand-color-2 !important;
+//   color: $color-white !important;
+// }
+// .claims {
+//   .filter {
+//     margin-bottom: 30px;
+//     .filter-title {
+//       display: flex;
+//       font-size: 15px;
+//       p {
+//         flex: 1;
+//       }
+//       .claims-count {
+//         text-align: right;
+//       }
+//     }
+//     .statuses {
+//       display: flex;
+//       background-color: $color-white;
+//       border-radius: 8px;
+//       cursor: pointer;
+//       .status {
+//         flex: 1;
+//         margin: 0;
+//         padding: 8px 0;
+//         border: 1px solid $brand-color-2;
+//         text-align: center;
+//       }
+//       .status:first-child {
+//         border-radius: 8px 0 0 8px;
+//         margin-right: -1px;
+//       }
+//       .status:nth-child(2) {
+//         margin-right: -1px;
+//       }
+//       .status:last-child {
+//         margin-left: -1px;
+//         border-radius: 0 8px 8px 0;
+//       }
+//     }
+//   }
+//   .empty-filter {
+//     background-color: $color-white;
+//     width: 100%;
+//     text-align: center;
+//     border-radius: 8px;
+//     padding: 25px;
+//     box-sizing: border-box;
+//   }
+//   .claim-table {
+//     margin-bottom: 5px;
+//     overflow-x: auto;
+//     p {
+//       text-align: center;
+//     }
+//     .table-wrapper {
+//       min-width: 600px;
+//       .table-head, .table-body .content-wrapper {
+//         display: flex;
+//         align-items: center;
+//         div {
+//           flex: 1;
+//           text-align: center;
+//         }
+//       }
+//       .table-head {
+//         margin-bottom: 20px;
+//         color: $faint-color;
+//       }
+//       .table-body {
+//         height: 65px;
+//         overflow: hidden;
+//         margin-bottom: 10px;
+//         border-radius: 8px;
+//         transition: all .4s ease-in;
+//         &:active, &:focus {
+//           height: 600px;
+//           outline: none;
+//         }
+//         &:active .see-more-button, &:focus .see-more-button {
+//           opacity: 0;
+//         }
+//         @media screen and (max-width: 630px) {
+//           &:active, &:focus {
+//             height: 700px;
+//           }
+//         }
+//         .see-more-button {
+//           position: relative;
+//           color: $color-white;
+//           font-size: 15px;
+//           text-align: center;
+//           opacity: .7;
+//           cursor: pointer;
+//           transition: all .6s ease-in;
+//           i {
+//             position: absolute;
+//             top: -29px;
+//             background-color: $brand-color-2;
+//             height: 15px;
+//             padding: 5px 2px;
+//             border-radius: 1000px 0 0 1000px;
+//             transform: rotate(90deg);
+//           }
+//         }
+//         .content-wrapper {
+//           background-color: $color-white;
+//           border-radius: 8px;
+//           margin-bottom: 10px;
+//           padding: 20px;
+//           box-sizing: border-box;
+//           cursor: pointer;
+//           &:focus {
+//             outline: none;
+//           }
+//           .bullet {
+//             box-sizing: border-box;
+//             margin: auto -20px auto 20px;
+//             .outter-ellipse {
+//               width: 25px;
+//               height: 25px;
+//               margin: auto auto auto 20px;
+//               padding: 1px;
+//               background-color: $brand-color;
+//               border-radius: 1000px;
+//               box-sizing: border-box;
+//               .inner-ellipse {
+//                 width: 13px;
+//                 height: 13px;
+//                 padding: 0;
+//                 margin: 5px auto;
+//                 background-color: $color-white;
+//                 border-radius: 1000px;
+//               }
+//             }
+//             .claim-icon {
+//               width: 25px;
+//               margin: auto auto auto 20px;
+//               img {
+//                 width: 100%;
+//               }
+//             }
+//           }
+//           .claim-month {
+//             margin: auto 20px auto -20px;
+//           }
+//           .claim-status {
+//             margin: auto -10px auto 5px;
+//           }
+//           .claim-created-at {
+//             color: $faint-color;
+//           }
+//         }
+//         .approval-progress-bar {
+//           text-align: center;
+//         }
+//       }
+//     }
+//   }
+//   .pagination {
+//     margin-top: 20px;
+//     .navigation {
+//       display: flex;
+//       align-items: center;
+//       width: 200px;
+//       margin: auto;
+//       .prev, .next {
+//         color: $brand-color-3;
+//         cursor: pointer;
+//       }
+//       .prev {
+//         margin-right: 20px;
+//         @include pagination-button;
+//       }
+//       .next {
+//         margin-left: 20px;
+//         @include pagination-button;
+//       }
+//       span {
+//         margin: auto 10px;
+//       }
+//     }
+//   }
+// }

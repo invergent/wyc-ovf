@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { jqxChartComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxchart';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { TopNav } from './top-nav/top-nav.component';
 import { ClaimsComponent } from './claims/claims.component';
@@ -26,7 +27,8 @@ const declarations = [
     CommonModule,
     FormsModule,
     RouterModule,
-    PipesModule
+    PipesModule,
+    InfiniteScrollModule
   ],
   declarations,
   exports: declarations

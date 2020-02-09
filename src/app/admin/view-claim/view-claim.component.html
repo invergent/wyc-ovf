@@ -9,5 +9,5 @@
   <div class="claim-creator">
     <h4 [routerLink]="['/admin/staff', claim[0]?.staffId]">{{claim[0].firstname}} {{claim[0].lastname}}{{claim[0]?.middlename ? (' '+claim[0]?.middlename.substring(0,1)) : ''}}</h4>
   </div>
-  <claims [claims]="claim" [statuses]="[]" [showDetails]="true"></claims>
+  <claims [claims]="claim" [showDetails]="true"></claims>
 </section>
