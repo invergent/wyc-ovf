@@ -79,8 +79,10 @@ export class OvertimeService {
 
   createQueryString(queries) {
     return Object.keys(queries).reduce((acc, key) => {
-      if (acc) acc += '&';
-      if (queries[key]) acc += `${key}=${queries[key]}`;
+      if (queries[key]) {
+        if (acc) acc += '&';
+        acc += `${key}=${queries[key]}`;
+      }
       return acc;
     }, '')
   }

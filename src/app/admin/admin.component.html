@@ -3,13 +3,12 @@
   <article class="content-wrapper">
     <section class="side-nav" (click)="toggleSideNav('self')" [ngStyle]="{left: sideNavLeft}">
       <div class="side-nav-tags">
-        <p>{{authService.currentStaff.role !== 'Auditor' ? 'Overview' : ' '}}</p>
+        <p>{{currentStaffRole !== 'Auditor' ? 'Overview' : ' '}}</p>
       </div>
       <a
-        *ngIf="authService.currentStaff.role !== 'Auditor'"
+        *ngIf="currentStaffRole !== 'Auditor'"
         [routerLink]="['/admin/dashboard']"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-tachometer-alt"></i>
@@ -19,21 +18,19 @@
       <a
         [routerLink]="['/admin/claims']"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="far fa-clock"></i>
         </div>
         <p>Claims</p>
       </a>
-      <div *ngIf="authService.currentStaff.role !== 'Auditor'" class="side-nav-tags">
+      <div *ngIf="currentStaffRole !== 'Auditor'" class="side-nav-tags">
         <p>Administration</p>
       </div>
       <a
-        *ngIf="authService.currentStaff.role !== 'Auditor'"
+        *ngIf="currentStaffRole !== 'Auditor'"
         [routerLink]="['/admin/staff']"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-users"></i>
@@ -41,10 +38,9 @@
         <p>Staff</p>
       </a>
       <a
-        *ngIf="authService.currentStaff.role === 'Super Admin'"
+        *ngIf="currentStaffRole === 'Super Admin'"
         [routerLink]="['/admin/admins']"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-snowman"></i>
@@ -52,10 +48,9 @@
         <p>Admins</p>
       </a>
       <a
-        *ngIf="authService.currentStaff.role !== 'Auditor'"
+        *ngIf="currentStaffRole !== 'Auditor'"
         [routerLink]="['/admin/branch']"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-university"></i>
@@ -63,10 +58,9 @@
         <p>Branch</p>
       </a>
       <a
-        *ngIf="authService.currentStaff.role !== 'Auditor'"
+        *ngIf="currentStaffRole !== 'Auditor'"
         [routerLink]="['/admin/holidays']"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-snowman"></i>
@@ -74,10 +68,9 @@
         <p>Holidays</p>
       </a>
       <a
-        *ngIf="authService.currentStaff.role !== 'Auditor'"
+        *ngIf="currentStaffRole !== 'Auditor'"
         [routerLink]="['/admin/settings']"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-cogs"></i>
@@ -85,24 +78,22 @@
         <p>Settings</p>
       </a>
       <a
-        *ngIf="authService.currentStaff.role !== 'Admin'"
+        *ngIf="currentStaffRole !== 'Admin'"
         [routerLink]="['/admin/logs']"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-cogs"></i>
         </div>
         <p>Logs</p>
       </a>
-      <div *ngIf="authService.currentStaff.role !== 'Auditor'" class="side-nav-tags">
+      <div *ngIf="currentStaffRole !== 'Auditor'" class="side-nav-tags">
         <p>Personal</p>
       </div>
       <a
-        *ngIf="authService.currentStaff.role !== 'Auditor'"
+        *ngIf="currentStaffRole !== 'Auditor'"
         [routerLink]="['/admin/profile']"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-user"></i>
@@ -112,7 +103,6 @@
       <a
         [routerLink]="['/admin/change-password']"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}"
         class="side-nav-link">
         <div class="icon-wrapper">
           <i class="fas fa-lock"></i>

@@ -171,11 +171,11 @@
     border-radius: 8px;
     transition: all .4s ease-in-out;
     &:focus {
-      height: 480px;
+      height: 500px;
       outline: none;
     }
     &:focus .fa-chevron-right {
-      transform: rotate(90deg);
+      opacity: 0 !important;
     }
     
     .request-details {
@@ -192,25 +192,42 @@
       opacity: 1;
       transition: all 1s ease-in-out;
       .direction-icon {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
         .fa-chevron-right {
-          font-size: 30px;
+          font-size: 15px;
           color: $brand-color;
           margin-left: 5px;
+          transform: rotate(90deg);
+          opacity: 1;
           transition: all .4s ease-out;
+          cursor: pointer;
         }
       }
-      .staff-image, .claim-details, .claim-amount, .claim-status, .approval-buttons {
+      .sub-text {
+        color: $faint-color;
+        margin: 0;
+        font-size: .7rem;
+      }
+      .claim-details, .claim-period, .claim-amount, .claim-status, .approval-buttons {
         flex: 1;
       }
+      .claim-period, .claim-amount {
+        text-align: center;
+      }
+      .staff-image {
+        flex: 0 0 70px;
+      }
       .claim-age {
-        flex: 0 0 150px;
+        flex: 0 0 100px;
       }
       .staff-image {
         text-align: center;
         .image-wrapper {
           padding-top: 10px;
           height: 60px;
-          margin: auto auto 10px;
+          margin: auto 10px 10px auto;
           img {
             height: 100%;
             border-radius: 10000px;
@@ -220,11 +237,6 @@
       .claim-details {
         .name {
           margin: 0;
-        }
-        .claim-elements {
-          color: $faint-color;
-          margin: 0;
-          font-size: .7rem;
         }
       }
       .approval-buttons {
@@ -273,6 +285,10 @@
             margin: auto 10px auto auto;
           }
         }
+      }
+      .details {
+        
+        position: relative;
       }
     }
   }

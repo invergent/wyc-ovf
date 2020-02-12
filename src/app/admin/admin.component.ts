@@ -7,8 +7,11 @@ import { AuthService } from '../shared';
 })
 export class AdminComponent {
   sideNavLeft = '-300px';
+  currentStaffRole: string;
 
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService){
+    this.currentStaffRole = authService.currentStaff.role;
+  }
 
   toggleSideNav(source) {
     if (source === 'navItem') {
