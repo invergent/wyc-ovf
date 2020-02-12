@@ -25,6 +25,8 @@ export class LogsComponent implements OnInit {
   from: string
   to: string
 
+  userFocused: boolean
+
   showSpinner: boolean = true;
   smallSpinner: boolean = false;
   @ViewChild('staffInput') staffInput: ElementRef;

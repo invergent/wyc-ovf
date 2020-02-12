@@ -42,7 +42,7 @@ export class AdminsComponent implements OnInit {
     this.roleList = data;
   }
 
-  runModalDisplay(modal, title, staffId) {
+  runModalDisplay(modal, title, staffId?) {
     if (modal === 'deleteAdminModal' && !staffId) {
       return this.toastr.error('Operation failed!');
     }

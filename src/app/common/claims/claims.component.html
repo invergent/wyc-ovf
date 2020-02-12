@@ -19,13 +19,17 @@
       </select>
     </div>
     <div class="input-wrapper">
+      <label for="requester">SOL ID</label>
+      <input #solIdInput [(ngModel)]="solId" type="text" name="solId" placeholder="SOL ID" class="short-input">
+    </div>
+    <div class="input-wrapper">
       <label for="requester">Staff</label>
       <input
       #staffInput
       [(ngModel)]="staffId"
       type="text"
       name="staffId"
-      placeholder="Staff ID or email"
+      placeholder="Staff ID"
       (focus)="userFocused=true"
       (blur)="userFocused=false">
       <div *ngIf="staffList?.length&&userFocused" class="staff-list">
@@ -71,7 +75,11 @@
             </div>
             <div class="claim-details">
               <p class="name">{{claim?.fullname}}</p>
-              <p class="claim-elements">{{claim?.claimElements}} claim elements</p>
+              <p class="sub-text">{{claim?.branch}} branch</p>
+            </div>
+            <div class="claim-period">
+              <div class="month">{{claim?.monthOfClaim}}, {{claim?.year}}</div>
+              <p class="sub-text">{{claim?.claimElements}} claim items</p>
             </div>
             <div class="claim-amount">₦{{claim?.amount | number}}</div>
             <div class="claim-status">{{claim?.status}}</div>

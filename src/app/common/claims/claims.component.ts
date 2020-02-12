@@ -30,6 +30,7 @@ export class ClaimsComponent implements OnInit {
   month
   status
   requester
+  solId
   staffId
 
   constructor(
@@ -84,7 +85,6 @@ export class ClaimsComponent implements OnInit {
   }
 
   async onScroll() {
-    console.log('scrolled!!!!')
     this.page += 1;
     this.fetchClaimsEvent.emit(this.getQueries());
   }
@@ -99,7 +99,7 @@ export class ClaimsComponent implements OnInit {
   }
 
   getQueries() {
-    const { year, month, status, requester, page } = this;
-    return { year, month, status, requester, page };
+    const { year, month, status, requester, solId, page } = this;
+    return { year, month, status, requester, solId, page };
   }
 }
