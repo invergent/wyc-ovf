@@ -38,6 +38,16 @@
         <p>Staff</p>
       </a>
       <a
+        *ngIf="currentStaffRole !== 'Auditor'"
+        [routerLink]="['/admin/line-managers']"
+        routerLinkActive="active"
+        class="side-nav-link">
+        <div class="icon-wrapper">
+          <i class="fas fa-users"></i>
+        </div>
+        <p>Line Managers</p>
+      </a>
+      <a
         *ngIf="currentStaffRole === 'Super Admin'"
         [routerLink]="['/admin/admins']"
         routerLinkActive="active"

@@ -67,7 +67,7 @@ export class AdminsComponent implements OnInit {
     this.displaySpinner = true;
 
     try {
-      await this.profileService.removeAdmin(this.adminToRemove);
+      await this.profileService.removeUser(this.adminToRemove);
       this.toastr.success('Admin removed!');
       await this.updateStaffList();
       this.displaySpinner = false;

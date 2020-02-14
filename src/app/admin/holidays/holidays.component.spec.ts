@@ -1,7 +1,7 @@
 import { HolidaysComponent } from './holidays.component';
 import { overtimeServiceMock, mockToastr, mockJQuery } from 'src/app/__mocks__';
 
-describe('ClaimEngineComponent', () => {
+describe('HolidaysComponent', () => {
   let component: HolidaysComponent;
 
   beforeEach(() => {

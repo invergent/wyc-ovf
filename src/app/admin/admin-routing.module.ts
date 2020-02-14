@@ -15,6 +15,7 @@ import { ViewClaimComponent } from './view-claim/view-claim.component';
 import { LogsComponent } from './logs/logs.component';
 import { AdminOnlyGuard, SuperAdminAuditorGuard, SuperAdminGuard } from '../shared';
 import { AdminsComponent } from './admins/admins.component';
+import { LineManagersComponent } from './line-managers/line-managers.component';
 
 const routes: Routes = [{
   path: '',
@@ -25,6 +26,7 @@ const routes: Routes = [{
     { path: 'claims/:claimId', component: ViewClaimComponent },
     { path: 'staff', canActivate: [AdminOnlyGuard], component: AdminStaffComponent },
     { path: 'staff/:staffId', canActivate: [AdminOnlyGuard], component: ViewStaffComponent },
+    { path: 'line-managers', canActivate: [AdminOnlyGuard], component: LineManagersComponent },
     { path: 'branch', canActivate: [AdminOnlyGuard], component: AdminBranchComponent },
     { path: 'holidays', canActivate: [AdminOnlyGuard], component: HolidaysComponent },
     { path: 'settings', canActivate: [AdminOnlyGuard], component: AdminSettingsComponent },
