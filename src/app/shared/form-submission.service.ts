@@ -8,7 +8,7 @@ export class FormSubmissionService {
   validateProfileInfo(formValues) {
     const { staffId, firstname, lastname, middlename, email, phone, altPhone, solId, name, address, accountNumber } = formValues;
     const errors = [];
-
+console.log(formValues)
     if (staffId) errors.push(...this.checkFields('Staff ID', staffId, staffIdRegex));
     if (firstname) errors.push(...this.checkFields('First name', firstname, emptyRegex));
     if (lastname) errors.push(...this.checkFields('Last name', lastname, emptyRegex));
@@ -27,7 +27,8 @@ export class FormSubmissionService {
   }
 
   checkFields(field, fieldValue, regex) {
-    if (!regex.test(fieldValue.trim())) return [`${field} value is invalid`];
+    const value = Number.isInteger(fieldValue) ? fieldValue : fieldValue.trim();
+    if (!regex.test(value)) return [`${field} value is invalid`];
   }
 
   fileSubmit(filePropName, file) {
@@ -49,7 +50,6 @@ export class FormSubmissionService {
     if (phone) formValues.phone = phone.trim();
     if (altPhone) formValues.altPhone = altPhone.trim();
     if (accountNumber) formValues.accountNumber = accountNumber.trim();
-    if (solId) formValues.solId = solId.trim();
     if (name) formValues.name = this.nameSanitizer(name);
     if (address) formValues.address = address.trim();
     

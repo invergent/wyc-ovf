@@ -53,6 +53,7 @@ export interface IProfileUpdate {
 
 export interface ILineManager {
   idNumber: string
+  solId: number
   firstname: string
   lastname: string
   phone: string

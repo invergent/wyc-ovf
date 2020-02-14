@@ -111,7 +111,7 @@ export class ProfileService {
     return this.http.delete<IPutProfile>(`${this.api}/admin/staff/${staffId}`, this.options).toPromise();
   }
 
-  removeAdmin(adminId) {
-    return this.http.delete<IPutProfile>(`${this.api}/admin/admins/${adminId}`, this.options).toPromise();
+  removeUser(id, route: string = 'admins') {
+    return this.http.delete<IPutProfile>(`${this.api}/admin/${route}/${id}`, this.options).toPromise();
   }
 }
