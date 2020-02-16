@@ -132,8 +132,9 @@ export class OvertimeService {
     return this.http.get<IGetChartStatistics>(`${this.api}/admin/claims/chart-statistics`, this.options).toPromise();
   }
 
-  exportApprovedClaims(docType: string): Promise<any> {
-    return this.http.get<any>(`${this.api}/admin/claims/export/${docType}`,
+  exportApprovedClaims(docType: string, queries): Promise<any> {
+    const queryString = this.createQueryString(queries);
+    return this.http.get<any>(`${this.api}/admin/claims/export/${docType}?${queryString}`,
       { responseType: 'arrayBuffer' as 'json', withCredentials: true }).toPromise();
   }
 

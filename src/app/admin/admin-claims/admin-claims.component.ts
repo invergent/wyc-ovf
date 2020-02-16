@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { saveAs } from 'file-saver';
-import { IClaim, OvertimeService, TOASTR_TOKEN, IToastr, months } from '../../shared';
+import { IClaim, OvertimeService, TOASTR_TOKEN, IToastr, months, AuthService } from '../../shared';
 
 @Component({
   selector: 'app-admin-claims',
@@ -12,6 +11,7 @@ export class AdminClaimsComponent implements OnInit {
   errorMessage: string = '';
   claimStatuses: string[] = ['All', 'Completed', 'Pending'];
   claims: IClaim[] = [];
+  claimCount: number
 
   // modal controls
   modalTitle: string
@@ -27,6 +27,7 @@ export class AdminClaimsComponent implements OnInit {
 
   constructor(
     private overtimeService: OvertimeService,
+    private authService: AuthService,
     @Inject(TOASTR_TOKEN) private toastr: IToastr,
   ) {}
 
@@ -68,11 +69,12 @@ export class AdminClaimsComponent implements OnInit {
   async fetchClaims(queries) {
     this.itsFetching = true;
     try {
-      const { data: claims } = await this.overtimeService.fetchAdminClaimsForAdmin(queries);
+      const { data: { count, submittedClaims } } = await this.overtimeService.fetchAdminClaimsForAdmin(queries);
+      this.claimCount = count;
       if (queries.page === 1) {
-        this.claims = claims;
+        this.claims = submittedClaims;
       } else {
-        this.claims = [...this.claims, ...claims];
+        this.claims = [...this.claims, ...submittedClaims];
       }
       this.itsFetching = false;
       this.showLoader = false;
@@ -80,25 +82,6 @@ export class AdminClaimsComponent implements OnInit {
       this.itsFetching = false;
       this.showLoader = false;
       this.toastr.error('Error fetching claims');
-    }
-  }
-
-  async exportClaims(docType) {
-    this.displaySpinner = true;
-
-    const type = docType === 'xlsx'
-      ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-      : 'text/csv;charset=utf-8;';
-
-    try {
-      const excelBlob = await this.overtimeService.exportApprovedClaims(docType);
-      const blob = new Blob([excelBlob], { type });
-      saveAs(blob, `Approved Claims (${new Date().toDateString().substr(4)})`);
-      this.closeModal(this.currentModal);
-      this.displaySpinner = false;
-    } catch (error) {
-      this.displaySpinner = false;
-      this.toastr.error('Error exporting claims');
     }
   }
 }

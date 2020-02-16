@@ -305,7 +305,13 @@ export interface IGetClaimHistory {
   data: IClaim[]
 }
 
-export interface IGetClaimsForAdmin extends IGetClaimHistory {}
+export interface IGetClaimsForAdmin {
+  message: string,
+  data: {
+    count: number
+    submittedClaims: IClaim[]
+  }
+}
 
 export interface IGetActivities {
   message: string,
