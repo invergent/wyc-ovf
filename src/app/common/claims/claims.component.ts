@@ -1,7 +1,8 @@
-import { Component, Input, ViewChild, ElementRef, OnInit, EventEmitter, Output } from '@angular/core';
-import { IClaim, OvertimeService, months, ProfileService, IStaffForAdmin } from '../../shared';
+import { Component, Input, ViewChild, ElementRef, OnInit, EventEmitter, Output, Inject } from '@angular/core';
+import { IClaim, OvertimeService, months, ProfileService, IStaffForAdmin, TOASTR_TOKEN, IToastr } from '../../shared';
 import { fromEvent } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'claims',
@@ -10,6 +11,7 @@ import { map, debounceTime } from 'rxjs/operators';
 })
 export class ClaimsComponent implements OnInit {
   @Input() claims: IClaim[] = []
+  @Input() claimCount: number
   @Input() claimStatuses: string[] = [];
   @Input() itsFetching: boolean = false;
   @Input() showDetails: boolean = false;
@@ -33,9 +35,12 @@ export class ClaimsComponent implements OnInit {
   solId
   staffId
 
+  displaySpinnerExport
+
   constructor(
     private overtimeService: OvertimeService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    @Inject(TOASTR_TOKEN) private toastr: IToastr
   ) { }
 
   async ngOnInit() {
@@ -94,12 +99,34 @@ export class ClaimsComponent implements OnInit {
     this.fetchClaimsEvent.emit(this.getQueries());
   }
 
-  onSelectChange() {
-    console.log(this.year)
-  }
-
   getQueries() {
     const { year, month, status, requester, solId, page } = this;
     return { year, month, status, requester, solId, page };
+  }
+
+  exportType(docType) {
+    const types = {
+      xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      csv: 'text/csv;charset=utf-8;',
+      pdf: 'application/pdf'
+    }
+    return types[docType];
+  }
+
+  async exportClaims(docType) {
+    this.displaySpinnerExport = true;
+
+    const type = this.exportType(docType);
+    const queries = this.getQueries();
+
+    try {
+      const excelBlob = await this.overtimeService.exportApprovedClaims(docType, queries);
+      const blob = new Blob([excelBlob], { type });
+      saveAs(blob, `Claims (${new Date().toDateString().substr(4)})`);
+      this.displaySpinnerExport = false;
+    } catch (error) {
+      this.displaySpinnerExport = false;
+      this.toastr.error('Error exporting claims');
+    }
   }
 }

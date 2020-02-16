@@ -2,7 +2,7 @@
   <div class="inputs">
     <div class="input-wrapper">
       <label for="year">Year</label>
-      <select [(ngModel)]="year" type="text" name="year" (change)="onSelectChange()" class="short-input">
+      <select [(ngModel)]="year" type="text" name="year" class="short-input">
         <option *ngFor="let claimYear of claimYears" [value]="claimYear">{{claimYear}}</option>
       </select>
     </div>
@@ -44,12 +44,16 @@
     <button [disabled]="showSpinner" (click)="fetchClaims()">Search</button>
   </div>
   <section *ngIf="true" class="export-button-section">
-    <button [disabled]="showSpinner" class="export-button" (click)="runModalDisplay('exportModal', 'Export')">
+    <button [disabled]="showSpinner" class="export-button">
       Export results
+      <i class="fa fa-caret-down"></i>
       <i *ngIf="displaySpinnerExport" class="fa fa-spinner fa-spin"></i>
     </button>
     <div class="doc-types">
-      
+      <div class="wrapper">
+        <p (mousedown)="exportClaims('xlsx')">XLSX</p>
+        <p (mousedown)="exportClaims('csv')">CSV</p>
+      </div>
     </div>
   </section>
 </div>
@@ -59,7 +63,8 @@
       Nothing! Please refine your search parameters to see results.
     </div>
   </div>
-  <div *ngIf="claims?.length">
+  <div *ngIf="claims?.length" class="claims">
+    <div class="claim-count">Claim count: {{claimCount}}</div>
     <div
       class="body-container"
       [ngClass]="{'add-height': showFilters}"

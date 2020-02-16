@@ -22,6 +22,8 @@ export class AdminsComponent implements OnInit {
 
   adminToRemove: string;
 
+  roleId = null;
+
   constructor(
     private profileService: ProfileService,
     @Inject(TOASTR_TOKEN) private toastr: IToastr
@@ -39,7 +41,7 @@ export class AdminsComponent implements OnInit {
 
   async updateRoleList() {
     const { data } = await this.profileService.fetchRoles(true);
-    this.roleList = data;
+    this.roleList = [{id: null, name: '--Select role--'}, ...data];
   }
 
   runModalDisplay(modal, title, staffId?) {
@@ -79,7 +81,6 @@ export class AdminsComponent implements OnInit {
   }
 
   async handleSubmit(formValues) {
-    console.log(formValues);
     try {
       await this.profileService.createAdmin(formValues);
       this.toastr.success('Admin created!');
