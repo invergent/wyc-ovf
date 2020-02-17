@@ -5,12 +5,11 @@ import { AuthService } from './auth.service';
 export class ProfileCheckerService {
   changedPassword: boolean
   lineManager: string
-  bsm: string
   branch: string
   role: string
   phone: string
   accountNumber: string
-  expectedFields: string[] = ['changedPassword', 'role', 'branch', 'phone', 'accountNumber', 'lineManager'];
+  expectedFields: string[] = ['changedPassword', 'branch', 'role', 'phone', 'accountNumber', 'lineManager'];
   pendingFields: string[]
 
   constructor(private authService: AuthService) { }

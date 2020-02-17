@@ -9,9 +9,10 @@ export interface IStaff {
   accountNumber: string
   image: string
   role: string
+  solId: number
   branch: string
   changedPassword: boolean
-  canUpdateLineManager: boolean
+  canUpdateBranch: boolean
   extraMonthsPermitted: boolean
   extraMonthsData: IExtraMonthsData
   lineManagerIdNumber: string;
