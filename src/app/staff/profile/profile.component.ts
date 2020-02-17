@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   accountNumber: string
   position: string
   branch: string
-  canUpdateLineManager: boolean
+  canUpdateBranch: boolean
   lineManagerIdNumber: string
   lineManagerFirstName: string
   lineManagerLastName: string
@@ -65,6 +65,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   // hidden input controls
   roleId
   branchId
+  
+  lineManagerId = null;
+  selectedSupervisorName: string
+
+  supervisorSelect
+  supervisorSelectOptions
 
   lineManagers: ILineManager[] = [];
   branches: IBranch[] = [];
@@ -177,7 +183,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.accountNumber = this.authService.currentStaff.accountNumber;
     this.position = this.authService.currentStaff.role;
     this.branch = this.authService.currentStaff.branch;
-    this.canUpdateLineManager = this.authService.currentStaff.canUpdateLineManager;
+    this.canUpdateBranch = this.authService.currentStaff.canUpdateBranch;
     this.lineManagerIdNumber = this.authService.currentStaff.lineManagerIdNumber;
     this.lineManagerFirstName = this.authService.currentStaff.lineManagerFirstName;
     this.lineManagerLastName = this.authService.currentStaff.lineManagerLastName;
@@ -196,9 +202,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   runModalDisplay(modal, title) {
-    if (modal === 'lineManagerModal' && this.lineManagerIdNumber && !this.canUpdateLineManager) {
-      return this.toastr.error('Contact admin for permission to update your line manager.');
-    }
     this.modalTitle = title;
     this.displayModal = 'block';
     this.currentModal = modal;
@@ -231,13 +234,30 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.jQuery('.edit-icon').css('display', this.editMode);
   }
 
+  updateBranchFields(branch) {
+    this.jQuery('#decoy-input').text(branch.name);
+    if (branch.supervisors.length > 1) {
+      this.supervisorSelectOptions = [{
+          id: null,
+          firstname: '--Select',
+          lastname:  'Supervisor--'
+        },
+        ...branch.supervisors
+      ];
+    } else {
+      this.supervisorSelectOptions = branch.supervisors;
+      this.lineManagerId = branch.supervisors[0].id;
+    }
+    this.supervisorSelect = true;
+  }
+
   handleSelect(field, fieldValue) {
     if (fieldValue.name) {
       // for role and branch
       this.currentStaff[field] = fieldValue.name; // update currently display profile info
       this[`${field}Id`] = fieldValue.id; // update hidden input field
       if (field === 'branch') {
-        this.jQuery('#decoy-input').text(fieldValue.name);
+        this.updateBranchFields(fieldValue);
       }
     } else {
       // for line managers
@@ -258,6 +278,10 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   handleInput(value, arrayProp, field) {
     this[`${field}Dropdown`] = true;
     this[`filtered${arrayProp}`] = this.filterArray(value, arrayProp);
+    if (field === 'branch') {
+      this.supervisorSelect = false; // reset supervisor select
+      this.lineManagerId = null;
+    } 
   }
 
   filterArray(value, arrayProp) {
@@ -279,6 +303,17 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     reader.addEventListener('load', () => {
       this.imagePreview = reader.result
     });
+  }
+
+  async requestBranchEditPermission() {
+    try {
+      const { message } = await this.profileService.requestBranchEditPermission();
+      this.toastr.success(message);
+      this.closeModal(this.currentModal);
+    } catch (error) {
+      this.toastr.error('An error occurred while sending permission request email');
+      this.closeModal(this.currentModal);
+    }
   }
 
   async handleSubmit(formValues, currentModal) {

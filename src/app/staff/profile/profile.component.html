@@ -21,11 +21,15 @@
     </div>
     <div class="profile-details">
       <div class="details">
-        <div class="edit-icon" (click)="runModalDisplay('nameModal', 'Name')">
-          <i class="fas fa-edit"></i>
-        </div>
         <p class="details-header">Name</p>
         <p class="details-item">{{currentStaff?.lastname}} {{currentStaff?.firstname}} {{currentStaff?.middlename?.substring(0,1)}}</p>
+      </div>
+      <div class="details">
+        <div class="edit-icon" (click)="runModalDisplay('branchModal', 'Branch')">
+          <i class="fas fa-edit"></i>
+        </div>
+        <p class="details-header">Branch</p>
+        <p class="details-item">{{currentStaff?.branch}} ({{currentStaff?.solId || 'No branch yet'}})</p>
       </div>
       <div class="details">
         <div class="edit-icon" (click)="runModalDisplay('roleModal', 'Role')">
@@ -42,46 +46,16 @@
         <p class="details-item">0{{currentStaff?.phone}}{{currentStaff?.altPhone ? ('; 0'+currentStaff?.altPhone) : ''}}</p>
       </div>
       <div class="details">
-        <div class="edit-icon" (click)="runModalDisplay('emailModal', 'Email Address')">
-          <i class="fas fa-edit"></i>
-        </div>
         <p class="details-header">Email Address</p>
         <p class="details-item">{{currentStaff?.emailAddress}}</p>
       </div>
-      <div class="details">
-        <div class="edit-icon" (click)="runModalDisplay('branchModal', 'Branch')">
-          <i class="fas fa-edit"></i>
-        </div>
-        <p class="details-header">Branch</p>
-        <p class="details-item">{{currentStaff?.branch || '--'}}</p>
-      </div>
     </div>
     <div class="lm lineManager">
-      <div class="edit-icon" (click)="runModalDisplay('lineManagerModal', 'Supervisor')">
-        <i class="fas fa-edit"></i>
-      </div>
       <div class="lm-details-header">
         <p>Line Manager</p>
       </div>
-      <div class="lm-details-body">
-        <div class="details-header">
-          <p>ID Number</p>
-        </div>
-        <div class="id-number details-item">
-          <p>{{currentStaff?.lineManagerIdNumber || '--'}}</p>
-        </div>
-        <div class="details-header">
-          <p>Name</p>
-        </div>
-        <div class="name details-item">
-          <p>{{currentStaff?.lineManagerFirstName || '--'}} {{currentStaff?.lineManagerLastName}}</p>
-        </div>
-        <div class="phone details-header">
-          <p>Phone Number</p>
-        </div>
-        <div class="phone details-item">
-          <p>{{currentStaff?.lineManagerPhone || '--'}}</p>
-        </div>
+      <div>
+        {{currentStaff?.lineManagerFirstName || '--'}} {{currentStaff?.lineManagerLastName}}
       </div>
     </div>
     <div class="lm account-details">
@@ -139,58 +113,48 @@
             </div>
           </ng-template>
           <ng-template [ngSwitchCase]="roleModal">
-            <div class="input role-input-wrapper" tabindex="0" (blur)="roleDropdown=false">
-              <div class="decoy-input role-decoy-input" (click)="roleDropdown=true">{{currentStaff?.role}}</div>
+            <div class="input role-input-wrapper" tabindex="0" (focus)="roleDropdown=true" (blur)="roleDropdown=false">
+              <div class="decoy-input role-decoy-input">{{currentStaff?.role}}</div>
               <input [ngStyle]="{display:'none'}" [(ngModel)]="roleId" name="roleId" type="number" required>
               <div *ngIf="roleDropdown" class="dropdown-list">
-                <div *ngFor="let role of roles" class="list-item" (click)="handleSelect('role', role)">{{role.name}}</div>
+                <div *ngFor="let role of roles" class="list-item" (mousedown)="handleSelect('role', role)">{{role.name}}</div>
               </div>
             </div>
           </ng-template>
           <ng-template [ngSwitchCase]="branchModal">
-            <div class="input">
+            <div *ngIf="branch && !canUpdateBranch" class="request-permission">
+              <p>You do not have permission to change your branch. Would you like to request permission?</p>
+              <div class="button">
+                <button (click)="requestBranchEditPermission()" type="button">
+                  Yes, request permission.
+                  <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="!branch || canUpdateBranch" class="input">
               <div
                 contenteditable="true"
                 class="decoy-input"
                 id="decoy-input"
                 (input)="handleInput($event.target.innerText, 'branches', 'branch')"
                 (focus)="handleInput('', 'branches', 'branch')"
-              >{{currentStaff?.branch}}</div>
+                (blur)="branchDropdown=false"
+              >{{currentStaff?.branch}} ({{currentStaff?.solId}})</div>
               <input [ngStyle]="{display:'none'}" [(ngModel)]="branchId" name="branchId" type="number" required>
               <div *ngIf="branchDropdown && filteredbranches.length" class="dropdown-list">
-                <div *ngFor="let branch of filteredbranches" class="list-item" (click)="handleSelect('branch', branch)">{{branch.name}}</div>
+                <div *ngFor="let branch of filteredbranches" class="list-item" (mousedown)="handleSelect('branch', branch)">{{branch.name}} ({{branch.solId}})</div>
               </div>
             </div>
-          </ng-template>
-          <ng-template [ngSwitchCase]="lineManagerModal">
-            <div class="input">
-              <input
-                [(ngModel)]="lineManagerIdNumber"
-                name="idNumber"
-                type="text"
-                placeholder="Enter line manager's ID number"
-                (input)="handleInput($event.target.value, 'lineManagers', 'lineManager')"
-                required>
-              <div *ngIf="lineManagerDropdown && filteredlineManagers.length" class="dropdown-list">
-                <div *ngFor="let lm of filteredlineManagers" class="multi-list-item" (click)="handleSelect('lineManager', lm)">
-                  <p class="lm-name">{{lm.idNumber}}</p>
-                  <p class="lm-email">{{lm.firstname}} {{lm.lastname}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="input">
-              <input [(ngModel)]="lineManagerFirstName" name="firstname" type="text" placeholder="Enter Line Manager's first name" required>
-            </div>
-            <div class="input">
-              <input [(ngModel)]="lineManagerLastName" name="lastname" type="text" placeholder="Enter Line Manager's last name" required>
-            </div>
-            <div class="input">
-              <input [(ngModel)]="lineManagerPhone" name="phone" type="tel" placeholder="Enter line manager's phone number" required>
+            <div *ngIf="supervisorSelect" class="input">
+              <label for="lineManagerId">Line Manager</label>
+              <select [(ngModel)]="lineManagerId" type="number" name="lineManagerId" class="short-input" required>
+                <option *ngFor="let supervisor of supervisorSelectOptions" [value]="supervisor.id">{{supervisor.firstname}} {{supervisor.lastname}}</option>
+              </select>
             </div>
           </ng-template>
-          <div class="button">
+          <div *ngIf="!(branchModal && branch && !canUpdateBranch)" class="button">
             <button
-              [disabled]="imageModal && fileInvalid"
+              [disabled]="(imageModal && fileInvalid) || (branchModal && !(branchId && lineManagerId))"
               (click)="displaySpinner=true"
               type="submit"
               name="submit">

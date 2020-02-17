@@ -171,7 +171,7 @@
             position: relative;
             width: 100%;
             margin-top: 25px;
-            input, .decoy-input {
+            input, .decoy-input, select {
               width: 100%;
               height: 45px;
               padding: 0 20px;
@@ -182,9 +182,15 @@
                 color: rgba(0,0,0,.2);
               }
             }
+            label {
+              float: left;
+              margin-bottom: 5px;
+              color: grey;
+            }
             .decoy-input {
               line-height: 3;
               text-align: left;
+              margin-bottom: 20px;
             }
             .role-decoy-input {
               background-position: right 3% top 50%;

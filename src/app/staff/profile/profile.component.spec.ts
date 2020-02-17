@@ -1,8 +1,8 @@
 import { ProfileComponent } from './profile.component';
 import {
-  authServiceMock, profileServiceMock, formServiceMock, mockToastr, mockJQuery, overtimeServiceMock, notificationServiceMock, routerMock, activatedRouteMock, profileCheckerServiceMock
+  authServiceMock, profileServiceMock, mockToastr, mockJQuery, overtimeServiceMock, notificationServiceMock, routerMock, activatedRouteMock, profileCheckerServiceMock
 } from '../../__mocks__';
-import { FormSubmissionService, ProfileCheckerService } from 'src/app/shared';
+import { FormSubmissionService } from 'src/app/shared';
 
 const realFSS = new FormSubmissionService();
 
@@ -89,7 +89,7 @@ describe('Profile Component', () => {
   it('should update open modal"s input fields on dropdown item select', () => {
     const mockText = jest.fn();
     const jqMock = jest.fn(() => ({ text: mockText }));
-    const branchPayload = { id: 1, name: 'name' };
+    const branchPayload = { id: 1, name: 'name', supervisors: ['supervisor1', 'supervisor2'] };
     const lineManagerPayload = { firstname: 'John', lastname: 'Doe', email: 'email' };
 
     const newComponent = new ProfileComponent(
@@ -113,7 +113,7 @@ describe('Profile Component', () => {
   it('should create a new array with filtered content based on user"s input', () => {
     // @ts-ignore
     component.branches = [{ id: 2, name: 'Some branch'}];
-    component.lineManagers = [{ idNumber: 'some ID', firstname: 'John', lastname: 'Doe', phone: 'phone', email: 'email' }];
+    component.lineManagers = [{ idNumber: 'some ID', solId: 345, firstname: 'John', lastname: 'Doe', phone: 'phone', email: 'email' }];
     
     component.handleInput('bra', 'branches', 'branch');
     expect(component.filteredbranches).toHaveLength(1);
