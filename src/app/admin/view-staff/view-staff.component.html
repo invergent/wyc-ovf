@@ -10,7 +10,7 @@
     <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i>
     <button class="margin-right" (click)="runModalDisplay('calendarModal', 'Authorise multiple claims')">Permit multiple claims</button>
     <button *ngIf="!staff?.changedPassword" class="margin-right" (click)="runAuthorisation(staff?.staffId, 'resendLoginCredentials')">Resend login details</button>
-    <button *ngIf="staff?.changedPassword" class="margin-right" (click)="runAuthorisation(staff?.staffId, 'authoriseLineManagerEdit')">Permit line manager edit</button>
+    <button *ngIf="staff?.changedPassword" class="margin-right" (click)="runAuthorisation(staff?.staffId, 'authoriseBranchEditRequest')">Permit branch edit</button>
     <button (click)="runModalDisplay('removeStaffModal', 'Remove Staff')">Remove</button>
     
   </div>
