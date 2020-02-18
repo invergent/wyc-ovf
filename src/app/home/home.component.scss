@@ -5,7 +5,7 @@
   height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
-  background-image: url('../../assets/images/bg.jpg');
+  background-image: url('https://res.cloudinary.com/invergent/image/upload/v1582097789/assets/bg.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -52,7 +52,7 @@
           height: 50px;
           font-size: 1.3rem;
           color: $color-white;
-          padding: 0 20px;
+          padding: 0 30px;
           border: none;
           border-radius: 100000px;
           cursor: pointer;
