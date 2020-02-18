@@ -109,7 +109,8 @@ export class ApprovalsComponent implements OnInit {
     } 
 
     try {
-      const { message } = await this.lineManagerService.requestEdit({ editMessage }, this.currentClaim.id);
+      const payload = { editMessage, lineManager: this.lineManager };
+      const { message } = await this.lineManagerService.requestEdit(payload, this.currentClaim.id);
       this.requestEditSpinner = false;
       this.toaster.success(message);
       this.fadeThenRemoveApprovedClaim('requestEdit', this.currentClaim.id);

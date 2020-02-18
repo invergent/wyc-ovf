@@ -81,6 +81,10 @@ export class ClaimDetailsComponent implements OnInit {
     }, '')
   }
 
+  updateClaim() {
+    return this.router.navigate(['/staff/claims/' + this.claim.id + '/update'])
+  }
+
   async cancelClaim() {
     try {
       await this.overtimeService.cancelClaim(this.claim.id);

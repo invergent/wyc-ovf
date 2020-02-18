@@ -9,7 +9,7 @@ export class StaffOnlyGuard implements CanActivate {
   async canActivate() {
     const isAuthenticated = await this.authService.authenticate();
     if (!isAuthenticated) return this.router.navigate(['/login']);
-    if (this.authService.currentStaff.role !== 'Admin') return true;
+    if (!['Super Admin', 'Admin', 'Auditor'].includes(this.authService.currentStaff.role)) return true;
     return this.router.navigate(['/login']);
   }
 }

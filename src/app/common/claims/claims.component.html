@@ -64,7 +64,7 @@
     </div>
   </div>
   <div *ngIf="claims?.length" class="claims">
-    <div class="claim-count">Claim count: {{claimCount}}</div>
+    <div *ngIf="!showActionButtons" class="claim-count">Claim count: {{claimCount}}</div>
     <div
       class="body-container"
       [ngClass]="{'add-height': showFilters}"
@@ -80,7 +80,7 @@
             </div>
             <div class="claim-details">
               <p class="name">{{claim?.fullname}}</p>
-              <p class="sub-text">{{claim?.branch}} branch</p>
+              <p *ngIf="!showActionButtons" class="sub-text">{{claim?.branch}} branch</p>
             </div>
             <div class="claim-period">
               <div class="month">{{claim?.monthOfClaim}}, {{claim?.year}}</div>
