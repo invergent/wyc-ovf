@@ -3,9 +3,9 @@ import { profileServiceMock, mockToastr, mockJQuery } from '../../__mocks__';
 import { FormSubmissionService } from '../../shared';
 
 const staffList = [
-  { firstname: 'Johnny', lastname: 'Doe', emailAddress: 'j.doe@init.com' },
-  { firstname: 'Jane', lastname: 'Doey', emailAddress: 'ja.doey@init.com' },
-  { firstname: 'Bill', lastname: 'Cross', emailAddress: 'bill-crossy@init.com' }
+  { staffId: 'someId', firstname: 'Johnny', lastname: 'Doe', emailAddress: 'j.doe@init.com' },
+  { staffId: 'someId', firstname: 'Jane', lastname: 'Doey', emailAddress: 'ja.doey@init.com' },
+  { staffId: 'someId', firstname: 'Bill', lastname: 'Cross', emailAddress: 'bill-crossy@init.com' }
 ];
 
 const inputFile = {
