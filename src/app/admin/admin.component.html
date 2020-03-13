@@ -3,7 +3,7 @@
   <article class="content-wrapper">
     <section class="side-nav" (click)="toggleSideNav('self')" [ngStyle]="{left: sideNavLeft}">
       <div class="side-nav-tags">
-        <p>{{currentStaffRole !== 'Auditor' ? 'Overview' : ' '}}</p>
+        <p>{{currentStaffRole === 'Admin' ? 'Overview' : ' '}}</p>
       </div>
       <a
         *ngIf="currentStaffRole !== 'Auditor'"
@@ -16,6 +16,7 @@
         <p>Dashboard</p>
       </a>
       <a
+        *ngIf="currentStaffRole !== 'Super Admin'"
         [routerLink]="['/admin/claims']"
         routerLinkActive="active"
         class="side-nav-link">
@@ -24,11 +25,11 @@
         </div>
         <p>Claims</p>
       </a>
-      <div *ngIf="currentStaffRole !== 'Auditor'" class="side-nav-tags">
+      <div *ngIf="currentStaffRole === 'Admin'" class="side-nav-tags">
         <p>Administration</p>
       </div>
       <a
-        *ngIf="currentStaffRole !== 'Auditor'"
+        *ngIf="currentStaffRole === 'Admin'"
         [routerLink]="['/admin/staff']"
         routerLinkActive="active"
         class="side-nav-link">
@@ -38,7 +39,7 @@
         <p>Staff</p>
       </a>
       <a
-        *ngIf="currentStaffRole !== 'Auditor'"
+        *ngIf="currentStaffRole === 'Admin'"
         [routerLink]="['/admin/line-managers']"
         routerLinkActive="active"
         class="side-nav-link">
@@ -58,7 +59,7 @@
         <p>Admins</p>
       </a>
       <a
-        *ngIf="currentStaffRole !== 'Auditor'"
+        *ngIf="currentStaffRole === 'Admin'"
         [routerLink]="['/admin/branch']"
         routerLinkActive="active"
         class="side-nav-link">
@@ -68,7 +69,7 @@
         <p>Branch</p>
       </a>
       <a
-        *ngIf="currentStaffRole !== 'Auditor'"
+        *ngIf="currentStaffRole === 'Admin'"
         [routerLink]="['/admin/holidays']"
         routerLinkActive="active"
         class="side-nav-link">
@@ -78,7 +79,7 @@
         <p>Holidays</p>
       </a>
       <a
-        *ngIf="currentStaffRole !== 'Auditor'"
+        *ngIf="currentStaffRole === 'Admin'"
         [routerLink]="['/admin/settings']"
         routerLinkActive="active"
         class="side-nav-link">
@@ -97,11 +98,11 @@
         </div>
         <p>Logs</p>
       </a>
-      <div *ngIf="currentStaffRole !== 'Auditor'" class="side-nav-tags">
+      <div *ngIf="currentStaffRole === 'Admin'" class="side-nav-tags">
         <p>Personal</p>
       </div>
       <a
-        *ngIf="currentStaffRole !== 'Auditor'"
+        *ngIf="currentStaffRole === 'Admin'"
         [routerLink]="['/admin/profile']"
         routerLinkActive="active"
         class="side-nav-link">

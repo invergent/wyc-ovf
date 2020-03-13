@@ -1,10 +1,14 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import {
   LogService, ILogData, ProfileService, IStaffForAdmin, TOASTR_TOKEN,
-  IToastr, JQUERY_TOKEN
+  IToastr, JQUERY_TOKEN, pdfSetup, months
 } from '../../shared';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   templateUrl: './logs.component.html',
@@ -140,20 +144,17 @@ export class LogsComponent implements OnInit {
     this.staffId = staffId
   }
 
-  getQueries() {
-    let period;
-    if (this.isRange) {
-      period = this.range;
-    } else {
-      period = this.period
-    }
-
-    const periodIso = this.convertToISORange(period);
-    return { period: periodIso, staffId: this.staffId, page: this.page };
+  getPeriod() {
+    return this.isRange ? this.range : this.period;
   }
 
-  async fetchLogs(): Promise<ILogData[]> {
-    const queries = this.getQueries();
+  getQueries(exportable?: boolean) {
+    const periodIso = this.convertToISORange(this.getPeriod());
+    return { period: periodIso, staffId: this.staffId, page: this.page, exportable };
+  }
+
+  async fetchLogs(exportable?: boolean): Promise<ILogData[]> {
+    const queries = this.getQueries(exportable);
     try {
       const { data } = await this.logger.fetchLogs(queries);
       return data;
@@ -166,5 +167,33 @@ export class LogsComponent implements OnInit {
   async runLogsfetch() {
     this.page = 1; // reset page
     this.logs = await this.fetchLogs();
+  }
+
+  convertIsoDateToWords(date) {
+    const [year, month, daysdate] = date.split('T')[0].split('-');
+    return `${months[+month]} ${daysdate}, ${year}`;
+  }
+
+  makeIsoDateHumanReadable() {
+    const date = this.convertToISORange(this.getPeriod());
+    const [min, max] = date.split('_');
+    return `${this.convertIsoDateToWords(min)} to ${this.convertIsoDateToWords(max)}`;
+  }
+
+  prepareLogsDataForExport(data) {
+    return data.map((log) => {
+      const { createdAt, staffId, activity, creator: { firstname, lastname } } = log;
+      return [createdAt, staffId, `${firstname} ${lastname}`, activity];
+    })
+  }
+
+  async exportLogs() {
+    if (!this.getPeriod()) return this.toastr.error('Please specify a date range');
+
+    const data = await this.fetchLogs(true);
+    const logs = this.prepareLogsDataForExport(data);
+    const period = this.makeIsoDateHumanReadable();
+    const docDefinition = pdfSetup(period, logs);
+    pdfMake.createPdf(docDefinition).download('Logs');
   }
 }

@@ -71,9 +71,10 @@ export class AdminStaffComponent implements OnInit {
     this.currentPage = 1; // reset current page
     const filterQuery = query.toLowerCase();
     this.visibleStaffList = this.staffList.filter((staff) => {
-      const { firstname, lastname, emailAddress } = staff;
+      const { firstname, lastname, emailAddress, staffId } = staff;
       return (
-        firstname.toLowerCase().includes(filterQuery)
+        staffId.toLowerCase().includes(filterQuery)
+        || firstname.toLowerCase().includes(filterQuery)
         || lastname.toLowerCase().includes(filterQuery)
         || emailAddress.toLowerCase().includes(filterQuery)
       );
