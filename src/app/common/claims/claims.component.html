@@ -60,7 +60,7 @@
 <div class="claims">
   <div *ngIf="!claims?.length" class="empty-state">
     <div class="empty-state-message">
-      Nothing! Please refine your search parameters to see results.
+      {{showActionButtons ? 'Nothing!' : 'Nothing! Please refine your search parameters to see results.'}}
     </div>
   </div>
   <div *ngIf="claims?.length" class="claims">
