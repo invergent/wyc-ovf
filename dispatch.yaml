@@ -1,0 +1,6 @@
+dispatch:
+  - url: "cleontime-api-test.whytecleon.ng/*"
+    service: default
+
+  - url: "cleontime-ui-test.whytecleon.ng/*"
+    service: cleontime-ui-test

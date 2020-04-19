@@ -1,12 +1,10 @@
 {
   "name": "overtime-frontend",
   "version": "0.0.0",
-  "engines": {
-    "node": "12.13.0"
-  },
   "scripts": {
     "clean": "rm -rf dist && mkdir dist",
-    "build": "ng build --prod",
+    "build:production": "npm run clean && ng build --prod",
+    "build:cloud_test": "npm run clean && ng build --configuration=cloud_test",
     "start": "node app.js",
     "heroku-postbuild": "npm run clean && npm run build",
     "start:dev": "npm run clean:build && npm run start",

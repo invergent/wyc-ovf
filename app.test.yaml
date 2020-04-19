@@ -1,4 +1,4 @@
-service: default #if you change this name it will create a new service in GCP
+service: cleontime-ui-test
 runtime: nodejs12
 handlers:
 - url: /.*
