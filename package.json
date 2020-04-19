@@ -7,6 +7,7 @@
   "scripts": {
     "clean": "rm -rf dist && mkdir dist",
     "build": "ng build --prod",
+    "gcp-build": "npm run clean && npm run build",
     "start": "node app.js",
     "heroku-postbuild": "npm run clean && npm run build",
     "start:dev": "npm run clean:build && npm run start",
