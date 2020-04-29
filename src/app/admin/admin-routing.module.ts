@@ -13,7 +13,7 @@ import { HolidaysComponent } from './holidays/holidays.component';
 import { ViewStaffComponent } from './view-staff/view-staff.component';
 import { ViewClaimComponent } from './view-claim/view-claim.component';
 import { LogsComponent } from './logs/logs.component';
-import { AdminOnlyGuard, SuperAdminAuditorGuard, SuperAdminGuard } from '../shared';
+import { AdminOnlyGuard, SuperAdminAuditorGuard, SuperAdminGuard, EnforceProfileUpdateService } from '../shared';
 import { AdminsComponent } from './admins/admins.component';
 import { LineManagersComponent } from './line-managers/line-managers.component';
 
@@ -22,7 +22,7 @@ const routes: Routes = [{
   component: AdminComponent,
   children: [
     { path: 'dashboard', canActivate: [AdminOnlyGuard], component: AdminDashboardComponent },
-    { path: 'claims', component: AdminClaimsComponent },
+    { path: 'claims', canActivate: [EnforceProfileUpdateService], component: AdminClaimsComponent },
     { path: 'claims/:claimId', component: ViewClaimComponent },
     { path: 'staff', canActivate: [AdminOnlyGuard], component: AdminStaffComponent },
     { path: 'staff/:staffId', canActivate: [AdminOnlyGuard], component: ViewStaffComponent },

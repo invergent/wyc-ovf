@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { IStaffForAdmin, ProfileService, TOASTR_TOKEN, IToastr, IRole } from 'src/app/shared';
+import { IStaffForAdmin, ProfileService, TOASTR_TOKEN, IToastr, IRole, AuthService } from 'src/app/shared';
 
 @Component({
   selector: 'app-admins',
@@ -25,6 +25,7 @@ export class AdminsComponent implements OnInit {
   roleId = null;
 
   constructor(
+    private authService: AuthService,
     private profileService: ProfileService,
     @Inject(TOASTR_TOKEN) private toastr: IToastr
   ) { }

@@ -21,14 +21,14 @@
     </div>
     <div class="profile-details">
       <div class="details">
-        <div class="edit-icon" (click)="runModalDisplay('nameModal', 'Name')">
+        <div *ngIf="authService?.currentStaff?.role !== 'Super Admin'" class="edit-icon" (click)="runModalDisplay('nameModal', 'Name')">
           <i class="fas fa-edit"></i>
         </div>
         <p class="details-header">Name</p>
         <p class="details-item">{{currentStaff?.firstname}} {{currentStaff?.lastname}} {{currentStaff?.middlename?.substring(0, 1)}}</p>
       </div>
       <div class="details">
-        <div class="edit-icon" (click)="runModalDisplay('emailModal', 'Email Address')">
+        <div *ngIf="authService?.currentStaff?.role !== 'Super Admin'" class="edit-icon" (click)="runModalDisplay('emailModal', 'Email Address')">
           <i class="fas fa-edit"></i>
         </div>
         <p class="details-header">Email Address</p>
@@ -59,9 +59,9 @@
             <div class="input">
               <input [(ngModel)]="lastname" name="lastname" type="text" placeholder="Enter your last name" required>
             </div>
-            <div class="input">
+            <!-- <div class="input">
               <input [(ngModel)]="middlename" name="middlename" type="text" placeholder="Enter your middle name" required>
-            </div>
+            </div> -->
           </ng-template>
           <ng-template [ngSwitchCase]="emailModal">
             <div class="input">

@@ -36,7 +36,7 @@
         <div class="email">{{staff?.emailAddress}}</div>
         <div class="role">{{staff?.role?.name}}</div>
         <div
-          *ngIf="staff.role.name !== 'Super Admin'"
+          *ngIf="staff.staffId !== authService.currentStaff.staffId"
           class="remove-admin"
           (click)="runModalDisplay('deleteAdminModal', 'Delete Admin', staff.role.name === 'Super Admin' ? null : staff?.staffId)">Delete</div>
       </div>
