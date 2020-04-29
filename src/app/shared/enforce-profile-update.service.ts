@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { ProfileCheckerService } from './profile-checker.service';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class EnforceProfileUpdateService implements CanActivate {
 
-  constructor(private router: Router, private profileChecker: ProfileCheckerService) { }
+  constructor(
+    private router: Router,
+    private profileChecker: ProfileCheckerService,
+    private authService: AuthService
+  ) { }
 
   canActivate() {
     const pendingFields = this.profileChecker.getPendingFields();

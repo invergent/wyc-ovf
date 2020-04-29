@@ -3,5 +3,5 @@
   <p *ngIf="!!errorMessage">{{errorMessage}}</p>
 </div>
 <section *ngIf="!showLoader && !errorMessage" class="update-claim">
-  <claim-engine [claim]="pendingClaim[0]" [applyingMonth]="applyingMonth" [callingComponent]="'Update claim'"></claim-engine>
+  <claim-engine [claim]="pendingClaims[0]" [applyingMonth]="applyingMonth" [callingComponent]="'Update claim'"></claim-engine>
 </section>

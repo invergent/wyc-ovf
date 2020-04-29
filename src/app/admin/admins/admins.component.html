@@ -36,7 +36,7 @@
         <div class="email">{{staff?.emailAddress}}</div>
         <div class="role">{{staff?.role?.name}}</div>
         <div
-          *ngIf="staff.role.name !== 'Super Admin'"
+          *ngIf="staff.staffId !== authService.currentStaff.staffId"
           class="remove-admin"
           (click)="runModalDisplay('deleteAdminModal', 'Delete Admin', staff.role.name === 'Super Admin' ? null : staff?.staffId)">Delete</div>
       </div>
@@ -49,7 +49,7 @@
       </div>
       <div [ngSwitch]="true" class="form-wrapper">
         <ng-template [ngSwitchCase]="addAdminModal">
-          <form  #addAdminForm="ngForm" (ngSubmit)="handleSubmit(addAdminForm.value)" autocomplete="off" novalidate>
+          <form  #addAdminForm="ngForm" (ngSubmit)="handleSubmit(addAdminForm)" autocomplete="off" novalidate>
             <div class="input">
               <input [(ngModel)]="staffId" name="staffId" type="text" placeholder="Admin ID (e.g Admin001)" required>
             </div>

@@ -17,7 +17,7 @@ import {
   JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService,
   EnforceProfileUpdateService, ProfileCheckerService, AdminsAuditorGuard, AdminOnlyGuard, StaffOnlyGuard,
   PUSHER_TOKEN, CRONSTRUE_TOKEN, ICronstrue, SettingsService, LOCALSTORAGE_TOKEN,
-  ILocalStorage, LogService, SuperAdminAuditorGuard, SuperAdminGuard
+  ILocalStorage, LogService, SuperAdminAuditorGuard, SuperAdminGuard, EnforcePasswordChangeAdminGuard
 } from './shared';
 import { environment } from 'src/environments/environment';
 import { PipesModule } from './pipes/pipes.module';
@@ -56,6 +56,7 @@ const localStorage: ILocalStorage = window['localStorage'];
     AdminsAuditorGuard,
     AdminOnlyGuard,
     StaffOnlyGuard,
+    EnforcePasswordChangeAdminGuard,
     EnforceProfileUpdateService,
     ProfileCheckerService,
     FormSubmissionService,

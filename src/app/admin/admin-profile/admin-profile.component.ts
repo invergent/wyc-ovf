@@ -30,6 +30,7 @@ export class AdminProfileComponent implements OnInit {
   lastname: string
   middlename: string
   email: string
+  role: string
 
   // image
   imagePreview: any
@@ -55,6 +56,7 @@ export class AdminProfileComponent implements OnInit {
     this.lastname = this.authService.currentStaff.lastname;
     this.middlename = this.authService.currentStaff.middlename;
     this.email = this.authService.currentStaff.emailAddress;
+    this.role = this.authService.currentStaff.role;
   }
 
   async syncStaffData() {

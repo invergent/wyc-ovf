@@ -58,6 +58,12 @@ export class PasswordChangeComponent implements AfterViewInit {
   async handleSubmit(formValues) {
     const { newPassword, confirmPassword } = formValues;
 
+    if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/.test(newPassword)) {
+      this.displaySpinner = false;
+      return this.toastr
+        .error('Password must be atleast 6 characters long and contain atleast 1 uppercase, 1 lowercase, 1 number.');
+    }
+
     if (newPassword !== confirmPassword) {
       this.displaySpinner = false;
       return this.toastr.error('Passwords do not match');

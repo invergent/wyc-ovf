@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { IStaffForAdmin, ProfileService, TOASTR_TOKEN, IToastr, IRole } from 'src/app/shared';
+import { IStaffForAdmin, ProfileService, TOASTR_TOKEN, IToastr, IRole, AuthService } from 'src/app/shared';
 
 @Component({
   selector: 'app-admins',
@@ -25,6 +25,7 @@ export class AdminsComponent implements OnInit {
   roleId = null;
 
   constructor(
+    private authService: AuthService,
     private profileService: ProfileService,
     @Inject(TOASTR_TOKEN) private toastr: IToastr
   ) { }
@@ -80,11 +81,12 @@ export class AdminsComponent implements OnInit {
     }
   }
 
-  async handleSubmit(formValues) {
+  async handleSubmit(form) {
     try {
-      await this.profileService.createAdmin(formValues);
+      await this.profileService.createAdmin(form.value);
       this.toastr.success('Admin created!');
       await this.updateStaffList();
+      form.resetForm();
       this.displaySpinner = false;
       this.closeModal(this.currentModal);
     } catch (error) {

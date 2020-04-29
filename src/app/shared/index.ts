@@ -10,6 +10,7 @@ export * from './form-submission.service';
 export * from './notification.service';
 export * from './pusher.service';
 export * from './profile-checker.service';
+export * from './enforce-password-change-admin.guard';
 export * from './enforce-profile-update.service';
 export * from './admins-auditor.guard';
 export * from './auditor-super-admin.guard';
