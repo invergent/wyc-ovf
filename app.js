@@ -1,11 +1,51 @@
 const express = require('express');
+const helmet = require("helmet");
 const path = require('path');
 
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 8000;
 
+const whitelist = ['cleontime.whytecleon.ng', 'cleontime-ui-test.whytecleon.ng'];
+
+app.set('trust proxy', true);
+
+app.use(helmet());
+
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'", 'use.fontawesome.com', '*.pusher.com', '*.cloudinary.com', '*.whytecleon.ng'],
+    styleSrc: ["'self'", "'unsafe-inline'", 'use.fontawesome.com'],
+    scriptSrc: ["'self'", "'unsafe-eval'", '*.pusher.com'],
+    imgSrc: ["'self'", 'data:', '*.cloudinary.com']
+  }
+}))
+
+app.use((req, res, next) => {
+  if (!['development', 'test'].includes(process.env.NODE_ENV)) {
+    const { hostname, headers: { host, referer }, secure } = req;
+    const forwardedHost = req.headers['x-forwarded-host'];
+  
+    if (!whitelist.includes(hostname)) return res.status(403).send('Not allowed');
+    if (hostname !== host) return res.status(403).send('Not allowed');
+    if (forwardedHost && (forwardedHost !== hostname)) {
+      return res.status(403).send('Not allowed');
+    }
+    if (!secure) return res.redirect(`https://${hostname}${req.url}`);
+    if (referer) {
+      const refererHost = referer.split('/')[2];
+      if (!whitelist.includes(refererHost)) {
+        return res.status(403).send('Not allowed');
+      }
+    }
+  }
+
+  return next();
+});
+
 app.use(express.static('dist/overtime-frontend'));
 
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'dist/overtime-frontend/index.html')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/overtime-frontend/index.html'));
+});
 
 app.listen(port);

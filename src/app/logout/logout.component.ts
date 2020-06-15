@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService, OvertimeService, NotificationService } from '../shared';
+import { AuthService, OvertimeService, NotificationService, IdleWatchService } from '../shared';
 import { ProfileService } from '../shared';
 
 @Component({
@@ -24,7 +24,8 @@ export class LogoutComponent implements OnInit {
     private overtimeService: OvertimeService,
     private profileService: ProfileService,
     private notificationService: NotificationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private idleWatcher: IdleWatchService
   ) { }
 
   async ngOnInit() {
@@ -40,6 +41,7 @@ export class LogoutComponent implements OnInit {
       this.notificationService.notifications = null;
       this.notificationService.disconnect();
       this.notificationService.newNotificationsCount = 0;
+      this.idleWatcher.stopWatching();
       this.router.navigate(['/login'], forced ?  { queryParams: { m: 'c' } } : {});
     } catch(e) {
       this.displaySpinner = false;

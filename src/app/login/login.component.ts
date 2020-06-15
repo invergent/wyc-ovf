@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
-  AuthService, TOASTR_TOKEN, ILoginFormData, IToastr, JQUERY_TOKEN, emailRegex
+  AuthService, TOASTR_TOKEN, ILoginFormData, IToastr, JQUERY_TOKEN, emailRegex, IdleWatchService
 } from '../shared';
 import { staffIdRegex } from '../shared';
 
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
+    private idleWatcher: IdleWatchService,
     @Inject(TOASTR_TOKEN) private toastr: IToastr,
     @Inject(JQUERY_TOKEN) private jQuery
   ) { }
@@ -64,7 +65,7 @@ export class LoginComponent implements OnInit {
       this.toastr.success(response.message);
 
       await this.authService.authenticate();
-      
+      this.idleWatcher.startWatching();
       return this.router.navigate([`/${this.isAdmin ? 'admin' : 'staff'}/dashboard`], { queryParams: { login: true } });
     } catch(e) {
       this.displaySpinner = false;
