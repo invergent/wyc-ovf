@@ -16,7 +16,7 @@ import {
   AuthService, ProfileService, OvertimeService, RedirectToDashboard, TOASTR_TOKEN,
   JQUERY_TOKEN, IToastr, FormSubmissionService, IPusher, NotificationService,
   EnforceProfileUpdateService, ProfileCheckerService, AdminsAuditorGuard, AdminOnlyGuard, StaffOnlyGuard,
-  PUSHER_TOKEN, CRONSTRUE_TOKEN, ICronstrue, SettingsService, LOCALSTORAGE_TOKEN,
+  PUSHER_TOKEN, CRONSTRUE_TOKEN, ICronstrue, SettingsService, LOCALSTORAGE_TOKEN, IdleWatchService,
   ILocalStorage, LogService, SuperAdminAuditorGuard, SuperAdminGuard, EnforcePasswordChangeAdminGuard
 } from './shared';
 import { environment } from 'src/environments/environment';
@@ -63,6 +63,7 @@ const localStorage: ILocalStorage = window['localStorage'];
     NotificationService,
     SettingsService,
     LogService,
+    IdleWatchService,
     { provide: JQUERY_TOKEN, useValue: jQuery },
     { provide: TOASTR_TOKEN, useValue: toastr },
     { provide: PUSHER_TOKEN, useValue: pusher },

@@ -22,3 +22,4 @@ export * from './cronstrue.service';
 export * from './local-storage.service';
 export * from './settings.service';
 export * from './log.service';
+export * from './idle-watch.service';
