@@ -244,6 +244,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         },
         ...branch.supervisors
       ];
+    } else if (branch.supervisors.length < 1) {
+      return this.toastr.error('The branch you selected has no supervisor');
     } else {
       this.supervisorSelectOptions = branch.supervisors;
       this.lineManagerId = branch.supervisors[0].id;
