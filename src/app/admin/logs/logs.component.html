@@ -63,8 +63,8 @@
       <div class="body-conainer" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
         <div *ngFor="let log of logs" class="body">
           <div class="body-item timestamp">{{log.createdAt | formatIsoDate}}</div>
-          <div class="body-item userid">{{log.staffId}}</div>
-          <div class="body-item username">{{log?.creator?.firstname}} {{log?.creator?.lastname}}</div>
+          <div class="body-item userid">{{log?.supervisorId || log?.staffId}}</div>
+          <div class="body-item username">{{log?.user?.firstname}} {{log?.user?.lastname}}</div>
           <div class="body-item activity">{{log.activity}}</div>
         </div>
       </div>

@@ -47,10 +47,19 @@ export class LogsComponent implements OnInit {
 
   async ngOnInit() {
     const { data } = await this.logger.fetchLogs({ page: this.page });
+    const refinedData = this.refineLogsData(data);
     const { staffList } = await this.profileService.fetchProfileData(true);
-    this.logs = data;
+    this.logs = refinedData;
     this.staffList = staffList;
     this.showSpinner = false;
+  }
+
+  refineLogsData(data) {
+    return data.map(item => {
+      const { creator, sCreator, ...rest } = item;
+      const user = sCreator || creator;
+      return { ...rest, user };
+    })
   }
 
   ngAfterViewInit() {
@@ -157,7 +166,8 @@ export class LogsComponent implements OnInit {
     const queries = this.getQueries(exportable);
     try {
       const { data } = await this.logger.fetchLogs(queries);
-      return data;
+      const refinedData = this.refineLogsData(data);
+      return refinedData;
     } catch (error) {
       this.toastr.error(error.error ? error.error.message : 'An error occurred');
       return [];
@@ -182,8 +192,8 @@ export class LogsComponent implements OnInit {
 
   prepareLogsDataForExport(data) {
     return data.map((log) => {
-      const { createdAt, staffId, activity, creator: { firstname, lastname } } = log;
-      return [createdAt, staffId, `${firstname} ${lastname}`, activity];
+      const { createdAt, staffId, supervisorId, activity, user: { firstname, lastname } } = log;
+      return [createdAt, (staffId || supervisorId), `${firstname} ${lastname}`, activity];
     })
   }
 
