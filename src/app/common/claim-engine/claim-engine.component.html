@@ -8,7 +8,8 @@
         (click)="toggleButtonPress('overtimeClicked', disableWeekends)"
         [ngClass]="{buttonPressed: overtimeClicked}"
         type="button"
-        name="button">Overtime</button>
+        name="button"
+        [disabled]="true">Overtime</button>
       <button
         (click)="toggleButtonPress('weekendClicked', disableWeekdays)"
         [ngClass]="{buttonPressed: weekendClicked}"

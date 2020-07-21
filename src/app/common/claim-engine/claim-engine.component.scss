@@ -45,6 +45,10 @@
       &:focus {
         outline: none;
       }
+      &:disabled {
+        color: $faint-color-ex-light;
+        border: 1px solid $faint-color-ex-light;
+      }
       @media screen and (max-width: 400px) {
         margin-right: 10px;
         padding: 7px 10px;
