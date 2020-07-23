@@ -27,7 +27,9 @@ export class LogsComponent implements OnInit {
   logsCalendar
 
   from: string
+  fromTime: number
   to: string
+  toTime: number
 
   userFocused: boolean
 
@@ -102,38 +104,45 @@ export class LogsComponent implements OnInit {
   handleDateSelection(dates) {
     if (dates) {
       this.from = this.convertDateToDateString(dates[0]);
+      this.fromTime = dates[0].getTime();
       this.to = dates[1] ? this.convertDateToDateString(dates[1]) : '';
+      this.toTime = dates[1] ? dates[1].getTime() : '';
     } else {
       this.from = '';
+      this.fromTime = null;
       this.to = '';
+      this.toTime = null;
     }
   }
 
-  convertDateToDateString(airdate) {
-    const [day, month, date, year] = airdate.toDateString().split(' ');
-    return `${date}-${month}-${year}`;
+  getDateElements(dateObj?) {
+    let date = dateObj || new Date();
+    const daysDate = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    return [year, month, daysDate];
   }
 
-  convertTodayToDateString() {
-    const [day, month, date, year] = new Date(Date.now()).toDateString().split(' ');
-    return `${date}-${month}-${year}`;
+  convertDateToDateString(dateObj?) {
+    const [year, month, daysDate] = this.getDateElements(dateObj);
+    return `${daysDate}-${months[month+1]}-${year}`;
   }
 
-  convertToISORange(range) {
+  convertToISORange(range, adjustFrom?: boolean) {
     if (!range) return;
     let minDate;
     let maxDate;
     
     if (range === 'today') {
-      const today = this.convertTodayToDateString();
+      const [year, month, daysDate] = this.getDateElements();
+      const today = new Date(year, month, daysDate).getTime();
       minDate = today;
-      maxDate = today;
+      maxDate = today + 86340000;
     } else {
-      const range = this.range.split(' — ');
-      minDate = range[0];
-      maxDate = range[range.length === 1 ? 0 : 1];
+      minDate = this.fromTime + (adjustFrom ? 3600000 : 0); // WAT timezone offset adjustment when converting to words
+      maxDate = (this.toTime || this.fromTime) + 86340000; //adjust to 23:59 of date
     }
-    return `${new Date(minDate).toISOString()}_${new Date(`${maxDate} 23:59`).toISOString()}`;
+    return `${new Date(minDate).toISOString()}_${new Date(maxDate).toISOString()}`;
   }
 
   async onScroll() {
@@ -185,7 +194,7 @@ export class LogsComponent implements OnInit {
   }
 
   makeIsoDateHumanReadable() {
-    const date = this.convertToISORange(this.getPeriod());
+    const date = this.convertToISORange(this.getPeriod(), true);
     const [min, max] = date.split('_');
     return `${this.convertIsoDateToWords(min)} to ${this.convertIsoDateToWords(max)}`;
   }
