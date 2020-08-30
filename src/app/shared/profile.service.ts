@@ -91,6 +91,10 @@ export class ProfileService {
     return this.http.post(`${this.api}/admin/${route}/single`, staffData, this.options).toPromise();
   }
 
+  removeBranch(branchId:number) {
+    return this.http.delete(`${this.api}/admin/branch/${branchId}`, this.options).toPromise();
+  }
+
   createAdmin(adminData: ICreateStaffData) {
     return this.http.post(`${this.api}/admin/admins`, adminData, this.options).toPromise();
   }
