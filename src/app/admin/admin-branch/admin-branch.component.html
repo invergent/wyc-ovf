@@ -5,7 +5,7 @@
   <div class="function-div">
     <div class="filter-section">
       <p class="action-labels">Filter by branch name:</p>
-      <input #filterQuery type="text" placeholder="Filter branch by name" (input)="handleFiltering(filterQuery.value)">
+      <input #filterQuery type="text" placeholder="Filter branch by name or SOL ID" (input)="handleFiltering(filterQuery.value)">
     </div>
     <div class="add-section">
       <p class="action-labels">Add new branch:</p>
@@ -44,6 +44,9 @@
             <td>{{branch?.name || '--'}}</td>
             <td>{{branch?.address}}</td>
           </tr>
+          <div
+            class="remove-branch"
+            (click)="runModalDisplay('deleteBranchModal', 'Delete Branch', branch)">Delete</div>
         </tbody>
       </table>
     </div>
@@ -99,7 +102,13 @@
               </div>
             </div>
           </ng-template>
-          <div *ngIf="!excelErrorModal" class="button">
+          <ng-template [ngSwitchCase]="deleteBranchModal">
+            <div class="remove-warning">
+              If you proceed, {{branchToRemove.name}} ({{branchToRemove.solId}}) branch would be deleted.
+            </div>
+            <div (click)="removeBranch()" class="proceed">Proceed <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i></div>
+          </ng-template>
+          <div *ngIf="!(excelErrorModal || deleteBranchModal)" class="button">
             <button
               [disabled]="addBranchForm.invalid || (bulkModal && fileInvalid)"
               (click)="displaySpinner=true"

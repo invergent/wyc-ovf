@@ -25,8 +25,11 @@ export class AdminBranchComponent implements OnInit {
 
   bulkModal: boolean = false;
   singleModal: boolean = false;
+  deleteBranchModal:boolean = false;
   excelErrorModal: boolean = false;
   excelFile: any
+
+  branchToRemove
 
   // input controls
   fileInvalid: boolean = true
@@ -59,11 +62,13 @@ export class AdminBranchComponent implements OnInit {
     this.calculatePagination(this.branches);
   }
 
-  runModalDisplay(modal, title) {
+  runModalDisplay(modal, title, branch?) {
     this.modalTitle = title;
     this.displayModal = 'block';
     this.currentModal = modal;
     this[modal] = true;
+
+    if (branch) this.branchToRemove = branch;
   }
 
   closeModal(modal) {
@@ -79,8 +84,8 @@ export class AdminBranchComponent implements OnInit {
     this.currentPage = 1; // reset current page
     const filterQuery = query.toLowerCase();
     this.visibleBranches = this.branches.filter((staff) => {
-      const { name, address } = staff;
-      return (name.toLowerCase().includes(filterQuery) || address.toLowerCase().includes(filterQuery));
+      const { solId, name, address } = staff;
+      return (name.toLowerCase().includes(filterQuery) || address.toLowerCase().includes(filterQuery) || `${solId}`.includes(filterQuery));
     });
     this.calculatePagination(this.visibleBranches);
   }
@@ -115,6 +120,24 @@ export class AdminBranchComponent implements OnInit {
     this.modalTitle = 'Errors'
     this.excelErrorModal = true;
     this.currentModal = 'excelErrorModal';
+  }
+
+  async removeBranch() {
+    this.displaySpinner = true;
+
+    try {
+      await this.profileService.removeBranch(this.branchToRemove.id);
+      this.toastr.success('Branch removed!');
+
+      await this.profileService.syncWithAPI();
+      await this.initialiseData();
+
+      this.displaySpinner = false;
+      this.closeModal(this.currentModal);
+    } catch (error) {
+      this.toastr.error(error.error ? error.error.message : 'Error removing admin.');
+      this.displaySpinner = false;
+    }
   }
 
   async handleSubmit(formValues, currentModal) {
