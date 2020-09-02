@@ -11,7 +11,7 @@ export const claimPrice = {
   weekend: 800,
   shiftDuty: 800,
   atmDuty: 3000,
-  atmSupport: 2500,
+  atmSupport: 500,
   holiday: 800
 }
 export const months = [
