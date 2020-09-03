@@ -94,7 +94,7 @@ export class ClaimEngineComponent implements OnInit {
     if (previousWork) this.restorePreviousWork(previousWork);
 
     // set dates and counters values
-    this.claimMonthDate = this.overtimeService.claimMonthDate(`${this.applyingMonth}/2`);
+    this.claimMonthDate = this.overtimeService.claimMonthDate(`${this.applyingMonth}/1`);
     this.totalDaysInClaimMonth = this.claimMonthDate.getDate();
     // get holidays for the claim month
     const { data: holidays } = await this.overtimeService.fetchHolidays(this.applyingMonth);
