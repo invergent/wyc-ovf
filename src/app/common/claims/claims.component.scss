@@ -200,6 +200,7 @@
 }
 
 .claim-requests-wrapper {
+  min-width: 600px;
   .claim-request {
     width: 100%;
     height: 120px;
@@ -207,7 +208,7 @@
     border-radius: 8px;
     transition: all .4s ease-in-out;
     &:focus {
-      height: 550px;
+      height: 800px;
       outline: none;
       transition: all .3s ease-in-out;
     }
