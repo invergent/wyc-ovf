@@ -1,4 +1,5 @@
 const express = require('express');
+const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const path = require('path');
 
@@ -8,6 +9,26 @@ const port = parseInt(process.env.PORT, 10) || 8000;
 const whitelist = ['cleontime.whytecleon.ng', 'cleontime-ui-test.whytecleon.ng'];
 
 app.set('trust proxy', true);
+
+const limiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 2 // limit each IP to 100 requests per windowMs
+});
+
+const resetLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 5 // limit each IP to 100 requests per windowMs
+});
+ 
+//  apply to all requests
+app.use('/login/', limiter);
+app.use('/logout/', limiter);
+app.use('/admin/', limiter);
+app.use('/line-manager/', limiter);
+app.use('/staff/', limiter);
+app.use('/forgot-password/', resetLimiter);
+app.use('/confirm-reset-request/', resetLimiter);
+app.use('/password-reset/', resetLimiter);
 
 app.use(helmet());
 
