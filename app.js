@@ -1,7 +1,6 @@
 const express = require('express');
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
-const https = require("https");
 const path = require('path');
 
 const app = express();
@@ -70,6 +69,4 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/overtime-frontend/index.html'));
 });
 
-const server = https.createServer({ minVersion: 'TLSv1.2' }, app)
-
-server.listen(port);
+app.listen(port);
