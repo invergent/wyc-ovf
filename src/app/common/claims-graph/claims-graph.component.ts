@@ -30,7 +30,7 @@ export class ClaimsGraphComponent implements OnInit, AfterViewInit {
 
   valueAxis = {
     minValue: 0,
-    maxValue: 6000,
+    maxValue: 4000,
     unitInterval: 1000,
     title: { text: 'Claims' },
     tickMarks: { color: '#CACACA' },
