@@ -31,7 +31,6 @@ export class ClaimsGraphComponent implements OnInit, AfterViewInit {
   valueAxis = {
     minValue: 0,
     maxValue: 4000,
-    unitInterval: 1000,
     title: { text: 'Claims' },
     tickMarks: { color: '#CACACA' },
     gridLines: { color: '#CACACA25' }
@@ -61,6 +60,10 @@ export class ClaimsGraphComponent implements OnInit, AfterViewInit {
 
   createDataForChart(stats) {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return months.map(Month => ({ Month, claims: stats[Month] }));
+    const chartData = months.map(Month => ({ Month, claims: stats[Month] }));
+
+    // get the highest value of the 12 months, add 500 just to keep chart line within the chart
+    this.valueAxis.maxValue = Math.max(...chartData.map(item => item.claims)) + 500;
+    return chartData;
   }
 }
