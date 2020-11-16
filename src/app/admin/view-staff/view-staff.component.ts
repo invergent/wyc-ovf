@@ -72,10 +72,9 @@ export class ViewStaffComponent implements OnInit {
 
   calendarPreselectAndMaxDate() {
     const today = new Date();
-    const todaysDate = today.getDate();
     const thisMonth = today.getMonth();
     const thisYear = today.getFullYear();
-    const preselectMonth = todaysDate > 8 ? today : new Date(thisYear, thisMonth - 1);
+    const preselectMonth = new Date(thisYear, thisMonth - 1);
     const maxDate = new Date(thisYear, preselectMonth.getMonth() - 1);
     return { preselectMonth, maxDate };
   }
