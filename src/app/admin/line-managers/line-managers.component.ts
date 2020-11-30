@@ -74,7 +74,15 @@ export class LineManagersComponent implements OnInit {
   handleFiltering(query: string) {
     this.currentPage = 1; // reset current page
     const filterQuery = query.toLowerCase();
-    this.visibleManagers = this.lineManagers.filter(lineManager => (lineManager.idNumber.toLowerCase().includes(filterQuery)));
+    this.visibleManagers = this.lineManagers.filter(lineManager => {
+      const { idNumber, firstname, lastname, solId } = lineManager;
+      return (
+        idNumber.toLowerCase().includes(filterQuery)
+        || firstname.toLowerCase().includes(filterQuery)
+        || lastname.toLowerCase().includes(filterQuery)
+        || solId.toString().includes(filterQuery)
+      );
+    });
     this.calculatePagination(this.visibleManagers);
   }
 
