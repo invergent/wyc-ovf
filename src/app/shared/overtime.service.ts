@@ -67,7 +67,8 @@ export class OvertimeService {
 
   currentClaimYearMonth() {
     const today = new Date();
-    const previousMonth = today.getMonth();
+    let previousMonth = today.getMonth();
+    if (previousMonth === 0) previousMonth = 12;
     return `${today.getFullYear()}/${previousMonth}`;
   }
 

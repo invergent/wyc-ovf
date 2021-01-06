@@ -134,6 +134,8 @@ export class ClaimEngineComponent implements OnInit {
       selectedOnOvertimeCalendar = this['overtime'].selectedDates.map(date => date.getDate());
     }
 
+    console.log(this.applyingMonth)
+
     this[prop] = this.jQuery(element).datepicker({
       inline: true,
       multipleDates: true,
