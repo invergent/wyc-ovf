@@ -39,7 +39,7 @@
         <div class="firstname">{{lineManager?.firstname || '--'}}</div>
         <div class="email">{{lineManager?.email}}</div>
         <div class="role">{{lineManager?.phone}}</div>
-        <div class="controls">
+        <div *ngIf="user.role === 'Super Admin'" class="controls">
           <div
             class="edit-admin"
             (click)="runModalDisplay('editModal', 'Edit Supervisor', lineManager)">Edit

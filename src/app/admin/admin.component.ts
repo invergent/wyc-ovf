@@ -10,7 +10,7 @@ export class AdminComponent {
   currentStaffRole: string;
 
   constructor(private authService: AuthService){
-    this.currentStaffRole = authService.currentStaff.role;
+    this.currentStaffRole = this.authService.currentStaff.role;
   }
 
   toggleSideNav(source) {

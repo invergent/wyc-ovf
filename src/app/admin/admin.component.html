@@ -39,7 +39,7 @@
         <p>Staff</p>
       </a>
       <a
-        *ngIf="currentStaffRole === 'Super Admin'"
+        *ngIf="['Super Admin', 'Admin'].includes(currentStaffRole)"
         [routerLink]="['/admin/line-managers']"
         routerLinkActive="active"
         class="side-nav-link">

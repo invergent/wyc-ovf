@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { IStaffForAdmin, ProfileService, FormSubmissionService, TOASTR_TOKEN, IToastr, JQUERY_TOKEN, ILineManager } from 'src/app/shared';
+import { IStaffForAdmin, ProfileService, FormSubmissionService, TOASTR_TOKEN, IToastr, JQUERY_TOKEN, ILineManager, AuthService, IStaff } from 'src/app/shared';
 
 @Component({
   templateUrl: './line-managers.component.html',
@@ -44,12 +44,17 @@ export class LineManagersComponent implements OnInit {
   supervisorToRemove: number;
   supervisorToEdit:number;
 
+  user:IStaff
+
   constructor(
+    private authService: AuthService,
     private profileService: ProfileService,
     private formSubmissionService: FormSubmissionService,
     @Inject(TOASTR_TOKEN) private toastr: IToastr,
     @Inject(JQUERY_TOKEN) private jQuery
-  ) { }
+  ) {
+    this.user = this.authService.currentStaff;
+  }
 
   async ngOnInit() {
     await this.initialiseData();
