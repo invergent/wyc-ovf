@@ -102,3 +102,13 @@ button, .app-name {
 .margin-right {
   margin-right: 10px;
 }
+
+.link {
+  color: #268fdd;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
