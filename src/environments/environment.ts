@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   api: 'http://overtime-api.example.com:7000',
-  API_KEY: 'b79fda95698b77ecf0a3'
+  API_KEY: 'b79fda95698b77ecf0a3',
+  appraisalUrl: 'http://example.com:8001/verify'
 };
 
 /*

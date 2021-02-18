@@ -6,7 +6,12 @@ const path = require('path');
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 8000;
 
-const whitelist = ['cleontime.whytecleon.ng', 'cleontime-ui-test.whytecleon.ng'];
+const whitelist = [
+  'cleontime.whytecleon.ng',
+  'cleontime-ui-test.whytecleon.ng',
+  'appraisal.whytecleon.ng',
+  'appraisal-test.whytecleon.ng'
+];
 
 app.set('trust proxy', true);
 
