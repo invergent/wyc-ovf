@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { IClaimStatistics, AuthService, OvertimeService } from '../../shared';
 
 @Component({
@@ -10,6 +11,8 @@ export class AdminDashboardComponent implements OnInit {
   errorMessage: string = '';
   claimStatistics: IClaimStatistics
   staffFirstName: string
+
+  appraisalUrl:string = environment.appraisalUrl;
 
   constructor(
     private authService: AuthService,

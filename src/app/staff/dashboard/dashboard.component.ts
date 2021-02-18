@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {
   AuthService, IClaimStatistics, IClaim, IActivity, OvertimeService, IStaffClaimData
 } from '../../shared';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   templateUrl: './dashboard.component.html',
@@ -20,6 +21,8 @@ export class DashboardComponent implements OnInit {
   pendingClaims: IClaim[]
   activities: IActivity[]
   staffFirstName: string
+
+  appraisalUrl:string = environment.appraisalUrl;
 
   constructor(
     private authService: AuthService,
