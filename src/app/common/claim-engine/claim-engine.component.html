@@ -29,7 +29,8 @@
         (click)="toggleButtonPress('atmSupportClicked')"
         [ngClass]="{buttonPressed: atmSupportClicked}"
         type="button"
-        name="button">ATM Support</button>
+        name="button"
+        [disabled]="true">ATM Support</button>
       <button
         (click)="toggleButtonPress('holidayClicked', disableWeekends)"
         [ngClass]="{buttonPressed: holidayClicked}"
