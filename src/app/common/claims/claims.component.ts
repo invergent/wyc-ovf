@@ -75,12 +75,13 @@ export class ClaimsComponent implements OnInit {
     }, [])
   }
 
-  setDefaultFilterFields() {
-    this.claimYears = this.overtimeService.getClaimYears();
+  async setDefaultFilterFields() {
     this.claimMonths = this.getClaimMonths();
     this.year = this.getCurrentClaimMonthYear().year;
     this.month = this.claimMonths[this.getCurrentClaimMonthYear().month + 1];
     this.status = '';
+    const { data: years } = await this.overtimeService.getClaimYears();
+    this.claimYears = years;
   }
 
   getCurrentClaimMonthYear() {
