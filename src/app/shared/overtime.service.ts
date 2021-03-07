@@ -152,8 +152,8 @@ export class OvertimeService {
     return this.http.delete<IGetHolidays>(`${this.api}/admin/holidays?fullDate=${fullDate}`, this.options).toPromise();
   }
 
-  getClaimYears() {
-    return [2020, 2019, 2018];
+  getClaimYears(): Promise<any> {
+    return this.http.get(`${this.api}/admin/claims/years`, this.options).toPromise();
   }
 }
 
