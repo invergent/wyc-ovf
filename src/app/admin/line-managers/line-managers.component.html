@@ -39,10 +39,16 @@
         <div class="firstname">{{lineManager?.firstname || '--'}}</div>
         <div class="email">{{lineManager?.email}}</div>
         <div class="role">{{lineManager?.phone}}</div>
-        <div
-          class="remove-admin"
-          (click)="runModalDisplay('deleteAdminModal', 'Delete Supervisor', lineManager?.id)">Delete</div>
-      </div>
+        <div class="controls">
+          <div
+            class="edit-admin"
+            (click)="runModalDisplay('editModal', 'Edit Supervisor', lineManager)">Edit
+          </div>
+          <div
+            class="remove-admin"
+            (click)="runModalDisplay('deleteModal', 'Delete Supervisor', lineManager)">Delete
+          </div>
+        </div>
     </div>
   </div>
   <div *ngIf="visibleManagers.length>staffPerPage" class="pagination">
@@ -72,7 +78,7 @@
               <input #fileInput type="file" id="fileInput" (input)="handleFileInput(fileInput)" accept=".csv, .xlsx" required>
             </div>
           </ng-template>
-          <ng-template [ngSwitchCase]="singleModal">
+          <ng-template [ngSwitchCase]="singleModal || editModal">
             <div class="input">
               <input [(ngModel)]="idNumber" name="idNumber" type="text" placeholder="Supervisor ID" required>
             </div>
@@ -105,13 +111,13 @@
               </div>
             </div>
           </ng-template>
-          <ng-template [ngSwitchCase]="deleteAdminModal">
+          <ng-template [ngSwitchCase]="deleteModal">
             <div class="remove-warning">
               If you proceed, this supervisor would be deleted and would no longer have access to CleonTime.
             </div>
             <div (click)="removeSupervisor()" class="proceed">Proceed <i *ngIf="displaySpinner" class="fa fa-spinner fa-spin"></i></div>
           </ng-template>
-          <div *ngIf="!(excelErrorModal || deleteAdminModal)" class="button">
+          <div *ngIf="!(excelErrorModal || deleteModal)" class="button">
             <button
               [disabled]="(bulkModal && fileInvalid)"
               (click)="displaySpinner=true"

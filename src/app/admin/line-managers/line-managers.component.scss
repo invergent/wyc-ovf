@@ -125,10 +125,10 @@
         background-color: $color-white;
         border-radius: 8px;
         padding: 20px;
-        &:hover .remove-admin {
+        &:hover .controls {
           display: block;
         }
-        .remove-admin {
+        .controls {
           display: none;
           position: absolute;
           bottom: 0;
@@ -136,6 +136,12 @@
           font-size: 13px;
           color: $brand-color;
           cursor: pointer;
+          .edit-admin {
+            margin-right: 7px;
+          }
+          .remove-admin, .edit-admin {
+            display: inline-block;
+          }
         }
       }
       table {
