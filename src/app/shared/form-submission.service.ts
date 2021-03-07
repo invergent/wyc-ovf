@@ -78,7 +78,8 @@ console.log(formValues)
       imageModal: 'updateImage',
       lineManagerModal: 'updateLineManagerInfo',
       bulkModal: 'createBulk',
-      singleModal: 'createSingle'
+      singleModal: 'createSingle',
+      editModal: 'updateSupervisorProfile'
     };
 
     if (!updateMethods[openModal]) {

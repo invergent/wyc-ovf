@@ -83,6 +83,10 @@ export class ProfileService {
     return this.http.post<IPutProfile>(`${this.api}/users/profile/line-manager`, updatePayload, this.options).toPromise();
   }
 
+  updateSupervisorProfile(updatePayload, supervisorId) {
+    return this.http.put(`${this.api}/admin/supervisors/${supervisorId}`, updatePayload, this.options).toPromise();
+  }
+
   createBulk(excelData, route: string = 'staff') {
     return this.http.post<IPutProfile>(`${this.api}/admin/${route}`, excelData, { withCredentials: true }).toPromise();
   }

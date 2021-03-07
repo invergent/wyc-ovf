@@ -22,17 +22,27 @@ export class LineManagersComponent implements OnInit {
 
   bulkModal: boolean = false;
   singleModal: boolean = false;
+  editModal:boolean = false;
+  deleteModal: boolean = false;
   excelErrorModal: boolean = false;
-  deleteAdminModal: boolean = false;
+
   excelFile: any
 
   // input controls
-  fileInvalid: boolean = true
+  fileInvalid: boolean = true;
+
+  idNumber:number;
+  solId:number;
+  firstname:string;
+  lastname:string;
+  email:string;
+  phone:string;
 
   excelErrors;
   excelErrorsToDisplay;
 
-  supervisorToRemove
+  supervisorToRemove: number;
+  supervisorToEdit:number;
 
   constructor(
     private profileService: ProfileService,
@@ -53,18 +63,34 @@ export class LineManagersComponent implements OnInit {
     this.calculatePagination(this.lineManagers);
   }
 
-  runModalDisplay(modal, title, id?: number) {
+  runModalDisplay(modal, title, supervisor) {
     this.modalTitle = title;
     this.displayModal = 'block';
     this.currentModal = modal;
     this[modal] = true;
 
-    if (id) this.supervisorToRemove = id;
+    if (modal === 'deleteModal' && supervisor) this.supervisorToRemove = supervisor.id;
+    if (modal === 'editModal' && supervisor) {
+      this.idNumber = supervisor.idNumber;
+      this.solId = supervisor.solId;
+      this.firstname = supervisor.firstname;
+      this.lastname = supervisor.lastname;
+      this.email = supervisor.email;
+      this.phone = supervisor.phone;
+      this.supervisorToEdit = supervisor.id
+    }
   }
 
   closeModal(modal) {
     this.displayModal = 'none';
     this[modal] = false;
+    this.idNumber = null;
+    this.solId = null;
+    this.firstname = null;
+    this.lastname = null;
+    this.email = null;
+    this.phone = null;
+    this.supervisorToEdit = null;
   }
 
   triggerFileInput() {
@@ -152,14 +178,13 @@ export class LineManagersComponent implements OnInit {
     }
     
     try {
-      const { message } = await this.profileService[updateMethod](submissionData.data, 'supervisors');
+      const { message } = await this.profileService[updateMethod](submissionData.data, this.supervisorToEdit || 'supervisors');
       this.toastr.success(message);
 
       await this.profileService.syncWithAPI(true);
       await this.initialiseData();
 
-      this.displayModal = 'none';
-      this[currentModal] = false;
+      this.closeModal(currentModal);
       this.displaySpinner = false;
       this.fileInvalid = true;
     } catch (error) {
